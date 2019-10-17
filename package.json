@@ -1,0 +1,32 @@
+{
+  "name": "inequidadseguros",
+  "version": "0.0.1",
+  "description": "Proyecto Requisitos",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alemando/inequidadSeguros.git"
+  },
+  "keywords": [
+    "nodejs",
+    "react"
+  ],
+  "author": "alemando",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alemando/inequidadSeguros/issues"
+  },
+  "homepage": "https://github.com/alemando/inequidadSeguros#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.7.5",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  }
+}
