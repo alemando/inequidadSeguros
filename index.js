@@ -3,7 +3,10 @@ const morgan = require('morgan');
 const path = require('path');
 const app = express();
 
+const { mongoose} = require('./database.js');
 //Importing Routes
+
+const indexRoutes = require('./src/routes/index.routes.js');
 const clienteRoutes = require('./src/routes/cliente.routes.js');
 
 //Settings
@@ -14,8 +17,10 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 //Routes
-app.use(clienteRoutes)
 
+app.use(indexRoutes)
+
+app.use('/clientes', clienteRoutes)
 
 //Static files
 app.use(express.static(path.join(__dirname, 'public')));

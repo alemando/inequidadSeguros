@@ -51,9 +51,8 @@ const clienteSchema = Schema({
     }
 
 });
+
 clienteSchema.plugin(uniqueValidator);
 const clientes = mongoose.model('clientes', clienteSchema);
 
-module.exports = {
-    clientes
-}
+module.exports = clientes;
