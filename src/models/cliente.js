@@ -51,8 +51,19 @@ const clienteSchema = Schema({
     }
 
 });
-
 clienteSchema.plugin(uniqueValidator);
+
+clienteSchema.statics.guardarCliente = async function(datos) {
+    const clienteNuevo = new clientes({documento:datos.documento,nombre:datos.nombre,apellido1:datos.apellido1,apellido2:datos.apellido2,direccion:datos.direccion,telefono:datos.telefono,fechaNacimiento:datos.fechaNacimiento,ingresos:datos.ingresos,egresos:datos.egresos});
+    try {
+        await clienteNuevo.save();
+        return "cliente guardado";
+    } catch (error) {
+        if (error.errors.documento.kind==="unique") return "El documento ingresado ya existe en nuestra base de datos";
+        else return "error desconocido";
+    }
+};
 const clientes = mongoose.model('clientes', clienteSchema);
+
 
 module.exports = clientes;
