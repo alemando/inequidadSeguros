@@ -12,6 +12,7 @@ const { mongoose} = require('./database.js');
 
 const indexRoutes = require('./src/routes/index.routes.js');
 const clienteRoutes = require('./src/routes/cliente.routes.js');
+const aseguradoraRoutes = require('./src/routes/aseguradora.routes.js')
 
 //Settings
 app.set('port', process.env.PORT || 3000)
@@ -22,14 +23,13 @@ app.use(express.json());
 
 //Routes
 
-app.use(indexRoutes)
+app.use(indexRoutes);
 
-app.use('/clientes', clienteRoutes)
+app.use('/clientes', clienteRoutes);
+app.use('/aseguradoras', aseguradoraRoutes);
 
 //Static files
 app.use(express.static(path.join(__dirname, 'public')));
-
-
 
 //Starting the server
 app.listen(app.get('port'), () => {
