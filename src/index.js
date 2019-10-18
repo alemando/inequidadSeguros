@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 
@@ -20,6 +21,7 @@ const aseguradoraRoutes = require('./routes/aseguradora.routes.js')
 app.set('port', process.env.PORT || 3000)
 
 //Middlewares
+app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 
