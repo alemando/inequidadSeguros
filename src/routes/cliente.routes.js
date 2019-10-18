@@ -3,39 +3,37 @@ const router = express.Router();
 
 
 // Cliente Model
-const Task = require('../models/cliente');
+const Cliente = require('../models/cliente');
 
-// GET all Tasks
+// GET all Clientes
 router.get('/', async (req, res) => {
-  const tasks = await Task.find();
-  res.json(tasks);
+  const clientes = await Cliente.find();
+  res.json(clientes);
 });
 
-// GET all Tasks
+// GET all Clientes
 router.get('/:id', async (req, res) => {
-  const task = await Task.findById(req.params.id);
-  res.json(task);
+  const cliente = await Cliente.findById(req.params.id);
+  res.json(cliente);
 });
 
-// ADD a new task
+// ADD a new cliente
 router.post('/', async (req, res) => {
-  const { title, description } = req.body;
-  const task = new Task({title, description});
-  await task.save();
-  res.json({status: 'Task Saved'});
+  resultado = await Cliente.guardarCliente(req.body);
+  res.json({status: resultado});
 });
 
-// UPDATE a new task
+// UPDATE a new cliente
 router.put('/:id', async (req, res) => {
   const { title, description } = req.body;
-  const newTask = {title, description};
-  await Task.findByIdAndUpdate(req.params.id, newTask);
-  res.json({status: 'Task Updated'});
+  const newCliente = {title, description};
+  await Cliente.findByIdAndUpdate(req.params.id, newCliente);
+  res.json({status: 'Cliente Updated'});
 });
 
 router.delete('/:id', async (req, res) => {
-  await Task.findByIdAndRemove(req.params.id);
-  res.json({status: 'Task Deleted'});
+  await Cliente.findByIdAndRemove(req.params.id);
+  res.json({status: 'Cliente Deleted'});
 });
 
 module.exports = router;
