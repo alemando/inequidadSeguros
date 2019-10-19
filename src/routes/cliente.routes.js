@@ -4,8 +4,8 @@ const router = express.Router();
 
 // Cliente Model
 const Cliente = require('../models/cliente');
-
 // GET all Clientes
+
 router.get('/', async (req, res) => {
   const clientes = await Cliente.obtenerClientes();
   res.json(clientes);
@@ -14,7 +14,6 @@ router.get('/', async (req, res) => {
 // GET one Cliente by documento
 router.post('/getByDocumento', async (req, res) => {
   const cliente = await Cliente.obtenerCliente(req.body.documento);
-  
   res.json(cliente);
 });
 
