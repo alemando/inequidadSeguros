@@ -11,7 +11,7 @@ const bienSchema = Schema({
     idCliente: {
         type: Schema.ObjectId,
         ref: "clientes",
-        require: true,
+        require: false,
         trim:true
     },
     categoria: {
