@@ -23,17 +23,15 @@ router.post('/save', async (req, res) => {
   res.json({status: resultado});
 });
 
-// UPDATE a new cliente
-router.put('/updateByDocumento', async (req, res) => {
-  const { title, description } = req.body;
-  const newCliente = {title, description};
-  await Cliente.findByIdAndUpdate(req.params.id, newCliente);
-  res.json({status: 'Cliente Updated'});
+// UPDATE a cliente
+router.post('/updateByDocumento', async (req, res) => {
+  resultado = await Cliente.actualizarCliente(req.body);
+  res.json({status: resultado});
 });
-
-router.delete('/delete', async (req, res) => {
-  await Cliente.findByIdAndRemove(req.params.id);
-  res.json({status: 'Cliente Deleted'});
+// Delete a cliente
+router.post('/borrar', async (req, res) => {
+  resultado = await Cliente.borrarCliente(req.body.documento);
+  res.json({status: resultado});
 });
 
 module.exports = router;

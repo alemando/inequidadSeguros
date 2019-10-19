@@ -68,7 +68,7 @@ clienteSchema.statics.obtenerClientes = async function() {
         let clientela = await clientes.find();
         return clientela;
     } catch (error) {
-        return "ha ocurrido algo inesperado\n"+ error;
+        return "ha ocurrido algo inesperado al intentar obtener los clientes\n"+ error;
     }
 }
 clienteSchema.statics.obtenerCliente = async function(documento) {
@@ -76,7 +76,24 @@ clienteSchema.statics.obtenerCliente = async function(documento) {
         let cliente = await clientes.findOne({documento:documento});
         return cliente;
     } catch (error) {
-        return "ha ocurrido algo inesperado\n"+ error;
+        return "ha ocurrido algo inesperado al intentar obtener el cliente\n"+ error;
+    }
+}
+clienteSchema.statics.actualizarCliente = async function(datos) {
+    try {
+        let clienteActualizado = await clientes.findOneAndUpdate({documento:datos.documento}, {$set:{nombre:datos.nombre, apellido1:datos.apellido1, apellido2:datos.apellido2, direccion:datos.direccion, telefono:datos.telefono, fechaNacimiento:datos.fechaNacimiento, ingresos:datos.ingresos, egresos:datos.egresos}}, {new:true, runValidators:true, context:'query'})
+        console.log(clienteActualizado);
+        return "Cliente actualizado"
+    } catch (error) {
+        return "el cliente no se pudo actualizar debido a un error inesperado\n" + error;
+    }
+}
+clienteSchema.statics.borrarCliente = async function(documento){
+    try {
+        let respuesta = await clientes.findOneAndDelete({documento:documento})
+        return respuesta;
+    } catch (error) {
+        return "el cliente no se ha podido eliminar, ha ocurrido algo inesperado\n" + error;
     }
 }
 const clientes = mongoose.model('clientes', clienteSchema);
