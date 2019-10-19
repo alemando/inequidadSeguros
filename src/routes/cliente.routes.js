@@ -18,7 +18,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // ADD a new cliente
-router.post('/', async (req, res) => {
+router.post('/save', async (req, res) => {
   resultado = await Cliente.guardarCliente(req.body);
   res.json({status: resultado});
 });
