@@ -14,7 +14,6 @@ router.get('/', async (req, res) => {
 // GET one Cliente by documento
 router.post('/getByDocumento', async (req, res) => {
   const cliente = await Cliente.obtenerCliente(req.body.documento);
-  console.log("vivo ruta");
   
   res.json(cliente);
 });

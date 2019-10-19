@@ -72,21 +72,12 @@ clienteSchema.statics.obtenerClientes = async function() {
     }
 }
 clienteSchema.statics.obtenerCliente = async function(documento) {
-    console.log("vivo afuera");
-    await clientes.findOne({documento:"1"},(err, res)=>{
-        if(err) console.log(err);
-        else console.log(res); 
-    });
-    //setTimeout(function(){console.log(cliente);},2000)
-    
-    // try {
-    //     let cliente = await clientes.findOne({documento:documento});
-    //     console.log("vivo");
-        
-    //     return cliente;
-    // } catch (error) {
-    //     return "ha ocurrido algo inesperado\n"+ error;
-    // }
+    try {
+        let cliente = await clientes.findOne({documento:documento});
+        return cliente;
+    } catch (error) {
+        return "ha ocurrido algo inesperado\n"+ error;
+    }
 }
 const clientes = mongoose.model('clientes', clienteSchema);
 
