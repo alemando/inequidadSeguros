@@ -7,13 +7,15 @@ const Cliente = require('../models/cliente');
 
 // GET all Clientes
 router.get('/', async (req, res) => {
-  const clientes = await Cliente.find();
+  const clientes = await Cliente.obtenerClientes();
   res.json(clientes);
 });
 
-// GET all Clientes
-router.get('/:id', async (req, res) => {
-  const cliente = await Cliente.findById(req.params.id);
+// GET one Cliente by documento
+router.post('/getByDocumento', async (req, res) => {
+  const cliente = await Cliente.obtenerCliente(req.body.documento);
+  console.log("vivo ruta");
+  
   res.json(cliente);
 });
 
@@ -24,14 +26,14 @@ router.post('/save', async (req, res) => {
 });
 
 // UPDATE a new cliente
-router.put('/:id', async (req, res) => {
+router.put('/updateByDocumento', async (req, res) => {
   const { title, description } = req.body;
   const newCliente = {title, description};
   await Cliente.findByIdAndUpdate(req.params.id, newCliente);
   res.json({status: 'Cliente Updated'});
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/delete', async (req, res) => {
   await Cliente.findByIdAndRemove(req.params.id);
   res.json({status: 'Cliente Deleted'});
 });

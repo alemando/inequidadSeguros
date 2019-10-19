@@ -8,8 +8,9 @@ const bienSchema = Schema({
         require: true,
         trim:true,
     },
-    documentoCliente: {
-        type: String,
+    idCliente: {
+        type: Schema.ObjectId,
+        ref: "clientes",
         require: true,
         trim:true
     },
