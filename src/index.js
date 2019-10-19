@@ -8,7 +8,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
-//DB 
+//DB
 const { mongoose} = require('./database.js');
 
 //Importing Routes
@@ -16,6 +16,7 @@ const { mongoose} = require('./database.js');
 const indexRoutes = require('./routes/index.routes.js');
 const clienteRoutes = require('./routes/cliente.routes.js');
 const aseguradoraRoutes = require('./routes/aseguradora.routes.js')
+const bienesRoutes= require('./routes/bien.routes.js')
 
 //Settings
 app.set('port', process.env.PORT || 3000)
@@ -30,6 +31,7 @@ app.use(indexRoutes)
 
 app.use('/clientes', clienteRoutes);
 app.use('/aseguradoras', aseguradoraRoutes);
+app.use('/bienes', bienesRoutes);
 
 //Static files
 app.use(express.static(path.join(__dirname, 'public')));
