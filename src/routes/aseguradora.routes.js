@@ -1,38 +1,37 @@
 const express = require('express');
 const router = express.Router();
 
+
 // Aseguradora Model
 const Aseguradora = require('../models/aseguradora');
-
 // GET all Aseguradoras
+
 router.get('/', async (req, res) => {
-  const aseguradoras = await Aseguradora.find();
+  const aseguradoras = await Aseguradora.obtenerAseguradoras();
   res.json(aseguradoras);
 });
 
-// GET all Aseguradoras
-router.get('/:id', async (req, res) => {
-  const aseguradora = await Aseguradora.findById(req.params.id);
+// GET one Aseguradora by documento
+router.post('/getByNit', async (req, res) => {
+  const aseguradora = await Aseguradora.obtenerAseguradora(req.body.nit);
   res.json(aseguradora);
 });
 
 // ADD a new aseguradora
-router.post('/', async (req, res) => {
+router.post('/save', async (req, res) => {
   resultado = await Aseguradora.guardarAseguradora(req.body);
   res.json({status: resultado});
 });
 
-// UPDATE a new aseguradora
-router.put('/:id', async (req, res) => {
-  const { title, description } = req.body;
-  const newAseguradora = {title, description};
-  await Aseguradora.findByIdAndUpdate(req.params.id, newAseguradora);
-  res.json({status: 'Aseguradora Updated'});
+// UPDATE a aseguradora
+router.post('/updateByNit', async (req, res) => {
+  resultado = await Aseguradora.actualizarAseguradora(req.body);
+  res.json({status: resultado});
 });
-
-router.delete('/:id', async (req, res) => {
-  await Aseguradora.findByIdAndRemove(req.params.id);
-  res.json({status: 'Aseguradora Deleted'});
+// Delete a aseguradora
+router.post('/delete', async (req, res) => {
+  resultado = await Aseguradora.borrarAseguradora(req.body.nit);
+  res.json({status: resultado});
 });
 
 module.exports = router;

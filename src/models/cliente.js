@@ -82,8 +82,7 @@ clienteSchema.statics.obtenerCliente = async function(documento) {
 clienteSchema.statics.actualizarCliente = async function(datos) {
     try {
         let clienteActualizado = await clientes.findOneAndUpdate({documento:datos.documento}, {$set:{nombre:datos.nombre, apellido1:datos.apellido1, apellido2:datos.apellido2, direccion:datos.direccion, telefono:datos.telefono, fechaNacimiento:datos.fechaNacimiento, ingresos:datos.ingresos, egresos:datos.egresos}}, {new:true, runValidators:true, context:'query'})
-        console.log(clienteActualizado);
-        return "Cliente actualizado"
+        return "Cliente actualizado\n" + clienteActualizado;
     } catch (error) {
         return "el cliente no se pudo actualizar debido a un error inesperado\n" + error;
     }
