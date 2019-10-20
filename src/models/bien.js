@@ -56,7 +56,7 @@ bienSchema.statics.obtenerBienes = async function() {
   }
 };
 
-bienSchema.static.obtenerBienesPorCliente = async  function(documentoCliente){
+bienSchema.statics.obtenerBienesPorCliente = async  function(documentoCliente){
   try {
     let bienesall = await bienes.find({documentoCliente: documentoCliente});
     return bienesall;
@@ -65,18 +65,18 @@ bienSchema.static.obtenerBienesPorCliente = async  function(documentoCliente){
   }
 };
 
-bienSchema.static.actualizarBien = async function(datos){
+bienSchema.statics.actualizarBien = async function(datos){
   try {
-    let bienActualizado = await bienes.findOneAndUpdate({id:datos._id},{$set:{categoria:datos.categoria, caracteristicas: datos.caracteristicas, documentos: datos.documentos}},{new:true, runValidators:true,context:'query'})
+    let bienActualizado = await bienes.findOneAndUpdate({id:datos.id},{$set:{categoria:datos.categoria, caracteristicas: datos.caracteristicas, documentos: datos.documentos}},{new:true, runValidators:true,context:'query'})
     return bienActualizado
   } catch (error) {
     return "El bien no  pudo ser actualizado\n" + error
   }
 };
 
-bienSchema.static.borrarBien = async function(id){
+bienSchema.statics.borrarBien = async function(id){
   try {
-    let bienBorrado = await bienes.findByIdAndRemove({id: id})
+    let bienBorrado = await bienes.findOneAndRemove({id: id})
     return bienBorrado
   } catch (error) {
     return "El bien no  pudo se pudo borrar\n" + error
