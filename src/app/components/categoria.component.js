@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-import ClientesList from "./clientes-list.component";
-import CreateCliente from "./create-cliente.component";
+import CategoriasList from "./categorias-list.component";
+import CreateCategoria from "./create-categoria.component";
 
-export default class Cliente extends Component {
+export default class Categoria extends Component {
 
   render() {
     return (
         <div>
-            <ClientesList />
-            <CreateCliente />
+            <CategoriasList />
+            <CreateCategoria />
         </div>
     );
   }

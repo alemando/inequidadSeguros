@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-import ClientesList from "./clientes-list.component";
-import CreateCliente from "./create-cliente.component";
+import BienesList from "./bienes-list.component";
+import CreateBien from "./create-bien.component";
 
-export default class Cliente extends Component {
+export default class Bien extends Component {
 
   render() {
     return (
         <div>
-            <ClientesList />
-            <CreateCliente />
+            <BienesList />
+            <CreateBien />
         </div>
     );
   }

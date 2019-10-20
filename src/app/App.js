@@ -5,7 +5,9 @@ import { BrowserRouter as Router, Route} from "react-router-dom";
 import Index from "./components/index.component";
 import Navbar from "./components/navbar.component"
 import Cliente from "./components/cliente.component";
-
+import Aseguradora from "./components/aseguradora.component";
+import Bien from "./components/bien.component";
+import Categoria from "./components/categoria.component";
 
 function App() {
   return (
@@ -15,9 +17,9 @@ function App() {
       <br/>
       <Route path="/" exact component={Index} />
       <Route path="/clientes" component={Cliente} />
-      <Route path="/aseguradoras" component={Cliente} />
-      <Route path="/bienes" component={Cliente} />
-      <Route path="/categorias" component={Cliente} />
+      <Route path="/aseguradoras" component={Aseguradora} />
+      <Route path="/bienes" component={Bien} />
+      <Route path="/categorias" component={Categoria} />
       </div>
     </Router>
   );
