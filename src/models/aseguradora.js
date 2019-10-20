@@ -34,8 +34,8 @@ aseguradoraSchema.statics.guardarAseguradora = async function(datos) {
 };
 aseguradoraSchema.statics.obtenerAseguradoras = async function() {
     try {
-        let aseguradoras = await aseguradoras.find();
-        return aseguradoras;
+        let aseguradorasli = await aseguradoras.find();
+        return aseguradorasli;
     } catch (error) {
         return "ha ocurrido algo inesperado al intentar obtener las aseguradoras\n"+ error;
     }

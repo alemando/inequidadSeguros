@@ -36,6 +36,7 @@ app.use('/aseguradoras', aseguradoraRoutes);
 app.use('/bienes', bienesRoutes);
 app.use('/categorias', categoriaRoutes);
 
+
 //Static files
 app.use(express.static(path.join(__dirname, 'public')));
 

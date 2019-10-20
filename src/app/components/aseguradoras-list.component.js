@@ -27,7 +27,7 @@ export default class AseguradorasList extends Component {
     }
 
     fetchAseguradoras() {
-        fetch('/Aseguradoras')
+        fetch('/aseguradoras')
             .then(res => res.json())
             .then(data => {
                 this.setState({aseguradoras: data});

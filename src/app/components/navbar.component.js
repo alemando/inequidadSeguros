@@ -13,13 +13,13 @@ export default class Navbar extends Component {
           <Link to="/clientes" className="nav-link">Clientes</Link>
           </li>
           <li className="navbar-item">
-          <Link to="/aseguradoras" className="nav-link">Asegurados</Link>
+          <Link to="/aseguradoras" className="nav-link">Aseguradoras</Link>
           </li>
           <li className="navbar-item">
-          <Link to="/bienes" className="nav-link">Bien</Link>
+          <Link to="/bienes" className="nav-link">Bienes</Link>
           </li>
           <li className="navbar-item">
-          <Link to="/categorias" className="nav-link">Categoria</Link>
+          <Link to="/categorias" className="nav-link">Categorias</Link>
           </li>
         </ul>
         </div>

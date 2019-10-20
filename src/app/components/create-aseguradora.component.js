@@ -25,7 +25,6 @@ export default class CreateAseguradora extends Component {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 this.setState({
                     nit: '',
                     nombre: '',
@@ -51,6 +50,7 @@ export default class CreateAseguradora extends Component {
               <label>* Nit:</label>
               <input name="nit" onChange={this.handleChange} type="text"
                   required
+                  value={this.state.nit}
                   className="form-control"
                   />
             </div>
@@ -58,6 +58,7 @@ export default class CreateAseguradora extends Component {
               <label>* Nombre:</label>
               <input name="nombre" onChange={this.handleChange} type="text"
                   required
+                  value={this.state.nombre}
                   className="form-control"
                   />
             </div>
@@ -65,6 +66,7 @@ export default class CreateAseguradora extends Component {
               <label>* Contacto:</label>
               <input name="contacto" onChange={this.handleChange} type="text"
                   required
+                  value={this.state.contacto}
                   className="form-control"
                   />
             </div>

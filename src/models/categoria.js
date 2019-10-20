@@ -24,8 +24,8 @@ categoriaSchema.statics.guardarCategoria = async function(datos) {
 };
 categoriaSchema.statics.obtenerCategorias = async function() {
     try {
-        let categorias = await categorias.find();
-        return categorias;
+        let categoriasLi = await categorias.find();
+        return categoriasLi;
     } catch (error) {
         return "ha ocurrido algo inesperado al intentar obtener las categorias\n"+ error;
     }

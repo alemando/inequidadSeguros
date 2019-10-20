@@ -4,8 +4,8 @@ const router = express.Router();
 
 // Categoria Model
 const Categoria = require('../models/categoria');
-// GET all Categorias
 
+// GET all Categorias
 router.get('/', async (req, res) => {
   const categorias = await Categoria.obtenerCategorias();
   res.json(categorias);

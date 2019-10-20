@@ -63,6 +63,7 @@ export default class CreateCliente extends Component {
               <label>* Documento:</label>
               <input name="documento" onChange={this.handleChange} type="text"
                   required
+                  value={this.state.documento}
                   className="form-control"
                   />
             </div>
@@ -70,6 +71,7 @@ export default class CreateCliente extends Component {
               <label>* Nombre:</label>
               <input name="nombre" onChange={this.handleChange} type="text"
                   required
+                  value={this.state.nombre}
                   className="form-control"
                   />
             </div>
@@ -77,6 +79,7 @@ export default class CreateCliente extends Component {
               <label>* Primer apellido:</label>
               <input name="apellido1" onChange={this.handleChange} type="text"
                   required
+                  value={this.state.apellido1}
                   className="form-control"
                   />
             </div>
@@ -84,6 +87,7 @@ export default class CreateCliente extends Component {
               <label>* Segundo apellido:</label>
               <input name="apellido2" onChange={this.handleChange} type="text"
                   required
+                  value={this.state.apellido2}
                   className="form-control"
                   />
             </div>
@@ -91,6 +95,7 @@ export default class CreateCliente extends Component {
               <label>* Dirección:</label>
               <input name="direccion" onChange={this.handleChange} type="text"
                   required
+                  value={this.state.direccion}
                   className="form-control"
                   />
             </div>
@@ -98,6 +103,7 @@ export default class CreateCliente extends Component {
               <label>* Telefono:</label>
               <input name="telefono" onChange={this.handleChange} type="text"
                   required
+                  value={this.state.telefono}
                   className="form-control"
                   />
             </div>
@@ -105,6 +111,7 @@ export default class CreateCliente extends Component {
               <label>* Fecha nacimineto:</label>
               <input name="fechaNacimiento" onChange={this.handleChange} type="date"
                   required
+                  value={this.state.fechaNacimiento}
                   className="form-control"
                   />
             </div>
@@ -112,6 +119,7 @@ export default class CreateCliente extends Component {
               <label>* Ingresos:</label>
               <input name="ingresos" onChange={this.handleChange} type="number"
                   required
+                  value={this.state.ingresos}
                   className="form-control"
                   />
             </div>
@@ -119,6 +127,7 @@ export default class CreateCliente extends Component {
               <label>* Egresos:</label>
               <input name="egresos" onChange={this.handleChange} type="number"
                   required
+                  value={this.state.egresos}
                   className="form-control"
                   />
             </div>

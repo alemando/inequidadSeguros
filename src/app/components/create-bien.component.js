@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class CreateCliente extends Component {
+export default class CreateBien extends Component {
 
     constructor(){
         super();
@@ -11,13 +11,13 @@ export default class CreateCliente extends Component {
             caracteristicas: '',
             documentos: ''
         }
-        this.addCliente = this.addCliente.bind(this);
+        this.addBien = this.addBien.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
-    addCliente(e){
+    addBien(e){
         e.preventDefault();
-        fetch('/clientes/save', {
+        fetch('/bienes/save', {
             method: 'POST',
             body: JSON.stringify(this.state),
             headers: {
@@ -49,8 +49,8 @@ export default class CreateCliente extends Component {
     render() {
         return (
         <div>
-          <h3>Crear un nuevo cliente</h3>
-          <form onSubmit={this.addCliente}>
+          <h3>Crear un nuevo Bien</h3>
+          <form onSubmit={this.addBien}>
             <div className="form-group">
               <label>* Documento:</label>
               <input name="documento" onChange={this.handleChange} type="text"
