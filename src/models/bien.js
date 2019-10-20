@@ -11,8 +11,13 @@ const bienSchema = Schema({
     idCliente: {
         type: Schema.ObjectId,
         ref: "clientes",
-        require: true,
+        require: false,
         trim:true
+    },
+    documentoCliente: {
+      type: String,
+      require: true,
+      trim: true
     },
     categoria: {
         type: String,
@@ -47,10 +52,37 @@ bienSchema.statics.obtenerBienes = async function() {
     let bienesall = await bienes.find();
     return bienesall
   } catch(error){
-    return "Has cometido un error fatal\n" +error;
+    return "Ha ocurrido algo al intentar obetener bienes\n" +error;
+  }
+};
+
+bienSchema.static.obtenerBienesPorCliente = async  function(documentoCliente){
+  try {
+    let bienesall = await bienes.find({documentoCliente: documentoCliente});
+    return bienesall;
+  } catch (error) {
+    return "Ha ocurrido algo al intentar obtener bienes por cliente\n" + error
+  }
+};
+
+bienSchema.static.actualizarBien = async function(datos){
+  try {
+    let bienActualizado = await bienes.findOneAndUpdate({id:datos._id},{$set:{categoria:datos.categoria, caracteristicas: datos.caracteristicas, documentos: datos.documentos}},{new:true, runValidators:true,context:'query'})
+    return bienActualizado
+  } catch (error) {
+    return "El bien no  pudo ser actualizado\n" + error
+  }
+};
+
+bienSchema.static.borrarBien = async function(id){
+  try {
+    let bienBorrado = await bienes.findByIdAndRemove({id: id})
+    return bienBorrado
+  } catch (error) {
+    return "El bien no  pudo se pudo borrar\n" + error
   }
 };
 
 const bienes = mongoose.model('bienes',bienSchema);
 
-module.exports = bienes
+module.exports = bienes;

@@ -11,29 +11,27 @@ router.get('/', async (req, res) => {
   res.json(bienes);
 });
 
-// GET all Bienes
-router.get('/:id', async (req, res) => {
-  const bienes = await Bienes.findById(req.params.id);
+// GET Bienes by Clientes
+router.post('/getByidCliente', async (req, res) => {
+  const bienes = await Bienes.obtenerBienesPorCliente(req.body.documentoCliente);
   res.json(bienes);
 });
 
 // ADD a new bien
-router.post('/', async (req, res) => {
+router.post('/save', async (req, res) => {
   resultado = await Bienes.guardarBien(req.body);
   res.json({status: resultado});
 });
 
 // UPDATE a new bien
-router.put('/:id', async (req, res) => {
-  const { title, description } = req.body;
-  const newBien = {title, description};
-  await Bienes.findByIdAndUpdate(req.params.id, newBien);
-  res.json({status: 'Bien Updated'});
+router.post('/updateById', async (req, res) => {
+  resultado = await Bienes.actualizarBien(req.body);
+  res.json({status: resultado});
 });
 
-router.delete('/:id', async (req, res) => {
-  await Bienes.findByIdAndRemove(req.params.id);
-  res.json({status: 'Bien Deleted'});
+router.post('/borrar', async (req, res) => {
+  resultado = await Bienes.borrarBien(req.body.id);
+  res.json({status: resultado});
 });
 
 module.exports = router;
