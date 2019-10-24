@@ -30,7 +30,7 @@ export default class BienesList extends Component {
     }
 
     fetchBienes() {
-        fetch('/bienes')
+        fetch('/api/bienes')
             .then(res => res.json())
             .then(data => {
                 this.setState({bienes: data});

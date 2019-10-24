@@ -7,7 +7,8 @@ export default class CreateAseguradora extends Component {
         this.state = {
             nit: '',
             nombre: '',
-            contacto: ''
+            telefono: '',
+            correo: ''
         }
         this.addAseguradora = this.addAseguradora.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -15,7 +16,7 @@ export default class CreateAseguradora extends Component {
 
     addAseguradora(e){
         e.preventDefault();
-        fetch('/aseguradoras/save', {
+        fetch('/api/aseguradoras/save', {
             method: 'POST',
             body: JSON.stringify(this.state),
             headers: {
@@ -28,7 +29,8 @@ export default class CreateAseguradora extends Component {
                 this.setState({
                     nit: '',
                     nombre: '',
-                    contacto: ''
+                    telefono: '',
+                    correo: ''
                 });
             })
             .catch(err => console.error(err));
@@ -63,10 +65,18 @@ export default class CreateAseguradora extends Component {
                   />
             </div>
             <div className="form-group">
-              <label>* Contacto:</label>
-              <input name="contacto" onChange={this.handleChange} type="text"
+              <label>* Telefono:</label>
+              <input name="telefono" onChange={this.handleChange} type="text"
                   required
-                  value={this.state.contacto}
+                  value={this.state.telefono}
+                  className="form-control"
+                  />
+            </div>
+            <div className="form-group">
+              <label>* Correo:</label>
+              <input name="correo" onChange={this.handleChange} type="email"
+                  required
+                  value={this.state.correo}
                   className="form-control"
                   />
             </div>

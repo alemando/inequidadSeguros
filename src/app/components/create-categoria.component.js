@@ -13,7 +13,7 @@ export default class CreateCategoria extends Component {
 
     addCategoria(e){
         e.preventDefault();
-        fetch('/categorias/save', {
+        fetch('/api/categorias/save', {
             method: 'POST',
             body: JSON.stringify(this.state),
             headers: {

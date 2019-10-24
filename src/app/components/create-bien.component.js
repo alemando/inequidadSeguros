@@ -17,7 +17,7 @@ export default class CreateBien extends Component {
 
     addBien(e){
         e.preventDefault();
-        fetch('/bienes/save', {
+        fetch('/api/bienes/save', {
             method: 'POST',
             body: JSON.stringify(this.state),
             headers: {

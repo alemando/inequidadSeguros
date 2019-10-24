@@ -34,18 +34,23 @@ const clienteSchema = Schema({
         trim:true,
         require:true
     },
-    fechaNacimiento: {
+    correo: {
         type: String,
+        trim:true,
+        require:true
+    },
+    fechaNacimiento: {
+        type: Date,
         trim:true,
         require:true
     },
     ingresos: {
-        type: String,
+        type: Number,
         trim:true,
         require:true
     },
     egresos: {
-        type: String,
+        type: Number,
         trim:true,
         require:true
     }
@@ -54,7 +59,17 @@ const clienteSchema = Schema({
 clienteSchema.plugin(uniqueValidator);
 
 clienteSchema.statics.guardarCliente = async function(datos) {
-    const clienteNuevo = new clientes({documento:datos.documento,nombre:datos.nombre,apellido1:datos.apellido1,apellido2:datos.apellido2,direccion:datos.direccion,telefono:datos.telefono,fechaNacimiento:datos.fechaNacimiento,ingresos:datos.ingresos,egresos:datos.egresos});
+    const clienteNuevo = new clientes(
+        {documento:datos.documento,
+            nombre:datos.nombre,
+            apellido1:datos.apellido1,
+            apellido2:datos.apellido2,
+            direccion:datos.direccion,
+            telefono:datos.telefono,
+            correo:datos.correo,
+            fechaNacimiento:datos.fechaNacimiento,
+            ingresos:datos.ingresos,
+            egresos:datos.egresos});
     try {
         await clienteNuevo.save();
         return "cliente guardado";
@@ -81,7 +96,18 @@ clienteSchema.statics.obtenerCliente = async function(documento) {
 }
 clienteSchema.statics.actualizarCliente = async function(datos) {
     try {
-        let clienteActualizado = await clientes.findOneAndUpdate({documento:datos.documento}, {$set:{nombre:datos.nombre, apellido1:datos.apellido1, apellido2:datos.apellido2, direccion:datos.direccion, telefono:datos.telefono, fechaNacimiento:datos.fechaNacimiento, ingresos:datos.ingresos, egresos:datos.egresos}}, {new:true, runValidators:true, context:'query'})
+        let clienteActualizado = await clientes.findOneAndUpdate({documento:datos.documento}, 
+            {$set:{documento:datos.documento,
+                nombre:datos.nombre,
+                apellido1:datos.apellido1,
+                apellido2:datos.apellido2,
+                direccion:datos.direccion,
+                telefono:datos.telefono,
+                correo:datos.correo,
+                fechaNacimiento:datos.fechaNacimiento,
+                ingresos:datos.ingresos,
+                egresos:datos.egresos}}, 
+                {new:true, runValidators:true, context:'query'})
         return "Cliente actualizado\n" + clienteActualizado;
     } catch (error) {
         return "el cliente no se pudo actualizar debido a un error inesperado\n" + error;

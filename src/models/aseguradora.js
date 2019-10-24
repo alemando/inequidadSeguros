@@ -14,7 +14,12 @@ const aseguradoraSchema = Schema({
         require: true,
         trim:true
     },
-    contacto: {
+    telefono: {
+        type: String,
+        require: true,
+        trim:true
+    },
+    correo: {
         type: String,
         require: true,
         trim:true
@@ -23,7 +28,11 @@ const aseguradoraSchema = Schema({
 aseguradoraSchema.plugin(uniqueValidator);
 
 aseguradoraSchema.statics.guardarAseguradora = async function(datos) {
-    const aseguradoraNueva = new aseguradoras({nit:datos.nit,nombre:datos.nombre,contacto:datos.contacto});
+    const aseguradoraNueva = new aseguradoras(
+        {nit:datos.nit,
+        nombre:datos.nombre,
+        telefono:datos.telefono,
+        correo:datos.correo});
     try {
         await aseguradoraNueva.save();
         return "aseguradora guardada";
@@ -50,7 +59,12 @@ aseguradoraSchema.statics.obtenerAseguradora = async function(nit) {
 }
 aseguradoraSchema.statics.actualizarAseguradora = async function(datos) {
     try {
-        let aseguradoraActualizado = await aseguradoras.findOneAndUpdate({nit:datos.nit}, {$set:{nombre:datos.nombre, contacto:datos.contacto}}, {new:true, runValidators:true, context:'query'})
+        let aseguradoraActualizado = await aseguradoras.findOneAndUpdate(
+            {nit:datos.nit},
+             {$set:{nombre:datos.nombre,
+                telefono:datos.telefono,
+                correo:datos.correo}}, 
+             {new:true, runValidators:true, context:'query'})
         return "Aseguradora actualizada\n" + aseguradoraActualizado;
     } catch (error) {
         return "la aseguradora no se pudo actualizar debido a un error inesperado\n" + error;

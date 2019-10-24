@@ -12,7 +12,6 @@ app.use(express.json())
 const { mongoose} = require('./database.js');
 
 //Importing Routes
-
 const indexRoutes = require('./routes/index.routes.js');
 const clienteRoutes = require('./routes/cliente.routes.js');
 const aseguradoraRoutes = require('./routes/aseguradora.routes.js')
@@ -30,15 +29,16 @@ app.use(express.json());
 
 //Routes
 app.use(indexRoutes)
-
-app.use('/clientes', clienteRoutes);
-app.use('/aseguradoras', aseguradoraRoutes);
-app.use('/bienes', bienesRoutes);
-app.use('/categorias', categoriaRoutes);
-
+app.use('/api/clientes', clienteRoutes);
+app.use('/api/aseguradoras', aseguradoraRoutes);
+app.use('/api/bienes', bienesRoutes);
+app.use('/api/categorias', categoriaRoutes);
 
 //Static files
 app.use(express.static(path.join(__dirname, 'public')));
+
+//HTML en todas las rutas para react
+app.get('*', (req, res) => res.sendFile(path.join(__dirname+'/public/index.html')));
 
 //Starting the server
 app.listen(app.get('port'), () => {

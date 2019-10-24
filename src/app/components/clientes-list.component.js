@@ -8,6 +8,7 @@ const Cliente = props => (
     <td>{props.cliente.apellido2}</td>
     <td>{props.cliente.direccion}</td>
     <td>{props.cliente.telefono}</td>
+    <td>{props.cliente.correo}</td>
     <td>{props.cliente.fechaNacimiento}</td>
     <td>{props.cliente.ingresos}</td>
     <td>{props.cliente.egresos}</td>
@@ -33,7 +34,7 @@ export default class ClientesList extends Component {
     }
 
     fetchClientes() {
-        fetch('/clientes')
+        fetch('/api/clientes')
             .then(res => res.json())
             .then(data => {
                 this.setState({clientes: data});
@@ -55,6 +56,7 @@ export default class ClientesList extends Component {
               <th>apellido2</th>
               <th>direccion</th>
               <th>telefono</th>
+              <th>correo</th>
               <th>fechaNacimiento</th>
               <th>ingresos</th>
               <th>egresos</th>

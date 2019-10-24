@@ -4,7 +4,8 @@ const Aseguradora = props => (
   <tr>
     <td>{props.aseguradora.nit}</td>
     <td>{props.aseguradora.nombre}</td>
-    <td>{props.aseguradora.contacto}</td>
+    <td>{props.aseguradora.telefono}</td>
+    <td>{props.aseguradora.correo}</td>
   </tr>
 )
 
@@ -27,7 +28,7 @@ export default class AseguradorasList extends Component {
     }
 
     fetchAseguradoras() {
-        fetch('/aseguradoras')
+        fetch('/api/aseguradoras')
             .then(res => res.json())
             .then(data => {
                 this.setState({aseguradoras: data});
@@ -45,7 +46,8 @@ export default class AseguradorasList extends Component {
             <tr>
               <th>nit</th>
               <th>nombre</th>
-              <th>contacto</th>
+              <th>telefono</th>
+              <th>correo</th>
             </tr>
           </thead>
           <tbody>

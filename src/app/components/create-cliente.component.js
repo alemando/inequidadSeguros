@@ -11,6 +11,7 @@ export default class CreateCliente extends Component {
             apellido2: '',
             direccion: '',
             telefono: '',
+            correo: '',
             fechaNacimiento: '',
             ingresos: 0,
             egresos: 0
@@ -21,7 +22,7 @@ export default class CreateCliente extends Component {
 
     addCliente(e){
         e.preventDefault();
-        fetch('/clientes/save', {
+        fetch('/api/clientes/save', {
             method: 'POST',
             body: JSON.stringify(this.state),
             headers: {
@@ -39,6 +40,7 @@ export default class CreateCliente extends Component {
                     apellido2: '',
                     direccion: '',
                     telefono: '',
+                    correo: '',
                     fechaNacimiento: '',
                     ingresos: 0,
                     egresos: 0
@@ -104,6 +106,14 @@ export default class CreateCliente extends Component {
               <input name="telefono" onChange={this.handleChange} type="text"
                   required
                   value={this.state.telefono}
+                  className="form-control"
+                  />
+            </div>
+            <div className="form-group">
+              <label>* Correo:</label>
+              <input name="correo" onChange={this.handleChange} type="email"
+                  required
+                  value={this.state.correo}
                   className="form-control"
                   />
             </div>
