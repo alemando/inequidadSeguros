@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import swal from 'sweetalert';
+import SweetAlert from 'sweetalert-react';
 export default class CreateAseguradora extends Component {
 
     constructor() {
@@ -24,7 +24,15 @@ export default class CreateAseguradora extends Component {
                 'Content-Type': 'application/json'
             }
         })
-            .then(res => res.json())
+            .then(res => {
+                res.json();
+                <SweetAlert
+                    show={this.state.show}
+                    title="Atención"
+                    text = {res}
+                    onConfirm={() => this.setState({ show: false })}
+                />
+            })
             .then(data => {
                 this.setState({
                     nit: '',
@@ -34,11 +42,6 @@ export default class CreateAseguradora extends Component {
                 });
             })
             .catch(err => console.error(err));
-        swal({
-            title: "Atención",
-            text: data,
-            icon: "alert",
-        });
     }
 
     handleChange(e) {

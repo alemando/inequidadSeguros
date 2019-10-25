@@ -5,13 +5,7 @@ const Categoria = props => (
     <td>{props.categoria.nombre}</td>
     <td>+</td>
   </tr>
-)
-const Criterio = props => (
-  <tr>
-    <td>{props.categoria.criterio.nombre}</td>
-    <td>+</td>
-  </tr>
-)
+)/*
 class Criterio extends Component {
   constructor() {
     super();
@@ -58,7 +52,7 @@ class Criterio extends Component {
     }
   }
 }
-
+*/
 export default class CategoriasList extends Component {
   constructor() {
     super();
