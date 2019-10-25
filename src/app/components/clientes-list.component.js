@@ -12,6 +12,7 @@ const Cliente = props => (
     <td>{props.cliente.fechaNacimiento}</td>
     <td>{props.cliente.ingresos}</td>
     <td>{props.cliente.egresos}</td>
+    <td>+</td>
   </tr>
 )
 

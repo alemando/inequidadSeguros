@@ -17,6 +17,7 @@ const clienteRoutes = require('./routes/cliente.routes.js');
 const aseguradoraRoutes = require('./routes/aseguradora.routes.js')
 const bienesRoutes= require('./routes/bien.routes.js')
 const categoriaRoutes = require('./routes/categoria.routes.js')
+const seguroRoutes = require('./routes/seguro.routes.js')
 
 
 //Settings
@@ -33,6 +34,7 @@ app.use('/api/clientes', clienteRoutes);
 app.use('/api/aseguradoras', aseguradoraRoutes);
 app.use('/api/bienes', bienesRoutes);
 app.use('/api/categorias', categoriaRoutes);
+app.use('/api/seguros', seguroRoutes);
 
 //Static files
 app.use(express.static(path.join(__dirname, 'public')));
