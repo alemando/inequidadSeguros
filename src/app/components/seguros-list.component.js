@@ -29,7 +29,7 @@ export default class SegurosList extends Component {
         })
     }
 
-  
+
     componentDidMount(){
         this.fetchSeguros();
     }
