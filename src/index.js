@@ -17,6 +17,11 @@ const clienteRoutes = require('./routes/cliente.routes.js');
 const aseguradoraRoutes = require('./routes/aseguradora.routes.js')
 const bienesRoutes= require('./routes/bien.routes.js')
 const categoriaRoutes = require('./routes/categoria.routes.js')
+<<<<<<< Updated upstream
+=======
+const vendedorRoutes = require('./routes/vendedor.routes.js')
+//const seguroRoutes = require('./routes/seguro.routes.js')
+>>>>>>> Stashed changes
 
 
 //Settings
@@ -33,6 +38,11 @@ app.use('/api/clientes', clienteRoutes);
 app.use('/api/aseguradoras', aseguradoraRoutes);
 app.use('/api/bienes', bienesRoutes);
 app.use('/api/categorias', categoriaRoutes);
+<<<<<<< Updated upstream
+=======
+app.use('/api/vendedores', vendedorRoutes);
+//app.use('/api/seguros', seguroRoutes);
+>>>>>>> Stashed changes
 
 //Static files
 app.use(express.static(path.join(__dirname, 'public')));
