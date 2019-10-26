@@ -63,7 +63,7 @@ aseguradoraSchema.statics.actualizarAseguradora = async function(datos) {
             {nit:datos.nit},
              {$set:{nombre:datos.nombre,
                 telefono:datos.telefono,
-                correo:datos.correo}}, 
+                correo:datos.correo}},
              {new:true, runValidators:true, context:'query'})
         return "Aseguradora actualizada\n" + aseguradoraActualizado;
     } catch (error) {

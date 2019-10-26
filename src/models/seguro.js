@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 var uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
 
-const clienteSchema = Schema({
+const seguroSchema = Schema({
     id: {
         type: String,
         require: true,
@@ -101,7 +101,7 @@ seguroSchema.statics.obtenerSeguro = async function(id) {
 }
 seguroSchema.statics.actualizarSeguro = async function(datos) {
     try {
-        let seguroActualizado = await seguros.findOneAndUpdate({id:datos.id}, 
+        let seguroActualizado = await seguros.findOneAndUpdate({id:datos.id},
             {$set:{id:datos.id,
                 documentoVendedor:datos.documentoVendedor,
                 documentoCliente:datos.documentoCliente,
@@ -112,7 +112,7 @@ seguroSchema.statics.actualizarSeguro = async function(datos) {
                 valorTotal:datos.valorTotal,
                 fechaPago:datos.fechaPago,
                 estado:datos.estado,
-                observaciones:datos.observaciones}}, 
+                observaciones:datos.observaciones}},
                 {new:true, runValidators:true, context:'query'})
         return "Seguro actualizado\n" + seguroActualizado;
     } catch (error) {

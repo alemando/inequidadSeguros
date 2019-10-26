@@ -17,7 +17,7 @@ const clienteRoutes = require('./routes/cliente.routes.js');
 const aseguradoraRoutes = require('./routes/aseguradora.routes.js')
 const bienesRoutes= require('./routes/bien.routes.js')
 const categoriaRoutes = require('./routes/categoria.routes.js')
-const seguroRoutes = require('./routes/seguro.routes.js')******************************************+
+const seguroRoutes = require('./routes/seguro.routes.js')
 
 
 //Settings

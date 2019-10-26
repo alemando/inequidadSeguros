@@ -8,7 +8,7 @@ const Seguro = require('../models/seguro');
 
 router.get('/', async (req, res) => {
   const seguros = await Seguro.obtenerSeguros();
-  res.json(clientes);
+  res.json(seguros);
 });
 
 // GET one Cliente by documento
@@ -23,12 +23,12 @@ router.post('/save', async (req, res) => {
   res.json({status: resultado});
 });
 
-// UPDATE a seguro
+ //UPDATE a seguro
 router.post('/updateById', async (req, res) => {
   resultado = await Seguro.actualizarSeguro(req.body);
   res.json({status: resultado});
 });
-// Delete a seguro
+ //Delete a seguro
 router.post('/borrar', async (req, res) => {
   resultado = await Seguro.borrarSeguro(req.body.id);
   res.json({status: resultado});

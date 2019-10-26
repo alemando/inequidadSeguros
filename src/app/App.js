@@ -21,7 +21,7 @@ function App() {
       <Route path="/aseguradoras" component={Aseguradora} />
       <Route path="/bienes" component={Bien} />
       <Route path="/categorias" component={Categoria} />
-      <Route path="/seguros" component={Seguros} />}
+      <Route path="/seguros" component={Seguro} />}
 
       </div>
     </Router>
