@@ -8,6 +8,7 @@ import Cliente from "./components/cliente.component";
 import Aseguradora from "./components/aseguradora.component";
 import Bien from "./components/bien.component";
 import Categoria from "./components/categoria.component";
+import Seguro from "./components/seguro.component";
 
 function App() {
   return (
@@ -20,8 +21,8 @@ function App() {
       <Route path="/aseguradoras" component={Aseguradora} />
       <Route path="/bienes" component={Bien} />
       <Route path="/categorias" component={Categoria} />
-      {//<Route path="/seguros" component={Seguros} />}
-      }
+      <Route path="/seguros" component={Seguros} />}
+
       </div>
     </Router>
   );
