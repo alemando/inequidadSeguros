@@ -23,7 +23,7 @@ export default class SegurosList extends Component {
     this.state = {seguros: []};
   }
 
-    clientesList() {
+    segurosList() {
         return this.state.seguros.map(currentSeguro => {
             return <Seguro seguro={currentSeguro} key={currentSeguro._id}/>;
         })
@@ -47,7 +47,7 @@ export default class SegurosList extends Component {
   render() {
     return (
       <div>
-        <h3>Clientes</h3>
+        <h3>Seguros</h3>
         <table className="table">
           <thead className="thead-light">
             <tr>

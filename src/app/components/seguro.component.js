@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import SegurosList from "./categorias-list.component";
-import CreateSeguros from "./create-categoria.component";
+import SegurosList from "./seguros-list.component";
+import CreateSeguro from "./create-seguro.component";
 
 export default class Seguro extends Component {
 
@@ -9,7 +9,7 @@ export default class Seguro extends Component {
     return (
         <div>
             <SegurosList />
-            <CreateSeguros />
+            <CreateSeguro />
         </div>
     );
   }

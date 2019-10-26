@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SweetAlert from 'sweetalert-react';
+//import SweetAlert from 'sweetalert-react';
 export default class CreateAseguradora extends Component {
 
     constructor() {
@@ -26,7 +26,7 @@ export default class CreateAseguradora extends Component {
         })
             .then(res => {
                 res.json();
-
+                
             })
             .then(data => {
                 this.setState({
@@ -35,13 +35,6 @@ export default class CreateAseguradora extends Component {
                     telefono: '',
                     correo: ''
                 });
-                //alert("hola");
-                <SweetAlert
-                    show={this.state.show}
-                    title="Atención"
-                    text="hola"//{res}
-                    onConfirm={() => this.setState({ show: false })}
-                />
             })
             .catch(err => console.error(err));
     }
