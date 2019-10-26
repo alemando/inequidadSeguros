@@ -5,7 +5,6 @@ export default class CreateCliente extends Component {
     constructor(){
         super();
         this.state = {
-            id: '',
             documentoVendedor: '',
             documentoCliente: '',
             idBien: '',
@@ -14,7 +13,7 @@ export default class CreateCliente extends Component {
             fechaFin: '',
             valorTotal: 0,
             fechaPago: 0,
-            estado: 0,
+            estado: '',
             observaciones: ''
         }
         this.addSeguro = this.addSeguro.bind(this);
@@ -35,7 +34,6 @@ export default class CreateCliente extends Component {
             .then(data => {
                 console.log(data);
                 this.setState({
-                    id: '',
                     documentoVendedor: '',
                     documentoCliente: '',
                     idBien: '',
@@ -44,7 +42,7 @@ export default class CreateCliente extends Component {
                     fechaFin: '',
                     valorTotal: 0,
                     fechaPago: 0,
-                    estado: 0,
+                    estado: '',
                     observaciones: ''
                 });
             })
@@ -63,14 +61,7 @@ export default class CreateCliente extends Component {
         <div>
           <h3>Crear un nuevo seguro</h3>
           <form onSubmit={this.addSeguro}>
-            <div className="form-group">
-              <label>* ID:</label>
-              <input name="id" onChange={this.handleChange} type="text"
-                  required
-                  value={this.state.id}
-                  className="form-control"
-                  />
-            </div>
+
             <div className="form-group">
               <label>* Documento vendedor:</label>
               <input name="documentoVendedor" onChange={this.handleChange} type="text"
@@ -129,7 +120,7 @@ export default class CreateCliente extends Component {
             </div>
             <div className="form-group">
               <label>* Fecha pago:</label>
-              <input name="fechaPago" onChange={this.handleChange} type="date"
+              <input name="fechaPago" onChange={this.handleChange} type="text"
                   required
                   value={this.state.fechaPago}
                   className="form-control"
@@ -137,7 +128,7 @@ export default class CreateCliente extends Component {
             </div>
             <div className="form-group">
               <label>* Estado:</label>
-              <input name="estado" onChange={this.handleChange} type="number"
+              <input name="estado" onChange={this.handleChange} type="text"
                   required
                   value={this.state.estado}
                   className="form-control"

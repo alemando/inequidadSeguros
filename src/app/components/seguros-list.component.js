@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 
 const Seguro = props => (
   <tr>
-    <td>{props.seguro.id}</td>
     <td>{props.seguro.documentoVendedor}</td>
     <td>{props.seguro.documentoCliente}</td>
     <td>{props.seguro.idBien}</td>
     <td>{props.seguro.nitAseguradora}</td>
-    <td>{props.seguro.fechaInicio}</td>
-    <td>{props.seguro.fechaFin}</td>
+    <td>{new Date(props.seguro.fechaInicio).toISOString().slice(0,10)}</td>
+    <td>{new Date(props.seguro.fechaFin).toISOString().slice(0,10)}</td>
     <td>{props.seguro.valorTotal}</td>
     <td>{props.seguro.fechaPago}</td>
     <td>{props.seguro.estado}</td>
@@ -51,12 +50,11 @@ export default class SegurosList extends Component {
         <table className="table">
           <thead className="thead-light">
             <tr>
-              <th>id</th>
               <th>documentoVendedor</th>
               <th>documentoCliente</th>
               <th>idBien</th>
               <th>nitAseguradora</th>
-              <th>fechaInicio</th>
+              <th>fechaInicio </th>
               <th>fechaFin</th>
               <th>valorTotal</th>
               <th>fechaPago</th>
