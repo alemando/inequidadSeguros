@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 const Categoria = props => (
   <tr>
     <td>{props.categoria.nombre}</td>
+    <td><button>Editar</button><a> </a><button>Borrar</button></td>
   </tr>
 )
 
@@ -41,11 +42,12 @@ export default class CategoriasList extends Component {
         <table className="table">
           <thead className="thead-light">
             <tr>
-              <th>nombre</th>
+              <th>Nombre</th>
+              <th>Editar | | Borrar</th>
             </tr>
           </thead>
           <tbody>
-            { this.categoriasList() }
+            { this.categoriasList()}
           </tbody>
         </table>
       </div>
