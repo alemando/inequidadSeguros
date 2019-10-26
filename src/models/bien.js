@@ -37,7 +37,11 @@ const bienSchema = Schema({
 bienSchema.plugin(uniqueValidator);
 
 bienSchema.statics.guardarBien = async function(datos) {
-    const bienNuevo = new bienes({documentoCliente:datos.documentoCliente,categoria:datos.categoria,caracteristicas:datos.caracteristicas,documento:datos.documento});
+    const bienNuevo = new bienes(
+      {documentoCliente:datos.documentoCliente,
+        categoria:datos.categoria,
+        caracteristicas:datos.caracteristicas,
+        documento:datos.documento});
     try {
         await bienNuevo.save();
         return "bien guardado";
