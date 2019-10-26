@@ -26,12 +26,7 @@ export default class CreateAseguradora extends Component {
         })
             .then(res => {
                 res.json();
-                <SweetAlert
-                    show={this.state.show}
-                    title="Atención"
-                    text = {res}
-                    onConfirm={() => this.setState({ show: false })}
-                />
+
             })
             .then(data => {
                 this.setState({
@@ -40,6 +35,13 @@ export default class CreateAseguradora extends Component {
                     telefono: '',
                     correo: ''
                 });
+                //alert("hola");
+                <SweetAlert
+                    show={this.state.show}
+                    title="Atención"
+                    text="hola"//{res}
+                    onConfirm={() => this.setState({ show: false })}
+                />
             })
             .catch(err => console.error(err));
     }
