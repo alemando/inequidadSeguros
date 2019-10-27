@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 var uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
+const clientes = require('../models/cliente');
+const vendedores = require('../models/vendedor');
+const bienes = require('../models/bien');
+const aseguradoras = require('../models/aseguradora');
+const criterios = require('../models/criterio');
 
 const seguroSchema = Schema({
   fechaInicio: {
@@ -13,7 +18,7 @@ const seguroSchema = Schema({
     require: false,
     trim: true
   },
-  valor_total: {
+  valortotal: {
     type: Number,
     require: true,
     trim: true
@@ -33,33 +38,28 @@ const seguroSchema = Schema({
     require: true,
     trim: true
   },
-  idCliente: {
-    type: Schema.ObjectId,
-    ref: "clientes",
+  documentoCliente: {
+    type: String,
     require: true,
     trim: true
   },
   idBien: {
-    type: Schema.ObjectId,
-    ref: "bienes",
+    type: String,
     require: true,
     trim: true
   },
-  idVendedor: {
-    type: Schema.ObjectId,
-    ref: "vendedores",
+  docuementoVendedor: {
+    type: String,
     require: true,
     trim: true
   },
-  idAseguradora: {
-    type: Schema.ObjectId,
-    ref: "aseguradoras",
+  nitAseguradora: {
+    type: String,
     require: true,
     trim: true
   },
   arrayCriterios: {
-    type: [Schema.ObjectId],
-    ref: "criterios",
+    type: [String],
     require: false,
     trim: true
   }
@@ -67,12 +67,54 @@ const seguroSchema = Schema({
 seguroSchema.plugin(uniqueValidator);
 
 seguroSchema.statics.guardarSeguro = async function(datos) {
-  let cliente = await clientes.exist({documento: datos.idCliente})
-  let bien = await bienes.exist({id: datos.idBien})
-  let vendedor = await vendedores.exist({documentoVen: datos.idVendedor})
-  let aux = true
-  for (var i = 0; i < datos.length; i++) {
-    let criterio = await criterios.exist({numero: datos.numero})
+  let cliente = await clientes.findOne({documento:datos.documentoCliente});
+  let vendedor = await vendedores.findOne({docuemento:datos.docuementoVendedor});
+  let bien = await bienes.findById({_id:datos.idBien});
+  let aseguradora = await aseguradoras.findOne({nit:datos.nitAseguradora});
+  let aux = true;
+  for (var i = 0; i < datos.arrayCriterios.length; i++) {
+    console.log(datos.arrayCriterios[i])
+    let criterio = await criterios.findOne({number:datos.arrayCriterios[i]});
+    console.log(criterio);
+    if(criterio){
+      aux = false
+      console.log("Entre if")
+    }
+  }
+  if(cliente && vendedor && bien && aseguradora && aux){
+    const seguro = new seguros({
+      fechaInicio: datos.fechaInicio,
+      fechaFin: datos.fechaFin,
+      valortotal: datos.valortotal,
+      fechaPago: datos.fechaPago,
+      estado: datos.estado,
+      observaciones: datos.observaciones,
+      documentoCliente: datos.documentoCliente,
+      idBien: datos.idBien,
+      docuementoVendedor: datos.docuementoVendedor,
+      nitAseguradora: datos.nitAseguradora,
+      arrayCriterios: datos.arrayCriterios
+    });
+    try {
+        await seguro.save();
+        return "seguro guardado";
+    } catch (error) {
+         return "error desconocido";
+    }
+  }else {
+    return "Algun elemento no existe"
+  }
+};
+
+seguroSchema.statics.obtenerSeguros = async function() {
+  try{
+    let segurosall = await seguros.find();
+    return segurosall
+  } catch(error){
+    return "Ha ocurrido algo al intentar obetener seguros\n" +error;
+  }
 };
 
 const seguros = mongoose.model('seguros',seguroSchema);
+
+module.exports = seguros;
