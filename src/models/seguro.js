@@ -48,7 +48,7 @@ const seguroSchema = Schema({
     require: true,
     trim: true
   },
-  docuementoVendedor: {
+  documentoVendedor: {
     type: String,
     require: true,
     trim: true
