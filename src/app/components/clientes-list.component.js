@@ -50,7 +50,7 @@ export default class ClientesList extends Component {
         <table className="table">
           <thead className="thead-light">
             <tr>
-              <th>documento</th>
+              <th>documentos</th>
               <th>nombre</th>
               <th>apellido1</th>
               <th>apellido2</th>

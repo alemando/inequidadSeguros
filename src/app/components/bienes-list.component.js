@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 const Bien = props => (
   <tr>
     <td>{props.bien.id}</td>
-    <td>{props.bien.idBien}</td>
-    <td>{props.bien.documentoBien}</td>
+    <td>{props.bien.documentoCliente}</td>
     <td>{props.bien.categoria}</td>
     <td>{props.bien.caracteristicas}</td>
     <td>{props.bien.documentos}</td>
@@ -20,7 +19,7 @@ export default class BienesList extends Component {
 
     bienesList() {
         return this.state.bienes.map(currentBien => {
-            return <Bien Bien={currentBien} key={currentBien._id}/>;
+            return <Bien bien={currentBien} key={currentBien._id}/>;
         })
     }
 
@@ -32,7 +31,7 @@ export default class BienesList extends Component {
     fetchBienes() {
         fetch('/api/bienes')
             .then(res => res.json())
-            .then(data => {
+            .then(data => { 
                 this.setState({bienes: data});
             })
             .catch(err => console.error(err));
@@ -46,15 +45,11 @@ export default class BienesList extends Component {
         <table className="table">
           <thead className="thead-light">
             <tr>
-              <th>documento</th>
-              <th>nombre</th>
-              <th>apellido1</th>
-              <th>apellido2</th>
-              <th>direccion</th>
-              <th>telefono</th>
-              <th>fechaNacimiento</th>
-              <th>ingresos</th>
-              <th>egresos</th>
+              <th>id</th>
+              <th>documentoCliente</th>
+              <th>categoria</th>
+              <th>caracteristicas</th>
+              <th>documentos</th>
             </tr>
           </thead>
           <tbody>
