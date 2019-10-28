@@ -5,12 +5,11 @@ export default class CreateVendedor extends Component {
     constructor(){
         super();
         this.state = {
-            documento: '',
+            documentoIdentidad: '',
             nombre: '',
             apellido1: '',
             apellido2: '',
-            direccion: '',
-            telefono: '',
+            numContacto: '',
             es_admin: ''
         }
         this.addVendedor = this.addVendedor.bind(this);
@@ -31,13 +30,12 @@ export default class CreateVendedor extends Component {
             .then(data => {
                 console.log(data);
                 this.setState({
-                    documento: '',
+                    documentoIdentidad: '',
                     nombre: '',
                     apellido1: '',
                     apellido2: '',
-                    direccion: '',
-                    telefono: '',
-                    es_admin: ''
+                    numContacto: '',
+                    esAdmin: ''
                 });
             })
             .catch(err => console.error(err));

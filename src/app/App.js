@@ -8,11 +8,8 @@ import Cliente from "./components/cliente.component";
 import Aseguradora from "./components/aseguradora.component";
 import Bien from "./components/bien.component";
 import Categoria from "./components/categoria.component";
-<<<<<<< Updated upstream
-=======
 import Seguro from "./components/seguro.component";
 import Vendedor from "./components/vendedor.component";
->>>>>>> Stashed changes
 
 function App() {
   return (
@@ -26,11 +23,8 @@ function App() {
       <Route path="/aseguradoras" component={Aseguradora} />
       <Route path="/bienes" component={Bien} />
       <Route path="/categorias" component={Categoria} />
-<<<<<<< Updated upstream
-=======
       {/*<Route path="/seguros" component={Seguros} />*/}
 
->>>>>>> Stashed changes
       </div>
     </Router>
   );
