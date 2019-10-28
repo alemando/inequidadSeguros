@@ -34,7 +34,7 @@ export default class crearCrierio extends Component {
     render(){
         return (
             <div>
-                <h4>Crear nuevo criterio</h4>
+                <h4>Añadir nuevo criterio</h4>
                 <form onSubmit={this.submitFormCriterio} id="form-criterio">
                     <div className="form-group">
                         <div>

@@ -100,7 +100,7 @@ export default class CreateCategoria extends Component {
                         </div>
                         <div className="mt">
                             <br></br>
-                            <button type="button" className="btn btn-primary mt" onClick={this.removeCriterio.bind(this,i)}>
+                            <button type="button" className="btn btn-danger mt" onClick={this.removeCriterio.bind(this,i)}>
                                     Eliminar
                             </button>
                         </div>
@@ -126,7 +126,7 @@ export default class CreateCategoria extends Component {
                 {criteriosActuales}
                 <Criterios handleData={this.handleCriterioChange} />
                 <div className="form-group">
-                    <button type="button" className="btn btn-primary" onClick={this.addCategoria}>
+                    <button type="button" className="btn btn-success" onClick={this.addCategoria}>
                         Registrar Categoria
                 </button>
                 </div>
