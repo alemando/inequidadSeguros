@@ -41,7 +41,7 @@ export default class CreateCliente extends Component {
                     fechaInicio: '',
                     fechaFin: '',
                     valorTotal: 0,
-                    fechaPago: 0,
+                    fechaPago: '',
                     estado: '',
                     observaciones: ''
                 });
@@ -64,7 +64,7 @@ export default class CreateCliente extends Component {
 
             <div className="form-group">
               <label>* Documento vendedor:</label>
-              <input name="documentoVendedor" onChange={this.handleChange} type="text"
+              <input name="C.C Vendedor" onChange={this.handleChange} type="text"
                   required
                   value={this.state.documentoVendedor}
                   className="form-control"
@@ -72,7 +72,7 @@ export default class CreateCliente extends Component {
             </div>
             <div className="form-group">
               <label>* Documento cliente:</label>
-              <input name="documentoCliente" onChange={this.handleChange} type="text"
+              <input name="C.C Cliente" onChange={this.handleChange} type="text"
                   required
                   value={this.state.documentoCliente}
                   className="form-control"
