@@ -10,7 +10,7 @@ export default class CreateVendedor extends Component {
             apellido1: '',
             apellido2: '',
             numContacto: '',
-            es_admin: ''
+            esAdmin: false
         }
         this.addVendedor = this.addVendedor.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -35,7 +35,7 @@ export default class CreateVendedor extends Component {
                     apellido1: '',
                     apellido2: '',
                     numContacto: '',
-                    esAdmin: ''
+                    esAdmin: false
                 });
             })
             .catch(err => console.error(err));

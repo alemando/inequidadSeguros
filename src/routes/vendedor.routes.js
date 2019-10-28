@@ -7,7 +7,8 @@ const Vendedor = require('../models/vendedor');
 // GET all vendedores
 router.get('/', async (req, res) => {
   const vendedores = await Vendedor.obtenerVendedores();
-  res.json(vendedores);
+  //res.json(vendedores);
+  res.json({estado:"No sirve nada copnm postman"});
 });
 
 // GET one Vendedor by documento
@@ -18,8 +19,8 @@ router.post('/getById', async (req, res) => {
 
 // ADD a new vendedor
 router.post('/save', async (req, res) => {
-  resultado = await Vendedor.guardarVendedor(req.body);
-  res.json({status: resultado});
+  //resultado = await Vendedor.guardarVendedor(req.body);
+  res.json({statdo: "resultado"});
 });
 
 // UPDATE a vendedor
