@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const criterioSchema = Schema({
   numero: {
-    type: String,
+    type: Number,
     require: true,
     trim: true
   }

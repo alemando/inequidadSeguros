@@ -59,7 +59,7 @@ const seguroSchema = Schema({
     trim: true
   },
   arrayCriterios: {
-    type: [String],
+    type: [Number],
     require: false,
     trim: true
   }
@@ -74,9 +74,9 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
   let aux = true;
   for (var i = 0; i < datos.arrayCriterios.length; i++) {
     console.log(datos.arrayCriterios[i])
-    let criterio = await criterios.findOne({number:datos.arrayCriterios[i]});
+    let criterio = await criterios.findOne({numero:datos.arrayCriterios[i]});
     console.log(criterio);
-    if(criterio){
+    if(!criterio){
       aux = false
       console.log("Entre if")
     }
@@ -99,7 +99,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
         await seguro.save();
         return "seguro guardado";
     } catch (error) {
-         return "error desconocido";
+         return "error desconocido\n" + error;
     }
   }else {
     return "Algun elemento no existe"
