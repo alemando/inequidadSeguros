@@ -20,7 +20,7 @@ router.post('/getByDocumento', async (req, res) => {
 // ADD a new cliente
 router.post('/save', async (req, res) => {
   resultado = await Cliente.guardarCliente(req.body);
-  res.json({status: resultado});
+  res.json(resultado);
 });
 
 // UPDATE a cliente

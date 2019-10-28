@@ -20,7 +20,7 @@ router.post('/getByNombre', async (req, res) => {
 // ADD a new categoria
 router.post('/save', async (req, res) => {
   resultado = await Categoria.guardarCategoria(req.body);
-  res.json({status: resultado});
+  res.json(resultado);
 });
 
 // UPDATE a categoria
