@@ -68,7 +68,7 @@ seguroSchema.plugin(uniqueValidator);
 
 seguroSchema.statics.guardarSeguro = async function(datos) {
   let cliente = await clientes.findOne({documento:datos.documentoCliente});
-  let vendedor = await vendedores.findOne({docuemento:datos.docuementoVendedor});
+  let vendedor = await vendedores.findOne({documentoVendedor:datos.documentoVendedor});
   let bien = await bienes.findById({_id:datos.idBien});
   let aseguradora = await aseguradoras.findOne({nit:datos.nitAseguradora});
   let aux = true;
@@ -81,6 +81,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
       console.log("Entre if")
     }
   }
+  console.log(cliente,vendedor,aseguradora,bien,aux)
   if(cliente && vendedor && bien && aseguradora && aux){
     const seguro = new seguros({
       fechaInicio: datos.fechaInicio,
