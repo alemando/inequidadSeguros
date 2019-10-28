@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Vendedor Model
-const Vendedor = require('../models/vendedores');
+const Vendedor = require('../models/vendedor');
 
 // GET all vendedores
 router.get('/', async (req, res) => {

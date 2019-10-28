@@ -58,7 +58,7 @@ const vendedorSchema = Schema({
         require: false 
     }
 });
-vendedorSchema.plugin(uniqueValidaor);
+vendedorSchema.plugin(uniqueValidator);
 
 ////////////Funciones estaticas de vendedor
 //Obtener todos los vendedores, ¿no deberia comprobarse permisos de admin?
@@ -82,14 +82,14 @@ vendedorSchema.statics.obtenerVendedor = async function(id){
 }
 
 //Crea un nuevo vendedor
-vendedorSchema.statics.guardarVendedor(datos){
+vendedorSchema.statics.guardarVendedor = async function(datos){
     const vendedorNuevo = new vendedores({
         documentoIdentidad:datos.documentoIdentidad,
         nombre:datos.nombre,
         apellido1:datos.apellido1,
         apellido2:datos.apellido2,
         numContacto:datos.numContacto,
-        esAdmin:false
+        esAdmin:datos.esAdmin
         });
     try {
         await vendedorNuevo.save();
@@ -103,6 +103,10 @@ vendedorSchema.statics.guardarVendedor(datos){
 //Actualiza informacion de un vendedor
 vendedorSchema.statics.actualizarVendedor = async function(datos) {
     try {
+        //Verifica si existe el vendedor
+        if(!vendedores.findOne(datos.documentoIdentidad)){
+            throw 'inexistente';
+        }
         let vendedorActualizado = await vendedores.findOneAndUpdate({documentoIdentidad:datos.documentoIdentidad}, 
             {$set:{documentoIdentidad:datos.documentoIdentidad,
                 nombre:datos.nombre,
@@ -114,21 +118,32 @@ vendedorSchema.statics.actualizarVendedor = async function(datos) {
                 {new:true, runValidators:true, context:'query'})
         return "Vendedor actualizado\n" + vendedorActualizado;
     } catch (error) {
-        return "El vendedor no se pudo actualizar debido a un error inesperado\n" + error;
+        if(error === 'inexistente'){
+            return "El vendedor no se pudo actualizar porque no existe."
+        }else{
+            return "El vendedor no se pudo actualizar debido a un error inesperado\n" + error;
+        }
     }
 }
 
 //Se borra un vendedor por su documentoIdentidad
 vendedorSchema.statics.borrarVendedor = async function(documento){
-    try {
+    try {//Verifica si existe el vendedor
+        if(!vendedores.findOne(datos.documentoIdentidad)){
+            throw 'inexistente';
+        }
         let respuesta = await vendedores.findOneAndDelete({documentoIdentidad:documento})
         return respuesta;
     } catch (error) {
-        return "El vendedor no se ha podido eliminar, ha ocurrido algo inesperado\n" + error;
+        if(error === 'inexistente'){
+            return "El vendedor no se pudo actualizar porque no existe."
+        }else{
+            return "El vendedor no se ha podido eliminar, ha ocurrido algo inesperado\n" + error;
+        }
     }
 }
 
 //Se retorna clase vendedores para exportar
-const vendedores = mongoose.model('vendedoresbienes',vendedorSchema);
+const vendedores = mongoose.model('vendedores',vendedorSchema);
 
 module.exports = vendedores;
