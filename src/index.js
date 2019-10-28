@@ -17,7 +17,9 @@ const clienteRoutes = require('./routes/cliente.routes.js');
 const aseguradoraRoutes = require('./routes/aseguradora.routes.js')
 const bienesRoutes= require('./routes/bien.routes.js')
 const categoriaRoutes = require('./routes/categoria.routes.js')
-
+const seguroRoutes = require('./routes/seguro.routes.js')
+const vendedorRoutes = require('./routes/vendedor.routes.js')
+const criterioRoutes = require('./routes/criterio.routes.js')
 
 //Settings
 app.set('port', process.env.PORT || 3000)
@@ -33,6 +35,9 @@ app.use('/api/clientes', clienteRoutes);
 app.use('/api/aseguradoras', aseguradoraRoutes);
 app.use('/api/bienes', bienesRoutes);
 app.use('/api/categorias', categoriaRoutes);
+app.use('/api/seguro', seguroRoutes);
+app.use('/api/vendedor', vendedorRoutes);
+app.use('/api/criterio', criterioRoutes);
 
 //Static files
 app.use(express.static(path.join(__dirname, 'public')));
