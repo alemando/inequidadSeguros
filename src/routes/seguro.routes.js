@@ -33,4 +33,9 @@ router.post('/borrar', async (req, res) => {
   res.json({status: resultado});
 });
 
+router.get('/principales', async (req,res)=>{
+  resultado= await Seguro.obtenerDatosPrincipales();
+  res.json(resultado);
+});
+
 module.exports = router;

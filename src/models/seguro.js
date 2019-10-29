@@ -107,13 +107,76 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
 };
 
 seguroSchema.statics.obtenerSeguros = async function() {
-  try{
-    let segurosall = await seguros.find();
-    return segurosall
-  } catch(error){
-    return "Ha ocurrido algo al intentar obetener seguros\n" +error;
-  }
-};
+    try {
+        let segur = await seguros.find();
+        return segur;
+    } catch (error) {
+        return "ha ocurrido algo inesperado al intentar obtener los seguros\n"+ error;
+    }
+}
+seguroSchema.statics.obtenerSeguro = async function(id) {
+    try {
+        let seguro = await seguros.findOne({id:id});
+        return seguro;
+    } catch (error) {
+        return "ha ocurrido algo inesperado al intentar obtener el seguro\n"+ error;
+    }
+}
+seguroSchema.statics.actualizarSeguro = async function(datos) {
+    try {
+        let seguroActualizado = await seguros.findOneAndUpdate({id:datos.id},
+            {$set:{id:datos.id,
+                documentoVendedor:datos.documentoVendedor,
+                documentoCliente:datos.documentoCliente,
+                idBien:datos.idBien,
+                nitAseguradora:datos.nitAseguradora,
+                fechaInicio:datos.fechaInicio,
+                fechaFin:datos.fechaFin,
+                valorTotal:datos.valorTotal,
+                fechaPago:datos.fechaPago,
+                estado:datos.estado,
+                observaciones:datos.observaciones}},
+                {new:true, runValidators:true, context:'query'})
+        return "Seguro actualizado\n" + seguroActualizado;
+    } catch (error) {
+        return "el seguro no se pudo actualizar debido a un error inesperado\n" + error;
+    }
+}
+seguroSchema.statics.borrarSeguro = async function(id){
+    try {
+        let respuesta = await seguros.findOneAndDelete({id:id})
+        return respuesta;
+    } catch (error) {
+        return "el seguro no se ha podido eliminar, ha ocurrido algo inesperado\n" + error;
+    }
+}
+
+//Importando el Schema de bien para armar el JSON que me piden
+const bien=require('./bien');
+seguroSchema.statics.obtenerDatosPrincipales= async function(){
+    try{
+        let respuesta= await seguros.find();
+        let answer=[]
+        //let answer1= await bien.findOne({id: respuesta[1].idBien});
+        //let bien1= await bien.find();
+        for(let i=0;i<respuesta.length;i++){
+            //let seguro = await seguros.findOne({id:id});
+            let myBien= await bien.findOne({id: respuesta[i].idBien});
+            answer.push({
+                documentoCliente: respuesta[i].documentoCliente,
+                idBien: respuesta[i].idBien,
+                categoria: myBien,//.categoria,
+                nombre: myBien,//.caracteristicas,
+                detalle: 'Falta'
+            });
+        }
+        return answer;
+    } catch (error){
+        return "No se han podido mostrar los datos principales, ha ocurrido algo inesperado \n" +error;
+    }
+}
+
+const seguros = mongoose.model('seguros', seguroSchema);
 
 const seguros = mongoose.model('seguros',seguroSchema);
 
