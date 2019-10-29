@@ -115,6 +115,23 @@ seguroSchema.statics.obtenerSeguros = async function() {
   }
 };
 
+seguroSchema.statics.obtenerPrincipal= async function(){
+  try{
+      let respuesta= await seguros.find();
+      let answer=[]
+      for(let i=0;i<respuesta.length;i++){
+          let det= await seguros.findById({_id: respuesta[i].id});
+          answer.push({
+              documentoCliente: respuesta[i].documentoCliente,
+              idBien: respuesta[i].idBien,
+              detalle: det
+          });
+      }
+      return answer;
+  } catch (error){
+      return "No se han podido mostrar los datos principales, ha ocurrido algo inesperado \n" +error;
+  }
+}
 const seguros = mongoose.model('seguros',seguroSchema);
 
 module.exports = seguros;

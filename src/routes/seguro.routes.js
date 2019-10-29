@@ -16,4 +16,10 @@ router.post('/save', async (req, res) =>{
   res.json({status: resultado});
 });
 
+//Get all seguros modificado
+router.get('/principal', async(req,res)=>{
+  resultado = await Seguro.obtenerPrincipal();
+  res.send(resultado);
+});
+
 module.exports = router;
