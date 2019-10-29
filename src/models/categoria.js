@@ -13,13 +13,15 @@ const categoriaSchema = Schema({
 categoriaSchema.plugin(uniqueValidator);
 
 categoriaSchema.statics.guardarCategoria = async function(datos) {
+
     const categoriaNuevo = new categorias({nombre:datos.nombre});
     try {
         await categoriaNuevo.save();
-        return "categoria guardada";
+        return { id: "1", mensaje: "categoria guardada"};
     } catch (error) {
-        if (error.errors.nombre.kind==="unique") return "La categoria ingresada ya existe en nuestra base de datos";
-        else return "error desconocido";
+        if (error.errors.nombre.kind==="unique") return { 
+            id: "2", mensaje: "La categoria ingresada ya existe en nuestra base de datos"};
+        else return { id: "0", mensaje: "error desconocido"};
     }
 };
 categoriaSchema.statics.obtenerCategorias = async function() {

@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-
-// Cliente Model
+// Seguro Model
 const Seguro = require('../models/seguro');
-// GET all Clientes
 
-router.get('/', async (req, res) => {
+// Get all seguros
+router.get('/', async (req,res)=>{
   const seguros = await Seguro.obtenerSeguros();
   res.json(seguros);
 });
@@ -17,8 +16,8 @@ router.post('/getById', async (req, res) => {
   res.json(seguro);
 });
 
-// ADD a new seguro
-router.post('/save', async (req, res) => {
+// ADD seguro
+router.post('/save', async (req, res) =>{
   resultado = await Seguro.guardarSeguro(req.body);
   res.json({status: resultado});
 });

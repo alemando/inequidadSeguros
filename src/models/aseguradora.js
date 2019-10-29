@@ -28,6 +28,17 @@ const aseguradoraSchema = Schema({
 aseguradoraSchema.plugin(uniqueValidator);
 
 aseguradoraSchema.statics.guardarAseguradora = async function(datos) {
+
+    var patronCorreo = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    
+    let validacion = { id: "0", mensaje: ""}
+
+    if(!patronCorreo.test(datos.correo)){
+        validacion.mensaje += "El correo no sigue el formato example@dominio.ext\n"
+    }
+    
+    if(validacion.mensaje.length!=0) return validacion
+
     const aseguradoraNueva = new aseguradoras(
         {nit:datos.nit,
         nombre:datos.nombre,
@@ -35,10 +46,11 @@ aseguradoraSchema.statics.guardarAseguradora = async function(datos) {
         correo:datos.correo});
     try {
         await aseguradoraNueva.save();
-        return "aseguradora guardada";
+        return { id: "0", mensaje: "aseguradora guardada"};
     } catch (error) {
-        if (error.errors.nit.kind==="unique") return "El nit ingresado ya existe en nuestra base de datos";
-        else return "error desconocido";
+        if (error.errors.nit.kind==="unique") return { 
+            id: "2", mensaje: "El nit ingresado ya existe en nuestra base de datos"};
+        else return { id: "0", mensaje: "error desconocido"};
     }
 };
 aseguradoraSchema.statics.obtenerAseguradoras = async function() {

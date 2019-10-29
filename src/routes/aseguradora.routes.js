@@ -20,7 +20,7 @@ router.post('/getByNit', async (req, res) => {
 // ADD a new aseguradora
 router.post('/save', async (req, res) => {
   resultado = await Aseguradora.guardarAseguradora(req.body);
-  res.json({status: resultado});
+  res.json(resultado);
 });
 
 // UPDATE a aseguradora
