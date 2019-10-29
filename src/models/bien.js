@@ -83,6 +83,14 @@ bienSchema.statics.borrarBien = async function(id){
   }
 };
 
+bienSchema.statics.encontrarBien = async function(id) {
+  try {
+      let bien = await bienes.findOne({id:id});
+      return bien;
+  } catch (error) {
+      return "ha ocurrido algo inesperado al intentar obtener el bien\n"+ error;
+  }
+}
 const bienes = mongoose.model('bienes',bienSchema);
 
 module.exports = bienes;
