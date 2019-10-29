@@ -12,8 +12,56 @@ const Cliente = props => (
     <td>{props.cliente.fechaNacimiento}</td>
     <td>{props.cliente.ingresos}</td>
     <td>{props.cliente.egresos}</td>
+    <td><ViewCliente documento={props.cliente.documento} key={props.cliente.documento}/></td>
   </tr>
 )
+
+class ViewCliente extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      documento: '',
+      nombre: '',
+      apellido1: '',
+      apellido2: '',
+      direccion: '',
+      telefono: '',
+      correo: '',
+      fechaNacimiento: '',
+      ingresos: 0,
+      egresos: 0
+  }
+    this.viewCliente = this.viewCliente.bind(this);
+  }
+
+    viewCliente() {
+        this.fetchClientes()
+    }
+
+    fetchClientes() {
+        fetch('/api/clientes/getByDocumento', {
+          method: 'POST',
+          body: JSON.stringify({documento: this.props.documento}),
+          headers: {
+              'Accept' : 'application/json',
+              'Content-Type': 'application/json'
+          }
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert(data)
+            this.setState({clientes: data});
+        })
+        .catch(err => console.error(err));
+    }
+
+  render() {
+    return (
+      <button onClick={this.viewCliente} className="btn btn-primary"> ver cliente</button>
+    )
+  }
+}
 
 export default class ClientesList extends Component {
   constructor() {
