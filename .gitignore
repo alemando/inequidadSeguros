@@ -61,3 +61,6 @@ typings/
 .next
 src/public/js/bundle.js
 *.js
+
+#Archivo compilado de las vistas
+/public/js/bundle.js
