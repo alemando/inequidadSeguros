@@ -10,7 +10,7 @@ router.get('/', async (req,res)=>{
   res.json(seguros);
 });
 
-// GET one Cliente by documento
+// GET one Seguro by documento
 router.post('/getById', async (req, res) => {
   const seguro = await Seguro.obtenerSeguro(req.body.id);
   res.json(seguro);
@@ -33,9 +33,16 @@ router.post('/borrar', async (req, res) => {
   res.json({status: resultado});
 });
 
-router.get('/principales', async (req,res)=>{
-  resultado= await Seguro.obtenerDatosPrincipales();
+//Obtener datos principales del seguro
+router.get('/principal', async (req,res)=>{
+  resultado= await Seguro.obtenerPrincipal();
   res.json(resultado);
+});
+
+//Link para ver la información completa de un seguro en específico (Sale de /principal)
+router.get('/principal/:id', async(req,res)=>{
+  let respuesta = await Seguro.findById({_id: req.url.split('/')[2]});
+  res.json(respuesta);
 });
 
 module.exports = router;
