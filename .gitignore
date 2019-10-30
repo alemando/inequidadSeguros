@@ -63,5 +63,4 @@ src/public/js/bundle.js
 *.js
 
 #Archivo compilado de las vistas
-/public/js/bundle.js
 src/public/js/bundle.js
