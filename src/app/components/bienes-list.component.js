@@ -22,12 +22,9 @@ export default class BienesList extends Component {
             return <Bien bien={currentBien} key={currentBien._id}/>;
         })
     }
-
-  
     componentDidMount(){
         this.fetchBienes();
     }
-
     fetchBienes() {
         fetch('/api/bienes')
             .then(res => res.json())

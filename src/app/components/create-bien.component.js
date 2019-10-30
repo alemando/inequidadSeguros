@@ -21,8 +21,10 @@ export default class CreateBien extends Component {
             method: 'POST',
             body: JSON.stringify(this.state),
             headers: {
-                'Accept' : 'application/json',
-                'Content-Type': 'application/json'
+                'Accept' : '*/*',
+                'Content-Type': 'application/octet-stream',
+                'Content-Length': '23735',
+                'Accept-Encoding': 'gzip, deflate,7bit'
             }
         })
             .then(res => res.json())
@@ -49,7 +51,7 @@ export default class CreateBien extends Component {
         return (
         <div>
           <h3>Crear un nuevo Bien</h3>
-          <form onSubmit={this.addBien}>
+          <form onSubmit={this.addBien} encType='multipart/form-data'>
             <div className="form-group">
               <label>* Id:</label>
               <input name="id" onChange={this.handleChange} type="text"
