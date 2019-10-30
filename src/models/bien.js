@@ -7,12 +7,14 @@ const bienSchema = Schema({
         type: String,
         require: true,
         trim:true,
+        unique:true
     },
     idCliente: {
         type: Schema.ObjectId,
         ref: "clientes",
         require: false,
-        trim:true
+        trim:true,
+        default:null
     },
     documentoCliente: {
       type: String,
@@ -37,8 +39,11 @@ const bienSchema = Schema({
 bienSchema.plugin(uniqueValidator);
 
 bienSchema.statics.guardarBien = async function(datos) {
+    console.log(datos.documento);
+    
     const bienNuevo = new bienes(
-      {documentoCliente:datos.documentoCliente,
+      { id:datos.id,
+        documentoCliente:datos.documentoCliente,
         categoria:datos.categoria,
         caracteristicas:datos.caracteristicas,
         documento:datos.documento});

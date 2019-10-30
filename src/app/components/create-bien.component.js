@@ -6,7 +6,7 @@ export default class CreateBien extends Component {
         super();
         this.state = {
             id: '',
-            idCliente: '',
+            documentoCliente: '',
             categoria: '',
             caracteristicas: '',
             documentos: ''
@@ -27,10 +27,9 @@ export default class CreateBien extends Component {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 this.setState({
                   id: '',
-                  idCliente: '',
+                  documentoCliente: '',
                   categoria: '',
                   caracteristicas: '',
                   documentos: ''
@@ -52,64 +51,36 @@ export default class CreateBien extends Component {
           <h3>Crear un nuevo Bien</h3>
           <form onSubmit={this.addBien}>
             <div className="form-group">
-              <label>* Documento:</label>
-              <input name="documento" onChange={this.handleChange} type="text"
+              <label>* Id:</label>
+              <input name="id" onChange={this.handleChange} type="text"
                   required
                   className="form-control"
                   />
             </div>
             <div className="form-group">
-              <label>* Nombre:</label>
-              <input name="nombre" onChange={this.handleChange} type="text"
+              <label>* Documento Cliente</label>
+              <input name="documentoCliente" onChange={this.handleChange} type="text"
                   required
                   className="form-control"
                   />
             </div>
             <div className="form-group">
-              <label>* Primer apellido:</label>
-              <input name="apellido1" onChange={this.handleChange} type="text"
+              <label>* Categoria:</label>
+              <input name="categoria" onChange={this.handleChange} type="text"
                   required
                   className="form-control"
                   />
             </div>
             <div className="form-group">
-              <label>* Segundo apellido:</label>
-              <input name="apellido2" onChange={this.handleChange} type="text"
+              <label>* Caracteristicas:</label>
+              <input name="caracteristicas" onChange={this.handleChange} type="text"
                   required
                   className="form-control"
                   />
             </div>
             <div className="form-group">
-              <label>* Dirección:</label>
-              <input name="direccion" onChange={this.handleChange} type="text"
-                  required
-                  className="form-control"
-                  />
-            </div>
-            <div className="form-group">
-              <label>* Telefono:</label>
-              <input name="telefono" onChange={this.handleChange} type="text"
-                  required
-                  className="form-control"
-                  />
-            </div>
-            <div className="form-group">
-              <label>* Fecha nacimineto:</label>
-              <input name="fechaNacimiento" onChange={this.handleChange} type="date"
-                  required
-                  className="form-control"
-                  />
-            </div>
-            <div className="form-group">
-              <label>* Ingresos:</label>
-              <input name="ingresos" onChange={this.handleChange} type="number"
-                  required
-                  className="form-control"
-                  />
-            </div>
-            <div className="form-group">
-              <label>* Egresos:</label>
-              <input name="egresos" onChange={this.handleChange} type="number"
+              <label>* Documentos:</label>
+              <input name="documentos" onChange={this.handleChange} type="file"
                   required
                   className="form-control"
                   />

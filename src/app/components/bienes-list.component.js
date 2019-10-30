@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 const Bien = props => (
   <tr>
     <td>{props.bien.id}</td>
-    <td>{props.bien.idBien}</td>
-    <td>{props.bien.documentoBien}</td>
+    <td>{props.bien.documentoCliente}</td>
     <td>{props.bien.categoria}</td>
     <td>{props.bien.caracteristicas}</td>
     <td>{props.bien.documentos}</td>
@@ -46,9 +45,11 @@ export default class BienesList extends Component {
         <table className="table">
           <thead className="thead-light">
             <tr>
-              <th>Nombre Referencia</th>
-              <th>Caracteristicas</th>
-              <th>Documento</th>
+              <th>id</th>
+              <th>documentoCliente</th>
+              <th>categoria</th>
+              <th>caracteristicas</th>
+              <th>documentos</th>
             </tr>
           </thead>
           <tbody>
