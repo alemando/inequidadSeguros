@@ -6,6 +6,10 @@ const vendedores = require('../models/vendedor');
 const bienes = require('../models/bien');
 const aseguradoras = require('../models/aseguradora');
 const criterios = require('../models/criterio');
+const express= require('express');
+const app=express();
+
+app.set('port',process.env.PORT || 3000);
 
 const seguroSchema = Schema({
   fechaInicio: {
@@ -157,7 +161,7 @@ seguroSchema.statics.obtenerPrincipal= async function(){
         let respuesta= await seguros.find();
         let answer=[]
         for(let i=0;i<respuesta.length;i++){
-            let link=`http://localhost:3000/api/seguro/principal/${respuesta[i].id}`;
+            let link=`http://localhost:${app.get('port')}/api/seguro/principal/${respuesta[i].id}`;
             answer.push({
                 documentoCliente: respuesta[i].documentoCliente,
                 idBien: respuesta[i].idBien,
