@@ -178,8 +178,6 @@ seguroSchema.statics.obtenerDatosPrincipales= async function(){
     }
 }
 
-const seguros = mongoose.model('seguros', seguroSchema);
-
 seguroSchema.statics.obtenerPrincipal= async function(){
   try{
       let respuesta= await seguros.find();

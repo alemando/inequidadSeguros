@@ -27,6 +27,7 @@ router.get('/principal', async(req,res)=>{
   resultado = await Seguro.obtenerPrincipal();
   res.send(resultado);
  //UPDATE a seguro
+});
 router.post('/updateById', async (req, res) => {
   resultado = await Seguro.actualizarSeguro(req.body);
   res.json({status: resultado});
