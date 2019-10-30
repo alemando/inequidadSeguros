@@ -8,20 +8,19 @@ const categoriaSchema = Schema({
         require: true,
         trim:true,
         unique:true
-    }
+    },
+    criteriosBase: [{_id:Schema.Types.ObjectId,nombre:String, descripcion:String, monto_cubrir:Number, deducible:String}]
 });
 categoriaSchema.plugin(uniqueValidator);
 
 categoriaSchema.statics.guardarCategoria = async function(datos) {
-
-    const categoriaNuevo = new categorias({nombre:datos.nombre});
+    const categoriaNuevo = new categorias({nombre:datos.nombre, criteriosBase:datos.criteriosBase});
     try {
         await categoriaNuevo.save();
-        return { id: "1", mensaje: "categoria guardada"};
+        return "categoria guardada";
     } catch (error) {
-        if (error.errors.nombre.kind==="unique") return { 
-            id: "2", mensaje: "La categoria ingresada ya existe en nuestra base de datos"};
-        else return { id: "0", mensaje: "error desconocido"};
+        if (error.errors.nombre.kind==="unique") return "La categoria ingresada ya existe en nuestra base de datos";
+        else return "error desconocido";
     }
 };
 categoriaSchema.statics.obtenerCategorias = async function() {
@@ -40,20 +39,39 @@ categoriaSchema.statics.obtenerCategoria = async function(nombre) {
         return "ha ocurrido algo inesperado al intentar obtener el categoria\n"+ error;
     }
 }
-// categoriaSchema.statics.actualizarCategoria = async function(datos) {
-//     try {
-//         let categoriaActualizado = await categorias.findOneAndUpdate({documento:datos.documento}, {$set:{nombre:datos.nombre, apellido1:datos.apellido1, apellido2:datos.apellido2, direccion:datos.direccion, telefono:datos.telefono, fechaNacimiento:datos.fechaNacimiento, ingresos:datos.ingresos, egresos:datos.egresos}}, {new:true, runValidators:true, context:'query'})
-//         return "Categoria actualizado\n" + categoriaActualizado;
-//     } catch (error) {
-//         return "el categoria no se pudo actualizar debido a un error inesperado\n" + error;
-//     }
-// }
+categoriaSchema.statics.actualizarCategoria = async function(datos) {
+    try {
+        let categoriaActualizado = await categorias.findOneAndUpdate({nombre:datos.nombre}, {$set:{nombre:datos.nombre, criteriosBase:datos.criteriosBase}}, {new:true, runValidators:true, context:'query'})
+        return "Categoria actualizado\n" + categoriaActualizado;
+    } catch (error) {
+        return "el categoria no se pudo actualizar debido a un error inesperado\n" + error;
+    }
+}
+
 categoriaSchema.statics.borrarCategoria = async function(nombre){
     try {
         let respuesta = await categorias.findOneAndDelete({nombre:nombre})
         return respuesta;
     } catch (error) {
         return "el categoria no se ha podido eliminar, ha ocurrido algo inesperado\n" + error;
+    }
+}
+
+categoriaSchema.statics.agregarCriterioBase = async function(datos){
+    try{
+        let respuesta = await categorias.findOneAndUpdate({nombre:datos.categoria},{$addToSet:{"criteriosBase":{$each:[{_id:datos._id,nombre:datos.nombre, descripcion:datos.descripcion, monto_cubrir:datos.monto_cubrir, deducible:datos.deducible}]}}})
+    } catch(error){
+        return "El criterio no se ha podido agregar a la categoria por el error: \n" + error
+    }
+}
+
+categoriaSchema.statics.criteriosCategoria = async function(nombre){
+    try{
+        let respuesta = await categorias.findOne({nombre:nombre})
+        let criteriosDeCategoria = respuesta.criteriosBase
+        return criteriosDeCategoria
+    }catch(error){
+        return 
     }
 }
 

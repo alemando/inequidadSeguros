@@ -21,6 +21,7 @@ const categoriaRoutes = require('./routes/categoria.routes.js')
 const seguroRoutes = require('./routes/seguro.routes.js')
 const vendedorRoutes = require('./routes/vendedor.routes.js')
 const criterioRoutes = require('./routes/criterio.routes.js')
+const criterioBaseRoutes = require('./routes/criterioBase.routes.js')
 
 //Settings
 app.set('port', process.env.PORT || 3000)
@@ -38,6 +39,7 @@ app.use('/api/categorias', categoriaRoutes);
 app.use('/api/seguros', seguroRoutes);
 app.use('/api/criterios', criterioRoutes);
 app.use('/api/vendedores', vendedorRoutes);
+app.use('/api/criteriosBase', criterioBaseRoutes)
 
 //Static files
 app.use(express.static(path.join(__dirname, 'public')));
