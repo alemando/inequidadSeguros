@@ -3,7 +3,7 @@ var uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
 
 const vendedorSchema = Schema({
-  docuementoVendedor: {
+  documentoVendedor: {
     type: String,
     require: true,
     trim: true
@@ -12,7 +12,7 @@ const vendedorSchema = Schema({
 vendedorSchema.plugin(uniqueValidator);
 
 vendedorSchema.statics.guardarVendedor = async function(datos) {
-  const vendedor = new vendedores({docuementoVendedor: datos.docuementoVendedor});
+  const vendedor = new vendedores({documentoVendedor: datos.documentoVendedor});
   try {
       await vendedor.save();
       return "vendedor guardado";
@@ -31,6 +31,15 @@ vendedorSchema.statics.obtenerVendedor = async function() {
   }
 };
 
-const vendedores = mongoose.model('vendores',vendedorSchema);
+vendedorSchema.statics.obtenerVendedorPorDocumento = async  function(documentoVendedor){
+  try {
+    let vendedor = await vendedores.findOne({documentoVendedor: documentoVendedor});
+    return vendedor;
+  } catch (error) {
+    return "Ha ocurrido algo al intentar obtener bienes por cliente\n" + error
+  }
+};
+
+const vendedores = mongoose.model('vendedores',vendedorSchema);
 
 module.exports = vendedores;

@@ -48,7 +48,7 @@ const seguroSchema = Schema({
     require: true,
     trim: true
   },
-  docuementoVendedor: {
+  documentoVendedor: {
     type: String,
     require: true,
     trim: true
@@ -68,19 +68,21 @@ seguroSchema.plugin(uniqueValidator);
 
 seguroSchema.statics.guardarSeguro = async function(datos) {
   let cliente = await clientes.findOne({documento:datos.documentoCliente});
-  let vendedor = await vendedores.findOne({docuemento:datos.docuementoVendedor});
+  console.log(datos.documentoVendedor);
+
+  //let vendedor = await vendedores.findOne({documentoVendedor: datos.documentoVendedor});
+  let vendedor = await vendedores.obtenerVendedorPorDocumento({documentoVendedor:datos.documentoVendedor});
   let bien = await bienes.findById({_id:datos.idBien});
   let aseguradora = await aseguradoras.findOne({nit:datos.nitAseguradora});
   let aux = true;
   for (var i = 0; i < datos.arrayCriterios.length; i++) {
-    console.log(datos.arrayCriterios[i])
     let criterio = await criterios.findOne({numero:datos.arrayCriterios[i]});
-    console.log(criterio);
     if(!criterio){
       aux = false
       console.log("Entre if")
     }
   }
+  console.log(cliente,vendedor,bien,aseguradora,aux);
   if(cliente && vendedor && bien && aseguradora && aux){
     const seguro = new seguros({
       fechaInicio: datos.fechaInicio,
@@ -91,7 +93,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
       observaciones: datos.observaciones,
       documentoCliente: datos.documentoCliente,
       idBien: datos.idBien,
-      docuementoVendedor: datos.docuementoVendedor,
+      documentoVendedor: datos.documentoVendedor,
       nitAseguradora: datos.nitAseguradora,
       arrayCriterios: datos.arrayCriterios
     });
