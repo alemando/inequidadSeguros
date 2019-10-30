@@ -9,6 +9,11 @@ const bienSchema = Schema({
         trim:true,
         unique:true
     },
+    nombre: {
+        type: String,
+        require: true,
+        trim:true
+    },
     idCliente: {
         type: Schema.ObjectId,
         ref: "clientes",
@@ -32,21 +37,21 @@ const bienSchema = Schema({
         trim:true
     },
     documentos: {
-        type: Buffer,
+        type: String,
         require: false
     }
 });
 bienSchema.plugin(uniqueValidator);
 
 bienSchema.statics.guardarBien = async function(datos) {
-    console.log(datos.documento);
     
     const bienNuevo = new bienes(
-      { id:datos.id,
-        documentoCliente:datos.documentoCliente,
-        categoria:datos.categoria,
-        caracteristicas:datos.caracteristicas,
-        documento:datos.documento});
+      { id:datos.body.id,
+        nombre:datos.body.nombre,
+        documentoCliente:datos.body.documentoCliente,
+        categoria:datos.body.categoria,
+        caracteristicas:datos.body.caracteristicas,
+        documentos:datos.file.filename});
     try {
         await bienNuevo.save();
         return "bien guardado";
@@ -65,12 +70,12 @@ bienSchema.statics.obtenerBienes = async function() {
   }
 };
 
-bienSchema.statics.obtenerBienesPorCliente = async  function(documentoCliente){
+bienSchema.statics.obtenerBienesPorCliente = async function(documentoCliente){
   try {
     let bienesall = await bienes.find({documentoCliente: documentoCliente});
     return bienesall;
   } catch (error) {
-    return "Ha ocurrido algo al intentar obtener bienes por cliente\n" + error
+    return "Ha ocurrido algo al intentar obtener bienes del cliente\n" + error
   }
 };
 
@@ -91,13 +96,12 @@ bienSchema.statics.borrarBien = async function(id){
     return "El bien no  pudo se pudo borrar\n" + error
   }
 };
-
-bienSchema.statics.encontrarBien = async function(id) {
+bienSchema.statics.getPdf = async function(){
   try {
-      let bien = await bienes.findOne({id:id});
-      return bien;
+    let cod64 = await bienes.findOne({id:"1015"},{documentos:1});
+    return cod64.documentos;
   } catch (error) {
-      return "ha ocurrido algo inesperado al intentar obtener el bien\n"+ error;
+    return error;
   }
 }
 const bienes = mongoose.model('bienes',bienSchema);

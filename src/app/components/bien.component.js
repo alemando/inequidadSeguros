@@ -8,7 +8,7 @@ export default class Bien extends Component {
   render() {
     return (
         <div>
-            <BienesList />
+
             <CreateBien />
         </div>
     );

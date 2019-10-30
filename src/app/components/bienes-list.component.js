@@ -23,7 +23,6 @@ export default class BienesList extends Component {
     })
   }
 
-
   componentDidMount() {
     this.fetchBienes();
   }
