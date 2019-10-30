@@ -126,7 +126,7 @@ seguroSchema.statics.obtenerSeguro = async function(id) {
 }
 seguroSchema.statics.actualizarSeguro = async function(datos) {
     try {
-        let seguroActualizado = await seguros.findOneAndUpdate({id:datos.id},
+        let seguroActualizado = await seguros.findOneAndUpdate({id:datos.id}, 
             {$set:{id:datos.id,
                 documentoVendedor:datos.documentoVendedor,
                 documentoCliente:datos.documentoCliente,

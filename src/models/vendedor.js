@@ -3,43 +3,147 @@ var uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
 
 const vendedorSchema = Schema({
-  documentoVendedor: {
-    type: String,
-    require: true,
-    trim: true
-  }
+    documentoIdentidad:{
+        type: String,
+        require: true,
+        trim: true,
+        unique: true
+    },
+    nombre:{
+        type: String,
+        requiere: true,
+        trim: true
+    },
+    apellido1:{
+        type: String,
+        requiere: true,
+        trim: true
+    },
+    apellido2:{
+        type: String,
+        requiere: true,
+        trim: true
+    },
+    numContacto:{
+        type: String,
+        requiere: true,
+        trim: true
+    },
+    esAdmin:{
+        type: Boolean,
+        requiere: false,
+        default: false
+    },
+    //Pendiente modificar para que credencial sea en arcivo separado
+    credencial:new Schema({
+        documentoIdentidadVendedor:{
+            type: String,
+            require: true,
+            trim: true
+        },
+        usuario: {
+            type: String,
+            require: true,
+            trim: true
+        },
+        contrasena:{
+            type: String,
+            require: true,
+            trim: true,
+            default: "123456789"
+        }
+        
+    }),
+    seguros:{
+        require: false 
+    }
 });
 vendedorSchema.plugin(uniqueValidator);
 
-vendedorSchema.statics.guardarVendedor = async function(datos) {
-  const vendedor = new vendedores({documentoVendedor: datos.documentoVendedor});
-  try {
-      await vendedor.save();
-      return "vendedor guardado";
-  } catch (error) {
-      if (error.errors.id.kind==="unique") return "El documento ingresado ya existe en nuestra base de datos";
-      else return "error desconocido";
-  }
-};
+////////////Funciones estaticas de vendedor
+//Obtener todos los vendedores, ¿no deberia comprobarse permisos de admin?
+vendedorSchema.statics.obtenerVendedores = async function(){
+    try{
+        let vendedoresAll = await vendedores.find();
+        return vendedoresAll;
+    }catch(error){
+        return "Error obteniendo los vendedores\n" + error;
+    }
+}
 
-vendedorSchema.statics.obtenerVendedor = async function() {
-  try{
-    let vendedorall = await vendedores.find();
-    return vendedorall
-  } catch(error){
-    return "Ha ocurrido algo al intentar obetener vendedor\n" +error;
-  }
-};
+//Obtiene vendedor por el id
+vendedorSchema.statics.obtenerVendedor = async function(id){
+    try{
+        let vendedor = await vendedores.findOne({documentoIdentidad:id});
+        return vendedor;
+    }catch(error){
+        return "Error obteniendo vendedor por documento identidad\n" + error;
+    }
+}
 
-vendedorSchema.statics.obtenerVendedorPorDocumento = async  function(documentoVendedor){
-  try {
-    let vendedor = await vendedores.findOne({documentoVendedor: documentoVendedor});
-    return vendedor;
-  } catch (error) {
-    return "Ha ocurrido algo al intentar obtener bienes por cliente\n" + error
-  }
-};
+//Crea un nuevo vendedor
+vendedorSchema.statics.guardarVendedor = async function(datos){
+    const vendedorNuevo = new vendedores({
+        documentoIdentidad:datos.documentoIdentidad,
+        nombre:datos.nombre,
+        apellido1:datos.apellido1,
+        apellido2:datos.apellido2,
+        numContacto:datos.numContacto,
+        esAdmin:datos.esAdmin
+        });
+    try {
+        await vendedorNuevo.save();
+        return "Vendedor guardado";
+    } catch (error) {
+        if (error.errors.documento.kind==="unique") return "El documento ingresado ya existe en nuestra base de datos";
+        else return "Error desconocido";
+    }
+}
 
+//Actualiza informacion de un vendedor
+vendedorSchema.statics.actualizarVendedor = async function(datos) {
+    try {
+        //Verifica si existe el vendedor
+        if(!vendedores.findOne(datos.documentoIdentidad)){
+            throw 'inexistente';
+        }
+        let vendedorActualizado = await vendedores.findOneAndUpdate({documentoIdentidad:datos.documentoIdentidad}, 
+            {$set:{documentoIdentidad:datos.documentoIdentidad,
+                nombre:datos.nombre,
+                apellido1:datos.apellido1,
+                apellido2:datos.apellido2,
+                numContacto:datos.numContacto,
+                esAdmin:datos.esAdmin,
+                }}, 
+                {new:true, runValidators:true, context:'query'})
+        return "Vendedor actualizado\n" + vendedorActualizado;
+    } catch (error) {
+        if(error === 'inexistente'){
+            return "El vendedor no se pudo actualizar porque no existe."
+        }else{
+            return "El vendedor no se pudo actualizar debido a un error inesperado\n" + error;
+        }
+    }
+}
+
+//Se borra un vendedor por su documentoIdentidad
+vendedorSchema.statics.borrarVendedor = async function(documento){
+    try {//Verifica si existe el vendedor
+        if(!vendedores.findOne(datos.documentoIdentidad)){
+            throw 'inexistente';
+        }
+        let respuesta = await vendedores.findOneAndDelete({documentoIdentidad:documento})
+        return respuesta;
+    } catch (error) {
+        if(error === 'inexistente'){
+            return "El vendedor no se pudo actualizar porque no existe."
+        }else{
+            return "El vendedor no se ha podido eliminar, ha ocurrido algo inesperado\n" + error;
+        }
+    }
+}
+
+//Se retorna clase vendedores para exportar
 const vendedores = mongoose.model('vendedores',vendedorSchema);
 
 module.exports = vendedores;

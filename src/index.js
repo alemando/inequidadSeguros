@@ -35,10 +35,9 @@ app.use('/api/clientes', clienteRoutes);
 app.use('/api/aseguradoras', aseguradoraRoutes);
 app.use('/api/bienes', bienesRoutes);
 app.use('/api/categorias', categoriaRoutes);
-app.use('/api/seguro', seguroRoutes);
-app.use('/api/vendedor', vendedorRoutes);
-app.use('/api/criterio', criterioRoutes);
-
+app.use('/api/seguros', seguroRoutes);
+app.use('/api/criterios', criterioRoutes);
+app.use('/api/vendedores', vendedorRoutes);
 
 //Static files
 app.use(express.static(path.join(__dirname, 'public')));
