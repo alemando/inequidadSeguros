@@ -6,6 +6,7 @@ const vendedores = require('../models/vendedor');
 const bienes = require('../models/bien');
 const aseguradoras = require('../models/aseguradora');
 const criterios = require('../models/criterio');
+const categorias = require('../models/categoria')
 
 const seguroSchema = Schema({
   fechaInicio: {
@@ -58,11 +59,7 @@ const seguroSchema = Schema({
     require: true,
     trim: true
   },
-  arrayCriterios: {
-    type: [Number],
-    require: false,
-    trim: true
-  }
+  arrayCriterios: [{_id:{type:Schema.Types.ObjectId,ref:"criterios"},nombre:String, descripcion:String, monto_cubrir:Number, deducible:String, observaciones:String}]
 });
 seguroSchema.plugin(uniqueValidator);
 
@@ -71,19 +68,22 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
   console.log(datos.documentoVendedor);
 
   //let vendedor = await vendedores.findOne({documentoVendedor: datos.documentoVendedor});
-  let vendedor = await vendedores.obtenerVendedorPorDocumento({documentoVendedor:datos.documentoVendedor});
+  let vendedor = await vendedores.findOne({documentoIdentidad:datos.documentoVendedor});
   let bien = await bienes.findById({_id:datos.idBien});
   let aseguradora = await aseguradoras.findOne({nit:datos.nitAseguradora});
   let aux = true;
-  for (var i = 0; i < datos.arrayCriterios.length; i++) {
+  /*for (var i = 0; i < datos.arrayCriterios.length; i++) {
     let criterio = await criterios.findOne({numero:datos.arrayCriterios[i]});
     if(!criterio){
       aux = false
       console.log("Entre if")
     }
-  }
+  }*/
   console.log(cliente,vendedor,bien,aseguradora,aux);
   if(cliente && vendedor && bien && aseguradora && aux){
+    let criteriosBase = await categorias.criteriosCategoria(bien.categoria)
+    console.log("Hola mundo")
+    console.log(criteriosBase)
     const seguro = new seguros({
       fechaInicio: datos.fechaInicio,
       fechaFin: datos.fechaFin,
@@ -95,7 +95,8 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
       idBien: datos.idBien,
       documentoVendedor: datos.documentoVendedor,
       nitAseguradora: datos.nitAseguradora,
-      arrayCriterios: datos.arrayCriterios
+      arrayCriterios: criteriosBase
+//      arrayCriterios: datos.arrayCriterios
     });
     try {
         await seguro.save();
