@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
-import Modal from 'react-modal';
+import VerCliente from "./ver-cliente.component";
+import CreateCliente from "./create-cliente.component";
+
 const Cliente = props => (
   <tr>
     <td>{props.cliente.documento}</td>
     <td>{props.cliente.nombre}</td>
-    <td>{props.cliente.apellido1}</td>
-    <td>{props.cliente.apellido2}</td>
-    <td>{props.cliente.direccion}</td>
-    <td>{props.cliente.telefono}</td>
-    <td>{props.cliente.correo}</td>
-    <td>{props.cliente.fechaNacimiento}</td>
-    <td>{props.cliente.ingresos}</td>
-    <td>{props.cliente.egresos}</td>
-    <td><VerBienes documento={props.cliente.documento} key={props.cliente.documento} /></td>
+    <td>{props.cliente.apellido1} {props.cliente.apellido2}</td>
+    <td><VerCliente  cliente={props.cliente} key={props.cliente.documento}/></td>
+    
   </tr>
 )
+//<td><VerBienes documento={props.cliente.documento} key={props.cliente.documento} /></td>
+/*
 const MostrarBien = props => (
   <tr>
     <td>{props.bien.id}</td>
@@ -32,18 +30,9 @@ class VerBienes extends Component {
       bienes: [],
       showModal: false
     }
-    this.handleOpenModal = this.handleOpenModal.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
-
     this.VerBienes = this.VerBienes.bind(this);
   }
-  handleOpenModal() {
-    this.setState({ showModal: true });
-  }
 
-  handleCloseModal() {
-    this.setState({ showModal: false });
-  }
   VerBienes() {
     this.fetchBienes()
     this.handleOpenModal()
@@ -101,14 +90,13 @@ class VerBienes extends Component {
       </div>
     )
   }
-}
+}*/
 //--------------------------------------------------------------------------------------------------------------
 //|
 //|
 export default class ClientesList extends Component {
   constructor() {
     super();
-
     this.state = { clientes: [] };
   }
 
@@ -117,7 +105,6 @@ export default class ClientesList extends Component {
       return <Cliente cliente={currentCliente} key={currentCliente._id} />;
     })
   }
-
 
   componentDidMount() {
     this.fetchClientes();
@@ -135,21 +122,19 @@ export default class ClientesList extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Clientes</h3>
+      <div className="container">
+        <div className="row">
+          <div className="col"><h3>Clientes</h3></div>
+          <div className="col"> <CreateCliente/></div>
+        </div>
         <table className="table">
           <thead className="thead-light">
             <tr>
-              <th>documentos</th>
-              <th>nombre</th>
-              <th>apellido1</th>
-              <th>apellido2</th>
-              <th>direccion</th>
-              <th>telefono</th>
-              <th>correo</th>
-              <th>fechaNacimiento</th>
-              <th>ingresos</th>
-              <th>egresos</th>
+              <th>Documento</th>
+              <th>Nombre</th>
+              <th>Apellidos</th>
+              <th>Ver más</th>
+              <th>Ver bienes</th>
             </tr>
           </thead>
           <tbody>

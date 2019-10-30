@@ -1,5 +1,6 @@
 import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.min.js";
 import { BrowserRouter as Router, Route} from "react-router-dom";
 
 import Index from "./components/index.component";
@@ -23,7 +24,7 @@ function App() {
       <Route path="/aseguradoras" component={Aseguradora} />
       <Route path="/bienes" component={Bien} />
       <Route path="/categorias" component={Categoria} />
-      <Route path="/seguros" component={Seguro} />}
+      <Route path="/seguros" component={Seguro} />
       </div>
     </Router>
   );

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Modal from 'react-modal';
 const Categoria = props => (
   <tr>
     <td>{props.categoria.nombre}</td>

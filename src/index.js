@@ -2,12 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
-const multer = require('multer');
-var upload = multer({})
 const app = express();
-
-app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
 
 //DB
 const { mongoose} = require('./database.js');
@@ -28,7 +23,9 @@ app.set('port', process.env.PORT || 3000)
 //Middlewares
 app.use(cors());
 app.use(morgan('dev'));
+app.use(express.urlencoded({ extended: false }))
 app.use(express.json());
+
 //Routes
 app.use(indexRoutes)
 app.use('/api/clientes', clienteRoutes);
