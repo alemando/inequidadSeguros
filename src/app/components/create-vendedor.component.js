@@ -56,8 +56,8 @@ export default class CreateVendedor extends Component {
             <form onSubmit={this.addVendedor}>
                 <div className="form-group">
                 <label>* Numero de documento:</label>
-                <input name="documento" onChange={this.handleChange} type="number" required
-                    value={this.state.documento}
+                <input name="documentoIdentidad" onChange={this.handleChange} type="number" required
+                    value={this.state.documentoIdentidad}
                     className="form-control"
                     />
                 </div>
@@ -81,25 +81,18 @@ export default class CreateVendedor extends Component {
                   value={this.state.apellido2}
                   className="form-control" pattern="[A-Za-z]"
                   />
-            </div>
-            <div className="form-group">
-              <label>* Dirección de correo electronico:</label>
-              <input name="direccion" onChange={this.handleChange} type="email" required
-                  value={this.state.direccion}
-                  className="form-control" 
-                  />
-            </div>
+            </div>            
             <div className="form-group">
               <label>* Telefono:</label>
-              <input name="telefono" onChange={this.handleChange} type="number" required
-                  value={this.state.telefono}
+              <input name="numContacto" onChange={this.handleChange} type="number" required
+                  value={this.state.numContacto}
                   className="form-control"
                   />
             </div>              
             <div className="form-group">
               <label>  Es administrador:</label>
-              <input name="es_admin" onChange={this.handleChange} type="checkbox" 
-                  value={this.state.es_admin}
+              <input name="esAdmin" onChange={this.handleChange} type="checkbox" 
+                  value={this.state.esAdmin}
                   className="form-control"
                   />
             </div>
