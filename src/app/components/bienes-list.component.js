@@ -15,28 +15,28 @@ export default class BienesList extends Component {
   constructor() {
     super();
 
-    this.state = {bienes: []};
+    this.state = { bienes: [] };
   }
 
-    bienesList() {
-        return this.state.bienes.map(currentBien => {
-            return <Bien Bien={currentBien} key={currentBien._id}/>;
-        })
-    }
+  bienesList() {
+    return this.state.bienes.map(currentBien => {
+      return <Bien Bien={currentBien} key={currentBien._id} />;
+    })
+  }
 
-  
-    componentDidMount(){
-        this.fetchBienes();
-    }
 
-    fetchBienes() {
-        fetch('/api/bienes')
-            .then(res => res.json())
-            .then(data => {
-                this.setState({bienes: data});
-            })
-            .catch(err => console.error(err));
-    }
+  componentDidMount() {
+    this.fetchBienes();
+  }
+
+  fetchBienes() {
+    fetch('/api/bienes')
+      .then(res => res.json())
+      .then(data => {
+        this.setState({ bienes: data });
+      })
+      .catch(err => console.error(err));
+  }
 
 
   render() {
@@ -46,19 +46,13 @@ export default class BienesList extends Component {
         <table className="table">
           <thead className="thead-light">
             <tr>
-              <th>documento</th>
-              <th>nombre</th>
-              <th>apellido1</th>
-              <th>apellido2</th>
-              <th>direccion</th>
-              <th>telefono</th>
-              <th>fechaNacimiento</th>
-              <th>ingresos</th>
-              <th>egresos</th>
+              <th>Nombre Referencia</th>
+              <th>Caracteristicas</th>
+              <th>Documento</th>
             </tr>
           </thead>
           <tbody>
-            { this.bienesList() }
+            {this.bienesList()}
           </tbody>
         </table>
       </div>

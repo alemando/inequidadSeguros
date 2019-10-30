@@ -39,6 +39,7 @@ app.use('/api/seguro', seguroRoutes);
 app.use('/api/vendedor', vendedorRoutes);
 app.use('/api/criterio', criterioRoutes);
 
+
 //Static files
 app.use(express.static(path.join(__dirname, 'public')));
 
