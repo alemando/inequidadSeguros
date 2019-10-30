@@ -178,6 +178,5 @@ seguroSchema.statics.obtenerDatosPrincipales= async function(){
 
 const seguros = mongoose.model('seguros', seguroSchema);
 
-const seguros = mongoose.model('seguros',seguroSchema);
 
 module.exports = seguros;

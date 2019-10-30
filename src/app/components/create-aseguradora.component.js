@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import SweetAlert from 'sweetalert-react';
+import Swal from 'sweetalert2'
 export default class CreateAseguradora extends Component {
 
     constructor() {
@@ -29,6 +29,7 @@ export default class CreateAseguradora extends Component {
                 
             })
             .then(data => {
+                Swal.fire('Mensaje', '', data)
                 this.setState({
                     nit: '',
                     nombre: '',
