@@ -56,6 +56,9 @@ export default class CreateCliente extends Component {
                     type: 'error'
                   })
                 }else if(data.id == 1){
+
+                  this.props.component.fetchClientes();
+                  
                   Swal.fire({
                     text: data.mensaje,
                     type: 'success'

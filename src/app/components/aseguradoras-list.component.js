@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CreateAseguradora from "./create-aseguradora.component";
 
 const Aseguradora = props => (
   <tr>
@@ -22,7 +23,6 @@ export default class AseguradorasList extends Component {
         })
     }
 
-  
     componentDidMount(){
         this.fetchAseguradoras();
     }
@@ -39,8 +39,11 @@ export default class AseguradorasList extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Aseguradoras</h3>
+      <div className="container">
+        <div className="row">
+          <div className="col"><h3>Aseguradoras</h3></div>
+          <div className="col"> <CreateAseguradora component={this}/></div>
+        </div>
         <table className="table">
           <thead className="thead-light">
             <tr>
@@ -51,7 +54,7 @@ export default class AseguradorasList extends Component {
             </tr>
           </thead>
           <tbody>
-            { this.aseguradorasList() }
+            {this.aseguradorasList()}
           </tbody>
         </table>
       </div>

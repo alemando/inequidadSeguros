@@ -118,6 +118,7 @@ clienteSchema.statics.guardarCliente = async (datos)=> {
     }
 };
 
+//Metodo para reotornar todos los clientes de la BD
 clienteSchema.statics.obtenerClientes = async ()=>{
     try {
         const listaClientes = await clientes.find();
@@ -127,6 +128,7 @@ clienteSchema.statics.obtenerClientes = async ()=>{
     }
 }
 
+//Metodo para retornar un cliente por su documento
 clienteSchema.statics.obtenerCliente = async (documento)=> {
     try {
         let cliente = await clientes.findOne({documento: documento});

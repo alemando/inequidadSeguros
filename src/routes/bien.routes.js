@@ -11,26 +11,14 @@ router.get('/', async (req, res) => {
 });
 
 // GET Bienes by Clientes
-router.post('/getByidCliente', async (req, res) => {
-  console.log(req);
-  const bienes = await Bienes.obtenerBienesPorCliente(req.body.documentoCliente);
+router.get('/:idCliente', async (req, res) => {
+  const bienes = await Bienes.obtenerBienesPorCliente(req.params.idCliente);
   res.json(bienes);
 });
 
 // ADD a new bien
 router.post('/save', async (req, res) => {
   resultado = await Bienes.guardarBien(req);
-  res.json({status: resultado});
-});
-
-// UPDATE a new bien
-router.post('/updateById', async (req, res) => {
-  resultado = await Bienes.actualizarBien(req.body);
-  res.json({status: resultado});
-});
-
-router.post('/borrar', async (req, res) => {
-  resultado = await Bienes.borrarBien(req.body.id);
   res.json({status: resultado});
 });
 

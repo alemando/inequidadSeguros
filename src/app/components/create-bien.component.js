@@ -50,49 +50,71 @@ export default class CreateBien extends Component {
     render() {
         return (
         <div>
-          <h3>Crear un nuevo Bien</h3>
-          <form onSubmit={this.addBien} encType='multipart/form-data'>
-            <div className="form-group">
-              <label>* Id:</label>
-              <input name="id" onChange={this.handleChange} type="text"
-                  required
-                  className="form-control"
-                  />
+          <button type="button" className="btn btn-primary" data-toggle="modal" data-target={"#CrearBien"+this.props.documento}>Crear bien</button>
+          
+          <div className="modal fade" id={"CrearBien"+this.props.documento} tabIndex="-1" role="dialog" aria-hidden="true">
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title"><b>Crear un nuevo bien</b></h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <form onSubmit={this.addBien} encType='multipart/form-data'>
+                  <div className="form-group">
+                    <label>* Id:</label>
+                    <input name="id" onChange={this.handleChange} type="text"
+                        required
+                        className="form-control"
+                        />
+                  </div>
+                  <div className="form-group">
+                    <label>* Documento Cliente</label>
+                    <input name="documentoCliente" onChange={this.handleChange} type="text"
+                        required
+                        className="form-control"
+                        />
+                  </div>
+                  <div className="form-group">
+                    <label>* Categoria:</label>
+                    <input name="categoria" onChange={this.handleChange} type="text"
+                        required
+                        className="form-control"
+                        />
+                  </div>
+                  <div className="form-group">
+                    <label>* Caracteristicas:</label>
+                    <input name="caracteristicas" onChange={this.handleChange} type="text"
+                        required
+                        className="form-control"
+                        />
+                  </div>
+                  <div className="form-group">
+                    <label>* Documentos:</label>
+                    <input name="documentos" onChange={this.handleChange} type="file"
+                        required
+                        className="form-control"
+                        />
+                  </div>
+                  <div className="form-group">
+                    <button type="submit" className="btn btn-primary">
+                        Enviar
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <div className="modal-footer">
+                <button type="submit" form="formCliente" className="btn btn-primary">Enviar</button>
+                <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Close</button>
+              </div>
             </div>
-            <div className="form-group">
-              <label>* Documento Cliente</label>
-              <input name="documentoCliente" onChange={this.handleChange} type="text"
-                  required
-                  className="form-control"
-                  />
-            </div>
-            <div className="form-group">
-              <label>* Categoria:</label>
-              <input name="categoria" onChange={this.handleChange} type="text"
-                  required
-                  className="form-control"
-                  />
-            </div>
-            <div className="form-group">
-              <label>* Caracteristicas:</label>
-              <input name="caracteristicas" onChange={this.handleChange} type="text"
-                  required
-                  className="form-control"
-                  />
-            </div>
-            <div className="form-group">
-              <label>* Documentos:</label>
-              <input name="documentos" onChange={this.handleChange} type="file"
-                  required
-                  className="form-control"
-                  />
-            </div>
-            <div className="form-group">
-              <button type="submit" className="btn btn-primary">
-                  Enviar
-              </button>
-            </div>
-          </form>
+          </div>
+        </div>
+          
+          
+          
         </div>
         )
       }
