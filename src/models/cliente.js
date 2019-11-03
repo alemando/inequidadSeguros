@@ -137,7 +137,7 @@ clienteSchema.statics.obtenerCliente = async (documento)=> {
         return "ha ocurrido algo inesperado al intentar obtener el cliente con documento " + documento + "\n"+ error;
     }
 }
-const clientes = mongoose.model('clientes', clienteSchema);
 
+const clientes = mongoose.model('clientes', clienteSchema);
 
 module.exports = clientes;
