@@ -35,9 +35,9 @@ router.post('/borrar', async (req, res) => {
   res.json({status: resultado});
 });
 
-//Agregar un criterio base a la categoría
-router.post('/addCriterioBase', async (req, res) =>{
-  resultado = await Categoria.agregarCriterioBase(req.body)
+//Agregar criterios base a la categoría
+router.post('/addCriteriosBase', async (req, res) =>{
+  resultado = await Categoria.agregarCriteriosBase(req.body)
   res.json({status: resultado})
 })
 
@@ -45,6 +45,17 @@ router.post('/addCriterioBase', async (req, res) =>{
 router.post('/getCriteriosBase', async(req, res) =>{
   resultado = await Categoria.criteriosCategoria(req.body.nombre)
   res.json(resultado)
+})
+
+//Borrar un criterio con el nombre de la categoría a la que pertenece y a su nombre
+router.post('/deleteCriterioCategoria', async(req,res)=>{
+  resultado = await Categoria.borrarCriterioCategoria(req.body)
+  res.json({status: resultado})
+})
+
+router.post('/updateCriterioCategoria', async(req,res)=>{
+  resultado = await Categoria.actualizarCriterioCategoria(req.body)
+  res.json({status: resultado})
 })
 
 module.exports = router;

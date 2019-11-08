@@ -10,7 +10,7 @@ const MostrarCriterio = props => (
   <tr>
     <td>{props.criterio.nombre}</td>
     <td>{props.criterio.descripción}</td>
-    <td>{props.criterio.lo_que_se_dará}</td>
+    <td>{props.criterio.montoCubrir}</td>
     <td>{props.criterio.deducible}</td>
   </tr>
 )
@@ -49,7 +49,7 @@ class Criterio extends Component {
   }
   fetchCriterios() {
 
-    fetch('/api/criterios', {
+    fetch('/api/criteriosBase', {
       method: 'POST',
       body: JSON.stringify({ categoria: this.props.categoria }),
       headers: {

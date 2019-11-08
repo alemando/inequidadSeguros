@@ -9,18 +9,48 @@ const categoriaSchema = Schema({
         trim:true,
         unique:true
     },
-    criteriosBase: [{_id:Schema.Types.ObjectId,nombre:String, descripcion:String, monto_cubrir:Number, deducible:String}]
-});
+    criteriosBase: [{
+        nombre:{
+            type:String,
+            require:true,
+            trim: true},
+        descripcion:{
+            type:String,
+            require:true,
+            trim: true},
+        montoCubrir:{
+            type:Number,
+            require:true,
+            trim: true},
+        deducible:{
+            type:String,
+            require:true,
+            trim: true}
+    }]
+})
 categoriaSchema.plugin(uniqueValidator);
 
 categoriaSchema.statics.guardarCategoria = async function(datos) {
     const categoriaNuevo = new categorias({nombre:datos.nombre, criteriosBase:datos.criteriosBase});
     try {
-        await categoriaNuevo.save();
-        return "categoria guardada";
+        let repetido = false
+        for(var i = 0; i<categoriaNuevo.criteriosBase.length;i++){
+            for(var j = i; j<categoriaNuevo.criteriosBase.length;j++){
+                if(categoriaNuevo.criteriosBase[i].nombre==categoriaNuevo.criteriosBase[j].nombre && j!=i){
+                    repetido = true
+                    break
+                }
+            }
+        }
+        if(!repetido){
+            await categoriaNuevo.save()
+            return "Categoría guardada."
+        }else{
+            return "Categoría no guardada, asegúrese de que los criterios tengan nombres diferentes."
+        }
     } catch (error) {
-        if (error.errors.nombre.kind==="unique") return "La categoria ingresada ya existe en nuestra base de datos";
-        else return "error desconocido";
+        if (error.errors.nombre.kind==="unique") return "Ya existe una categoría "+datos.nombre+" en la base de datos.";
+        else return "Error desconocido: \n" + error;
     }
 };
 categoriaSchema.statics.obtenerCategorias = async function() {
@@ -28,7 +58,7 @@ categoriaSchema.statics.obtenerCategorias = async function() {
         let categoriasLi = await categorias.find();
         return categoriasLi;
     } catch (error) {
-        return "ha ocurrido algo inesperado al intentar obtener las categorias\n"+ error;
+        return "Ha ocurrido algo inesperado al intentar obtener las categorías: \n"+ error;
     }
 }
 categoriaSchema.statics.obtenerCategoria = async function(nombre) {
@@ -42,7 +72,7 @@ categoriaSchema.statics.obtenerCategoria = async function(nombre) {
 categoriaSchema.statics.actualizarCategoria = async function(datos) {
     try {
         let categoriaActualizado = await categorias.findOneAndUpdate({nombre:datos.nombre}, {$set:{nombre:datos.nombre, criteriosBase:datos.criteriosBase}}, {new:true, runValidators:true, context:'query'})
-        return "Categoria actualizado\n" + categoriaActualizado;
+        return "Categoria actualizado: \n" + categoriaActualizado;
     } catch (error) {
         return "el categoria no se pudo actualizar debido a un error inesperado\n" + error;
     }
@@ -53,13 +83,36 @@ categoriaSchema.statics.borrarCategoria = async function(nombre){
         let respuesta = await categorias.findOneAndDelete({nombre:nombre})
         return respuesta;
     } catch (error) {
-        return "el categoria no se ha podido eliminar, ha ocurrido algo inesperado\n" + error;
+        return "La categoría no se ha podido eliminar, ha ocurrido algo inesperado: \n" + error;
     }
 }
 
-categoriaSchema.statics.agregarCriterioBase = async function(datos){
+categoriaSchema.statics.agregarCriteriosBase = async function(datos){
     try{
-        let respuesta = await categorias.findOneAndUpdate({nombre:datos.categoria},{$addToSet:{"criteriosBase":{$each:[{_id:datos._id,nombre:datos.nombre, descripcion:datos.descripcion, monto_cubrir:datos.monto_cubrir, deducible:datos.deducible}]}}})
+        let categoriaActual = await categorias.findOne({nombre:datos.nombre})
+        let repetido = false
+        for (i=0; i<categoriaActual.criteriosBase.length; i++){
+            for (j=0; j<datos.criteriosBase.length; j++){
+                if(categoriaActual.criteriosBase[i].nombre==datos.criteriosBase[j].nombre){
+                    repetido = true
+                    break
+                }
+            }
+        }
+        for (i=0; i<datos.criteriosBase.length; i++){
+            for (j=0; j<datos.criteriosBase.length; j++){
+                if(datos.criteriosBase[i].nombre==datos.criteriosBase[j].nombre && i!=j){
+                    repetido = true
+                    break
+                }
+            }
+        }
+        if(!repetido){
+            let respuesta = await categorias.findOneAndUpdate({nombre:datos.nombre},{$addToSet:{"criteriosBase":{$each:datos.criteriosBase}}},{new:true, runValidators:true, context:'query'})
+            return respuesta
+        } else{
+            return "Asegúrese de que los nombres de los criterios nuevos sean diferentes a los actuales y diferentes entre ellos."
+        }
     } catch(error){
         return "El criterio no se ha podido agregar a la categoria por el error: \n" + error
     }
@@ -71,7 +124,34 @@ categoriaSchema.statics.criteriosCategoria = async function(nombre){
         let criteriosDeCategoria = respuesta.criteriosBase
         return criteriosDeCategoria
     }catch(error){
-        return 
+        return error
+    }
+}
+
+
+/*
+Para borrar el criterio de la categoría es necesario enviar en datos un json con la siguiente estructura:
+{
+  "categoria":"(Se inserta aquí el nombre de la categoría)"
+  "criterio":"(Se inserta aquí el nombre del criterio)"
+}
+*/
+categoriaSchema.statics.borrarCriterioCategoria = async function(datos){
+    try{
+        let respuesta = await categorias.findOneAndUpdate({nombre:datos.categoria},{$pull:{criteriosBase:{nombre:datos.criterio}}},{new:true, runValidators:true, context:'query'})
+        return "El criterio " + datos.criterio + " de la categoria " + datos.categoria + " fue borrado correctamente."
+    }catch(error){
+        return error
+    }
+}
+
+categoriaSchema.statics.actualizarCriterioCategoria = async function(datos){
+    try{
+        let borrado = await categorias.borrarCriterioCategoria({categoria:datos.nombre,criterio:datos.criterio.nombre})
+        let actualizado = await categorias.findOneAndUpdate({nombre:datos.nombre},{$addToSet:{"criteriosBase":datos.criterio}},)
+        return "El criterio " + datos.criterio.nombre + " de la categoría " + datos.nombre + " ha sido actualizado."
+    }catch(error){
+        return "Error al actualizar: \n" + error
     }
 }
 

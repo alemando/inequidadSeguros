@@ -7,7 +7,8 @@ export default class crearCrierio extends Component {
         this.state = {
             nombreCriterio:'',
             descripcionCriterio:'',
-            deducibleCriterio:0.0
+            montoCubrirCriterio:0.0,
+            deducibleCriterio:''
         }
         this.handleChange = this.handleChange.bind(this);
         this.submitFormCriterio = this.submitFormCriterio.bind(this);
@@ -19,7 +20,8 @@ export default class crearCrierio extends Component {
         this.setState({
             nombreCriterio:'',
             descripcionCriterio:'',
-            deducibleCriterio:0.0
+            montoCubrirCriterio:0.0,
+            deducibleCriterio:''
         });
         document.getElementById("form-criterio").reset(); 
     }
@@ -55,8 +57,15 @@ export default class crearCrierio extends Component {
                             </textarea>
                         </div>
                         <div>
+                            <label>* Monto a cubrir criterio:</label>
+                            <input name="motoCubrirCriterio" onChange={this.handleChange} type="number"
+                                required={true}
+                                className="form-control"
+                                />
+                        </div>
+                        <div>
                             <label>* Deducible del criterio:</label>
-                            <input name="deducibleCriterio" onChange={this.handleChange} type="number"
+                            <input name="deducibleCriterio" onChange={this.handleChange} type="text"
                                 required={true}
                                 className="form-control"
                                 />

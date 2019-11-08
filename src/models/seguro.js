@@ -5,8 +5,6 @@ const clientes = require('../models/cliente');
 const vendedores = require('../models/vendedor');
 const bienes = require('../models/bien');
 const aseguradoras = require('../models/aseguradora');
-const criterios = require('../models/criterio');
-const categorias = require('../models/categoria')
 
 const seguroSchema = Schema({
   fechaInicio: {
@@ -59,7 +57,29 @@ const seguroSchema = Schema({
     require: true,
     trim: true
   },
-  arrayCriterios: [{_id:{type:Schema.Types.ObjectId,ref:"criterios"},nombre:String, descripcion:String, monto_cubrir:Number, deducible:String, observaciones:String}]
+  criterios: [{
+    nombre:{
+        type:String,
+        require:true,
+        trim: true},
+    descripcion:{
+        type:String,
+        require:true,
+        trim: true},
+    montoCubrir:{
+        type:Number,
+        require:true,
+        trim: true},
+    deducible:{
+        type:String,
+        require:true,
+        trim: true},
+    observaciones:{
+        type:String,
+        require:true,
+        trim: true
+    }
+}]
 });
 seguroSchema.plugin(uniqueValidator);
 
@@ -72,16 +92,8 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
   let bien = await bienes.findById({_id:datos.idBien});
   let aseguradora = await aseguradoras.findOne({nit:datos.nitAseguradora});
   let aux = true;
-  /*for (var i = 0; i < datos.arrayCriterios.length; i++) {
-    let criterio = await criterios.findOne({numero:datos.arrayCriterios[i]});
-    if(!criterio){
-      aux = false
-      console.log("Entre if")
-    }
-  }*/
   console.log(cliente,vendedor,bien,aseguradora,aux);
   if(cliente && vendedor && bien && aseguradora && aux){
-    let criteriosBase = await categorias.criteriosCategoria(bien.categoria)
     console.log("Hola mundo")
     console.log(criteriosBase)
     const seguro = new seguros({
@@ -95,8 +107,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
       idBien: datos.idBien,
       documentoVendedor: datos.documentoVendedor,
       nitAseguradora: datos.nitAseguradora,
-      arrayCriterios: criteriosBase
-//      arrayCriterios: datos.arrayCriterios
+      criterios: datos.criterios
     });
     try {
         await seguro.save();
@@ -119,7 +130,7 @@ seguroSchema.statics.obtenerSeguros = async function() {
 }
 seguroSchema.statics.obtenerSeguro = async function(id) {
     try {
-        let seguro = await seguros.findOne({id:id});
+        let seguro = await seguros.findById(id);
         return seguro;
     } catch (error) {
         return "ha ocurrido algo inesperado al intentar obtener el seguro\n"+ error;
@@ -127,8 +138,8 @@ seguroSchema.statics.obtenerSeguro = async function(id) {
 }
 seguroSchema.statics.actualizarSeguro = async function(datos) {
     try {
-        let seguroActualizado = await seguros.findOneAndUpdate({id:datos.id}, 
-            {$set:{id:datos.id,
+        let seguroActualizado = await seguros.findByIdAndUpdate(datos._id, 
+            {$set:{_id:datos._id,
                 documentoVendedor:datos.documentoVendedor,
                 documentoCliente:datos.documentoCliente,
                 idBien:datos.idBien,
@@ -147,7 +158,7 @@ seguroSchema.statics.actualizarSeguro = async function(datos) {
 }
 seguroSchema.statics.borrarSeguro = async function(id){
     try {
-        let respuesta = await seguros.findOneAndDelete({id:id})
+        let respuesta = await seguros.findByIdAndDelete(id)
         return respuesta;
     } catch (error) {
         return "el seguro no se ha podido eliminar, ha ocurrido algo inesperado\n" + error;
@@ -196,6 +207,74 @@ seguroSchema.statics.obtenerPrincipal= async function(){
       return "No se han podido mostrar los datos principales, ha ocurrido algo inesperado \n" +error;
   }
 }
+
+seguroSchema.statics.agregarCriterios = async function(datos){
+  try{
+      let seguroActual = await seguros.findById(datos._id)
+      let repetido = false
+      for (i=0; i<seguroActual.criterios.length; i++){
+          for (j=0; j<datos.criterios.length; j++){
+              if(seguroActual.criterios[i].nombre==datos.criterios[j].nombre){
+                  repetido = true
+                  break
+              }
+          }
+      }
+      for (i=0; i<datos.criterios.length; i++){
+          for (j=0; j<datos.criterios.length; j++){
+              if(datos.criterios[i].nombre==datos.criterios[j].nombre && i!=j){
+                  repetido = true
+                  break
+              }
+          }
+      }
+      if(!repetido){
+          let respuesta = await seguros.findByIdAndUpdate(datos._id,{$addToSet:{"criterios":{$each:datos.criterios}}},{new:true, runValidators:true, context:'query'})
+          return respuesta
+      } else{
+          return "Asegúrese de que los nombres de los criterios nuevos sean diferentes a los actuales y diferentes entre ellos."
+      }
+  } catch(error){
+      return "El criterio no se ha podido agregar al seguro por el error: \n" + error
+  }
+}
+
+seguroSchema.statics.criteriosSeguro = async function(id){
+  try{
+      let respuesta = await seguros.findById(id)
+      let criteriosDeSeguro = respuesta.criterios
+      return criteriosDeSeguro
+  }catch(error){
+      return error
+  }
+}
+
+/*
+Para borrar el criterio del seguro es necesario enviar en datos un json con la siguiente estructura:
+{
+  "_id":"(Se inserta aquí el id del seguro)"
+  "criterio":"(Se inserta aquí el nombre del criterio)"
+}
+*/
+seguroSchema.statics.borrarCriterioSeguro = async function(datos){
+  try{
+      let respuesta = await seguros.findByIdAndUpdate(datos._id,{$pull:{criterios:{nombre:datos.criterio}}},{new:true, runValidators:true, context:'query'})
+      return "El criterio " + datos.criterio + " del seguro  " + datos._id + " fue borrado correctamente."
+  }catch(error){
+      return "Error desconocido: \n " + error
+  }
+}
+
+seguroSchema.statics.actualizarCriterioSeguro = async function(datos){
+  try{
+      let borrado = await seguros.borrarCriterioSeguro({_id:datos._id,criterio:datos.criterio.nombre})
+      let actualizado = await seguros.findByIdAndUpdate(datos._id,{$addToSet:{"criterios":datos.criterio}},)
+      return "El criterio " + datos.criterio.nombre + " del seguro " + datos._id + " ha sido actualizado."
+  }catch(error){
+      return "Error al actualizar: \n" + error
+  }
+}
+
 const seguros = mongoose.model('seguros',seguroSchema);
 
 module.exports = seguros;

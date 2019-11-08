@@ -91,8 +91,16 @@ export default class CreateCategoria extends Component {
                             </textarea>
                         </div>
                         <div>
+                            <label>* Monto a cubrir del criterio:</label>
+                            <input name="montoCubrirCriterioFijo" type="number"
+                                disabled={true}
+                                value={criterio.montoCubrirCriterio}
+                                className="form-control"
+                            />
+                        </div>
+                        <div>
                             <label>* Deducible del criterio:</label>
-                            <input name="deducibleCriterioFijo" type="number"
+                            <input name="deducibleCriterioFijo" type="text"
                                 disabled={true}
                                 value={criterio.deducibleCriterio}
                                 className="form-control"
