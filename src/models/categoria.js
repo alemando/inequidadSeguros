@@ -30,8 +30,8 @@ const categoriaSchema = Schema({
 })
 categoriaSchema.plugin(uniqueValidator);
 
-categoriaSchema.statics.guardarCategoria = async function(datos) {
-    const categoriaNuevo = new categorias({nombre:datos.nombre, criteriosBase:datos.criteriosBase});
+categoriaSchema.statics.guardarCategoria = async (datos)=> {
+    const categoriaNuevo = new categorias({nombre: datos.nombre, criteriosBase:datos.criteriosBase});
     try {
         let repetido = false
         for(var i = 0; i<categoriaNuevo.criteriosBase.length;i++){
@@ -128,33 +128,6 @@ categoriaSchema.statics.criteriosCategoria = async function(nombre){
     }
 }
 
-
-/*
-Para borrar el criterio de la categoría es necesario enviar en datos un json con la siguiente estructura:
-{
-  "categoria":"(Se inserta aquí el nombre de la categoría)"
-  "criterio":"(Se inserta aquí el nombre del criterio)"
-}
-*/
-categoriaSchema.statics.borrarCriterioCategoria = async function(datos){
-    try{
-        let respuesta = await categorias.findOneAndUpdate({nombre:datos.categoria},{$pull:{criteriosBase:{nombre:datos.criterio}}},{new:true, runValidators:true, context:'query'})
-        return "El criterio " + datos.criterio + " de la categoria " + datos.categoria + " fue borrado correctamente."
-    }catch(error){
-        return error
-    }
-}
-
-categoriaSchema.statics.actualizarCriterioCategoria = async function(datos){
-    try{
-        let borrado = await categorias.borrarCriterioCategoria({categoria:datos.nombre,criterio:datos.criterio.nombre})
-        let actualizado = await categorias.findOneAndUpdate({nombre:datos.nombre},{$addToSet:{"criteriosBase":datos.criterio}},)
-        return "El criterio " + datos.criterio.nombre + " de la categoría " + datos.nombre + " ha sido actualizado."
-    }catch(error){
-        return "Error al actualizar: \n" + error
-    }
-}
-
-const categorias = mongoose.model('categorias',categoriaSchema);
+const categorias = mongoose.model('categorias', categoriaSchema);
 
 module.exports = categorias;

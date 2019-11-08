@@ -23,18 +23,6 @@ router.post('/save', async (req, res) => {
   res.json(resultado);
 });
 
-// UPDATE a categoria
-router.post('/updateByNombre', async (req, res) => {
-  resultado = await Categoria.actualizarCategoria(req.body);
-  res.json({status: resultado});
-});
-
-// Delete a categoria
-router.post('/borrar', async (req, res) => {
-  resultado = await Categoria.borrarCategoria(req.body.nombre);
-  res.json({status: resultado});
-});
-
 //Agregar criterios base a la categoría
 router.post('/addCriteriosBase', async (req, res) =>{
   resultado = await Categoria.agregarCriteriosBase(req.body)
