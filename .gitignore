@@ -60,7 +60,7 @@ typings/
 # next.js build output
 .next
 src/public/js/bundle.js
-*.js
+#*.js
 
 #Archivo compilado de las vistas
 src/public/js/bundle.js

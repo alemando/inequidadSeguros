@@ -15,7 +15,6 @@ const bienRoutes= require('./routes/bien.routes.js')
 const categoriaRoutes = require('./routes/categoria.routes.js')
 const seguroRoutes = require('./routes/seguro.routes.js')
 const vendedorRoutes = require('./routes/vendedor.routes.js')
-const criterioRoutes = require('./routes/criterio.routes.js')
 
 //Settings
 app.set('port', process.env.PORT || 3000)
@@ -33,7 +32,6 @@ app.use('/api/aseguradoras', aseguradoraRoutes);
 app.use('/api/bienes', bienRoutes);
 app.use('/api/categorias', categoriaRoutes);
 app.use('/api/seguros', seguroRoutes);
-app.use('/api/criterios', criterioRoutes);
 app.use('/api/vendedores', vendedorRoutes);
 
 //Static files
