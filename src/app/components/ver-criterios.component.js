@@ -4,7 +4,7 @@ import VerCriterio from "./ver-criterio.component";
 const Criterio = props => (
   <tr>
     <td>{props.criterio.nombre}</td>
-    <td><VerCriterio criterio={props.criterio} key={props.criterio.mombre}/></td>
+    <td><VerCriterio nombre={props.nombre} criterio={props.criterio} key={props.criterio.mombre}/></td>
   </tr>
 )
 
@@ -24,14 +24,14 @@ export default class VerCriterios extends Component {
 
   criteriosList() {
     return this.state.criterios.map(currentCriterio => {
-      return <Criterio criterio={currentCriterio} key={currentCriterio.nombre} />;
+      return <Criterio nombre={this.props.categoria.nombre} criterio={currentCriterio} key={currentCriterio.nombre} />;
     })
   }
 
   render() {
     return (
       <div>
-        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={"#Criterios-" + this.props.categoria.nombre}>ver bienes</button>
+        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={"#Criterios-" + this.props.categoria.nombre}>ver criterios</button>
         <div className="modal fade" id={"Criterios-" +this.props.categoria.nombre} tabIndex="-1" role="dialog" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
