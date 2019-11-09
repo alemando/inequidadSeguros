@@ -6,6 +6,10 @@ const vendedores = require('../models/vendedor');
 const bienes = require('../models/bien');
 const aseguradoras = require('../models/aseguradora');
 const criterios = require('../models/criterio');
+const express= require('express');
+const app=express();
+
+app.set('port',process.env.PORT || 3000);
 
 const seguroSchema = Schema({
   fechaInicio: {
@@ -153,23 +157,17 @@ seguroSchema.statics.borrarSeguro = async function(id){
     }
 }
 
-//Importando el Schema de bien para armar el JSON que me piden
-const bien=require('./bien');
-seguroSchema.statics.obtenerDatosPrincipales= async function(){
+// Método para obtener la información principal de un seguro
+seguroSchema.statics.obtenerPrincipal= async function(){
     try{
         let respuesta= await seguros.find();
         let answer=[]
-        //let answer1= await bien.findOne({id: respuesta[1].idBien});
-        //let bien1= await bien.find();
         for(let i=0;i<respuesta.length;i++){
-            //let seguro = await seguros.findOne({id:id});
-            let myBien= await bien.findOne({id: respuesta[i].idBien});
+            let link=`http://localhost:${app.get('port')}/api/seguro/principal/${respuesta[i].id}`;
             answer.push({
                 documentoCliente: respuesta[i].documentoCliente,
                 idBien: respuesta[i].idBien,
-                categoria: myBien,//.categoria,
-                nombre: myBien,//.caracteristicas,
-                detalle: 'Falta'
+                detalle: link
             });
         }
         return answer;
