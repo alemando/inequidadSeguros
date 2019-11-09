@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import CreateCategoria from "./create-categoria.component";
+import VerCriterios from "./ver-criterios.component";
 
 const Categoria = props => (
   <tr>
     <td>{props.categoria.nombre}</td>
-    <td>ver criterios</td>
+    <td><VerCriterios categoria={props.categoria}/></td>
   </tr>
 )
 
