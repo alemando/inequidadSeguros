@@ -1,34 +1,35 @@
 const mongoose = require('mongoose')
-var uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
+const clienteModel = require('./cliente')
+const categoriaModel = require('./categoria')
 
+//Clase file, especial para un subdocumento
+const fileSchema = Schema({
+  nombre:{
+      type:String,
+      require:true,
+      trim: true},
+  archivo:{
+      type: Buffer,
+      require:true
+  }
+})
+
+//Clase bien
 const bienSchema = Schema({
-    id: {
-        type: String,
-        require: true,
-        trim:true,
-        unique:true
-    },
     nombre: {
         type: String,
         require: true,
         trim:true
     },
-    idCliente: {
-        type: Schema.ObjectId,
-        ref: "clientes",
-        require: false,
-        trim:true,
-        default:null
-    },
-    documentoCliente: {
-      type: String,
-      require: true,
-      trim: true
+    cliente: {
+		type: Schema.Types.ObjectId, 
+		ref: 'clientes',
+      	require: true
     },
     categoria: {
-        type: String,
-        require: true,
+        type: Schema.Types.ObjectId, 
+		ref: 'categorias',
         trim:true
     },
     caracteristicas: {
@@ -36,74 +37,96 @@ const bienSchema = Schema({
         require: true,
         trim:true
     },
-    documentos: {
-        type: String,
-        require: false
-    }
+    documento: fileSchema
 });
-bienSchema.plugin(uniqueValidator);
 
+/*
+    Metodo para guardar un bien
+    recibe un arreglo json de parametros
+    retorna un arreglo JSON {id: #, mensaje:...}
+*/
 bienSchema.statics.guardarBien = async function(datos) {
-    
+    let validacion = { id: "0", mensaje: ""}
+
+	//Validacion de los nombres de criterios no son repetidos
+    if(await clienteModel.obtenerClienteById(datos.body.cliente) == null){
+        validacion.mensaje += "bien no guardado, cliente no existe en la BD"
+    }
+
+	if(await categoriaModel.obtenerCategoriaById(datos.body.categoria) == null){
+        validacion.mensaje += "bien no guardado, categoria no existe en la BD"
+	}
+	
+	if(datos.file.mimetype != 'application/pdf'){
+        validacion.mensaje += "bien no guardado, el archivo no es un pdf"
+	}
+	
+	if(datos.file.size >= 16000000){
+        validacion.mensaje += "bien no guardado, el archivo excede el tamaño permitido 16Mb"
+	}
+
+    //Si no pasa alguna validacion retorna el mensaje correspondiente
+    if(validacion.mensaje.length!=0) return validacion
+
+  	//Objeto bien
     const bienNuevo = new bienes(
-      { id:datos.body.id,
-        nombre:datos.body.nombre,
-        documentoCliente:datos.body.documentoCliente,
-        categoria:datos.body.categoria,
-        caracteristicas:datos.body.caracteristicas,
-        documentos:datos.file.filename});
+		{nombre: datos.body.nombre,
+		cliente: datos.body.cliente,
+		categoria: datos.body.categoria,
+		caracteristicas: datos.body.caracteristicas,
+		documento: { 
+			nombre: datos.file.originalname,
+			archivo: datos.file.buffer
+		}
+		});
     try {
         await bienNuevo.save();
-        return "bien guardado";
+        return { id: "1", mensaje: "bien guardado"};
     } catch (error) {
-        if (error.errors.id.kind==="unique") return "El documento ingresado ya existe en nuestra base de datos";
-        else return "error desconocido";
+		return { id: "0", mensaje: "Error desconocido"};
     }
 };
 
+//Metodo para retornar todos los bienes
 bienSchema.statics.obtenerBienes = async function() {
   try{
-    let bienesall = await bienes.find();
-    return bienesall
+    let listaBienes = await bienes.find({},{documento: 0}).
+	populate('cliente').
+	populate('categoria').
+	exec();
+    return listaBienes
   } catch(error){
     return "Ha ocurrido algo al intentar obetener bienes\n" +error;
   }
 };
 
-bienSchema.statics.obtenerBienesPorCliente = async function(documentoCliente){
+//Metodo para retornar todos los bienes asociados a un cliente
+bienSchema.statics.obtenerBienesPorCliente = async function(cliente){
   try {
-    let bienesall = await bienes.find({documentoCliente: documentoCliente});
-    return bienesall;
+    let listaBienes = await bienes.find({cliente: cliente},{documento: 0}).
+	populate('cliente').
+	populate('categoria').
+	exec();
+	console.log(listaBienes)
+    return listaBienes;
   } catch (error) {
     return "Ha ocurrido algo al intentar obtener bienes del cliente\n" + error
   }
 };
 
-bienSchema.statics.actualizarBien = async function(datos){
-  try {
-    let bienActualizado = await bienes.findOneAndUpdate({id:datos.id},{$set:{categoria:datos.categoria, caracteristicas: datos.caracteristicas, documentos: datos.documentos}},{new:true, runValidators:true,context:'query'})
-    return bienActualizado
-  } catch (error) {
-    return "El bien no  pudo ser actualizado\n" + error
-  }
-};
+//Metodo para retornar todos los bienes asociados a un cliente
+bienSchema.statics.obtenerBienPorId = async function(IdBien){
+	try {
+	  let bien = await bienes.findById(IdBien).
+	  populate('cliente').
+	  populate('categoria').
+	  exec();
+	  return bien;
+	} catch (error) {
+	  return "Ha ocurrido algo al intentar obtener el bien\n" + error
+	}
+  };
 
-bienSchema.statics.borrarBien = async function(id){
-  try {
-    let bienBorrado = await bienes.findOneAndRemove({id: id})
-    return bienBorrado
-  } catch (error) {
-    return "El bien no  pudo se pudo borrar\n" + error
-  }
-};
-bienSchema.statics.getPdf = async function(){
-  try {
-    let cod64 = await bienes.findOne({id:"1015"},{documentos:1});
-    return cod64.documentos;
-  } catch (error) {
-    return error;
-  }
-}
 const bienes = mongoose.model('bienes',bienSchema);
 
 module.exports = bienes;

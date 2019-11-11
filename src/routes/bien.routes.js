@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-
+const multer = require('multer');
+const upload = multer();
+const fs = require('fs');
 // Bien Model
 const Bienes = require('../models/bien');
 
@@ -16,10 +18,22 @@ router.get('/:idCliente', async (req, res) => {
   res.json(bienes);
 });
 
+// GET Documento Bien
+router.get('/documento/:idBien', async (req, res) => {
+  const bien = await Bienes.obtenerBienPorId(req.params.idBien);
+  let file = bien.documento.archivo
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header('content-type', 'application/pdf');
+  res.send(file);
+  //Se debe hacer algo en caso de que no llegue
+});
+
+
 // ADD a new bien
-router.post('/save', async (req, res) => {
+router.post('/save', upload.single('documento'), async (req, res) => {
   resultado = await Bienes.guardarBien(req);
-  res.json({status: resultado});
+  res.json(resultado);
 });
 
 module.exports = router;

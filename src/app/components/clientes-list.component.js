@@ -10,8 +10,8 @@ const Cliente = props => (
     <td>{props.cliente.nombre}</td>
     <td>{props.cliente.apellido1} {props.cliente.apellido2}</td>
     <td><VerCliente cliente={props.cliente} key={props.cliente.documento}/></td>
-    <td><VerBienes documento={props.cliente.documento} key={props.cliente.documento}/></td>
-    <td><CreateBien documento={props.cliente.documento} key={props.cliente.documento}/></td>
+    <td><VerBienes cliente={props.cliente._id} key={props.cliente.documento}/></td>
+    <td><CreateBien cliente={props.cliente._id} key={props.cliente.documento}/></td>
   </tr>
 )
 

@@ -89,6 +89,17 @@ categoriaSchema.statics.obtenerCategoria = async (nombre) => {
     }
 }
 
+//Metodo para retornar el nombre de la categoria por su ID
+categoriaSchema.statics.obtenerCategoriaById = async (id) => {
+    try {
+        let categoria = await categorias.findById(id);
+        nombreCategoria = categoria.nombre
+        return nombreCategoria;
+    } catch (error) {
+        return "ha ocurrido algo inesperado al intentar obtener el categoria "+ error;
+    }
+}
+
 const verificarCriterios = (arreglo) => {
     for(let i = 0; i<arreglo.length;i++){
         for(let j = i; j<arreglo.length;j++){

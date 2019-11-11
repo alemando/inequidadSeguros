@@ -32,7 +32,6 @@ export default class CategoriasList extends Component {
     fetch('/api/categorias')
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         this.setState({ categorias: data });
       })
       .catch(err => console.error(err));

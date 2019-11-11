@@ -138,6 +138,16 @@ clienteSchema.statics.obtenerCliente = async (documento)=> {
     }
 }
 
+//Metodo para retornar un cliente por su id
+clienteSchema.statics.obtenerClienteById = async (id)=> {
+    try {
+        let cliente = await clientes.findById(id)
+        return cliente;
+    } catch (error) {
+        return "ha ocurrido algo inesperado al intentar obtener el cliente con id " + id + "\n"+ error;
+    }
+}
+
 const clientes = mongoose.model('clientes', clienteSchema);
 
 module.exports = clientes;

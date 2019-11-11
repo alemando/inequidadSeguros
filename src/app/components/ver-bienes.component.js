@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import VerBien from "./ver-bien.component";
 
 const TablaBien = props => (
   <tr>
-    <td>{props.bien.id}</td>
-    <td>{props.bien.nombre_de_referencia}</td>
-    <td>{props.bien.caracteristicas}</td>
-    <button className="btn btn-primary">descarga</button>
+    <td>{props.bien.nombre}</td>
+    <td>{props.bien.categoria.nombre}</td>
+    <td><VerBien bien={props.bien} key={props.bien._id}/></td>
   </tr>
 )
 
@@ -15,8 +15,7 @@ export default class VerBienes extends Component {
     super();
 
     this.state = {
-      bienes: [],
-      showModal: false
+      bienes: []
     }
     this.verBienes = this.verBienes.bind(this);
   }
@@ -27,12 +26,12 @@ export default class VerBienes extends Component {
 
   bienesList() {
     return this.state.bienes.map(currentBien => {
-      return <TablaBien bien={currentBien} key={currentBien.id} />;
+      return <TablaBien bien={currentBien} key={currentBien._id} />;
     })
   }
 
   fetchBienes() {
-    fetch('/api/bienes/'+this.props.documento, {
+    fetch('/api/bienes/'+this.props.cliente, {
       method: 'GET'
     })
       .then(res => res.json())
@@ -45,8 +44,8 @@ export default class VerBienes extends Component {
   render() {
     return (
       <div>
-        <button type="button" onClick={this.verBienes} className="btn btn-primary" data-toggle="modal" data-target={"#Bienes" + this.props.documento}>ver bienes</button>
-        <div className="modal fade" id={"Bienes" +this.props.documento} tabIndex="-1" role="dialog" aria-hidden="true">
+        <button type="button" onClick={this.verBienes} className="btn btn-primary" data-toggle="modal" data-target={"#Bienes" + this.props.cliente}>ver bienes</button>
+        <div className="modal fade" id={"Bienes" +this.props.cliente} tabIndex="-1" role="dialog" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
@@ -60,10 +59,9 @@ export default class VerBienes extends Component {
                   <table className="table">
                     <thead className="thead-light">
                       <tr>
-                        <th>id</th>
-                        <th>Nombre de referencia</th>
-                        <th>Caracteristicas</th>
-                        <th>Documento</th>
+                        <th>Nombre</th>
+                        <th>Categoria</th>
+                        <th>Ver mas</th>
                       </tr>
                     </thead>
                     <tbody>
