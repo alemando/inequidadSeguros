@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import CreateCriterio from "./create-criterio-categoria.component";
-import VerCriterio from "./ver-criterio.component"
+import VerCriterio from "./ver-criterio.component";
+import EditCriterio from "./edit-criterio.component";
 import Swal from 'sweetalert2'
 
 const Criterio = props => (
     <tr>
         <td>{props.criterio.nombre}</td>
-        <td><VerCriterio criterio={props.criterio} key={props.criterio.mombre}/></td>
-        <td><button type="button" className="btn btn-warning">Editar</button></td>
+        <td><VerCriterio criterio={props.criterio} key={props.criterio.nombre}/></td>
+        <td><EditCriterio component={props.component} criterio={props.criterio} key={props.criterio.nombre}/></td>
         <td><button type="button" onClick={() => props.component.removeCriterio(props.criterio.index)} className="btn btn-danger">X</button></td>
     </tr>
 )

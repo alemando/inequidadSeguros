@@ -26,9 +26,8 @@ router.get('/documento/:idBien', async (req, res) => {
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   res.header('content-type', 'application/pdf');
   res.send(file);
-  //Se debe hacer algo en caso de que no llegue
+  //Se debe hacer algo en caso de que no llegue el pdf
 });
-
 
 // ADD a new bien
 router.post('/save', upload.single('documento'), async (req, res) => {

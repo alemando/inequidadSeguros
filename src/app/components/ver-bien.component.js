@@ -9,6 +9,11 @@ export default class VerBien extends Component {
 
   modalClose(){
     $('#Bien-'+this.props.bien._id).modal('hide');
+    $(document).on('hidden.bs.modal', '.modal', function () {
+      if ($('body').find('.modal.show').length > 0) {
+          $('body').addClass('modal-open');
+      }
+    });
 }
 
   render() {

@@ -8,7 +8,7 @@ export default class VerCriterio extends Component {
 }
 
   modalClose(){
-    $('#Criterio-'+ this.categoriaCriterio() +this.props.criterio.nombre).modal('hide');
+    $('#Criterio-'+ this.props.criterio._id).modal('hide');
     $(document).on('hidden.bs.modal', '.modal', function () {
       if ($('body').find('.modal.show').length > 0) {
           $('body').addClass('modal-open');
@@ -16,18 +16,11 @@ export default class VerCriterio extends Component {
     });
 }
 
-  categoriaCriterio(){
-    if(this.props.nombre){
-      return this.props.nombre + "-"
-    }
-    return ""
-  }
-
   render() {
     return (
       <div>
-        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={"#Criterio-" + this.categoriaCriterio() + this.props.criterio.nombre}>ver más</button>
-        <div className="modal fade" id={"Criterio-" + this.categoriaCriterio() +this.props.criterio.nombre} tabIndex="-1" role="dialog" aria-hidden="true">
+        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={"#Criterio-"+this.props.criterio._id}>ver más</button>
+        <div className="modal fade" id={"Criterio-"+ this.props.criterio._id} tabIndex="-1" role="dialog" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">

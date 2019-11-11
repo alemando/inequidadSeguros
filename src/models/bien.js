@@ -23,13 +23,13 @@ const bienSchema = Schema({
         trim:true
     },
     cliente: {
-		type: Schema.Types.ObjectId, 
-		ref: 'clientes',
+        type: Schema.Types.ObjectId, 
+        ref: 'clientes',
       	require: true
     },
     categoria: {
         type: Schema.Types.ObjectId, 
-		ref: 'categorias',
+		    ref: 'categorias',
         trim:true
     },
     caracteristicas: {
@@ -48,22 +48,25 @@ const bienSchema = Schema({
 bienSchema.statics.guardarBien = async function(datos) {
     let validacion = { id: "0", mensaje: ""}
 
-	//Validacion de los nombres de criterios no son repetidos
+    //Validacion del cliente
     if(await clienteModel.obtenerClienteById(datos.body.cliente) == null){
         validacion.mensaje += "bien no guardado, cliente no existe en la BD"
     }
 
-	if(await categoriaModel.obtenerCategoriaById(datos.body.categoria) == null){
+    //Validacion de la categoria
+    if(await categoriaModel.obtenerCategoriaById(datos.body.categoria) == null){
         validacion.mensaje += "bien no guardado, categoria no existe en la BD"
-	}
-	
-	if(datos.file.mimetype != 'application/pdf'){
+    }
+
+    //Validacion archivo es pdf
+    if(datos.file.mimetype != 'application/pdf'){
         validacion.mensaje += "bien no guardado, el archivo no es un pdf"
-	}
-	
-	if(datos.file.size >= 16000000){
+    }
+
+    //Validacion archivo no excede 16Mb
+    if(datos.file.size >= 16000000){
         validacion.mensaje += "bien no guardado, el archivo excede el tamaño permitido 16Mb"
-	}
+    }
 
     //Si no pasa alguna validacion retorna el mensaje correspondiente
     if(validacion.mensaje.length!=0) return validacion
@@ -107,7 +110,6 @@ bienSchema.statics.obtenerBienesPorCliente = async function(cliente){
 	populate('cliente').
 	populate('categoria').
 	exec();
-	console.log(listaBienes)
     return listaBienes;
   } catch (error) {
     return "Ha ocurrido algo al intentar obtener bienes del cliente\n" + error
@@ -125,7 +127,7 @@ bienSchema.statics.obtenerBienPorId = async function(IdBien){
 	} catch (error) {
 	  return "Ha ocurrido algo al intentar obtener el bien\n" + error
 	}
-  };
+};
 
 const bienes = mongoose.model('bienes',bienSchema);
 

@@ -1,28 +1,24 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-export default class CreateCriterio extends Component {
+
+export default class EditCriterio extends Component {
 
     constructor(props){
         super(props);
         this.state = {
+            index: '',
             nombre:'',
             descripcion:'',
             montoCubrir:0,
             deducible:''
         }
         this.handleChange = this.handleChange.bind(this);
-        this.addCriterio = this.addCriterio.bind(this);
+        this.editCriterio = this.editCriterio.bind(this);
         this.modalClose = this.modalClose.bind(this);
     }
 
     modalClose(){
-        this.setState({
-            nombre:'',
-            descripcion:'',
-            montoCubrir:0.0,
-            deducible:''
-        });
-        $('#CrearCriterio').modal('hide');
+        $('#EditarCriterio-'+this.props.criterio.index).modal('hide');
         
         $(document).on('hidden.bs.modal', '.modal', function () {
             if ($('body').find('.modal.show').length > 0) {
@@ -31,11 +27,24 @@ export default class CreateCriterio extends Component {
         });
     }
 
-    addCriterio(e){
-        e.preventDefault();
-        this.props.component.addCriterio(this.state);
+    componentDidMount(){
+        this.setState(
+            {index: this.props.criterio.index,
+            nombre: this.props.criterio.nombre,
+            descripcion: this.props.criterio.descripcion,
+            montoCubrir: this.props.criterio.montoCubrir,
+            deducible: this.props.criterio.deducible})
+    }
+
+    editCriterio(){
+        this.props.criterio.nombre = this.state.nombre;
+        this.props.criterio.descripcion = this.state.descripcion;
+        this.props.criterio.montoCubrir = this.state.montoCubrir;
+        this.props.criterio.deducible = this.state.deducible;
+        this.props.component.forceUpdate();
         this.modalClose()
     }
+    
 
     handleChange(e){
         const { name, value } = e.target;
@@ -47,19 +56,18 @@ export default class CreateCriterio extends Component {
     render(){
         return (
         <div>
-            <button type="button" className="btn btn-success  float-right" data-toggle="modal" data-target="#CrearCriterio">Añadir criterio</button>
+            <button type="button" className="btn btn-warning  float-right" data-toggle="modal" data-target={"#EditarCriterio-"+this.props.criterio.index}>Editar</button>
         
-            <div className="modal fade" id="CrearCriterio" tabIndex="-1" role="dialog" aria-hidden="true">
+            <div className="modal fade" id={"EditarCriterio-"+this.props.criterio.index} tabIndex="-1" role="dialog" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title"><b>Añadir criterio</b></h5>
+                            <h5 className="modal-title"><b>Editar criterio</b></h5>
                             <button type="button" className="close" onClick={this.modalClose} aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
-                        <form onSubmit={this.addCriterio} id="formCriterio">
                             <div className="form-group">
                                 <label>* Nombre:</label>
                                 <input name="nombre" onChange={this.handleChange} type="text" 
@@ -95,10 +103,9 @@ export default class CreateCriterio extends Component {
                                     className="form-control"
                                     />
                             </div>
-                        </form> 
                         </div>
                         <div className="modal-footer">
-                            <button type="submit" form="formCriterio" className="btn btn-primary">Enviar</button>
+                            <button type="button" onClick={this.editCriterio}  className="btn btn-primary">Enviar</button>
                             <button type="button" className="btn btn-secondary" onClick={this.modalClose} >Close</button>
                         </div>
                     </div>

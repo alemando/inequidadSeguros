@@ -86,6 +86,16 @@ aseguradoraSchema.statics.obtenerAseguradora = async (nit)=> {
     }
 }
 
+//Metodo para retornar una aseguradora por su id
+aseguradoraSchema.statics.obtenerAseguradoraById = async (id)=> {
+    try {
+        let aseguradora = await aseguradoras.findById(id);
+        return aseguradora;
+    } catch (error) {
+        return "ha ocurrido algo inesperado al intentar obtener el aseguradora\n"+ error;
+    }
+}
+
 const aseguradoras = mongoose.model('aseguradoras',aseguradoraSchema);
 
 module.exports = aseguradoras;

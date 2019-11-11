@@ -94,10 +94,20 @@ vendedorSchema.statics.obtenerVendedores = async ()=> {
     }
 }
 
-//Obtiene vendedor por el id
+//Obtiene vendedor por el dccumento
 vendedorSchema.statics.obtenerVendedor = async (id)=> {
     try{
         let vendedor = await vendedores.findOne({documentoIdentidad: id});
+        return vendedor;
+    }catch(error){
+        return "Error obteniendo vendedor por documento identidad\n" + error;
+    }
+}
+
+//Obtiene vendedor por el id
+vendedorSchema.statics.obtenerVendedorById = async (id)=> {
+    try{
+        let vendedor = await vendedores.findById(id);
         return vendedor;
     }catch(error){
         return "Error obteniendo vendedor por documento identidad\n" + error;
