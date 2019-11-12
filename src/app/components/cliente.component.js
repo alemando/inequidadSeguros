@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import ClientesList from "./clientes-list.component";
-import CreateCliente from "./create-cliente.component";
 
 export default class Cliente extends Component {
 
@@ -9,7 +8,6 @@ export default class Cliente extends Component {
     return (
         <div>
             <ClientesList />
-            <CreateCliente />
         </div>
     );
   }

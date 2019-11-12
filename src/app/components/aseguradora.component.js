@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import AseguradorasList from "./aseguradoras-list.component";
-import CreateAseguradora from "./create-aseguradora.component";
 
 export default class Cliente extends Component {
 
@@ -9,7 +8,6 @@ export default class Cliente extends Component {
     return (
         <div>
             <AseguradorasList />
-            <CreateAseguradora />
         </div>
     );
   }

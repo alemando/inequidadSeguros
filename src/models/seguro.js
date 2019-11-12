@@ -1,16 +1,31 @@
 const mongoose = require('mongoose')
-var uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
-const clientes = require('../models/cliente');
-const vendedores = require('../models/vendedor');
-const bienes = require('../models/bien');
-const aseguradoras = require('../models/aseguradora');
-const criterios = require('../models/criterio');
-const express= require('express');
-const app=express();
+const clienteModel = require('../models/cliente');
+const vendedorModel = require('../models/vendedor');
+const bienModel = require('../models/bien');
+const aseguradoraModel = require('../models/aseguradora');
 
-app.set('port',process.env.PORT || 3000);
+//Clase criterio, especial para un subdocumento
+const criterioSchema = Schema({
+    nombre:{
+        type:String,
+        require:true,
+        trim: true},
+    descripcion:{
+        type:String,
+        require:true,
+        trim: true},
+    montoCubrir:{
+        type:Number,
+        require:true,
+        trim: true},
+    deducible:{
+        type:String,
+        require:true,
+        trim: true}
+})
 
+//Clase Seguro
 const seguroSchema = Schema({
   fechaInicio: {
     type: Date,
@@ -22,177 +37,172 @@ const seguroSchema = Schema({
     require: false,
     trim: true
   },
-  valortotal: {
+  valorTotal: {
     type: Number,
     require: true,
     trim: true
   },
-  fechaPago: {
-    type: Date,
+  diaPago: {
+    type: Number,
     require: true,
     trim: true
   },
   estado: {
     type: String,
     require: true,
+    default: "En proceso",
     trim: true
   },
   observaciones:{
     type: String,
-    require: true,
+    default: "",
     trim: true
   },
-  documentoCliente: {
-    type: String,
-    require: true,
-    trim: true
+  cliente: {
+    type: Schema.Types.ObjectId, 
+    ref: 'clientes',
+    trim:true
   },
-  idBien: {
-    type: String,
-    require: true,
-    trim: true
+  bien: {
+    type: Schema.Types.ObjectId, 
+    ref: 'bienes',
+    trim:true
   },
-  documentoVendedor: {
-    type: String,
-    require: true,
-    trim: true
+  vendedor: {
+    type: Schema.Types.ObjectId, 
+    ref: 'vendedores',
+    trim:true
   },
-  nitAseguradora: {
-    type: String,
-    require: true,
-    trim: true
+  aseguradora: {
+    type: Schema.Types.ObjectId, 
+    ref: 'aseguradoras',
+    trim:true
   },
-  arrayCriterios: {
-    type: [Number],
-    require: false,
-    trim: true
-  }
+  criterios: [criterioSchema]
 });
-seguroSchema.plugin(uniqueValidator);
 
+/*
+    Metodo para guardar un seguro
+    recibe un arreglo json de parametros
+    retorna un arreglo JSON {id: #, mensaje:...}
+*/
 seguroSchema.statics.guardarSeguro = async function(datos) {
-  let cliente = await clientes.findOne({documento:datos.documentoCliente});
-  console.log(datos.documentoVendedor);
 
-  //let vendedor = await vendedores.findOne({documentoVendedor: datos.documentoVendedor});
-  let vendedor = await vendedores.obtenerVendedorPorDocumento({documentoVendedor:datos.documentoVendedor});
-  let bien = await bienes.findById({_id:datos.idBien});
-  let aseguradora = await aseguradoras.findOne({nit:datos.nitAseguradora});
-  let aux = true;
-  for (var i = 0; i < datos.arrayCriterios.length; i++) {
-    let criterio = await criterios.findOne({numero:datos.arrayCriterios[i]});
-    if(!criterio){
-      aux = false
-      console.log("Entre if")
+    let validacion = { id: "0", mensaje: ""}
+
+    //Validacion de los nombres de criterios no son repetidos
+    if(verificarCriterios(datos.criterios)){
+        validacion.mensaje += "Categoría no guardada, asegúrese de que los criterios tengan nombres diferentes"
     }
-  }
-  console.log(cliente,vendedor,bien,aseguradora,aux);
-  if(cliente && vendedor && bien && aseguradora && aux){
+
+    //Validacion del cliente
+    if(await clienteModel.obtenerClienteById(datos.cliente) == null){
+        validacion.mensaje += "seguro no guardado, cliente no existe en la BD"
+    }
+
+    //Validacion del bien
+    let bienVerificado = await bienModel.obtenerBienPorId(datos.bien)
+    if(bienVerificado == null){
+        validacion.mensaje += "seguro no guardado, bien no existe en la BD"
+    }else if(bienVerificado.cliente._id != datos.cliente){
+        validacion.mensaje += "seguro no guardado, el bien no es del cliente"
+    }
+
+    //Validacion del vendedor
+    if(await vendedorModel.obtenerVendedorById(datos.vendedor) == null){
+        validacion.mensaje += "seguro no guardado, vendedor no existe en la BD"
+    }
+
+    //Validacion de la aseguradora
+    if(await aseguradoraModel.obtenerAseguradoraById(datos.aseguradora) == null){
+        validacion.mensaje += "seguro no guardado, aseguradora no existe en la BD"
+    }
+
+    //Validacion fechaInicio es una fecha valida
+    if(isNaN(Date.parse(datos.fechaInicio))){
+        validacion.mensaje += "La fecha de incio tiene un formato erroneo\n"
+    }
+
+    //Validacion fechaFin es una fecha valida
+    if(isNaN(Date.parse(datos.fechaFin))){
+        validacion.mensaje += "La fecha de fin tiene un formato erroneo\n"
+    }
+    
+    //Validacion diaPago es un numero 
+    if(isNaN(datos.diaPago)){
+        validacion.mensaje += "El dia de pago no es un numero\n"
+    }
+
+    //Validacion valorTotal es un numero 
+    if(isNaN(datos.valorTotal)){
+        validacion.mensaje += "El valor total no es un numero\n"
+    }
+
+    //Si no pasa alguna validacion retorna el mensaje correspondiente
+    if(validacion.mensaje.length!=0) return validacion
+
+    //Objeto seguro
     const seguro = new seguros({
       fechaInicio: datos.fechaInicio,
       fechaFin: datos.fechaFin,
-      valortotal: datos.valortotal,
-      fechaPago: datos.fechaPago,
-      estado: datos.estado,
+      valorTotal: datos.valorTotal,
+      diaPago: datos.diaPago,
       observaciones: datos.observaciones,
-      documentoCliente: datos.documentoCliente,
-      idBien: datos.idBien,
-      documentoVendedor: datos.documentoVendedor,
-      nitAseguradora: datos.nitAseguradora,
-      arrayCriterios: datos.arrayCriterios
+      cliente: datos.cliente,
+      bien: datos.bien,
+      vendedor: datos.vendedor,
+      aseguradora: datos.aseguradora,
+      criterios: datos.criterios
     });
+
     try {
+        //Procedo a guardar en la BD
         await seguro.save();
-        return "seguro guardado";
+        return {id:1, mensaje: "seguro guardado"};
     } catch (error) {
-         return "error desconocido\n" + error;
+        console.log(error)
+        return {id:0, mensaje: "error desconocido"};
+         
     }
-  }else {
-    return "Algun elemento no existe"
-  }
 };
 
+//Metodo para retornar todos los seguros
 seguroSchema.statics.obtenerSeguros = async function() {
     try {
-        let segur = await seguros.find();
-        return segur;
+        let listaSeguros = await seguros.find().
+        populate('cliente', ['nombre', "apellido1","apellido2"]).
+        populate('vendedor', ['nombre', "apellido1","apellido2"]).
+        populate('bien', 'nombre').
+        populate('aseguradora', 'nombre').
+        exec();;
+        return listaSeguros;
     } catch (error) {
         return "ha ocurrido algo inesperado al intentar obtener los seguros\n"+ error;
     }
 }
+
+//Metodo para retornar un seguro por su id
 seguroSchema.statics.obtenerSeguro = async function(id) {
     try {
-        let seguro = await seguros.findOne({id:id});
+        let seguro = await seguros.findById(id);
         return seguro;
     } catch (error) {
         return "ha ocurrido algo inesperado al intentar obtener el seguro\n"+ error;
     }
 }
-seguroSchema.statics.actualizarSeguro = async function(datos) {
-    try {
-        let seguroActualizado = await seguros.findOneAndUpdate({id:datos.id}, 
-            {$set:{id:datos.id,
-                documentoVendedor:datos.documentoVendedor,
-                documentoCliente:datos.documentoCliente,
-                idBien:datos.idBien,
-                nitAseguradora:datos.nitAseguradora,
-                fechaInicio:datos.fechaInicio,
-                fechaFin:datos.fechaFin,
-                valorTotal:datos.valorTotal,
-                fechaPago:datos.fechaPago,
-                estado:datos.estado,
-                observaciones:datos.observaciones}},
-                {new:true, runValidators:true, context:'query'})
-        return "Seguro actualizado\n" + seguroActualizado;
-    } catch (error) {
-        return "el seguro no se pudo actualizar debido a un error inesperado\n" + error;
-    }
-}
-seguroSchema.statics.borrarSeguro = async function(id){
-    try {
-        let respuesta = await seguros.findOneAndDelete({id:id})
-        return respuesta;
-    } catch (error) {
-        return "el seguro no se ha podido eliminar, ha ocurrido algo inesperado\n" + error;
-    }
-}
 
-// Método para obtener la información principal de un seguro
-seguroSchema.statics.obtenerPrincipal= async function(){
-    try{
-        let respuesta= await seguros.find();
-        let answer=[]
-        for(let i=0;i<respuesta.length;i++){
-            let link=`http://localhost:${app.get('port')}/api/seguro/principal/${respuesta[i].id}`;
-            answer.push({
-                documentoCliente: respuesta[i].documentoCliente,
-                idBien: respuesta[i].idBien,
-                detalle: link
-            });
+const verificarCriterios = (arreglo) => {
+    for(let i = 0; i<arreglo.length;i++){
+        for(let j = i; j<arreglo.length;j++){
+            if(arreglo[i].nombre==arreglo[j].nombre && j!=i){
+                return true
+            }
         }
-        return answer;
-    } catch (error){
-        return "No se han podido mostrar los datos principales, ha ocurrido algo inesperado \n" +error;
     }
-}
 
-seguroSchema.statics.obtenerPrincipal= async function(){
-  try{
-      let respuesta= await seguros.find();
-      let answer=[]
-      for(let i=0;i<respuesta.length;i++){
-          let det= await seguros.findById({_id: respuesta[i].id});
-          answer.push({
-              documentoCliente: respuesta[i].documentoCliente,
-              idBien: respuesta[i].idBien,
-              detalle: det
-          });
-      }
-      return answer;
-  } catch (error){
-      return "No se han podido mostrar los datos principales, ha ocurrido algo inesperado \n" +error;
-  }
-}
+    return false
+};
+
 const seguros = mongoose.model('seguros',seguroSchema);
 
 module.exports = seguros;

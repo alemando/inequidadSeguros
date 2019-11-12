@@ -35,3 +35,7 @@
 .mt{
   margin-top: 5px;
 }
+
+.modal{
+  overflow:auto !important;
+}

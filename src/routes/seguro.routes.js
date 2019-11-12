@@ -10,37 +10,15 @@ router.get('/', async (req,res)=>{
   res.json(seguros);
 });
 
-// GET one Seguro by documento
-router.post('/getById', async (req, res) => {
-  const seguro = await Seguro.obtenerSeguro(req.body.id);
+// GET one seguro by id
+router.get('/:id', async (req, res) => {
+  const seguro = await Seguro.obtenerSeguro(req.params._id);
   res.json(seguro);
 });
 
 // ADD seguro
 router.post('/save', async (req, res) =>{
   resultado = await Seguro.guardarSeguro(req.body);
-  res.json({status: resultado});
-});
-
-//Get all seguros modificado
-router.get('/principal', async(req,res)=>{
-  resultado = await Seguro.obtenerPrincipal();
-  res.send(resultado);
- //UPDATE a seguro
-});
-router.post('/updateById', async (req, res) => {
-  resultado = await Seguro.actualizarSeguro(req.body);
-  res.json({status: resultado});
-});
- //Delete a seguro
-router.post('/borrar', async (req, res) => {
-  resultado = await Seguro.borrarSeguro(req.body.id);
-  res.json({status: resultado});
-});
-
-//Obtener datos principales del seguro
-router.get('/principal', async (req,res)=>{
-  resultado= await Seguro.obtenerPrincipal();
   res.json(resultado);
 });
 

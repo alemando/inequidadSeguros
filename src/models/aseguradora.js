@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 var uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
 
+//Clase Aseguradora
 const aseguradoraSchema = Schema({
     nit: {
         type: String,
@@ -25,71 +26,76 @@ const aseguradoraSchema = Schema({
         trim:true
     }
 });
+
+//Validacion en BD de valores unicos
 aseguradoraSchema.plugin(uniqueValidator);
 
-aseguradoraSchema.statics.guardarAseguradora = async function(datos) {
+const patronCorreo = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    var patronCorreo = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+/*
+    Metodo para guardar una aseguradora
+    recibe un arreglo json de parametros
+    retorna un arreglo JSON {id: #, mensaje:...}
+*/
+aseguradoraSchema.statics.guardarAseguradora = async (datos)=> {
     
     let validacion = { id: "0", mensaje: ""}
 
+    //Validacion basada en regex de el formato de un correo
     if(!patronCorreo.test(datos.correo)){
         validacion.mensaje += "El correo no sigue el formato example@dominio.ext\n"
     }
-    
+
+    //Si no pasa alguna validacion retorna el mensaje correspondiente
     if(validacion.mensaje.length!=0) return validacion
 
+    //Objeto aseguradora
     const aseguradoraNueva = new aseguradoras(
-        {nit:datos.nit,
-        nombre:datos.nombre,
-        telefono:datos.telefono,
-        correo:datos.correo});
+        {nit: datos.nit,
+        nombre: datos.nombre,
+        telefono: datos.telefono,
+        correo: datos.correo});
     try {
+        //Procedo a guardar en la BD
         await aseguradoraNueva.save();
-        return { id: "0", mensaje: "aseguradora guardada"};
+        return { id: "1", mensaje: "aseguradora guardada"};
     } catch (error) {
         if (error.errors.nit.kind==="unique") return { 
             id: "2", mensaje: "El nit ingresado ya existe en nuestra base de datos"};
-        else return { id: "0", mensaje: "error desconocido"};
+        else return { id: "0", mensaje: "Error desconocido"};
     }
 };
-aseguradoraSchema.statics.obtenerAseguradoras = async function() {
+
+//Metodo para reotornar todas las aseguradoras de la BD
+aseguradoraSchema.statics.obtenerAseguradoras = async ()=> {
     try {
-        let aseguradorasli = await aseguradoras.find();
-        return aseguradorasli;
+        let listaAseguradoras = await aseguradoras.find();
+        return listaAseguradoras;
     } catch (error) {
         return "ha ocurrido algo inesperado al intentar obtener las aseguradoras\n"+ error;
     }
 }
-aseguradoraSchema.statics.obtenerAseguradora = async function(nit) {
+
+//Metodo para retornar una aseguradora por su nit
+aseguradoraSchema.statics.obtenerAseguradora = async (nit)=> {
     try {
-        let aseguradora = await aseguradoras.findOne({nit:nit});
+        let aseguradora = await aseguradoras.findOne({nit: nit});
         return aseguradora;
     } catch (error) {
         return "ha ocurrido algo inesperado al intentar obtener el aseguradora\n"+ error;
     }
 }
-aseguradoraSchema.statics.actualizarAseguradora = async function(datos) {
+
+//Metodo para retornar una aseguradora por su id
+aseguradoraSchema.statics.obtenerAseguradoraById = async (id)=> {
     try {
-        let aseguradoraActualizado = await aseguradoras.findOneAndUpdate(
-            {nit:datos.nit},
-             {$set:{nombre:datos.nombre,
-                telefono:datos.telefono,
-                correo:datos.correo}},
-             {new:true, runValidators:true, context:'query'})
-        return "Aseguradora actualizada\n" + aseguradoraActualizado;
+        let aseguradora = await aseguradoras.findById(id);
+        return aseguradora;
     } catch (error) {
-        return "la aseguradora no se pudo actualizar debido a un error inesperado\n" + error;
+        return "ha ocurrido algo inesperado al intentar obtener el aseguradora\n"+ error;
     }
 }
-aseguradoraSchema.statics.borrarAseguradora = async function(nit){
-    try {
-        let respuesta = await aseguradoras.findOneAndDelete({nit:nit})
-        return respuesta;
-    } catch (error) {
-        return "la aseguradora no se ha podido eliminar, ha ocurrido algo inesperado\n" + error;
-    }
-}
+
 const aseguradoras = mongoose.model('aseguradoras',aseguradoraSchema);
 
 module.exports = aseguradoras;
