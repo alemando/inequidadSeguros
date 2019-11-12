@@ -2,12 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
-const multer = require('multer');
-var upload = multer({})
 const app = express();
-
-app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
 
 //DB
 const { mongoose} = require('./database.js');
@@ -16,11 +11,10 @@ const { mongoose} = require('./database.js');
 const indexRoutes = require('./routes/index.routes.js');
 const clienteRoutes = require('./routes/cliente.routes.js');
 const aseguradoraRoutes = require('./routes/aseguradora.routes.js')
-const bienesRoutes= require('./routes/bien.routes.js')
+const bienRoutes= require('./routes/bien.routes.js')
 const categoriaRoutes = require('./routes/categoria.routes.js')
 const seguroRoutes = require('./routes/seguro.routes.js')
 const vendedorRoutes = require('./routes/vendedor.routes.js')
-const criterioRoutes = require('./routes/criterio.routes.js')
 
 //Settings
 app.set('port', process.env.PORT || 3000)
@@ -28,15 +22,16 @@ app.set('port', process.env.PORT || 3000)
 //Middlewares
 app.use(cors());
 app.use(morgan('dev'));
+app.use(express.urlencoded({ extended: false }))
 app.use(express.json());
+
 //Routes
 app.use(indexRoutes)
 app.use('/api/clientes', clienteRoutes);
 app.use('/api/aseguradoras', aseguradoraRoutes);
-app.use('/api/bienes', bienesRoutes);
+app.use('/api/bienes', bienRoutes);
 app.use('/api/categorias', categoriaRoutes);
 app.use('/api/seguros', seguroRoutes);
-app.use('/api/criterios', criterioRoutes);
 app.use('/api/vendedores', vendedorRoutes);
 
 //Static files
