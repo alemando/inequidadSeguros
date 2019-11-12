@@ -22,4 +22,10 @@ router.post('/save', async (req, res) =>{
   res.json(resultado);
 });
 
+//Link para ver la información completa de un seguro en específico (Sale de /principal)
+router.get('/principal/:id', async(req,res)=>{
+  let respuesta = await Seguro.findById({_id: req.url.split('/')[2]});
+  res.json(respuesta);
+});
+
 module.exports = router;
