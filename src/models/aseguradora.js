@@ -40,9 +40,20 @@ const patronCorreo = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+
 aseguradoraSchema.statics.guardarAseguradora = async (datos)=> {
     
     let validacion = { id: "0", mensaje: ""}
-
+    //Validaciones para cada uno de los campos a la hora de crear aseguradoras
+    if(datos.nit.length==0){
+        validacion.mensaje = "No puedes dejar el campo del nit vacío \n";
+    }
+    else if(datos.nombre.length==0){
+        validacion.mensaje = "No puedes dejar el campo del nombre vacío \n";
+    } else if(datos.telefono.length==0){
+        validacion.mensaje = "No puedes dejar el campo del teléfono vacío \n";
+    }
+    else if(datos.correo.length==0){
+        validacion.mensaje = "No puedes dejar el campo del correo vacío \n";
+    }
     //Validacion basada en regex de el formato de un correo
-    if(!patronCorreo.test(datos.correo)){
+    else if(!patronCorreo.test(datos.correo)){
         validacion.mensaje += "El correo no sigue el formato example@dominio.ext\n"
     }
 
