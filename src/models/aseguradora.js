@@ -108,14 +108,12 @@ aseguradoraSchema.statics.obtenerAseguradoraById = async (id)=> {
 }
 
 //Método para actualizar la aseguradora
-aseguradoraSchema.statics.ActualizarAseguradora = async (datos) =>{
+aseguradoraSchema.statics.actualizarAseguradora = async (datos) =>{
     try{
-        //Comprobamos que si exista
-        if(!aseguradoras.findById(datos.id)){
-            throw "inexistente";
-        }
+        //Restricciones para el Json de entrada
+        //Restricciones para campos obligatorios que no pueden ser nulos
         if(datos.nit.length==0){
-            throw "vacio";
+            throw "vacio";          
         }
         else if(datos.nombre.length==0){
             throw "vacio";
@@ -125,28 +123,26 @@ aseguradoraSchema.statics.ActualizarAseguradora = async (datos) =>{
         else if(datos.correo.length==0){
             throw "vacio";
         }
-        // Tenemos el objeto consulta para hacer comprobaciones
-        let consulta = await aseguradoras.findById(datos.id);
+        // Tenemos el objeto consulta para hacer comprobaciones de atributos no modificables
+        //Las búsquedas por ahora las estamos haciendo por el nit del objeto de entrada
+        let consulta = await aseguradoras.findById(datos._id);
         if(consulta.nit != datos.nit){
             throw "nit";
         }
-        if (consulta.nombre != datos.nombre){
-            throw "nombre"
-        }
-        let nuevo = await aseguradoras.findByIdAndUpdate({_id : datos.id},{
-            $set :{
-                nit : consulta.nit,
-                nombre : consulta.nombre,
-                telefono : datos.telefono,
-                correo : datos.correo
-            }},
-            {new:true, runValidators:true, context:'query'})
-            return nuevo;
+        //Proceso de actualización de los datos
+        let nuevo = await aseguradoras.findByIdAndUpdate(datos._id,
+            {
+                "nit" : consulta.nit,
+                "nombre" : consulta.nombre,
+                "telefono" : datos.telefono,
+                "correo" : datos.correo
+            });
+            //Mensaje de confirmación
+            return "Aseguradora actulizada";
+
     } catch(error){
-        if(error === "inexistente"){
-            return  "No se encontró la aseguradora en la base de datos";
-        }
-        else if(error === "vacio"){
+        //Manejo de errores
+        if(error === "vacio"){
             return  "No se pueden dejar campos en blanco para el nuevo objeto";
         }
         else if(error === "nit"){
@@ -156,7 +152,8 @@ aseguradoraSchema.statics.ActualizarAseguradora = async (datos) =>{
             return  "El nombre de la aseguradora no se puede modificar";
         }
         else{
-            return "Se ha producido un error inesperado \n" + error;
+            return `Se ha producido un error inesperado:  
+            ${error} `;
         }                
     }
 }
