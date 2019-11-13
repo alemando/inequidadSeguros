@@ -107,6 +107,59 @@ aseguradoraSchema.statics.obtenerAseguradoraById = async (id)=> {
     }
 }
 
+//Método para actualizar la aseguradora
+aseguradoraSchema.statics.ActualizarAseguradora = async (datos) =>{
+    try{
+        //Comprobamos que si exista
+        if(!aseguradoras.findById(datos.id)){
+            throw "inexistente";
+        }
+        if(datos.nit.length==0){
+            throw "vacio";
+        }
+        else if(datos.nombre.length==0){
+            throw "vacio";
+        } else if(datos.telefono.length==0){
+            throw "vacio";
+        }
+        else if(datos.correo.length==0){
+            throw "vacio";
+        }
+        // Tenemos el objeto consulta para hacer comprobaciones
+        let consulta = await aseguradoras.findById(datos.id);
+        if(consulta.nit != datos.nit){
+            throw "nit";
+        }
+        if (consulta.nombre != datos.nombre){
+            throw "nombre"
+        }
+        let nuevo = await aseguradoras.findByIdAndUpdate({_id : datos.id},{
+            $set :{
+                nit : consulta.nit,
+                nombre : consulta.nombre,
+                telefono : datos.telefono,
+                correo : datos.correo
+            }},
+            {new:true, runValidators:true, context:'query'})
+            return nuevo;
+    } catch(error){
+        if(error === "inexistente"){
+            return  "No se encontró la aseguradora en la base de datos";
+        }
+        else if(error === "vacio"){
+            return  "No se pueden dejar campos en blanco para el nuevo objeto";
+        }
+        else if(error === "nit"){
+            return  "El nit no se puede modificar";
+        }
+        else if(error === "nombre"){
+            return  "El nombre de la aseguradora no se puede modificar";
+        }
+        else{
+            return "Se ha producido un error inesperado \n" + error;
+        }                
+    }
+}
 const aseguradoras = mongoose.model('aseguradoras',aseguradoraSchema);
 
 module.exports = aseguradoras;
