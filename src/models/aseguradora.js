@@ -106,63 +106,6 @@ aseguradoraSchema.statics.obtenerAseguradoraById = async (id)=> {
         return "ha ocurrido algo inesperado al intentar obtener el aseguradora\n"+ error;
     }
 }
-
-//Método para actualizar la aseguradora
-aseguradoraSchema.statics.actualizarAseguradora = async (datos) =>{
-    try{
-        //Restricciones para el Json de entrada
-        //Restricciones para campos obligatorios que no pueden ser nulos
-        if(datos.nit.length==0){
-            throw "vacionit";          
-        }
-        else if(datos.nombre.length==0){
-            throw "vacionombre";
-        } else if(datos.telefono.length==0){
-            throw "vaciotel";
-        }
-        else if(datos.correo.length==0){
-            throw "vaciocor";
-        }
-        // Tenemos el objeto consulta para hacer comprobaciones de atributos no modificables
-        //Las búsquedas por ahora las estamos haciendo por el nit del objeto de entrada
-        let consulta = await aseguradoras.findById(datos._id);
-        if(consulta.nit != datos.nit){
-            throw "nit";
-        }
-        //Proceso de actualización de los datos
-        let nuevo = await aseguradoras.findByIdAndUpdate(datos._id,
-            {
-                "nit" : consulta.nit,
-                "nombre" : datos.nombre,
-                "telefono" : datos.telefono,
-                "correo" : datos.correo
-            });
-            //Mensaje de confirmación
-            return "Aseguradora actulizada";
-
-    } catch(error){
-        //Manejo de errores
-        if(error === "vacionit"){
-            return  "No se puede dejar el campo de nit en blanco para el nuevo objeto";
-        }
-        else if(error === "vacionombre"){
-            return  "No se puede dejar el campo de nombre en blanco para el nuevo objeto";
-        }
-        else if(error === "vaciotel"){
-            return  "No se puede dejar el campo de telefono en blanco para el nuevo objeto";
-        }
-        else if(error === "vaciocor"){
-            return  "No se puede dejar el campo de correo en blanco para el nuevo objeto";
-        }                   
-        else if(error === "nit"){
-            return  "El nit no se puede modificar";
-        }
-        else{
-            return `Se ha producido un error inesperado:  
-            ${error} `;
-        }                
-    }
-}
 const aseguradoras = mongoose.model('aseguradoras',aseguradoraSchema);
 
 module.exports = aseguradoras;
