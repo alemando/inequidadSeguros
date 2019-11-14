@@ -113,15 +113,15 @@ aseguradoraSchema.statics.actualizarAseguradora = async (datos) =>{
         //Restricciones para el Json de entrada
         //Restricciones para campos obligatorios que no pueden ser nulos
         if(datos.nit.length==0){
-            throw "vacio";          
+            throw "vacionit";          
         }
         else if(datos.nombre.length==0){
-            throw "vacio";
+            throw "vacionombre";
         } else if(datos.telefono.length==0){
-            throw "vacio";
+            throw "vaciotel";
         }
         else if(datos.correo.length==0){
-            throw "vacio";
+            throw "vaciocor";
         }
         // Tenemos el objeto consulta para hacer comprobaciones de atributos no modificables
         //Las búsquedas por ahora las estamos haciendo por el nit del objeto de entrada
@@ -133,7 +133,7 @@ aseguradoraSchema.statics.actualizarAseguradora = async (datos) =>{
         let nuevo = await aseguradoras.findByIdAndUpdate(datos._id,
             {
                 "nit" : consulta.nit,
-                "nombre" : consulta.nombre,
+                "nombre" : datos.nombre,
                 "telefono" : datos.telefono,
                 "correo" : datos.correo
             });
@@ -142,14 +142,20 @@ aseguradoraSchema.statics.actualizarAseguradora = async (datos) =>{
 
     } catch(error){
         //Manejo de errores
-        if(error === "vacio"){
-            return  "No se pueden dejar campos en blanco para el nuevo objeto";
+        if(error === "vacionit"){
+            return  "No se puede dejar el campo de nit en blanco para el nuevo objeto";
         }
+        else if(error === "vacionombre"){
+            return  "No se puede dejar el campo de nombre en blanco para el nuevo objeto";
+        }
+        else if(error === "vaciotel"){
+            return  "No se puede dejar el campo de telefono en blanco para el nuevo objeto";
+        }
+        else if(error === "vaciocor"){
+            return  "No se puede dejar el campo de correo en blanco para el nuevo objeto";
+        }                   
         else if(error === "nit"){
             return  "El nit no se puede modificar";
-        }
-        else if(error === "nombre"){
-            return  "El nombre de la aseguradora no se puede modificar";
         }
         else{
             return `Se ha producido un error inesperado:  
