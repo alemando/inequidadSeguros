@@ -34,7 +34,7 @@ const categoriaSchema = Schema({
     estado:{
       type: Boolean,
       require: true,
-      trim: true
+      default: false
     }
 })
 
@@ -54,7 +54,9 @@ categoriaSchema.statics.guardarCategoria = async (datos)=> {
       validacion.mensaje +="Categoría no guardada, JSON vacio"
     }else{
       // Validacion si nombre es no null o string vacio
-      if(datos.nombre == ""){
+      if(datos.nombre == null){
+        validacion.mensaje +="Categoría no guardada, no puedes dejar el nombre de categoría null"
+      }else if (datos.nombre == "") {
         validacion.mensaje +="Categoría no guardada, asegúrese de que la categoría tenga un nombre"
       }
 
@@ -76,8 +78,7 @@ categoriaSchema.statics.guardarCategoria = async (datos)=> {
     //Objeto categoria
     const categoriaNuevo = new categorias(
         {nombre: datos.nombre,
-         criterios: datos.criterios,
-         estado: false});
+         criterios: datos.criterios});
 
     try {
         //Procedo a guardar en la BD
