@@ -28,6 +28,10 @@ router.post('/update',async (req,res) => {
   res.json(resultado)
 });
 
-//chan
+//Change status categoria
+router.post('/estado',async (req,res) => {
+  resultado = await Categoria.actualizarCategoriaEstado(req.body);
+  res.json(resultado)
+});
 
 module.exports = router;

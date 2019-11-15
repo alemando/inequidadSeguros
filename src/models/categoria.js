@@ -147,8 +147,14 @@ categoriaSchema.statics.actualizarCategoria = async(datos) =>{
   }
 }
 
-ategoriaSchema.statics.actualizarCategoriaEstado= async(datos) =>{
-  
+categoriaSchema.statics.actualizarCategoriaEstado= async(datos) =>{
+  try {
+    let categoria = await categorias.findById(datos._id)
+    await categoria.update({estado: !categoria.estado});
+    return {id:"1", mensaje: "Cambio de estado correcto"};
+  } catch (e) {
+    return {id: "0", mensaje: 'Error desconocido: ${e}'};
+  }
 }
 
 const verificarCriterios = (arreglo) => {
