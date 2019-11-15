@@ -68,7 +68,8 @@ aseguradoraSchema.statics.guardarAseguradora = async (datos)=> {
     if(datos.telefono == null){
         validacion.mensaje += "No puedes dejar como nulo el atributo telefono\n";
     }
-    if(datos.telefono.length==0){
+    else if(datos.telefono.length==0){
+        validacion.mensaje += "No puedes dejar el campo del teléfono vacío\n";
     }
 
     //Para correo
