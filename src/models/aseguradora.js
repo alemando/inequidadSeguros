@@ -46,30 +46,37 @@ aseguradoraSchema.statics.guardarAseguradora = async (datos)=> {
     
     let validacion = { id: "0", mensaje: ""}
     //Validaciones para cada uno de los campos a la hora de crear aseguradoras
-    //Validadciones tipo null
+    //Por cada atributo, primero se verifica si es null y después si es un string vacío
+
+    //Para nit
     if(datos.nit == null){
-        validacion.mensaje = "No puedes dejar como nulo el atributo nit\n";
-    }
-    //Validaciones tipo campos vacios
-    else if(datos.nombre == null){
-        validacion.mensaje = "No puedes dejar como nulo el atributo nombre\n";
-    }
-    else if(datos.telefono == null){
-        validacion.mensaje = "No puedes dejar como nulo el atributo telefono\n";
-    }
-    else if(datos.correo == null){
-        validacion.mensaje = "No puedes dejar como nulo el atributo correo\n";
+        validacion.mensaje += "No puedes dejar como nulo el atributo nit\n";
     }
     else if(datos.nit.length==0){
-        validacion.mensaje = "No puedes dejar el campo del nit vacío\n";
+        validacion.mensaje += "No puedes dejar el campo del nit vacío\n";
+    }
+
+    //Para nombre
+    if(datos.nombre == null){
+        validacion.mensaje += "No puedes dejar como nulo el atributo nombre\n";
     }
     else if(datos.nombre.length==0){
-        validacion.mensaje = "No puedes dejar el campo del nombre vacío\n";
-    } else if(datos.telefono.length==0){
-        validacion.mensaje = "No puedes dejar el campo del teléfono vacío\n";
+        validacion.mensaje += "No puedes dejar el campo del nombre vacío\n";
+    }
+
+    //Para teléfono
+    if(datos.telefono == null){
+        validacion.mensaje += "No puedes dejar como nulo el atributo telefono\n";
+    }
+    if(datos.telefono.length==0){
+    }
+
+    //Para correo
+    if(datos.correo == null){
+        validacion.mensaje += "No puedes dejar como nulo el atributo correo\n";
     }
     else if(datos.correo.length==0){
-        validacion.mensaje = "No puedes dejar el campo del correo vacío\n";
+        validacion.mensaje += "No puedes dejar el campo del correo vacío\n";
     }
     //Validacion basada en regex de el formato de un correo
     else if(!patronCorreo.test(datos.correo)){
