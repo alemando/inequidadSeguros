@@ -22,4 +22,12 @@ router.post('/save', async (req, res) => {
   res.json(resultado);
 });
 
+// Update categoria
+router.post('/update',async (req,res) => {
+  resultado = await Categoria.actualizarCategoria(req.body);
+  res.json(resultado)
+});
+
+//chan
+
 module.exports = router;

@@ -30,7 +30,12 @@ const categoriaSchema = Schema({
         trim:true,
         unique:true
     },
-    criterios: [criterioSchema]
+    criterios: [criterioSchema],
+    estado: {
+      type: Boolean,
+      require: true,
+      default: false
+    }
 })
 
 //Validador de valores unicos
@@ -44,7 +49,7 @@ categoriaSchema.plugin(uniqueValidator);
 categoriaSchema.statics.guardarCategoria = async (datos)=> {
 
     let validacion = { id: "0", mensaje: ""}
-    
+
     //Validacion de los nombres de criterios no son repetidos
     if(verificarCriterios(datos.criterios)){
         validacion.mensaje += "Categoría no guardada, asegúrese de que los criterios tengan nombres diferentes"
@@ -52,10 +57,10 @@ categoriaSchema.statics.guardarCategoria = async (datos)=> {
 
     //Si no pasa alguna validacion retorna el mensaje correspondiente
     if(validacion.mensaje.length!=0) return validacion
-    
+
     //Objeto categoria
     const categoriaNuevo = new categorias(
-        {nombre: datos.nombre, 
+        {nombre: datos.nombre,
             criterios: datos.criterios});
 
     try {
@@ -63,7 +68,7 @@ categoriaSchema.statics.guardarCategoria = async (datos)=> {
         await categoriaNuevo.save()
         return { id: "1", mensaje: "Categoría guardada."}
     } catch (error) {
-        if (error.errors.nombre.kind==="unique") return { 
+        if (error.errors.nombre.kind==="unique") return {
             id: "2", mensaje: "Ya existe una categoría "+datos.nombre+" en la base de datos."};
         else return { id: "0", mensaje: "Error desconocido"};
     }
@@ -98,6 +103,52 @@ categoriaSchema.statics.obtenerCategoriaById = async (id) => {
     } catch (error) {
         return "ha ocurrido algo inesperado al intentar obtener el categoria "+ error;
     }
+}
+
+//Metodo para actualizar los campos de categorias
+categoriaSchema.statics.actualizarCategoria = async(datos) =>{
+  try{
+    //Verificacion del atributo nombre no sea ni null ni vacio
+    if(datos.nombre == null){
+      throw "nullNombre";
+    }else if (datos.nombre == "") {
+      throw "vacioNombre";
+    }
+
+    //Verificacion del atributo criterios no sea null
+    if(datos.criterios == null){
+      throw "nullCriterios"
+    }
+
+    //Actualizacion de categoria
+    let update = await categorias.findByIdAndUpdate(datos._id,
+    {
+      "nombre": datos.nombre,
+      "criterios": datos.criterios
+    });
+
+    return {id: "1", mensaje: "Categoria Actualizada"};
+  }catch(error){
+      let validacion = { id: "0", mensaje: ""}
+    //errores
+    if(error == "nullNombre"){
+      validacion.mensaje += "No se puede dejar el campo de nombre en null";
+      return validacion;
+    }else if (error == "vacioNombre") {
+      validacion.mensaje += "No se puede dejar el campo de nombre vacio";
+      return validacion;
+    }else if(error == "nullCriterios"){
+      validacion.mensaje += "No se puede dejar el campo de criterios en null";
+      return validacion;
+    }else{
+      validacion.mensaje += "Error desconocido";
+      return validacion;
+    }
+  }
+}
+
+ategoriaSchema.statics.actualizarCategoriaEstado= async(datos) =>{
+  
 }
 
 const verificarCriterios = (arreglo) => {
