@@ -30,7 +30,12 @@ const categoriaSchema = Schema({
         trim:true,
         unique:true
     },
-    criterios: [criterioSchema]
+    criterios: [criterioSchema],
+    estado:{
+      type: Boolean,
+      require: true,
+      trim: true
+    }
 })
 
 //Validador de valores unicos
@@ -44,26 +49,42 @@ categoriaSchema.plugin(uniqueValidator);
 categoriaSchema.statics.guardarCategoria = async (datos)=> {
 
     let validacion = { id: "0", mensaje: ""}
-    
-    //Validacion de los nombres de criterios no son repetidos
-    if(verificarCriterios(datos.criterios)){
-        validacion.mensaje += "Categoría no guardada, asegúrese de que los criterios tengan nombres diferentes"
+    //Validar que datos no esta vacido
+    if(Object.keys(datos).length == 0){
+      validacion.mensaje +="Categoría no guardada, JSON vacio"
+    }else{
+      // Validacion si nombre es no null o string vacio
+      if(datos.nombre == ""){
+        validacion.mensaje +="Categoría no guardada, asegúrese de que la categoría tenga un nombre"
+      }
+
+     //Validacion que exista el atributo opcional criterios
+      if(datos.criterios){
+          //Validacion de los nombres de criterios no son repetidos
+        if(verificarCriterios(datos.criterios)){
+          validacion.mensaje += "Categoría no guardada, asegúrese de que los criterios tengan nombres diferentes"
+        }
+      }
+
     }
+
+
 
     //Si no pasa alguna validacion retorna el mensaje correspondiente
     if(validacion.mensaje.length!=0) return validacion
-    
+
     //Objeto categoria
     const categoriaNuevo = new categorias(
-        {nombre: datos.nombre, 
-            criterios: datos.criterios});
+        {nombre: datos.nombre,
+         criterios: datos.criterios,
+         estado: false});
 
     try {
         //Procedo a guardar en la BD
         await categoriaNuevo.save()
         return { id: "1", mensaje: "Categoría guardada."}
     } catch (error) {
-        if (error.errors.nombre.kind==="unique") return { 
+        if (error.errors.nombre.kind==="unique") return {
             id: "2", mensaje: "Ya existe una categoría "+datos.nombre+" en la base de datos."};
         else return { id: "0", mensaje: "Error desconocido"};
     }
@@ -111,6 +132,7 @@ const verificarCriterios = (arreglo) => {
 
     return false
 };
+
 
 
 const categorias = mongoose.model('categorias', categoriaSchema);
