@@ -112,7 +112,7 @@ body {
   left: 0;
   right:0;
   width: auto !important;
-  position: fixed !important;
+  
  }
 
  .overlayContainer.expanded{
