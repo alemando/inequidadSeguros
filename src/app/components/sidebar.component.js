@@ -11,25 +11,26 @@ export default props => {
   return (
     <MediaQuery minDeviceWidth={1224} device={{ deviceWidth: 1600 }}>
     <Menu>
-     
+    
+
     <a className="menu-item" href="/index">
-       <font color="#2ebf91"> <b><h2>Menú principal</h2></b></font>
+      <p> <font color="#1565C0"> <b><h2><i className="fa fa-fw fa-home"></i> Menú </h2></b></font></p>
       </a>
 
       <a className="menu-item" href="/seguros">
-      <font color="#2ebf91"><b><h3>Seguros </h3></b></font>
+      <p><font color="#1565C0"><b><h3><i className="fa fa-shield"></i> Seguros </h3></b></font></p>
       </a>
 
       <a className="menu-item" href="/categorias">
-      <font color="#2ebf91"><b><h3>Categorías</h3></b></font>
+      <p><font color="#1565C0"><b><h3><i className="fa fa-archive"></i> Categorías</h3></b></font></p>
       </a>
 
       <a className="menu-item" href="/clientes">
-      <font color="#2ebf91"><b><h3>Clientes</h3></b></font>
+      <p><font color="#1565C0"><b><h3><i className="fa fa-users"></i> Clientes</h3></b></font></p>
       </a>
 
       <a className="menu-item" href="/vendedores">
-      <font color="#2ebf91"><b><h3>Vendedores</h3></b></font>
+      <p><font color="#1565C0"><b><h3><i className="fa fa-id-card-o"></i> Vendedores</h3></b></font></p>
       </a>
 
       
