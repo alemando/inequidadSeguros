@@ -89,6 +89,10 @@ const seguroSchema = Schema({
 seguroSchema.statics.guardarSeguro = async function(datos) {
 
     let validacion = { id: "0", mensaje: ""}
+    //Validar que json no este vacío
+    if(object.keys(datos).length == 0){
+        validacion.mensaje += "Seguro no guardado, datos vacíos"
+    }
 
     //Validacion de los nombres de criterios no son repetidos
     if(verificarCriterios(datos.criterios)){
@@ -99,8 +103,14 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     if(await clienteModel.obtenerClienteById(datos.cliente) == null){
         validacion.mensaje += "seguro no guardado, cliente no existe en la BD"
     }
+    if(datos.cliente == null || datos.cliente == ""){
+        validacion.mensaje += "Seguro no guardado, cliente vacío"
+    }
 
     //Validacion del bien
+    if(datos.bien == null || datos.bien == ""){
+        validacion.mensaje += "Seguro no guardado, bien vacío"
+    }
     let bienVerificado = await bienModel.obtenerBienPorId(datos.bien)
     if(bienVerificado == null){
         validacion.mensaje += "seguro no guardado, bien no existe en la BD"
@@ -109,6 +119,9 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     }
 
     //Validacion del vendedor
+    if(datos.vendedor == null || datos.vendedor == ""){
+        validacion.mensaje += "Seguro no guardado, vendedor vacío"
+    }
     if(await vendedorModel.obtenerVendedorById(datos.vendedor) == null){
         validacion.mensaje += "seguro no guardado, vendedor no existe en la BD"
     }
@@ -117,23 +130,38 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     if(await aseguradoraModel.obtenerAseguradoraById(datos.aseguradora) == null){
         validacion.mensaje += "seguro no guardado, aseguradora no existe en la BD"
     }
+    if(datos.aseguradora == null || datos.aseguradora == ""){
+        validacion.mensaje += "Seguro no guardado, aseguradora vacía\n"
+    }
 
     //Validacion fechaInicio es una fecha valida
     if(isNaN(Date.parse(datos.fechaInicio))){
         validacion.mensaje += "La fecha de incio tiene un formato erroneo\n"
+    }
+    if(datos.fechaInicio == null || datos.fechaInicio == ""){
+        validacion.mensaje += "Seguro no guadado, fecha de inicio vacía\n"
     }
 
     //Validacion fechaFin es una fecha valida
     if(isNaN(Date.parse(datos.fechaFin))){
         validacion.mensaje += "La fecha de fin tiene un formato erroneo\n"
     }
+    if(datos.fechaFin == null || datos.fechaFin == ""){
+        validacion.mensaje += "Seguro no guadado, fecha de fin vacía\n"
+    }
     
     //Validacion diaPago es un numero 
     if(isNaN(datos.diaPago)){
         validacion.mensaje += "El dia de pago no es un numero\n"
     }
+    if(datos.diaPago == null || datos.diaPago == ""){
+        validacion.mensaje += "Seguro no guardado, dia de pago vacío\n"
+    }
 
     //Validacion valorTotal es un numero 
+    if(datos.valorTotal == null || datos.valorTotal == ""){
+        validacion.mensaje += "El valor total está vacío\n"
+    }
     if(isNaN(datos.valorTotal)){
         validacion.mensaje += "El valor total no es un numero\n"
     }
