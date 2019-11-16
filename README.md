@@ -1,2 +1,0 @@
-# inequidadSeguros
-Proyecto de requisitos
