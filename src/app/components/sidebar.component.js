@@ -17,19 +17,19 @@ export default props => {
     <a className="menu-item" href="/index">
        <font color="#1565C0"> <b><h2><i className="fa fa-fw fa-home"></i> Menú </h2></b></font>
       </a>
-      
+      <hr width="80%"></hr>
       <a className="menu-item" href="/seguros">
       <font color="#1565C0"><b><h2><i className="fa fa-shield"></i> Seguros </h2></b></font>
       </a>
-
+      <hr width="80%"></hr>
       <a className="menu-item" href="/categorias">
       <font color="#1565C0"><b><h2><i className="fa fa-archive"></i> Categorías</h2></b></font>
       </a>
-
+      <hr width="80%"></hr>
       <a className="menu-item" href="/clientes">
       <font color="#1565C0"><b><h2><i className="fa fa-users"></i> Clientes</h2></b></font>
       </a>
-
+      <hr width="80%"></hr>
       <a className="menu-item" href="/vendedores">
      <font color="#1565C0"><b><h2><i className="fa fa-id-card-o"></i> Vendedores</h2></b></font>
       </a>
