@@ -45,7 +45,7 @@ export default class ClientesList extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col"><h3 align="left"><pre>Clientes</pre></h3></div>
+          <div className="col"><h3 align="left">Clientes</h3></div>
           <div className="col"> <CreateCliente component={this}/></div>
         </div>
         <table className="table">

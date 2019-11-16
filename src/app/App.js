@@ -42,8 +42,10 @@ export default function App() {
     <div id="App">
       <SideBar />
       <div id="page-wrap">
+        <header>
         <h1>Seguros Inequidad</h1>
         <h2 >compromiso y calidad </h2>
+        </header>
         <hr width="80%"></hr>
         <Route path="/clientes" component={Cliente} />
         <Route path="/vendedores" component={Vendedor} />

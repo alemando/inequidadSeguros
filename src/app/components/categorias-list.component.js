@@ -41,7 +41,7 @@ export default class CategoriasList extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col"><h3 align="left"><pre>Categorías</pre></h3></div>
+          <div className="col"><h3 align="left">Categorías</h3></div>
           <div className="col"> <CreateCategoria component={this}/></div>
         </div>
         <table className="table">
