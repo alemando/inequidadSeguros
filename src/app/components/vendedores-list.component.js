@@ -41,7 +41,7 @@ export default class VendedoresList extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col"><h3>Vendedores</h3></div>
+          <div className="col"><h3 align="left"><pre>Vendedores</pre></h3></div>
           <div className="col"> <CreateVendedor component={this}/></div>
         </div>
         <table className="table">

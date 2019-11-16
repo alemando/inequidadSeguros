@@ -44,7 +44,7 @@ export default class SegurosList extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col"><h3>Seguros</h3></div>
+          <div className="col"><h3 align="left"><pre>Seguros</pre></h3></div>
           <div className="col"> <CreateSeguro component={this}/></div>
         </div>
         <table className="table">

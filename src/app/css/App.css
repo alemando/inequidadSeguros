@@ -71,6 +71,7 @@ body {
 }
 
 .bm-item {
+  
   display: inline-block;
   text-decoration: none;
   margin-bottom: 10px;
@@ -92,11 +93,13 @@ body {
 
 .bm-burger-bars {
   background: #373a47;
+  
 }
 
 .bm-cross-button {
   height: 24px;
   width: 24px;
+  
 }
 
 .bm-cross {
@@ -139,6 +142,6 @@ body {
  }
 
  .overlayContainer.expanded{
-  right: 32%;
+  right: 35%;
  }
  
