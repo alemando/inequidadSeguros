@@ -5,7 +5,7 @@ export default class Index extends Component {
   render() {
     return (
       <div>
-          Hola Mundo
+          Que pasa prros
       </div>
     );
   }

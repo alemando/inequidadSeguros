@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
@@ -29,3 +30,20 @@ function App() {
 }
 
 export default App;
+*/
+import React from 'react';
+import SideBar from "./components/sidebar.component";
+
+import './css/App.css';
+
+export default function App() {
+  return (
+    <div id="App">
+      <SideBar />
+      <div id="page-wrap">
+        <h1>Requisistemas</h1>
+        <h2 >La buena caravana </h2>
+      </div>
+    </div>
+  );
+}
