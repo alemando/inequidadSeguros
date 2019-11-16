@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import VerCriterio from "./ver-criterio-seguro.component";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
 const Criterio = props => (
-  <tr>
-    <td>{props.criterio.nombre}</td>
-    <td><VerCriterio criterio={props.criterio} key={props.criterio._id}/></td>
-  </tr>
+  <Tr>
+    <Td>{props.criterio.nombre}</Td>
+    <Td><VerCriterio criterio={props.criterio} key={props.criterio._id}/></Td>
+  </Tr>
 )
 
 export default class VerSeguro extends Component {
@@ -86,17 +88,17 @@ export default class VerSeguro extends Component {
                     <div className="col-md-6 ml-auto">{this.props.seguro.observaciones}</div>
                   </div>
                   <div className="row">
-                  <table className="table">
-                    <thead className="thead-light">
-                      <tr>
-                        <th>Nombre</th>
-                        <th>Ver más</th>
-                      </tr>
-                    </thead>
-                    <tbody>
+                  <Table className="table">
+                    <Thead className="thead-light">
+                      <Tr>
+                        <Th>Nombre</Th>
+                        <Th>Ver más</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
                       {this.criteriosList()}
-                    </tbody>
-                  </table>
+                    </Tbody>
+                  </Table>
                 </div>
                 </div>
               </div>

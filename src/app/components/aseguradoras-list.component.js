@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import CreateAseguradora from "./create-aseguradora.component";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
 const Aseguradora = props => (
-  <tr>
-    <td>{props.aseguradora.nit}</td>
-    <td>{props.aseguradora.nombre}</td>
-    <td>{props.aseguradora.telefono}</td>
-    <td>{props.aseguradora.correo}</td>
-  </tr>
+  <Tr>
+    <Td>{props.aseguradora.nit}</Td>
+    <Td>{props.aseguradora.nombre}</Td>
+    <Td>{props.aseguradora.telefono}</Td>
+    <Td>{props.aseguradora.correo}</Td>
+  </Tr>
 )
 
 export default class AseguradorasList extends Component {
@@ -44,19 +46,19 @@ export default class AseguradorasList extends Component {
           <div className="col"><h3>Aseguradoras</h3></div>
           <div className="col"> <CreateAseguradora component={this}/></div>
         </div>
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>nit</th>
-              <th>nombre</th>
-              <th>telefono</th>
-              <th>correo</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table className="table">
+          <Thead className="thead-light">
+            <Tr>
+              <Th>nit</Th>
+              <Th>nombre</Th>
+              <Th>telefono</Th>
+              <Th>correo</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
             {this.aseguradorasList()}
-          </tbody>
-        </table>
+          </Tbody>
+        </Table>
       </div>
     )
   }

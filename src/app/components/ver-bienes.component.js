@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import VerBien from "./ver-bien.component";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
 const TablaBien = props => (
-  <tr>
-    <td>{props.bien.nombre}</td>
-    <td>{props.bien.categoria.nombre}</td>
-    <td><VerBien bien={props.bien} key={props.bien._id}/></td>
-  </tr>
+  <Tr>
+    <Td>{props.bien.nombre}</Td>
+    <Td>{props.bien.categoria.nombre}</Td>
+    <Td><VerBien bien={props.bien} key={props.bien._id}/></Td>
+  </Tr>
 )
 
 export default class VerBienes extends Component {
@@ -56,18 +58,18 @@ export default class VerBienes extends Component {
               </div>
               <div className="modal-body">
                 <div className="container">
-                  <table className="table">
-                    <thead className="thead-light">
-                      <tr>
-                        <th>Nombre</th>
-                        <th>Categoria</th>
-                        <th>Ver mas</th>
-                      </tr>
-                    </thead>
-                    <tbody>
+                  <Table className="table">
+                    <Thead className="thead-light">
+                      <Tr>
+                        <Th>Nombre</Th>
+                        <Th>Categoria</Th>
+                        <Th>Ver mas</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
                       {this.bienesList()}
-                    </tbody>
-                  </table>
+                    </Tbody>
+                  </Table>
                 </div>
               </div>
               <div className="modal-footer">

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
 const Bien = props => (
-  <tr>
-    <td>{props.bien.id}</td>
-    <td>{props.bien.documentoCliente}</td>
-    <td>{props.bien.categoria}</td>
-    <td>{props.bien.caracteristicas}</td>
-    <td>{props.bien.documentos}</td>
-  </tr>
+  <Tr>
+    <Td>{props.bien.id}</Td>
+    <Td>{props.bien.documentoCliente}</Td>
+    <Td>{props.bien.categoria}</Td>
+    <Td>{props.bien.caracteristicas}</Td>
+    <Td>{props.bien.documentos}</Td>
+  </Tr>
 )
 
 export default class BienesList extends Component {
@@ -41,20 +43,20 @@ export default class BienesList extends Component {
     return (
       <div>
         <h3>Bienes</h3>
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>id</th>
-              <th>documentoCliente</th>
-              <th>categoria</th>
-              <th>caracteristicas</th>
-              <th>documentos</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table className="table">
+          <Thead className="thead-light">
+            <Tr>
+              <Th>id</Th>
+              <Th>documentoCliente</Th>
+              <Th>categoria</Th>
+              <Th>caracteristicas</Th>
+              <Th>documentos</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
             {this.bienesList()}
-          </tbody>
-        </table>
+          </Tbody>
+        </Table>
       </div>
     )
   }

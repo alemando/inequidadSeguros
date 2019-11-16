@@ -3,14 +3,16 @@ import CreateCriterio from "./create-criterio-categoria.component";
 import VerCriterio from "./ver-criterio.component";
 import EditCriterio from "./edit-criterio.component";;
 import Swal from 'sweetalert2'
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
 const Criterio = props => (
-  <tr>
-      <td>{props.criterio.nombre}</td>
-      <td><VerCriterio criterio={props.criterio} key={props.criterio.mombre}/></td>
-      <td><EditCriterio component={props.component} criterio={props.criterio} key={props.criterio.nombre}/></td>
-      <td><button type="button" onClick={() => props.component.removeCriterio(props.criterio.index)} className="btn btn-danger">X</button></td>
-  </tr>
+  <Tr>
+      <Td>{props.criterio.nombre}</Td>
+      <Td><VerCriterio criterio={props.criterio} key={props.criterio.mombre}/></Td>
+      <Td><EditCriterio component={props.component} criterio={props.criterio} key={props.criterio.nombre}/></Td>
+      <Td><button type="button" onClick={() => props.component.removeCriterio(props.criterio.index)} className="btn btn-danger">X</button></Td>
+  </Tr>
 )
 
 export default class CreateSeguro extends Component {
@@ -347,19 +349,19 @@ export default class CreateSeguro extends Component {
                           <div className="row">
                             <div className="col">
                             <h2>Criterios</h2>
-                              <table className="table">
-                                  <thead className="thead-light">
-                                  <tr>
-                                      <th>Nombre</th>
-                                      <th>Ver mas</th>
-                                      <th>Editar</th>
-                                      <th>Borrar</th>
-                                  </tr>
-                                  </thead>
-                                  <tbody>
+                              <Table className="table">
+                                  <Thead className="thead-light">
+                                  <Tr>
+                                      <Th>Nombre</Th>
+                                      <Th>Ver mas</Th>
+                                      <Th>Editar</Th>
+                                      <Th>Borrar</Th>
+                                  </Tr>
+                                  </Thead>
+                                  <Tbody>
                                     {this.criteriosList()}
-                                  </tbody>
-                              </table>
+                                  </Tbody>
+                              </Table>
                             </div>
                           </div>
                         </div>

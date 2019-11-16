@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import VerVendedor from "./ver-vendedor.component";
 import CreateVendedor from "./create-vendedor.component";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
 const Vendedor = props => (
-  <tr>
-    <td>{props.vendedor.documento}</td>
-    <td>{props.vendedor.nombre}</td>
-    <td>{props.vendedor.apellido1} {props.vendedor.apellido2}</td>
-    <td><VerVendedor vendedor={props.vendedor} key={props.vendedor.documento}/></td>
-  </tr>
+  <Tr>
+    <Td>{props.vendedor.documento}</Td>
+    <Td>{props.vendedor.nombre}</Td>
+    <Td>{props.vendedor.apellido1} {props.vendedor.apellido2}</Td>
+    <Td><VerVendedor vendedor={props.vendedor} key={props.vendedor.documento}/></Td>
+  </Tr>
 )
 
 export default class VendedoresList extends Component {
@@ -44,19 +46,19 @@ export default class VendedoresList extends Component {
           <div className="col"><h3>Vendedores</h3></div>
           <div className="col"> <CreateVendedor component={this}/></div>
         </div>
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>Documento</th>
-              <th>Nombre</th>
-              <th>Apellidos</th>
-              <th>Ver más</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table className="table">
+          <Thead className="thead-light">
+            <Tr>
+              <Th>Documento</Th>
+              <Th>Nombre</Th>
+              <Th>Apellidos</Th>
+              <Th>Ver más</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
             {this.vendedoresList()}
-          </tbody>
-        </table>
+          </Tbody>
+        </Table>
       </div>
     )
   }

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import CreateCategoria from "./create-categoria.component";
 import VerCriterios from "./ver-criterios.component";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
 const Categoria = props => (
-  <tr>
-    <td>{props.categoria.nombre}</td>
-    <td><VerCriterios categoria={props.categoria}/></td>
-  </tr>
+  <Tr>
+    <Td>{props.categoria.nombre}</Td>
+    <Td><VerCriterios categoria={props.categoria}/></Td>
+  </Tr>
 )
 
 export default class CategoriasList extends Component {
@@ -44,17 +46,17 @@ export default class CategoriasList extends Component {
           <div className="col"><h3>Categorias</h3></div>
           <div className="col"> <CreateCategoria component={this}/></div>
         </div>
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>Nombre</th>
-              <th>Ver criterios</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table className="table">
+          <Thead className="thead-light">
+            <Tr>
+              <Th>Nombre</Th>
+              <Th>Ver criterios</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
             {this.categoriasList()}
-          </tbody>
-        </table>
+          </Tbody>
+        </Table>
       </div>
     )
   }

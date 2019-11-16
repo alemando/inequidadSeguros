@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import CreateSeguro from "./create-seguro.component";
 import VerSeguro from "./ver-seguro.component";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
 const Seguro = props => (
-  <tr>
-    <td>{props.seguro.cliente.nombre+" "+props.seguro.cliente.apellido1+" "+props.seguro.cliente.apellido2 }</td>
-    <td>{props.seguro.bien.nombre}</td>
-    <td>{props.seguro.aseguradora.nombre}</td>
-    <td>{props.seguro.vendedor.nombre+" "+props.seguro.vendedor.apellido1+" "+props.seguro.vendedor.apellido2 }</td>
-    <td><VerSeguro seguro={props.seguro} key={props.seguro._id}/></td>
-  </tr>
+  <Tr>
+    <Td>{props.seguro.cliente.nombre+" "+props.seguro.cliente.apellido1+" "+props.seguro.cliente.apellido2 }</Td>
+    <Td>{props.seguro.bien.nombre}</Td>
+    <Td>{props.seguro.aseguradora.nombre}</Td>
+    <Td>{props.seguro.vendedor.nombre+" "+props.seguro.vendedor.apellido1+" "+props.seguro.vendedor.apellido2 }</Td>
+    <Td><VerSeguro seguro={props.seguro} key={props.seguro._id}/></Td>
+  </Tr>
 )
 
 export default class SegurosList extends Component {
@@ -47,20 +49,20 @@ export default class SegurosList extends Component {
           <div className="col"><h3>Seguros</h3></div>
           <div className="col"> <CreateSeguro component={this}/></div>
         </div>
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>Cliente</th>
-              <th>Bien</th>
-              <th>Aseguradora</th>
-              <th>Vendedor</th>
-              <th>Ver mas</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table className="table">
+          <Thead className="thead-light">
+            <Tr>
+              <Th>Cliente</Th>
+              <Th>Bien</Th>
+              <Th>Aseguradora</Th>
+              <Th>Vendedor</Th>
+              <Th>Ver mas</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
             { this.segurosList() }
-          </tbody>
-        </table>
+          </Tbody>
+        </Table>
       </div>
     )
   }
