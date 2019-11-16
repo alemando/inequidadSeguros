@@ -12,8 +12,8 @@ const criterioSchema = Schema({
         type:String,
         require:true,
         trim: true},
-    montoCubrir:{
-        type:Number,
+    cobertura:{
+        type:String,
         require:true,
         trim: true},
     deducible:{
@@ -116,7 +116,7 @@ const verificarCriterios = (arreglo) => {
 
 /*
 La función validacionesCriterios recibe un arreglo de criterios y verifica uno por uno que cumplan con las validaciones respectivas
-de no datos vacios o nulos, además de que para el monto a cubrir debe ser un número.
+de no datos vacios o nulos.
 Se retorna un string con todos los errores de validación encontrados señalando el error y el nombre del criterio al que corresponde,
 o en caso de no tener nombre, el número del criterio.
 En caso de no encontrar un error, retorna un string vacio ""
@@ -129,10 +129,8 @@ const validacionesCriterios = (arreglo) => {
             if(arreglo[i].descripcion=="" || arreglo[i].descripcion==null){
                 mensaje+= "La descripción del criterio "+ (i+1) +" no es válido\n"
             }
-            if(arreglo[i].montoCubrir=="" || arreglo[i].montoCubrir==null){
+            if(arreglo[i].cobertura=="" || arreglo[i].cobertura==null){
                 mensaje+="El monto a cubrir del criterio "+ (i+1) +" no es válido\n"
-            }else if(isNaN(arreglo[i].montoCubrir)){
-                mensaje+="El monto a cubrir del criterio "+ (i+1) +" debe ser un número\n"
             }
             if(arreglo[i].deducible=="" || arreglo[i].deducible==null){
                 mensaje+="El deducible del criterio "+ (i+1) +" no es válido\n"
@@ -142,10 +140,8 @@ const validacionesCriterios = (arreglo) => {
             if(arreglo[i].descripcion=="" || arreglo[i].descripcion==null){
                 mensaje+= "La descripción del criterio "+arreglo[i].nombre +" no es válido\n"
             }
-            if(arreglo[i].montoCubrir=="" || arreglo[i].montoCubrir==null){
+            if(arreglo[i].cobertura=="" || arreglo[i].cobertura==null){
                 mensaje+= "El monto a cubrir del criterio "+arreglo[i].nombre +" no es válido\n"
-            }else if(isNaN(arreglo[i].montoCubrir)){
-                mensaje+="El monto a cubrir del criterio "+arreglo[i].nombre +" debe ser un número\n"
             }
             if(arreglo[i].deducible=="" || arreglo[i].deducible==null){
                 mensaje+= "El deducible del criterio "+arreglo[i].nombre +" no es válido\n"
