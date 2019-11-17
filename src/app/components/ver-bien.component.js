@@ -2,25 +2,25 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 export default class VerBien extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.modalClose = this.modalClose.bind(this);
-}
+  }
 
-  modalClose(){
-    $('#Bien-'+this.props.bien._id).modal('hide');
+  modalClose() {
+    $('#Bien-' + this.props.bien._id).modal('hide');
     $(document).on('hidden.bs.modal', '.modal', function () {
       if ($('body').find('.modal.show').length > 0) {
-          $('body').addClass('modal-open');
+        $('body').addClass('modal-open');
       }
     });
-}
+  }
 
   render() {
     return (
       <div>
-        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={'#Bien-'+this.props.bien._id}>ver más</button>
-        <div className="modal fade" id={'Bien-'+this.props.bien._id} tabIndex="-1" role="dialog" aria-hidden="true">
+        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={'#Bien-' + this.props.bien._id}>ver más</button>
+        <div className="modal fade" id={'Bien-' + this.props.bien._id} tabIndex="-1" role="dialog" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
@@ -31,30 +31,42 @@ export default class VerBien extends Component {
               </div>
               <div className="modal-body">
                 <div className="container">
-                  <div className="row">
-                    <div className="col-md-6 ml-auto"><b>Nombre</b></div>
-                    <div className="col-md-6 ml-auto">{this.props.bien.nombre}</div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6 ml-auto"><b>Cliente</b></div>
-                    <div className="col-md-6 ml-auto">
-                      {this.props.bien.cliente.nombre +' '+ this.props.bien.cliente.apellido1+
-                      ' '+ this.props.bien.cliente.apellido2}</div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6 ml-auto"><b>Categoria</b></div>
-                    <div className="col-md-6 ml-auto">{this.props.bien.categoria.nombre}</div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6 ml-auto"><b>Monto a cubrir</b></div>
-                    <div className="col-md-6 ml-auto">{this.props.bien.caracteristicas}</div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6 ml-auto"><b>Documento</b></div>
-                    <div className="col-md-6 ml-auto"><a target="_blank" rel="noopener noreferrer" 
-                    className="btn btn-primary" href={"/api/bienes/documento/"+this.props.bien._id}>Ver documento
+                  <ul className="list-group">
+                    <li class="list-group-item">
+                      <div className="row">
+                        <div className="col-md-6 ml-auto"><b>Nombre</b></div>
+                        <div className="col-md-6 ml-auto">{this.props.bien.nombre}</div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div className="row">
+                        <div className="col-md-6 ml-auto"><b>Cliente</b></div>
+                        <div className="col-md-6 ml-auto">
+                          {this.props.bien.cliente.nombre + ' ' + this.props.bien.cliente.apellido1 +
+                            ' ' + this.props.bien.cliente.apellido2}</div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div className="row">
+                        <div className="col-md-6 ml-auto"><b>Categoria</b></div>
+                        <div className="col-md-6 ml-auto">{this.props.bien.categoria.nombre}</div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div className="row">
+                        <div className="col-md-6 ml-auto"><b>Monto a cubrir</b></div>
+                        <div className="col-md-6 ml-auto">{this.props.bien.caracteristicas}</div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div className="row">
+                        <div className="col-md-6 ml-auto"><b>Documento</b></div>
+                        <div className="col-md-6 ml-auto"><a target="_blank" rel="noopener noreferrer"
+                          className="btn btn-primary" href={"/api/bienes/documento/" + this.props.bien._id}>Ver documento
                     </a></div>
-                  </div>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div className="modal-footer">

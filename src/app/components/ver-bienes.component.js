@@ -51,7 +51,7 @@ export default class VerBienes extends Component {
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title"><b>Bienes</b></h5>
+                <h5 className="modal-title"><b>Bienes</b> {this.props.clienteInfo.nombre + " " + this.props.clienteInfo.apellido1 + " " + this.props.clienteInfo.apellido2}</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
