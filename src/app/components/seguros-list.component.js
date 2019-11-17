@@ -8,7 +8,7 @@ const Seguro = props => (
     <td>{props.seguro.bien.nombre}</td>
     <td>{props.seguro.aseguradora.nombre}</td>
     <td>{props.seguro.vendedor.nombre+" "+props.seguro.vendedor.apellido1+" "+props.seguro.vendedor.apellido2 }</td>
-    <td><VerSeguro seguro={props.seguro} key={props.seguro._id}/></td>
+    <td><center><VerSeguro seguro={props.seguro} key={props.seguro._id}/></center></td>
   </tr>
 )
 
@@ -42,26 +42,40 @@ export default class SegurosList extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col"><h3 align="left">Seguros</h3></div>
-          <div className="col"> <CreateSeguro component={this}/></div>
+      <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div className="card mb-3">
+            <div className="card-header">
+                <div className="row">
+                    <div className="col-xs-6 col-sm-6 col-md-8 col-lg-10 col-xl-10">
+                        <h3><i className="fa fa-shield"></i> Seguros disponibles</h3>
+                    </div>
+                    <div className="col-xs-6 col-sm-6 col-md-4 col-lg-2 col-xl-2">
+                        <CreateSeguro component={this}/>
+                    </div>
+                </div>
+            </div>
+                
+            <div className="card-body">
+                <div className="table-responsive">
+                <table id="tabla-seguros" className="table table-bordered table-hover display">
+                    <thead>
+                        <tr>
+                            <th><center>Cliente</center></th>
+                            <th><center>Bien</center></th>
+                            <th><center>Aseguradora</center></th>
+                            <th><center>Vendedor</center></th>
+                            <th><center>Ver mas</center></th>
+                        </tr>
+                    </thead>                                        
+                    <tbody>
+                        { this.segurosList() }
+                    </tbody>
+                </table>
+                </div>
+                
+            </div>                                                      
         </div>
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>Cliente</th>
-              <th>Bien</th>
-              <th>Aseguradora</th>
-              <th>Vendedor</th>
-              <th>Ver mas</th>
-            </tr>
-          </thead>
-          <tbody>
-            { this.segurosList() }
-          </tbody>
-        </table>
-      </div>
+      </div>  
     )
   }
 }
