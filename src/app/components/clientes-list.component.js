@@ -10,9 +10,9 @@ const Cliente = props => (
     <Td>{props.cliente.documento}</Td>
     <Td>{props.cliente.nombre}</Td>
     <Td>{props.cliente.apellido1} {props.cliente.apellido2}</Td>
-    <Td><VerCliente cliente={props.cliente} key={props.cliente.documento}/></Td>
-    <Td><VerBienes cliente={props.cliente._id} key={props.cliente.documento}/></Td>
-    <Td><CreateBien cliente={props.cliente._id} key={props.cliente.documento}/></Td>
+    <Td><center><VerCliente cliente={props.cliente} key={props.cliente.documento}/></center></Td>
+    <Td><center><VerBienes cliente={props.cliente._id} key={props.cliente.documento}/></center></Td>
+    <Td><center><CreateBien cliente={props.cliente._id} key={props.cliente.documento}/></center></Td>
   </Tr>
 )
 
@@ -44,27 +44,41 @@ export default class ClientesList extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col"><h3 align="left"><pre>Clientes</pre></h3></div>
-          <div className="col"> <CreateCliente component={this}/></div>
-        </div>
-        <Table className="table" striped bordered hover size="sm" responsive="sm">
-          <Thead className="thead-light">
-            <Tr>
-              <Th>Documento</Th>
-              <Th>Nombre</Th>
-              <Th>Apellidos</Th>
-              <Th>Ver más</Th>
-              <Th>Ver bienes</Th>
-              <Th>Crear bien</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {this.clientesList()}
-          </Tbody>
-        </Table>
+    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <div className="card mb-3">
+          <div className="card-header">
+              <div className="row">
+                  <div className="col-xs-6 col-sm-6 col-md-8 col-lg-10 col-xl-10">
+                      <h3><i className="fa fa-users"></i> Clientes disponibles</h3>
+                  </div>
+                  <div className="col-xs-6 col-sm-6 col-md-4 col-lg-2 col-xl-2">
+                      <CreateCliente component={this}/>
+                  </div>
+              </div>
+          </div>
+              
+          <div className="card-body">
+              <div className="table-responsive">
+              <Table id="tabla-vendedores" className="table table-bordered table-hover display">
+                  <Thead>
+                      <Tr>
+                          <Th><center>Documento</center></Th>
+                          <Th><center>Nombre</center></Th>
+                          <Th><center>Apellidos</center></Th>
+                          <Th><center>Ver más</center></Th>
+                          <Th><center>Ver bienes</center></Th>
+                          <Th><center>Crear bien</center></Th>
+                      </Tr>
+                  </Thead>                                        
+                  <Tbody>
+                      {this.clientesList()}
+                  </Tbody>
+              </Table>
+              </div>
+              
+          </div>                                                      
       </div>
+    </div>  
     )
   }
 }

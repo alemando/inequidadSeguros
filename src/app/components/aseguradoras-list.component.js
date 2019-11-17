@@ -41,24 +41,38 @@ export default class AseguradorasList extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col"><h3 align="left"><pre>Aseguradoras</pre></h3></div>
-          <div className="col"> <CreateAseguradora component={this}/></div>
+      <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div className="card mb-3">
+            <div className="card-header">
+                <div className="row">
+                    <div className="col-xs-6 col-sm-6 col-md-8 col-lg-10 col-xl-10">
+                        <h3><i className="fa fa-handshake-o"></i> Aseguradoras disponibles</h3>
+                    </div>
+                    <div className="col-xs-6 col-sm-6 col-md-4 col-lg-2 col-xl-2">
+                        <CreateAseguradora component={this}/>
+                    </div>
+                </div>
+            </div>
+                
+            <div className="card-body">
+                <div className="table-responsive">
+                <Table id="tabla-aseguradoras" className="table table-bordered table-hover display">
+                    <Thead>
+                        <Tr>
+                            <Th><center>nit</center></Th>
+                            <Th><center>nombre</center></Th>
+                            <Th><center>telefono</center></Th>
+                            <Th><center>correo</center></Th>
+                        </Tr>
+                    </Thead>                                        
+                    <Tbody>
+                        {this.aseguradorasList()}
+                    </Tbody>
+                </Table>
+                </div>
+                
+            </div>                                                      
         </div>
-        <Table className="table">
-          <Thead className="thead-light">
-            <Tr>
-              <Th>nit</Th>
-              <Th>nombre</Th>
-              <Th>telefono</Th>
-              <Th>correo</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {this.aseguradorasList()}
-          </Tbody>
-        </Table>
       </div>
     )
   }

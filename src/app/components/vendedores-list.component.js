@@ -9,7 +9,7 @@ const Vendedor = props => (
     <Td>{props.vendedor.documento}</Td>
     <Td>{props.vendedor.nombre}</Td>
     <Td>{props.vendedor.apellido1} {props.vendedor.apellido2}</Td>
-    <Td><VerVendedor vendedor={props.vendedor} key={props.vendedor.documento}/></Td>
+    <Td><center><VerVendedor vendedor={props.vendedor} key={props.vendedor.documento}/></center></Td>
   </Tr>
 )
 
@@ -41,25 +41,39 @@ export default class VendedoresList extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col"><h3 align="left"><pre>Vendedores</pre></h3></div>
-          <div className="col"> <CreateVendedor component={this}/></div>
+      <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div className="card mb-3">
+            <div className="card-header">
+                <div className="row">
+                    <div className="col-xs-6 col-sm-6 col-md-8 col-lg-10 col-xl-10">
+                        <h3><i className="fa fa-id-card-o"></i> Vendedores disponibles</h3>
+                    </div>
+                    <div className="col-xs-6 col-sm-6 col-md-4 col-lg-2 col-xl-2">
+                        <CreateVendedor component={this}/>
+                    </div>
+                </div>
+            </div>
+                
+            <div className="card-body">
+                <div className="table-responsive">
+                <Table id="tabla-vendedores" className="table table-bordered table-hover display">
+                    <Thead>
+                        <Tr>
+                            <Th><center>Documento</center></Th>
+                            <Th><center>Nombre</center></Th>
+                            <Th><center>Apellidos</center></Th>
+                            <Th><center>Ver más</center></Th>
+                        </Tr>
+                    </Thead>                                        
+                    <Tbody>
+                        {this.vendedoresList()}
+                    </Tbody>
+                </Table>
+                </div>
+                
+            </div>                                                      
         </div>
-        <Table className="table">
-          <Thead className="thead-light">
-            <Tr>
-              <Th>Documento</Th>
-              <Th>Nombre</Th>
-              <Th>Apellidos</Th>
-              <Th>Ver más</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {this.vendedoresList()}
-          </Tbody>
-        </Table>
-      </div>
+      </div>  
     )
   }
 }
