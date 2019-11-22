@@ -1,0 +1,16 @@
+Clase vendedor
+Documento obligatorio no modificable
+Nombre obligatorio modificable
+apellido1 obligatorio modificable
+apellido2 no obligatorio modificable
+teléfono obligatorio modificable
+correo obligatorio modificable
+esAdmin obligatorio modificable
+Primero creen una rama para trabajar las validaciones, estas validaciones deben incluir validaciones de obligatoriedad y no nulo, ademas de otras validaciones que encuentre
+Luego de este trabajo para adelantar cada uno tendra una clase y se debe tener otra rama aparte del trabajo anterior y le hara su respectivo CRUD, Buscar y crear ya estan, quedan faltando toda la logica de modificar y desactivar, para esto se agregara un nuevo atributo en las clases llamado estado, las unicas clases donde tendran logica de eliminar seran en las clases seguro y categoria en su lista decriterios
+Nota: seguir el formato de validaciones ya establecido {id:#, mensaje:} guiense de las validaciones ya creadas, id: 0 es error, id:1 creado exitosamente, id:2 duplicado
+Cabe puntualizar que las validaciones(Hacen parte del sprint)son para este sabado y se trabajan en una rama aparte del crud, para su entrega en los proximos dias, la idea con el crud es ir adelantando trabajo
+Alejo se encargara de brindarles unas vistas basicas para modificar y desactivar o eliminar
+Y por favor trabajar en las ramas adecuadas tanto el front como back
+El front tendra el trabajo de poner bonito el front basico ya creado, para la entrega de este sprint
+Cualquier duda por favor preguntar

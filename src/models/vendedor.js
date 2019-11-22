@@ -56,7 +56,7 @@ const patronCorreo = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+
 vendedorSchema.statics.guardarVendedor = async (datos)=> {
 
     let validacion = { id: "0", mensaje: ""}
-
+    
     //Validacion basada en regex de el formato de un correo
     if(!patronCorreo.test(datos.correo)){
         validacion.mensaje += "El correo no sigue el formato example@dominio.ext\n"
