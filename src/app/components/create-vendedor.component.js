@@ -100,7 +100,7 @@ export default class CreateVendedor extends Component {
                         <form id="formVendedor" onSubmit={this.addVendedor}>
                             <div className="form-group">
                                 <label>* Numero de documento:</label>
-                                <input name="documento" onChange={this.handleChange} type="number" required
+                                <input name="documento" onChange={this.handleChange} type="text" required
                                     value={this.state.documento}
                                     className="form-control"
                                     />

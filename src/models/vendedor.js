@@ -61,7 +61,7 @@ vendedorSchema.statics.guardarVendedor = async (datos)=> {
     if(!patronCorreo.test(datos.correo)){
         validacion.mensaje += "El correo no sigue el formato example@dominio.ext\n"
     }
-
+    
     //Si no pasa alguna validacion retorna el mensaje correspondiente
     if(validacion.mensaje.length!=0) return validacion
 
@@ -75,7 +75,8 @@ vendedorSchema.statics.guardarVendedor = async (datos)=> {
         correo: datos.correo
         });
     try {
-        await vendedorNuevo.save();
+        vendedorNuevo.save();
+        console.log('Guardado');
         return { id: "1", mensaje: "Vendedor guardado"};
     } catch (error) {
         if (error.errors.documento.kind==="unique") return { 
@@ -97,7 +98,7 @@ vendedorSchema.statics.obtenerVendedores = async ()=> {
 //Obtiene vendedor por el dccumento
 vendedorSchema.statics.obtenerVendedor = async (id)=> {
     try{
-        let vendedor = await vendedores.findOne({documentoIdentidad: id});
+        let vendedor = await vendedores.findOne({documento: id});
         return vendedor;
     }catch(error){
         return "Error obteniendo vendedor por documento identidad\n" + error;
