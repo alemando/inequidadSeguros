@@ -178,6 +178,14 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     //Si no pasa alguna validacion retorna el mensaje correspondiente
     if(validacion.mensaje.length!=0) return validacion
 
+    console.log(datos.criterios)
+    
+    for(let i = 0; i<datos.criterios.length;i++){
+        delete datos.criterios[i]._id;
+    }
+
+    console.log(datos.criterios)
+    
     //Objeto seguro
     const seguro = new seguros({
       fechaInicio: datos.fechaInicio,
