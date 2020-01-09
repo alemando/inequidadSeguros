@@ -46,7 +46,6 @@ const bienSchema = Schema({
 */
 bienSchema.statics.guardarBien = async function(datos) {
     let validacion = { id: "0", mensaje: ""}
-    console.log(datos.file);
     
     //Validacion del nombre
     if(datos.body.nombre == ""){
@@ -101,8 +100,6 @@ bienSchema.statics.guardarBien = async function(datos) {
         await bienNuevo.save();
         return { id: "1", mensaje: "bien guardado"};
     } catch (error) {
-      //console.log(error);
-      
 		return { id: "0", mensaje: "Error desconocido"};
     }
 };
