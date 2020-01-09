@@ -12,32 +12,31 @@ const vendedorSchema = Schema({
     },
     nombre:{
         type: String,
-        requiere: true,
+        require: true,
         trim: true
     },
     apellido1:{
         type: String,
-        requiere: true,
+        require: true,
         trim: true
     },
     apellido2:{
         type: String,
-        requiere: false,
         trim: true
     },
     telefono:{
         type: String,
-        requiere: true,
+        require: true,
         trim: true
     },
     correo:{
         type: String,
-        requiere: true,
+        require: true,
         trim: true
     },
     esAdmin:{
         type: Boolean,
-        requiere: true,
+        require: true,
         default: false
     }
 });
@@ -46,7 +45,6 @@ const vendedorSchema = Schema({
 vendedorSchema.plugin(uniqueValidator);
 
 const patronCorreo = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const patronPalabras = /^([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\']+[\s])+([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])?$/;
 
 /*
     Metodo para guardar un vendedor
@@ -63,27 +61,10 @@ vendedorSchema.statics.guardarVendedor = async (datos)=> {
     }
     
     //Validaciones documento negativo o nulo
-    if(datos.documento == "" || datos.documento.parseInt < 0){
+    if(datos.documento == "" || datos.documento == null || parseInt(datos.documento) < 0){
         validacion.mensaje += "El documento de identificacion no es valido\n";
-        console.log(validacion.mensaje);
     }
     
-   /*
-    //Validacion si nombre tiene no letras
-    if(!patronPalabras.test(datos.nombre)){
-        validacion.mensaje += "El nombre contiene caracteres diferentes a letras\n";
-    }
-    
-    //Validacion si apellido1 tiene no letras
-    if(!patronPalabras.test(datos.apellido1)){
-        validacion.mensaje += "El primer apellido contiene caracteres diferentes a letras\n";
-    }
-
-    //Validacion si apellido2 tiene no letras
-    if(!patronPalabras.test(datos.apellido2)){
-        validacion.mensaje += "El segundo apellido contiene caracteres diferentes a letras\n";
-    }
-    */
     //Si no pasa alguna validacion retorna el mensaje correspondiente
     if(validacion.mensaje.length!=0) return validacion
 
@@ -97,8 +78,7 @@ vendedorSchema.statics.guardarVendedor = async (datos)=> {
         correo: datos.correo
         });
     try {
-        vendedorNuevo.save();
-        console.log('Guardado');
+        await vendedorNuevo.save();
         return { id: "1", mensaje: "Vendedor guardado"};
     } catch (error) {
         if (error.errors.documento.kind==="unique") return { 
@@ -117,7 +97,7 @@ vendedorSchema.statics.obtenerVendedores = async ()=> {
     }
 }
 
-//Obtiene vendedor por el dccumento
+//Obtiene vendedor por el documento
 vendedorSchema.statics.obtenerVendedor = async (id)=> {
     try{
         let vendedor = await vendedores.findOne({documento: id});
