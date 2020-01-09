@@ -100,7 +100,7 @@ export default class CreateVendedor extends Component {
                         <form id="formVendedor" onSubmit={this.addVendedor}>
                             <div className="form-group">
                                 <label>* Numero de documento:</label>
-                                <input name="documento" onChange={this.handleChange} type="number" required
+                                <input name="documento" onChange={this.handleChange} type="text" required
                                     value={this.state.documento}
                                     className="form-control"
                                     />
@@ -121,7 +121,7 @@ export default class CreateVendedor extends Component {
                             </div>
                             <div className="form-group">
                                 <label>  Segundo apellido:</label>
-                                <input name="apellido2" onChange={this.handleChange} type="text" required
+                                <input name="apellido2" onChange={this.handleChange} type="text"
                                     value={this.state.apellido2}
                                     className="form-control"
                                     />
