@@ -46,7 +46,7 @@ export default class VerBien extends Component {
                     <div className="col-md-6 ml-auto">{this.props.bien.categoria.nombre}</div>
                   </div>
                   <div className="row">
-                    <div className="col-md-6 ml-auto"><b>Monto a cubrir</b></div>
+                    <div className="col-md-6 ml-auto"><b>Caracteristicas</b></div>
                     <div className="col-md-6 ml-auto">{this.props.bien.caracteristicas}</div>
                   </div>
                   <div className="row">
