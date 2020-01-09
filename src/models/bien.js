@@ -34,8 +34,7 @@ const bienSchema = Schema({
     },
     caracteristicas: {
         type: String,
-        require: true,
-        trim:true
+        require:false
     },
     documento: fileSchema
 });
@@ -47,27 +46,43 @@ const bienSchema = Schema({
 */
 bienSchema.statics.guardarBien = async function(datos) {
     let validacion = { id: "0", mensaje: ""}
+    console.log(datos.file);
+    
+    //Validacion del nombre
+    if(datos.body.nombre == ""){
+      validacion.mensaje += "El nombre es obligatorio"
+    }
+    
+    //Validacion categoria
+    if(datos.body.categoria == ""){
+      validacion.mensaje += "Tienes que seleccionar una categoria"
+    }
 
     //Validacion del cliente
     if(await clienteModel.obtenerClienteById(datos.body.cliente) == null){
         validacion.mensaje += "bien no guardado, cliente no existe en la BD"
     }
 
-    //Validacion de la categoria
+    //Validacion de la existencia de la categoria
     if(await categoriaModel.obtenerCategoriaById(datos.body.categoria) == null){
         validacion.mensaje += "bien no guardado, categoria no existe en la BD"
     }
 
-    //Validacion archivo es pdf
-    if(datos.file.mimetype != 'application/pdf'){
-        validacion.mensaje += "bien no guardado, el archivo no es un pdf"
+    if(!datos.file){
+      validacion.mensaje += "El documento es obligatorio"  
     }
+    else{
+      //Validacion archivo es pdf
+      if(datos.file.mimetype != 'application/pdf'){
+        validacion.mensaje += "bien no guardado, el archivo no es un pdf"
+      }
 
     //Validacion archivo no excede 16Mb
-    if(datos.file.size >= 16000000){
+      if(datos.file.size >= 16000000){
         validacion.mensaje += "bien no guardado, el archivo excede el tamaño permitido 16Mb"
+      }
     }
-
+    
     //Si no pasa alguna validacion retorna el mensaje correspondiente
     if(validacion.mensaje.length!=0) return validacion
 
@@ -86,6 +101,8 @@ bienSchema.statics.guardarBien = async function(datos) {
         await bienNuevo.save();
         return { id: "1", mensaje: "bien guardado"};
     } catch (error) {
+      //console.log(error);
+      
 		return { id: "0", mensaje: "Error desconocido"};
     }
 };

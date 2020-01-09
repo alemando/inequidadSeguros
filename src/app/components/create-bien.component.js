@@ -51,7 +51,6 @@ export default class CreateBien extends Component {
 
                 this.setState({
                   nombre: '',
-                  cliente: '',
                   categoria: '',
                   caracteristicas: '',
                   documentoInput: '',
@@ -134,7 +133,6 @@ export default class CreateBien extends Component {
                   <div className="form-group">
                     <label>* Caracteristicas:</label>
                     <textarea
-                      required
                       className="md-textarea form-control" 
                       name="caracteristicas" 
                       onChange={this.handleChange} 
