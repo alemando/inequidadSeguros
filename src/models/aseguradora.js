@@ -24,6 +24,11 @@ const aseguradoraSchema = Schema({
         type: String,
         require: true,
         trim:true
+    },
+    estado:{
+        type: Boolean,
+        requiere: true,
+        default: false
     }
 });
 
@@ -40,9 +45,42 @@ const patronCorreo = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+
 aseguradoraSchema.statics.guardarAseguradora = async (datos)=> {
     
     let validacion = { id: "0", mensaje: ""}
+    //Validaciones para cada uno de los campos a la hora de crear aseguradoras
+    //Por cada atributo, primero se verifica si es null y después si es un string vacío
 
+    //Para nit
+    if(datos.nit == null){
+        validacion.mensaje += "No puedes dejar como nulo el atributo nit\n";
+    }
+    else if(datos.nit.length==0){
+        validacion.mensaje += "No puedes dejar el campo del nit vacío\n";
+    }
+
+    //Para nombre
+    if(datos.nombre == null){
+        validacion.mensaje += "No puedes dejar como nulo el atributo nombre\n";
+    }
+    else if(datos.nombre.length==0){
+        validacion.mensaje += "No puedes dejar el campo del nombre vacío\n";
+    }
+
+    //Para teléfono
+    if(datos.telefono == null){
+        validacion.mensaje += "No puedes dejar como nulo el atributo telefono\n";
+    }
+    else if(datos.telefono.length==0){
+        validacion.mensaje += "No puedes dejar el campo del teléfono vacío\n";
+    }
+
+    //Para correo
+    if(datos.correo == null){
+        validacion.mensaje += "No puedes dejar como nulo el atributo correo\n";
+    }
+    else if(datos.correo.length==0){
+        validacion.mensaje += "No puedes dejar el campo del correo vacío\n";
+    }
     //Validacion basada en regex de el formato de un correo
-    if(!patronCorreo.test(datos.correo)){
+    else if(!patronCorreo.test(datos.correo)){
         validacion.mensaje += "El correo no sigue el formato example@dominio.ext\n"
     }
 
@@ -66,7 +104,7 @@ aseguradoraSchema.statics.guardarAseguradora = async (datos)=> {
     }
 };
 
-//Metodo para reotornar todas las aseguradoras de la BD
+//Metodo para retornar todas las aseguradoras de la BD
 aseguradoraSchema.statics.obtenerAseguradoras = async ()=> {
     try {
         let listaAseguradoras = await aseguradoras.find();
@@ -95,7 +133,6 @@ aseguradoraSchema.statics.obtenerAseguradoraById = async (id)=> {
         return "ha ocurrido algo inesperado al intentar obtener el aseguradora\n"+ error;
     }
 }
-
 const aseguradoras = mongoose.model('aseguradoras',aseguradoraSchema);
 
 module.exports = aseguradoras;
