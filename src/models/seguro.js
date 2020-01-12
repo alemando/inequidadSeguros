@@ -32,6 +32,11 @@ const seguroSchema = Schema({
     require: true,
     trim: true,
   },
+  tipoPago:{
+    type: String,
+    requiere: true,
+    trim: true,
+  },
   fechaFin: {
     type: Date,
     require: false,
@@ -59,22 +64,22 @@ const seguroSchema = Schema({
     trim: true
   },
   cliente: {
-    type: Schema.Types.ObjectId, 
+    type: Schema.Types.ObjectId,
     ref: 'clientes',
     trim:true
   },
   bien: {
-    type: Schema.Types.ObjectId, 
+    type: Schema.Types.ObjectId,
     ref: 'bienes',
     trim:true
   },
   vendedor: {
-    type: Schema.Types.ObjectId, 
+    type: Schema.Types.ObjectId,
     ref: 'vendedores',
     trim:true
   },
   aseguradora: {
-    type: Schema.Types.ObjectId, 
+    type: Schema.Types.ObjectId,
     ref: 'aseguradoras',
     trim:true
   },
@@ -140,20 +145,28 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
         validacion.mensaje += "Seguro no guadado, fecha de inicio vacía\n"
     }
 
+    //Validacion tipoPago no es null o vacio
+    if(datos.tipoPago == null || datos.tipoPago = ""){
+      validacion.mensaje += "Seguro no guardado, tipo de pago vacío\n"
+    }
+
     //Validacion fechaFin es una fecha valida
     if(isNaN(Date.parse(datos.fechaFin))){
         validacion.mensaje += "La fecha de fin tiene un formato erroneo\n"
     }
-    if(datos.fechaFin == null || datos.fechaFin == ""){
-        validacion.mensaje += "Seguro no guadado, fecha de fin vacía\n"
+    if(datos.tipoPago == "Credito" && (datos.fechaFin == null || datos.fechaFin == "")){
+        validacion.mensaje += "Seguro no guadado,fecha de fin vacía\n"
+    }
+    if(dato.tipoPago == "Contado" && (datos.fechaFin != null || datos.fechaFin != "")){
+      validacion.mensaje += "seguro no guardado, fecha de fin debe ser vacia"
     }
 
     //Validación fecha inicio menor a fecha fin
     if(Date.parse(datos.fechaInicio) > Date.parse(datos.fechaFin)){
         validacion.mensaje += "La fecha inicio debe ser menor que la fecha fin "
     }
-    
-    //Validacion diaPago es un numero 
+
+    //Validacion diaPago es un numero
     if(isNaN(datos.diaPago)){
         validacion.mensaje += "El dia de pago no es un numero\n"
     }
@@ -164,7 +177,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
         validacion.mensaje += "El día de pago debe estar entre 1 y 31\n"
     }
 
-    //Validacion valorTotal es un numero 
+    //Validacion valorTotal es un numero
     if(datos.valorTotal == null || datos.valorTotal == ""){
         validacion.mensaje += "El valor total está vacío\n"
     }
@@ -207,7 +220,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     } catch (error) {
         console.log(error)
         return {id:0, mensaje: "error desconocido"};
-         
+
     }
 };
 
