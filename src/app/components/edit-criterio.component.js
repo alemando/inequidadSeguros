@@ -9,7 +9,7 @@ export default class EditCriterio extends Component {
             index: '',
             nombre:'',
             descripcion:'',
-            montoCubrir:0,
+            cobertura:0,
             deducible:''
         }
         this.handleChange = this.handleChange.bind(this);
@@ -32,14 +32,14 @@ export default class EditCriterio extends Component {
             {index: this.props.criterio.index,
             nombre: this.props.criterio.nombre,
             descripcion: this.props.criterio.descripcion,
-            montoCubrir: this.props.criterio.montoCubrir,
+            montoCubrir: this.props.criterio.cobertura,
             deducible: this.props.criterio.deducible})
     }
 
     editCriterio(){
         this.props.criterio.nombre = this.state.nombre;
         this.props.criterio.descripcion = this.state.descripcion;
-        this.props.criterio.montoCubrir = this.state.montoCubrir;
+        this.props.criterio.montoCubrir = this.state.cobertura;
         this.props.criterio.deducible = this.state.deducible;
         this.props.component.forceUpdate();
         this.modalClose()
@@ -89,9 +89,9 @@ export default class EditCriterio extends Component {
                             </div>
                             <div className="form-group">
                                 <label>* Monto a cubrir:</label>
-                                <input name="montoCubrir" onChange={this.handleChange} type="number"
+                                <input name="cobertura" onChange={this.handleChange} type="number"
                                     required
-                                    value={this.state.montoCubrir}
+                                    value={this.state.cobertura}
                                     className="form-control"
                                     />
                             </div>

@@ -142,6 +142,8 @@ o en caso de no tener nombre, el número del criterio.
 En caso de no encontrar un error, retorna un string vacio ""
 */
 const validacionesCriterios = (arreglo) => {
+    
+    
     for(let i = 0; i<arreglo.length;i++){
         mensaje=""
         if(arreglo[i].nombre=="" || arreglo[i].nombre==null){

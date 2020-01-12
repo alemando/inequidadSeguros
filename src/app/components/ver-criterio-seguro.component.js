@@ -41,7 +41,7 @@ export default class VerCriterio extends Component {
                   </div>
                   <div className="row">
                     <div className="col-md-6 ml-auto"><b>Monto a cubrir</b></div>
-                    <div className="col-md-6 ml-auto">{this.props.criterio.montoCubrir}</div>
+                    <div className="col-md-6 ml-auto">{this.props.criterio.cobertura}</div>
                   </div>
                   <div className="row">
                     <div className="col-md-6 ml-auto"><b>Deducible</b></div>

@@ -4,7 +4,7 @@ import VerCriterio from "./ver-criterio.component";
 const Criterio = props => (
   <tr>
     <td>{props.criterio.nombre}</td>
-    <td><VerCriterio nombre={props.nombre} criterio={props.criterio} key={props.criterio.mombre}/></td>
+    <td><VerCriterio nombre={props.nombre} criterio={props.criterio} key={props.criterio.nombre}/></td>
   </tr>
 )
 
