@@ -155,7 +155,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     if(datos.tipoPago == "Credito" && (datos.fechaFin == null || datos.fechaFin == "")){
         validacion.mensaje += "Seguro no guadado,fecha de fin vacía\n"
     }
-    if(dato.tipoPago == "Contado" && (datos.fechaFin != null || datos.fechaFin != "")){
+    if(datos.tipoPago == "Contado" && (datos.fechaFin != null || datos.fechaFin != "")){
       validacion.mensaje += "seguro no guardado, fecha de fin debe ser vacia"
     }
 

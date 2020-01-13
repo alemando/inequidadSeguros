@@ -23,6 +23,7 @@ export default class CreateSeguro extends Component {
             bien: '',
             aseguradora: '',
             fechaInicio: '',
+            tipoPago: '',
             fechaFin: '',
             valorTotal: 0,
             diaPago: 0,
@@ -58,6 +59,7 @@ export default class CreateSeguro extends Component {
             bien: this.state.bien,
             aseguradora: this.state.aseguradora,
             fechaInicio: this.state.fechaInicio,
+            tipoPago: this.state.tipoPago,
             fechaFin: this.state.fechaFin,
             valorTotal: this.state.valorTotal,
             diaPago: this.state.diaPago,
@@ -75,7 +77,7 @@ export default class CreateSeguro extends Component {
             .then(res => res.json())
             .then(data => {
               if(data.id == 0){
-                  
+
                 Swal.fire({
                   text: data.mensaje,
                   type: 'error'
@@ -83,7 +85,7 @@ export default class CreateSeguro extends Component {
               }else if(data.id == 1){
 
                 this.props.component.fetchSeguros();
-                
+
                 Swal.fire({
                   text: data.mensaje,
                   type: 'success'
@@ -95,6 +97,7 @@ export default class CreateSeguro extends Component {
                   bien: '',
                   aseguradora: '',
                   fechaInicio: '',
+                  tipoPago: '',
                   fechaFin: '',
                   valorTotal: 0,
                   diaPago: 0,
@@ -111,7 +114,7 @@ export default class CreateSeguro extends Component {
                   type: 'error'
                 })
               }
-                
+
             })
             .catch(err => console.error(err));
     }
@@ -217,11 +220,17 @@ export default class CreateSeguro extends Component {
         }
     }
 
+    handleOptionChange(changeEvent) {
+      this.setState({
+        selectedOption: changeEvent.Target.value
+      });
+    }
+
     render() {
         return (
           <div>
         <button type="button" className="btn btn-primary  float-right" data-toggle="modal" data-target="#CrearSeguro">Crear seguro</button>
-        
+
         <div className="modal fade" id="CrearSeguro" tabIndex="-1" role="dialog" aria-hidden="true">
             <div className="modal-dialog modal-lg" role="document">
                 <div className="modal-content">
@@ -299,6 +308,24 @@ export default class CreateSeguro extends Component {
                             </div>
                             <div className="col-md-6">
                               <div className="form-group">
+                              <form>
+                                <div className="radio">
+                                  <label>
+                                    <input type="radio" value="pedrito" checked={this.state.selectedOption ==='pedrito'} onChange={this.handleOptionChange} />
+                                      pedrito
+                                  </label>
+                                </div>
+                                <div className="radio">
+                                  <label>
+                                    <input type="radio" value="credito" checked={this.state.selectedOption === 'credito'} onChange={this.handleOptionChange} />
+                                    Crédito
+                                  </label>
+                                </div>
+                            </form>
+                            </div>
+                          </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
                                 <label>* Fecha fin:</label>
                                 <input name="fechaFin" onChange={this.handleChange} type="date"
                                     required
@@ -335,9 +362,9 @@ export default class CreateSeguro extends Component {
                               <div className="form-group">
                                 <label>Observaciones:</label>
                                 <textarea
-                                  className="md-textarea form-control" 
-                                  name="observaciones" 
-                                  onChange={this.handleChange} 
+                                  className="md-textarea form-control"
+                                  name="observaciones"
+                                  onChange={this.handleChange}
                                   value={this.state.observaciones}
                                   rows="3">
                                 </textarea>
