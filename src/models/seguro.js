@@ -144,7 +144,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     }
 
     //Validacion tipoPago no es null o vacio
-    if(datos.tipoPago == null || datos.tipoPago = ""){
+    if(datos.tipoPago == null || datos.tipoPago == ""){
       validacion.mensaje += "Seguro no guardado, tipo de pago vacío\n"
     }
 
@@ -192,6 +192,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     //Objeto seguro
     const seguro = new seguros({
       fechaInicio: datos.fechaInicio,
+      tipoPago: datos.tipoPago,
       fechaFin: datos.fechaFin,
       valorTotal: datos.valorTotal,
       diaPago: datos.diaPago,
