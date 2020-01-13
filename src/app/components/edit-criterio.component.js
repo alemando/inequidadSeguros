@@ -32,14 +32,14 @@ export default class EditCriterio extends Component {
             {index: this.props.criterio.index,
             nombre: this.props.criterio.nombre,
             descripcion: this.props.criterio.descripcion,
-            montoCubrir: this.props.criterio.cobertura,
+            cobertura: this.props.criterio.cobertura,
             deducible: this.props.criterio.deducible})
     }
 
     editCriterio(){
         this.props.criterio.nombre = this.state.nombre;
         this.props.criterio.descripcion = this.state.descripcion;
-        this.props.criterio.montoCubrir = this.state.cobertura;
+        this.props.criterio.cobertura = this.state.cobertura;
         this.props.criterio.deducible = this.state.deducible;
         this.props.component.forceUpdate();
         this.modalClose()
