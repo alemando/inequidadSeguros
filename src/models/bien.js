@@ -45,7 +45,7 @@ const bienSchema = Schema({
     retorna un arreglo JSON {id: #, mensaje:...}
 */
 bienSchema.statics.guardarBien = async function(datos) {
-    let validacion = { id: "0", mensaje: ""}
+    let validacion = { id: "0", mensaje: ""}  
     
     //Validacion del nombre
     if(datos.body.nombre == ""){
