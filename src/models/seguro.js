@@ -200,6 +200,26 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
       criterios: datos.criterios
     });
 
+    //Verificar si ya existe un seguro con los mismos atributos ingresados
+    try{
+        seguroAux = await seguros.findOne({fechaInicio: seguro.fechaInicio, 
+                                            fechaFin: seguro.fechaFin,
+                                            valorTotal: seguro.valorTotal,
+                                            diaPago: seguro.diaPago,
+                                            observaciones: seguro.observaciones,
+                                            cliente: seguro.cliente,
+                                            bien: seguro.bien,
+                                            vendedor: seguro.vendedor,
+                                            aseguradora: seguro.aseguradora});
+        if(seguroAux != null){
+            validacion.mensaje += "Seguro ya existe\n"
+        }
+    }catch(error){
+        validacion.mensaje += "Error buscando seguros";
+    };
+
+    if(validacion.mensaje.length!=0) return validacion
+
     try {
         //Procedo a guardar en la BD
         await seguro.save();
