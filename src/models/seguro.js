@@ -146,7 +146,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     }
 
     //Validacion tipoPago no es null o vacio
-    if(datos.tipoPago == null || datos.tipoPago = ""){
+    if(datos.tipoPago == null || datos.tipoPago == ""){
       validacion.mensaje += "Seguro no guardado, tipo de pago vacío\n"
     }
 
