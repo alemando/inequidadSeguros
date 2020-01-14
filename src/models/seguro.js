@@ -206,7 +206,6 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
                                             fechaFin: seguro.fechaFin,
                                             valorTotal: seguro.valorTotal,
                                             diaPago: seguro.diaPago,
-                                            observaciones: seguro.observaciones,
                                             cliente: seguro.cliente,
                                             bien: seguro.bien,
                                             vendedor: seguro.vendedor,
