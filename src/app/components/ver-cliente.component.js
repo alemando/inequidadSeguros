@@ -17,55 +17,55 @@ export default class VerCliente extends Component {
               <div className="modal-body">
                 <div className="container">
                   <ul className="list-group">
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Documento</b></div>
                         <div className="col-md-6 ml-auto">{this.props.cliente.documento}</div>
                       </div>
                     </li>
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Nombre</b></div>
                         <div className="col-md-6 ml-auto">{this.props.cliente.nombre}</div>
                       </div>
                     </li>
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Apellidos</b></div>
                         <div className="col-md-6 ml-auto">{this.props.cliente.apellido1 + " " + this.props.cliente.apellido2}</div>
                       </div>
                     </li>
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Direccion</b></div>
                         <div className="col-md-6 ml-auto">{this.props.cliente.direccion}</div>
                       </div>
                     </li>
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Telefono</b></div>
                         <div className="col-md-6 ml-auto">{this.props.cliente.telefono}</div>
                       </div>
                     </li>
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Correo</b></div>
                         <div className="col-md-6 ml-auto">{this.props.cliente.correo}</div>
                       </div>
                     </li>
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Fecha nacimiento</b></div>
                         <div className="col-md-6 ml-auto">{this.props.cliente.fechaNacimiento}</div>
                       </div>
                     </li>
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Ingresos</b></div>
                         <div className="col-md-6 ml-auto">{this.props.cliente.ingresos}</div>
                       </div>
                     </li>
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Egresos</b></div>
                         <div className="col-md-6 ml-auto">{this.props.cliente.egresos}</div>
