@@ -23,4 +23,10 @@ router.post('/save', async (req, res) => {
   res.json(resultado);
 });
 
+//GET clientes with bienes
+router.post('/withBienes', async(req, res) =>{
+  const clientes = await Cliente.obtenerClientesConBienes();
+  res.json(clientes);
+});
+
 module.exports = router;
