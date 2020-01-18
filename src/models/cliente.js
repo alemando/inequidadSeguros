@@ -160,7 +160,7 @@ clienteSchema.statics.obtenerClientesConBienes = async () =>{
             if (bienes.length!=0){
                 listaClientesBienes.push(listaClientes[i])
             }
-    }
+        }
         return listaClientesBienes
     }
     catch (error){
