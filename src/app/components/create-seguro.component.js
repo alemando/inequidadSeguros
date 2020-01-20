@@ -32,10 +32,12 @@ export default class CreateSeguro extends Component {
             aseguradoras: [],
             clientes: [],
             bienes: [],
-            criterios: []
+            criterios: [],
+            disabled : false
         }
         this.addSeguro = this.addSeguro.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleOptionChange = this.handleOptionChange.bind(this);
         this.encontrarBien = this.encontrarBien.bind(this);
         this.addCriterio = this.addCriterio.bind(this);
         this.removeCriterio = this.removeCriterio.bind(this);
@@ -106,7 +108,8 @@ export default class CreateSeguro extends Component {
                   aseguradoras: [],
                   clientes: [],
                   bienes: [],
-                  criterios: []
+                  criterios: [],
+                  disabled : false
                 });
               }else{
                 Swal.fire({
@@ -221,8 +224,19 @@ export default class CreateSeguro extends Component {
     }
 
     handleOptionChange(changeEvent) {
+      console.log(changeEvent.target.value);
+      if(changeEvent.target.value == "Contado"){
+        this.setState({
+          disabled: !this.state.disabled
+        });
+      }else if (this.state.disabled) {
+        this.setState({
+          disabled: !this.state.disabled
+        });
+      }
       this.setState({
-        selectedOption: changeEvent.Target.value
+        selectedOption: changeEvent.target.value,
+        tipoPago: changeEvent.target.value
       });
     }
 
@@ -308,17 +322,18 @@ export default class CreateSeguro extends Component {
                             </div>
                             <div className="col-md-6">
                               <div className="form-group">
+                              <label>* Tipo Pago:</label>
                               <form>
                                 <div className="radio">
                                   <label>
-                                    <input type="radio" value="pedrito" checked={this.state.selectedOption ==='pedrito'} onChange={this.handleOptionChange} />
-                                      pedrito
+                                    <input type="radio" name="tipoPago" value="Contado" checked={this.state.selectedOption ==='Contado'} onChange={this.handleOptionChange} />
+                                      Contado
                                   </label>
                                 </div>
                                 <div className="radio">
                                   <label>
-                                    <input type="radio" value="credito" checked={this.state.selectedOption === 'credito'} onChange={this.handleOptionChange} />
-                                    Crédito
+                                    <input type="radio" name="tipoPago" value="Credito" checked={this.state.selectedOption === 'Credito'} onChange={this.handleOptionChange} />
+                                    Credito
                                   </label>
                                 </div>
                             </form>
@@ -331,6 +346,7 @@ export default class CreateSeguro extends Component {
                                     required
                                     value={this.state.fechaFin}
                                     className="form-control"
+                                    disabled = {(this.state.disabled)? "disabled" : ""}
                                     />
                               </div>
                             </div>
