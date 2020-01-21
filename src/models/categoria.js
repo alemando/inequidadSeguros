@@ -12,8 +12,8 @@ const criterioSchema = Schema({
         type:String,
         require:true,
         trim: true},
-    montoCubrir:{
-        type:Number,
+    cobertura:{
+        type:String,
         require:true,
         trim: true},
     deducible:{
@@ -30,7 +30,12 @@ const categoriaSchema = Schema({
         trim:true,
         unique:true
     },
-    criterios: [criterioSchema]
+    criterios: [criterioSchema],
+    estado:{
+      type: Boolean,
+      require: true,
+      default: false
+    }
 })
 
 //Validador de valores unicos
@@ -44,26 +49,43 @@ categoriaSchema.plugin(uniqueValidator);
 categoriaSchema.statics.guardarCategoria = async (datos)=> {
 
     let validacion = { id: "0", mensaje: ""}
-    
-    //Validacion de los nombres de criterios no son repetidos
-    if(verificarCriterios(datos.criterios)){
-        validacion.mensaje += "Categoría no guardada, asegúrese de que los criterios tengan nombres diferentes"
+    //Validar que datos no esta vacido
+    if(Object.keys(datos).length == 0){
+      validacion.mensaje +="Categoría no guardada, JSON vacio"
+    }else{
+      // Validacion si nombre es no null o string vacio
+      if(datos.nombre == null){
+        validacion.mensaje +="Categoría no guardada, no puedes dejar el nombre de categoría null"
+      }else if (datos.nombre == "") {
+        validacion.mensaje +="Categoría no guardada, asegúrese de que la categoría tenga un nombre"
+      }
+
+     //Validacion que exista el atributo opcional criterios
+      if(datos.criterios){
+          //Validacion de los nombres de criterios no son repetidos
+        if(verificarCriterios(datos.criterios)){
+          validacion.mensaje += "Categoría no guardada, asegúrese de que los criterios tengan nombres diferentes"
+        }
+      }
+
     }
+
+    validacion.mensaje+= validacionesCriterios(datos.criterios)
 
     //Si no pasa alguna validacion retorna el mensaje correspondiente
     if(validacion.mensaje.length!=0) return validacion
-    
+
     //Objeto categoria
     const categoriaNuevo = new categorias(
-        {nombre: datos.nombre, 
-            criterios: datos.criterios});
+        {nombre: datos.nombre,
+         criterios: datos.criterios});
 
     try {
         //Procedo a guardar en la BD
         await categoriaNuevo.save()
         return { id: "1", mensaje: "Categoría guardada."}
     } catch (error) {
-        if (error.errors.nombre.kind==="unique") return { 
+        if (error.errors.nombre.kind==="unique") return {
             id: "2", mensaje: "Ya existe una categoría "+datos.nombre+" en la base de datos."};
         else return { id: "0", mensaje: "Error desconocido"};
     }
@@ -111,6 +133,45 @@ const verificarCriterios = (arreglo) => {
 
     return false
 };
+
+/*
+La función validacionesCriterios recibe un arreglo de criterios y verifica uno por uno que cumplan con las validaciones respectivas
+de no datos vacios o nulos.
+Se retorna un string con todos los errores de validación encontrados señalando el error y el nombre del criterio al que corresponde,
+o en caso de no tener nombre, el número del criterio.
+En caso de no encontrar un error, retorna un string vacio ""
+*/
+const validacionesCriterios = (arreglo) => {
+    
+    
+    for(let i = 0; i<arreglo.length;i++){
+        mensaje=""
+        if(arreglo[i].nombre=="" || arreglo[i].nombre==null){
+            mensaje+= "El nombre del criterio "+ (i+1) +" no es válido\n"
+            if(arreglo[i].descripcion=="" || arreglo[i].descripcion==null){
+                mensaje+= "La descripción del criterio "+ (i+1) +" no es válido\n"
+            }
+            if(arreglo[i].cobertura=="" || arreglo[i].cobertura==null){
+                mensaje+="El monto a cubrir del criterio "+ (i+1) +" no es válido\n"
+            }
+            if(arreglo[i].deducible=="" || arreglo[i].deducible==null){
+                mensaje+="El deducible del criterio "+ (i+1) +" no es válido\n"
+            }
+        }
+        else{
+            if(arreglo[i].descripcion=="" || arreglo[i].descripcion==null){
+                mensaje+= "La descripción del criterio "+arreglo[i].nombre +" no es válido\n"
+            }
+            if(arreglo[i].cobertura=="" || arreglo[i].cobertura==null){
+                mensaje+= "El monto a cubrir del criterio "+arreglo[i].nombre +" no es válido\n"
+            }
+            if(arreglo[i].deducible=="" || arreglo[i].deducible==null){
+                mensaje+= "El deducible del criterio "+arreglo[i].nombre +" no es válido\n"
+            }
+        }
+    }
+    return mensaje
+}
 
 
 const categorias = mongoose.model('categorias', categoriaSchema);

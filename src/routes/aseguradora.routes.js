@@ -23,4 +23,10 @@ router.post('/save', async (req, res) => {
   res.json(resultado);
 });
 
+// UPDATE aseguradora
+router.post('/update/:id', async (req,res) =>{ 
+  const resultado = await Aseguradora.actualizarAseguradora(req.body);
+  res.json(resultado);
+});
+
 module.exports = router;

@@ -169,8 +169,8 @@ export default class CreateSeguro extends Component {
       .catch(err => console.error(err));
 
       //Cargar lista clientes
-      fetch('/api/clientes/', {
-        method: 'GET'
+      fetch('/api/clientes/withBienes', {
+        method: 'POST'
       })
       .then(res => res.json())
       .then(data => {
