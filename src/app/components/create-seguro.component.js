@@ -410,7 +410,7 @@ export default class CreateSeguro extends Component {
                         </div>
                         <div className="modal-footer">
                             <button type="submit" form="formSeguro" className="btn btn-primary">Enviar</button>
-                            <CreateCriterio component={this}/>
+                            <CreateCriterio component={this} bien={this.state.bien} />
                             <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Close</button>
                         </div>
                     </div>
