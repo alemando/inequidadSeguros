@@ -229,6 +229,26 @@ clienteSchema.statics.obtenerClienteById = async (id) => {
     }
 }
 
+//Método para obtener clientes que tienen bienes
+clienteSchema.statics.obtenerClientesConBienes = async () =>{
+    //Requerido para hacer uso de sus métodos en el método
+    const Bienes = require('./bien')
+    try{
+        const listaClientes = await clientes.obtenerClientes()
+        let listaClientesBienes = []
+        for(let i = 0; i<listaClientes.length;i++){
+            bienes = await Bienes.obtenerBienesPorCliente(listaClientes[i]._id)
+            if (bienes.length!=0){
+                listaClientesBienes.push(listaClientes[i])
+            }
+        }
+        return listaClientesBienes
+    }
+    catch (error){
+        return "Ha ocurrido algo inesperado al intentar obtener los clientes con bienes: \n" + error;
+    }
+}
+
 const clientes = mongoose.model('clientes', clienteSchema);
 
 module.exports = clientes;

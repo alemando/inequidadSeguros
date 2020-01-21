@@ -23,6 +23,7 @@ export default class CreateSeguro extends Component {
             bien: '',
             aseguradora: '',
             fechaInicio: '',
+            tipoPago: '',
             fechaFin: '',
             valorTotal: 0,
             diaPago: 0,
@@ -31,10 +32,12 @@ export default class CreateSeguro extends Component {
             aseguradoras: [],
             clientes: [],
             bienes: [],
-            criterios: []
+            criterios: [],
+            disabled : false
         }
         this.addSeguro = this.addSeguro.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleOptionChange = this.handleOptionChange.bind(this);
         this.encontrarBien = this.encontrarBien.bind(this);
         this.addCriterio = this.addCriterio.bind(this);
         this.removeCriterio = this.removeCriterio.bind(this);
@@ -58,6 +61,7 @@ export default class CreateSeguro extends Component {
             bien: this.state.bien,
             aseguradora: this.state.aseguradora,
             fechaInicio: this.state.fechaInicio,
+            tipoPago: this.state.tipoPago,
             fechaFin: this.state.fechaFin,
             valorTotal: this.state.valorTotal,
             diaPago: this.state.diaPago,
@@ -75,7 +79,7 @@ export default class CreateSeguro extends Component {
             .then(res => res.json())
             .then(data => {
               if(data.id == 0){
-                  
+
                 Swal.fire({
                   text: data.mensaje,
                   type: 'error'
@@ -83,7 +87,7 @@ export default class CreateSeguro extends Component {
               }else if(data.id == 1){
 
                 this.props.component.fetchSeguros();
-                
+
                 Swal.fire({
                   text: data.mensaje,
                   type: 'success'
@@ -95,6 +99,7 @@ export default class CreateSeguro extends Component {
                   bien: '',
                   aseguradora: '',
                   fechaInicio: '',
+                  tipoPago: '',
                   fechaFin: '',
                   valorTotal: 0,
                   diaPago: 0,
@@ -103,7 +108,8 @@ export default class CreateSeguro extends Component {
                   aseguradoras: [],
                   clientes: [],
                   bienes: [],
-                  criterios: []
+                  criterios: [],
+                  disabled : false
                 });
               }else{
                 Swal.fire({
@@ -111,7 +117,7 @@ export default class CreateSeguro extends Component {
                   type: 'error'
                 })
               }
-                
+
             })
             .catch(err => console.error(err));
     }
@@ -163,8 +169,8 @@ export default class CreateSeguro extends Component {
       .catch(err => console.error(err));
 
       //Cargar lista clientes
-      fetch('/api/clientes/', {
-        method: 'GET'
+      fetch('/api/clientes/withBienes', {
+        method: 'POST'
       })
       .then(res => res.json())
       .then(data => {
@@ -217,11 +223,28 @@ export default class CreateSeguro extends Component {
         }
     }
 
+    handleOptionChange(changeEvent) {
+      console.log(changeEvent.target.value);
+      if(changeEvent.target.value == "Contado"){
+        this.setState({
+          disabled: !this.state.disabled
+        });
+      }else if (this.state.disabled) {
+        this.setState({
+          disabled: !this.state.disabled
+        });
+      }
+      this.setState({
+        selectedOption: changeEvent.target.value,
+        tipoPago: changeEvent.target.value
+      });
+    }
+
     render() {
         return (
           <div>
         <button type="button" className="btn btn-primary  float-right" data-toggle="modal" data-target="#CrearSeguro">Crear seguro</button>
-        
+
         <div className="modal fade" id="CrearSeguro" tabIndex="-1" role="dialog" aria-hidden="true">
             <div className="modal-dialog modal-lg" role="document">
                 <div className="modal-content">
@@ -299,11 +322,31 @@ export default class CreateSeguro extends Component {
                             </div>
                             <div className="col-md-6">
                               <div className="form-group">
+                              <label>* Tipo Pago:</label>
+                              <form>
+                                <div className="radio">
+                                  <label>
+                                    <input type="radio" name="tipoPago" value="Contado" checked={this.state.selectedOption ==='Contado'} onChange={this.handleOptionChange} />
+                                      Contado
+                                  </label>
+                                </div>
+                                <div className="radio">
+                                  <label>
+                                    <input type="radio" name="tipoPago" value="Credito" checked={this.state.selectedOption === 'Credito'} onChange={this.handleOptionChange} />
+                                    Credito
+                                  </label>
+                                </div>
+                            </form>
+                            </div>
+                          </div>
+                            <div className="col-md-6">
+                              <div className="form-group">
                                 <label>* Fecha fin:</label>
                                 <input name="fechaFin" onChange={this.handleChange} type="date"
                                     required
                                     value={this.state.fechaFin}
                                     className="form-control"
+                                    disabled = {(this.state.disabled)? "disabled" : ""}
                                     />
                               </div>
                             </div>
@@ -335,9 +378,9 @@ export default class CreateSeguro extends Component {
                               <div className="form-group">
                                 <label>Observaciones:</label>
                                 <textarea
-                                  className="md-textarea form-control" 
-                                  name="observaciones" 
-                                  onChange={this.handleChange} 
+                                  className="md-textarea form-control"
+                                  name="observaciones"
+                                  onChange={this.handleChange}
                                   value={this.state.observaciones}
                                   rows="3">
                                 </textarea>
@@ -367,7 +410,7 @@ export default class CreateSeguro extends Component {
                         </div>
                         <div className="modal-footer">
                             <button type="submit" form="formSeguro" className="btn btn-primary">Enviar</button>
-                            <CreateCriterio component={this}/>
+                            <CreateCriterio component={this} bien={this.state.bien} />
                             <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Close</button>
                         </div>
                     </div>

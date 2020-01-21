@@ -44,10 +44,18 @@ export default class CreateCriterio extends Component {
         });
     }
 
+    activateButton(bien){
+        if(bien == ''){
+            return true
+        }else{
+            return false
+        }
+    }
+
     render(){
         return (
         <div>
-            <button type="button" className="btn btn-success  float-right" data-toggle="modal" data-target="#CrearCriterio">Añadir criterio</button>
+            <button type="button" className="btn btn-success  float-right" data-toggle="modal" data-target="#CrearCriterio"  disabled={this.activateButton(this.props.bien)}>Añadir criterio</button>
         
             <div className="modal fade" id="CrearCriterio" tabIndex="-1" role="dialog" aria-hidden="true">
                 <div className="modal-dialog" role="document">
