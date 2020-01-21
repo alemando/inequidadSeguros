@@ -151,14 +151,15 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     }
 
     //Validacion fechaFin es una fecha valida
-    if(isNaN(Date.parse(datos.fechaFin))){
+    /*if(isNaN(Date.parse(datos.fechaFin))){
         validacion.mensaje += "La fecha de fin tiene un formato erroneo\n"
-    }
+    }*/
     if(datos.tipoPago == "Credito" && (datos.fechaFin == null || datos.fechaFin == "")){
         validacion.mensaje += "Seguro no guadado,fecha de fin vacía\n"
     }
-    if(dato.tipoPago == "Contado" && (datos.fechaFin != null || datos.fechaFin != "")){
-      validacion.mensaje += "seguro no guardado, fecha de fin debe ser vacia"
+
+    if(datos.tipoPago == "Contado" &&  datos.fechaFin != "" ){
+      validacion.mensaje += "Seguro no guardado, fecha de fin debe ser vacia"
     }
 
     //Validación fecha inicio menor a fecha fin
@@ -202,6 +203,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     //Objeto seguro
     const seguro = new seguros({
       fechaInicio: datos.fechaInicio,
+      tipoPago: datos.tipoPago,
       fechaFin: datos.fechaFin,
       valorTotal: datos.valorTotal,
       diaPago: datos.diaPago,
