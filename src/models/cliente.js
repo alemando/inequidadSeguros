@@ -103,7 +103,7 @@ clienteSchema.statics.guardarCliente = async (datos) => {
     }
 
     //Validacion de nularidad direccion o string vacio(obligatorio)
-    if (datos.direcciom == null) {
+    if (datos.direccion == null) {
         validacion.mensaje += "Direccion no guardada no puedes dejar la Direccion null"
     } else if (datos.direccion == "") {
         validacion.mensaje += "Direccion no guardada, asegúrese de que la Direccion si este ingresado"
