@@ -203,14 +203,19 @@ export default class CreateSeguro extends Component {
     })
     if (name == "cliente") {
       //Cargar lista bienes si selecciona el cliente
-      fetch('/api/bienes/' + value, {
-        method: 'GET'
-      })
-        .then(res => res.json())
-        .then(data => {
-          this.setState({ bienes: data })
+      if(value != ""){
+        fetch('/api/bienes/' + value, {
+          method: 'GET'
         })
-        .catch(err => console.error(err));
+          .then(res => res.json())
+          .then(data => {
+            this.setState({ bienes: data })
+          })
+          .catch(err => console.error(err));
+      }else{
+        this.setState({bienes:[]});
+      }
+      
     }
 
     if (name == "bien") {

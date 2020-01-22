@@ -24,8 +24,6 @@
   },
   "homepage": "https://github.com/alemando/inequidadSeguros#readme",
   "dependencies": {
-    "@material-ui/core": "^4.6.1",
-    "@material-ui/icons": "^4.5.1",
     "@trendmicro/react-sidenav": "^0.4.5",
     "bootstrap": "^4.3.1",
     "cors": "^2.8.5",
@@ -39,7 +37,6 @@
     "react-burger-menu": "^2.6.12",
     "react-responsive": "^8.0.1",
     "react-router-dom": "^5.1.2",
-    "react-sidebar": "^3.0.2",
     "react-super-responsive-table": "^5.1.1",
     "sweetalert2": "^8.18.6"
   },
