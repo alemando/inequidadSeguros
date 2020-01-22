@@ -31,7 +31,7 @@ export default class VerCriterio extends Component {
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-    <h5 className="modal-title"><b>Criterio</b> {this.props.criterio.nombre}</h5>
+                <h5 className="modal-title"><b>Criterio</b> {this.props.criterio.nombre}</h5>
                 <button type="button" className="close" onClick={this.modalClose} aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
