@@ -7,8 +7,8 @@ export default class VerCriterio extends Component {
     this.modalClose = this.modalClose.bind(this);
   }
 
-  modalClose() {
-    $('#Criterio-' + this.categoriaCriterio() + this.props.criterio.nombre).modal('hide');
+  modalClose(){
+    $('#Criterio-'+ this.categoriaCriterio() +this.props.criterio.nombre.replace(/ /g,"_")).modal('hide');
     $(document).on('hidden.bs.modal', '.modal', function () {
       if ($('body').find('.modal.show').length > 0) {
         $('body').addClass('modal-open');
@@ -16,9 +16,9 @@ export default class VerCriterio extends Component {
     });
   }
 
-  categoriaCriterio() {
-    if (this.props.nombre) {
-      return this.props.nombre + "-"
+  categoriaCriterio(){
+    if(this.props.nombre){
+      return this.props.nombre.replace(/ /g,"_") + "-"
     }
     return ""
   }
@@ -26,8 +26,8 @@ export default class VerCriterio extends Component {
   render() {
     return (
       <div>
-        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={"#Criterio-" + this.categoriaCriterio() + this.props.criterio.nombre}>ver más</button>
-        <div className="modal fade" id={"Criterio-" + this.categoriaCriterio() + this.props.criterio.nombre} tabIndex="-1" role="dialog" aria-hidden="true">
+        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={"#Criterio-" + this.categoriaCriterio() + this.props.criterio.nombre.replace(/ /g,"_")}>ver más</button>
+        <div className="modal fade" id={"Criterio-" + this.categoriaCriterio() +this.props.criterio.nombre.replace(/ /g,"_")} tabIndex="-1" role="dialog" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
@@ -54,7 +54,7 @@ export default class VerCriterio extends Component {
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Monto a cubrir</b></div>
-                        <div className="col-md-6 ml-auto">{this.props.criterio.montoCubrir}</div>
+                        <div className="col-md-6 ml-auto">{this.props.criterio.cobertura}</div>
                       </div>
                     </li>
                     <li className="list-group-item">

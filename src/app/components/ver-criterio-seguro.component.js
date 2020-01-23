@@ -47,7 +47,7 @@ export default class VerCriterio extends Component {
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Monto a cubrir</b></div>
-                        <div className="col-md-6 ml-auto">{this.props.criterio.montoCubrir}</div>
+                        <div className="col-md-6 ml-auto">{this.props.criterio.cobertura}</div>
                       </div>
                     </li>
                     <li className="list-group-item">

@@ -12,32 +12,31 @@ const vendedorSchema = Schema({
     },
     nombre:{
         type: String,
-        requiere: true,
+        require: true,
         trim: true
     },
     apellido1:{
         type: String,
-        requiere: true,
+        require: true,
         trim: true
     },
     apellido2:{
         type: String,
-        requiere: true,
         trim: true
     },
     telefono:{
         type: String,
-        requiere: true,
+        require: true,
         trim: true
     },
     correo:{
         type: String,
-        requiere: true,
+        require: true,
         trim: true
     },
     esAdmin:{
         type: Boolean,
-        requiere: true,
+        require: true,
         default: false
     }
 });
@@ -47,7 +46,6 @@ vendedorSchema.plugin(uniqueValidator);
 
 const patronCorreo = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-
 /*
     Metodo para guardar un vendedor
     recibe un arreglo json de parametros
@@ -56,12 +54,17 @@ const patronCorreo = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+
 vendedorSchema.statics.guardarVendedor = async (datos)=> {
 
     let validacion = { id: "0", mensaje: ""}
-
+    
     //Validacion basada en regex de el formato de un correo
     if(!patronCorreo.test(datos.correo)){
         validacion.mensaje += "El correo no sigue el formato example@dominio.ext\n"
     }
-
+    
+    //Validaciones documento negativo o nulo
+    if(datos.documento == "" || datos.documento == null || parseInt(datos.documento) < 0){
+        validacion.mensaje += "El documento de identificacion no es valido\n";
+    }
+    
     //Si no pasa alguna validacion retorna el mensaje correspondiente
     if(validacion.mensaje.length!=0) return validacion
 
@@ -94,10 +97,10 @@ vendedorSchema.statics.obtenerVendedores = async ()=> {
     }
 }
 
-//Obtiene vendedor por el dccumento
+//Obtiene vendedor por el documento
 vendedorSchema.statics.obtenerVendedor = async (id)=> {
     try{
-        let vendedor = await vendedores.findOne({documentoIdentidad: id});
+        let vendedor = await vendedores.findOne({documento: id});
         return vendedor;
     }catch(error){
         return "Error obteniendo vendedor por documento identidad\n" + error;

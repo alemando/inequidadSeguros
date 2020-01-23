@@ -5,10 +5,10 @@ export default class CreateCriterio extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            nombre: '',
-            descripcion: '',
-            montoCubrir: 0,
-            deducible: ''
+            nombre:'',
+            descripcion:'',
+            cobertura:0,
+            deducible:''
         }
         this.handleChange = this.handleChange.bind(this);
         this.addCriterio = this.addCriterio.bind(this);
@@ -17,10 +17,10 @@ export default class CreateCriterio extends Component {
 
     modalClose() {
         this.setState({
-            nombre: '',
-            descripcion: '',
-            montoCubrir: 0.0,
-            deducible: ''
+            nombre:'',
+            descripcion:'',
+            cobertura:0,
+            deducible:''
         });
         $('#CrearCriterio').modal('hide');
 
@@ -89,9 +89,9 @@ export default class CreateCriterio extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label>* Monto a cubrir:</label>
-                                        <input name="montoCubrir" onChange={this.handleChange} type="number"
+                                        <input name="cobertura" onChange={this.handleChange} type="number"
                                             required
-                                            value={this.state.montoCubrir}
+                                            value={this.state.cobertura}
                                             className="form-control"
                                         />
                                     </div>

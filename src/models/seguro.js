@@ -15,8 +15,8 @@ const criterioSchema = Schema({
         type:String,
         require:true,
         trim: true},
-    montoCubrir:{
-        type:Number,
+    cobertura:{
+        type:String,
         require:true,
         trim: true},
     deducible:{
@@ -30,6 +30,11 @@ const seguroSchema = Schema({
   fechaInicio: {
     type: Date,
     require: true,
+    trim: true,
+  },
+  tipoPago:{
+    type: String,
+    requiere: true,
     trim: true,
   },
   fechaFin: {
@@ -59,22 +64,22 @@ const seguroSchema = Schema({
     trim: true
   },
   cliente: {
-    type: Schema.Types.ObjectId, 
+    type: Schema.Types.ObjectId,
     ref: 'clientes',
     trim:true
   },
   bien: {
-    type: Schema.Types.ObjectId, 
+    type: Schema.Types.ObjectId,
     ref: 'bienes',
     trim:true
   },
   vendedor: {
-    type: Schema.Types.ObjectId, 
+    type: Schema.Types.ObjectId,
     ref: 'vendedores',
     trim:true
   },
   aseguradora: {
-    type: Schema.Types.ObjectId, 
+    type: Schema.Types.ObjectId,
     ref: 'aseguradoras',
     trim:true
   },
@@ -95,45 +100,91 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
         validacion.mensaje += "Categoría no guardada, asegúrese de que los criterios tengan nombres diferentes"
     }
 
+    validacion.mensaje+= validacionesCriterios(datos.criterios)
+
     //Validacion del cliente
     if(await clienteModel.obtenerClienteById(datos.cliente) == null){
         validacion.mensaje += "seguro no guardado, cliente no existe en la BD"
     }
+    if(datos.cliente == null || datos.cliente == ""){
+        validacion.mensaje += "Seguro no guardado, cliente vacío"
+    }
 
     //Validacion del bien
+    if(datos.bien == null || datos.bien == ""){
+        validacion.mensaje += "Seguro no guardado, bien vacío"
+    }
     let bienVerificado = await bienModel.obtenerBienPorId(datos.bien)
     if(bienVerificado == null){
-        validacion.mensaje += "seguro no guardado, bien no existe en la BD"
+        validacion.mensaje += "seguro no guardado, bien no existe en la BD\n"
     }else if(bienVerificado.cliente._id != datos.cliente){
-        validacion.mensaje += "seguro no guardado, el bien no es del cliente"
+        validacion.mensaje += "seguro no guardado, el bien no es del cliente\n"
     }
 
     //Validacion del vendedor
+    if(datos.vendedor == null || datos.vendedor == ""){
+        validacion.mensaje += "Seguro no guardado, vendedor vacío\n"
+    }
     if(await vendedorModel.obtenerVendedorById(datos.vendedor) == null){
-        validacion.mensaje += "seguro no guardado, vendedor no existe en la BD"
+        validacion.mensaje += "seguro no guardado, vendedor no existe en la BD\n"
     }
 
     //Validacion de la aseguradora
     if(await aseguradoraModel.obtenerAseguradoraById(datos.aseguradora) == null){
         validacion.mensaje += "seguro no guardado, aseguradora no existe en la BD"
     }
+    if(datos.aseguradora == null || datos.aseguradora == ""){
+        validacion.mensaje += "Seguro no guardado, aseguradora vacía\n"
+    }
 
     //Validacion fechaInicio es una fecha valida
     if(isNaN(Date.parse(datos.fechaInicio))){
         validacion.mensaje += "La fecha de incio tiene un formato erroneo\n"
     }
+    if(datos.fechaInicio == null || datos.fechaInicio == ""){
+        validacion.mensaje += "Seguro no guadado, fecha de inicio vacía\n"
+    }
+
+    //Validacion tipoPago no es null o vacio
+    if(datos.tipoPago == null || datos.tipoPago == ""){
+      validacion.mensaje += "Seguro no guardado, tipo de pago vacío\n"
+    }
 
     //Validacion fechaFin es una fecha valida
-    if(isNaN(Date.parse(datos.fechaFin))){
+    /*if(isNaN(Date.parse(datos.fechaFin))){
         validacion.mensaje += "La fecha de fin tiene un formato erroneo\n"
+    }*/
+    if(datos.tipoPago == "Credito" && (datos.fechaFin == null || datos.fechaFin == "")){
+        validacion.mensaje += "Seguro no guadado,fecha de fin vacía\n"
     }
-    
-    //Validacion diaPago es un numero 
+
+    if(datos.tipoPago == "Contado" &&  datos.fechaFin != "" ){
+      validacion.mensaje += "Seguro no guardado, fecha de fin debe ser vacia"
+    }
+
+    //Validación fecha inicio menor a fecha fin
+    if(Date.parse(datos.fechaInicio) > Date.parse(datos.fechaFin)){
+        validacion.mensaje += "La fecha inicio debe ser menor que la fecha fin "
+    }
+
+    //Validacion diaPago es un numero
     if(isNaN(datos.diaPago)){
         validacion.mensaje += "El dia de pago no es un numero\n"
     }
+    if(datos.diaPago == null || datos.diaPago == ""){
+        validacion.mensaje += "Seguro no guardado, dia de pago vacío\n"
+    }
+    if(datos.diaPago > 31 || datos.diaPago <=0){
+        validacion.mensaje += "El día de pago debe estar entre 1 y 31\n"
+    }
 
-    //Validacion valorTotal es un numero 
+    //Validacion valorTotal es un numero
+    if(datos.valorTotal == null || datos.valorTotal == ""){
+        validacion.mensaje += "El valor total está vacío\n"
+    }
+    if(datos.valorTotal < 0){
+        validacion.mensaje += "El valor total debe ser mayor a cero"
+    }
     if(isNaN(datos.valorTotal)){
         validacion.mensaje += "El valor total no es un numero\n"
     }
@@ -141,9 +192,18 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     //Si no pasa alguna validacion retorna el mensaje correspondiente
     if(validacion.mensaje.length!=0) return validacion
 
+    console.log(datos.criterios)
+    
+    for(let i = 0; i<datos.criterios.length;i++){
+        delete datos.criterios[i]._id;
+    }
+
+    console.log(datos.criterios)
+    
     //Objeto seguro
     const seguro = new seguros({
       fechaInicio: datos.fechaInicio,
+      tipoPago: datos.tipoPago,
       fechaFin: datos.fechaFin,
       valorTotal: datos.valorTotal,
       diaPago: datos.diaPago,
@@ -155,6 +215,25 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
       criterios: datos.criterios
     });
 
+    //Verificar si ya existe un seguro con los mismos atributos ingresados
+    try{
+        seguroAux = await seguros.findOne({fechaInicio: seguro.fechaInicio, 
+                                            fechaFin: seguro.fechaFin,
+                                            valorTotal: seguro.valorTotal,
+                                            diaPago: seguro.diaPago,
+                                            cliente: seguro.cliente,
+                                            bien: seguro.bien,
+                                            vendedor: seguro.vendedor,
+                                            aseguradora: seguro.aseguradora});
+        if(seguroAux != null){
+            validacion.mensaje += "Seguro ya existe\n"
+        }
+    }catch(error){
+        validacion.mensaje += "Error buscando seguros";
+    };
+
+    if(validacion.mensaje.length!=0) return validacion
+
     try {
         //Procedo a guardar en la BD
         await seguro.save();
@@ -162,7 +241,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     } catch (error) {
         console.log(error)
         return {id:0, mensaje: "error desconocido"};
-         
+
     }
 };
 
@@ -202,6 +281,43 @@ const verificarCriterios = (arreglo) => {
 
     return false
 };
+
+/*
+La función validacionesCriterios recibe un arreglo de criterios y verifica uno por uno que cumplan con las validaciones respectivas
+de no datos vacios o nulos.
+Se retorna un string con todos los errores de validación encontrados señalando el error y el nombre del criterio al que corresponde,
+o en caso de no tener nombre, el número del criterio.
+En caso de no encontrar un error, retorna un string vacio ""
+*/
+const validacionesCriterios = (arreglo) => {
+    for(let i = 0; i<arreglo.length;i++){
+        mensaje=""
+        if(arreglo[i].nombre=="" || arreglo[i].nombre==null){
+            mensaje+= "El nombre del criterio "+ (i+1) +" no es válido\n"
+            if(arreglo[i].descripcion=="" || arreglo[i].descripcion==null){
+                mensaje+= "La descripción del criterio "+ (i+1) +" no es válido\n"
+            }
+            if(arreglo[i].cobertura=="" || arreglo[i].cobertura==null){
+                mensaje+="El monto a cubrir del criterio "+ (i+1) +" no es válido\n"
+            }
+            if(arreglo[i].deducible=="" || arreglo[i].deducible==null){
+                mensaje+="El deducible del criterio "+ (i+1) +" no es válido\n"
+            }
+        }
+        else{
+            if(arreglo[i].descripcion=="" || arreglo[i].descripcion==null){
+                mensaje+= "La descripción del criterio "+arreglo[i].nombre +" no es válido\n"
+            }
+            if(arreglo[i].cobertura=="" || arreglo[i].cobertura==null){
+                mensaje+= "El monto a cubrir del criterio "+arreglo[i].nombre +" no es válido\n"
+            }
+            if(arreglo[i].deducible=="" || arreglo[i].deducible==null){
+                mensaje+= "El deducible del criterio "+arreglo[i].nombre +" no es válido\n"
+            }
+        }
+    }
+    return mensaje
+}
 
 const seguros = mongoose.model('seguros',seguroSchema);
 
