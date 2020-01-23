@@ -3,16 +3,17 @@ import VerCliente from "./ver-cliente.component";
 import CreateCliente from "./create-cliente.component";
 import VerBienes from "./ver-bienes.component";
 import CreateBien from "./create-bien.component";
-
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 const Cliente = props => (
-  <tr>
-    <td>{props.cliente.documento}</td>
-    <td>{props.cliente.nombre}</td>
-    <td>{props.cliente.apellido1} {props.cliente.apellido2}</td>
-    <td><VerCliente cliente={props.cliente} key={props.cliente.documento}/></td>
-    <td><VerBienes cliente={props.cliente._id} key={props.cliente.documento}/></td>
-    <td><CreateBien cliente={props.cliente._id} key={props.cliente.documento}/></td>
-  </tr>
+  <Tr>
+    <Td>{props.cliente.documento}</Td>
+    <Td>{props.cliente.nombre}</Td>
+    <Td>{props.cliente.apellido1} {props.cliente.apellido2}</Td>
+    <Td><center><VerCliente cliente={props.cliente} key={props.cliente.documento}/></center></Td>
+    <Td><center><VerBienes cliente={props.cliente._id} clienteInfo={props.cliente} key={props.cliente.documento}/></center></Td>
+    <Td><center><CreateBien cliente={props.cliente._id} clienteInfo={props.cliente} key={props.cliente.documento}/></center></Td>
+  </Tr>
 )
 
 export default class ClientesList extends Component {
@@ -43,27 +44,41 @@ export default class ClientesList extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col"><h3>Clientes</h3></div>
-          <div className="col"> <CreateCliente component={this}/></div>
-        </div>
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>Documento</th>
-              <th>Nombre</th>
-              <th>Apellidos</th>
-              <th>Ver más</th>
-              <th>Ver bienes</th>
-              <th>Crear bien</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.clientesList()}
-          </tbody>
-        </table>
+    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <div className="card mb-3">
+          <div className="card-header">
+              <div className="row">
+                  <div className="col-xs-6 col-sm-6 col-md-8 col-lg-10 col-xl-10">
+                      <h3><i className="fa fa-users"></i> Clientes disponibles</h3>
+                  </div>
+                  <div className="col-xs-6 col-sm-6 col-md-4 col-lg-2 col-xl-2">
+                      <CreateCliente component={this}/>
+                  </div>
+              </div>
+          </div>
+              
+          <div className="card-body">
+              <div className="table-responsive">
+              <Table id="tabla-vendedores" className="table table-bordered table-hover display">
+                  <Thead>
+                      <Tr>
+                          <Th><center>Documento</center></Th>
+                          <Th><center>Nombre</center></Th>
+                          <Th><center>Apellidos</center></Th>
+                          <Th><center>Ver más</center></Th>
+                          <Th><center>Ver bienes</center></Th>
+                          <Th><center>Crear bien</center></Th>
+                      </Tr>
+                  </Thead>                                        
+                  <Tbody>
+                      {this.clientesList()}
+                  </Tbody>
+              </Table>
+              </div>
+              
+          </div>                                                      
       </div>
+    </div>  
     )
   }
 }

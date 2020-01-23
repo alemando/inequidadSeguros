@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import VerCriterio from "./ver-criterio.component";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
 const Criterio = props => (
-  <tr>
-    <td>{props.criterio.nombre}</td>
-    <td><VerCriterio nombre={props.nombre} criterio={props.criterio} key={props.criterio.nombre}/></td>
-  </tr>
+  <Tr>
+    <Td>{props.criterio.nombre}</Td>
+    <Td><VerCriterio nombre={props.nombre} criterio={props.criterio} key={props.criterio.mombre}/></Td>
+  </Tr>
 )
 
 export default class VerCriterios extends Component {
@@ -36,24 +38,24 @@ export default class VerCriterios extends Component {
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title"><b>Criterios</b></h5>
+    <h5 className="modal-title"><b>Criterios</b> {this.props.categoria.nombre}</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div className="modal-body">
                 <div className="container">
-                  <table className="table">
-                    <thead className="thead-light">
-                      <tr>
-                        <th>Nombre</th>
-                        <th>Ver más</th>
-                      </tr>
-                    </thead>
-                    <tbody>
+                  <Table className="table">
+                    <Thead className="thead-light">
+                      <Tr>
+                        <Th>Nombre</Th>
+                        <Th>Ver más</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
                       {this.criteriosList()}
-                    </tbody>
-                  </table>
+                    </Tbody>
+                  </Table>
                 </div>
               </div>
               <div className="modal-footer">

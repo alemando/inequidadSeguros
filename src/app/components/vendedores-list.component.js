@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import VerVendedor from "./ver-vendedor.component";
 import CreateVendedor from "./create-vendedor.component";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
 const Vendedor = props => (
-  <tr>
-    <td>{props.vendedor.documento}</td>
-    <td>{props.vendedor.nombre}</td>
-    <td>{props.vendedor.apellido1} {props.vendedor.apellido2}</td>
-    <td><VerVendedor vendedor={props.vendedor} key={props.vendedor.documento}/></td>
-  </tr>
+  <Tr>
+    <Td>{props.vendedor.documento}</Td>
+    <Td>{props.vendedor.nombre}</Td>
+    <Td>{props.vendedor.apellido1} {props.vendedor.apellido2}</Td>
+    <Td><center><VerVendedor vendedor={props.vendedor} key={props.vendedor.documento}/></center></Td>
+  </Tr>
 )
 
 export default class VendedoresList extends Component {
@@ -39,25 +41,39 @@ export default class VendedoresList extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col"><h3>Vendedores</h3></div>
-          <div className="col"> <CreateVendedor component={this}/></div>
+      <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div className="card mb-3">
+            <div className="card-header">
+                <div className="row">
+                    <div className="col-xs-6 col-sm-6 col-md-8 col-lg-10 col-xl-10">
+                        <h3><i className="fa fa-id-card-o"></i> Vendedores disponibles</h3>
+                    </div>
+                    <div className="col-xs-6 col-sm-6 col-md-4 col-lg-2 col-xl-2">
+                        <CreateVendedor component={this}/>
+                    </div>
+                </div>
+            </div>
+                
+            <div className="card-body">
+                <div className="table-responsive">
+                <Table id="tabla-vendedores" className="table table-bordered table-hover display">
+                    <Thead>
+                        <Tr>
+                            <Th><center>Documento</center></Th>
+                            <Th><center>Nombre</center></Th>
+                            <Th><center>Apellidos</center></Th>
+                            <Th><center>Ver más</center></Th>
+                        </Tr>
+                    </Thead>                                        
+                    <Tbody>
+                        {this.vendedoresList()}
+                    </Tbody>
+                </Table>
+                </div>
+                
+            </div>                                                      
         </div>
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>Documento</th>
-              <th>Nombre</th>
-              <th>Apellidos</th>
-              <th>Ver más</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.vendedoresList()}
-          </tbody>
-        </table>
-      </div>
+      </div>  
     )
   }
 }

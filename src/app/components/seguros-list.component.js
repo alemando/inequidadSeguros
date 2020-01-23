@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import CreateSeguro from "./create-seguro.component";
 import VerSeguro from "./ver-seguro.component";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
 const Seguro = props => (
-  <tr>
-    <td>{props.seguro.cliente.nombre+" "+props.seguro.cliente.apellido1+" "+props.seguro.cliente.apellido2 }</td>
-    <td>{props.seguro.bien.nombre}</td>
-    <td>{props.seguro.aseguradora.nombre}</td>
-    <td>{props.seguro.vendedor.nombre+" "+props.seguro.vendedor.apellido1+" "+props.seguro.vendedor.apellido2 }</td>
-    <td><VerSeguro seguro={props.seguro} key={props.seguro._id}/></td>
-  </tr>
+  <Tr>
+    <Td>{props.seguro.cliente.nombre+" "+props.seguro.cliente.apellido1+" "+props.seguro.cliente.apellido2 }</Td>
+    <Td>{props.seguro.bien.nombre}</Td>
+    <Td>{props.seguro.aseguradora.nombre}</Td>
+    <Td>{props.seguro.vendedor.nombre+" "+props.seguro.vendedor.apellido1+" "+props.seguro.vendedor.apellido2 }</Td>
+    <Td><center><VerSeguro seguro={props.seguro} key={props.seguro._id}/></center></Td>
+  </Tr>
 )
 
 export default class SegurosList extends Component {
@@ -42,26 +44,40 @@ export default class SegurosList extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col"><h3>Seguros</h3></div>
-          <div className="col"> <CreateSeguro component={this}/></div>
+      <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div className="card mb-3">
+            <div className="card-header">
+                <div className="row">
+                    <div className="col-xs-6 col-sm-6 col-md-8 col-lg-10 col-xl-10">
+                        <h3><i className="fa fa-shield"></i> Seguros disponibles</h3>
+                    </div>
+                    <div className="col-xs-6 col-sm-6 col-md-4 col-lg-2 col-xl-2">
+                        <CreateSeguro component={this}/>
+                    </div>
+                </div>
+            </div>
+                
+            <div className="card-body">
+                <div className="table-responsive">
+                <Table id="tabla-seguros" className="table table-bordered table-hover display">
+                    <Thead>
+                        <Tr>
+                            <Th><center>Cliente</center></Th>
+                            <Th><center>Bien</center></Th>
+                            <Th><center>Aseguradora</center></Th>
+                            <Th><center>Vendedor</center></Th>
+                            <Th><center>Ver mas</center></Th>
+                        </Tr>
+                    </Thead>                                        
+                    <Tbody>
+                        { this.segurosList() }
+                    </Tbody>
+                </Table>
+                </div>
+                
+            </div>                                                      
         </div>
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>Cliente</th>
-              <th>Bien</th>
-              <th>Aseguradora</th>
-              <th>Vendedor</th>
-              <th>Ver mas</th>
-            </tr>
-          </thead>
-          <tbody>
-            { this.segurosList() }
-          </tbody>
-        </table>
-      </div>
+      </div>  
     )
   }
 }
