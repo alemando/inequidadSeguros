@@ -35,7 +35,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-src/public/js/bundle.js
+
 # TypeScript v1 declaration files
 typings/
 
@@ -59,8 +59,7 @@ typings/
 
 # next.js build output
 .next
-src/public/js/bundle.js
 #*.js
 
 #Archivo compilado de las vistas
-src/public/js/bundle.js
+#src/public/js/bundle.js
