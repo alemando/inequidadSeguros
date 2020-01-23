@@ -1,7 +1,13 @@
-
-
+//Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
+
+//MomentJS
+import "moment/moment.js"
+
+//Fontawesome
+import "@fortawesome/fontawesome-free/css/fontawesome.min.css"
+
 import { BrowserRouter as Router, Route} from "react-router-dom";
 
 import Index from "./components/index.component";
@@ -13,30 +19,9 @@ import Aseguradora from "./components/aseguradora.component";
 import Categoria from "./components/categoria.component";
 import Seguro from "./components/seguro.component";
 import Vendedor from "./components/vendedor.component";
-/*
-function App() {
-  return (
-    <Router>
-    <div id="App">
-      <SideBar />
-      <div id="page-wrap">
-        <header>
-        <h1>Seguros Inequidad</h1>
-        <h2 >compromiso y calidad </h2>
-        </header>
-        <hr width="80%"></hr>
-        
-      </div>
-    </div>
-    </Router>
-  );
-}
-
-export default App;
-*/
 import React from 'react';
 
-import './css/App.css';
+
 
 export default function App() {
   return (
