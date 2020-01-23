@@ -74,6 +74,12 @@ export default class VerSeguro extends Component {
                     </li>
                     <li className="list-group-item">
                       <div className="row">
+                        <div className="col-md-6 ml-auto"><b>Tipo de pago</b></div>
+                        <div className="col-md-6 ml-auto">{this.props.seguro.tipoPago}</div>
+                      </div>
+                    </li>
+                    <li className="list-group-item">
+                      <div className="row">
                         <div className="col-md-6 ml-auto"><b>Fecha Inicio</b></div>
                         <div className="col-md-6 ml-auto">{this.props.seguro.fechaInicio}</div>
                       </div>
