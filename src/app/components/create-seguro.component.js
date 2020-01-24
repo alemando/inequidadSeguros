@@ -279,7 +279,7 @@ vendedores(){
                           </div>
                           <div className="col-md-6">
                             <div className="form-group">
-                              <label>* Aseguradoa:</label>
+                              <label>* Aseguradora:</label>
                               <select name="aseguradora" onChange={this.handleChange}
                                   required
                                   value={this.state.aseguradora}
@@ -391,6 +391,13 @@ vendedores(){
                                 value={this.state.observaciones}
                                 rows="3">
                               </textarea>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col">
+                            <div className="form-group">
+                              <label>Todos los campos con * son obligatorios</label>
                             </div>
                           </div>
                         </div>

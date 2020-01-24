@@ -120,7 +120,7 @@ export default class CreateVendedor extends Component {
                                     />
                             </div>
                             <div className="form-group">
-                                <label>  Segundo apellido:</label>
+                                <label> * Segundo apellido:</label>
                                 <input name="apellido2" onChange={this.handleChange} type="text"
                                     value={this.state.apellido2}
                                     className="form-control"
@@ -139,6 +139,13 @@ export default class CreateVendedor extends Component {
                                     value={this.state.correo}
                                     className="form-control"
                                     />
+                            </div>
+                            <div className="row">
+                                <div className="col">
+                                    <div className="form-group">
+                                        <label>Todos los campos con * son obligatorios</label>
+                                    </div>
+                                </div>
                             </div>
                             </form>
                         </div>

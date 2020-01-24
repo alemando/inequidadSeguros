@@ -19,7 +19,7 @@ export default class VerBien extends Component {
   render() {
     return (
       <div>
-        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={'#Bien-' + this.props.bien._id}>ver más</button>
+        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={'#Bien-' + this.props.bien._id}>Ver más</button>
         <div className="modal fade" id={'Bien-' + this.props.bien._id} tabIndex="-1" role="dialog" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">

@@ -4,7 +4,7 @@ export default class VerCliente extends Component {
   render() {
     return (
       <div>
-        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={"#Cliente" + this.props.cliente.documento}>ver más</button>
+        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={"#Cliente" + this.props.cliente.documento}>Ver más</button>
         <div className="modal fade" id={"Cliente" + this.props.cliente.documento} tabIndex="-1" role="dialog" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">

@@ -33,7 +33,7 @@ export default class VerCriterios extends Component {
   render() {
     return (
       <div>
-        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={"#Criterios-" + this.props.categoria.nombre.replace(/ /g,"_")}>ver criterios</button>
+        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={"#Criterios-" + this.props.categoria.nombre.replace(/ /g,"_")}>Ver criterios</button>
         <div className="modal fade" id={"Criterios-" +this.props.categoria.nombre.replace(/ /g,"_")} tabIndex="-1" role="dialog" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">

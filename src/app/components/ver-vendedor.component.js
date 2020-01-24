@@ -4,7 +4,7 @@ export default class VerVendedor extends Component {
   render() {
     return (
       <div>
-        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={"#Vendedor" + this.props.vendedor.documento}>ver más</button>
+        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={"#Vendedor" + this.props.vendedor.documento}>Ver más</button>
         <div className="modal fade" id={"Vendedor" + this.props.vendedor.documento} tabIndex="-1" role="dialog" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
