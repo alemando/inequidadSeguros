@@ -123,7 +123,14 @@ export default class CreateAseguradora extends Component {
                                     className="form-control"
                                 />
                             </div>
-                        </form>
+                            <div className="row">
+                                <div className="col">
+                                    <div className="form-group">
+                                        <label>Todos los campos con * son obligatorios</label>
+                                    </div>
+                                 </div>
+                            </div>
+                    </form>
                 </div>
                 <div className="modal-footer">
                     <button type="submit" form="formAseguradora" className="btn btn-primary">Enviar</button>

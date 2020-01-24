@@ -148,6 +148,13 @@ export default class CreateBien extends Component {
                         className="form-control"
                         />
                   </div>
+                  <div className="row">
+                    <div className="col">
+                      <div className="form-group">
+                        <label>Todos los campos con * son obligatorios</label>
+                      </div>
+                    </div>
+                  </div>
                 </form>
               </div>
               <div className="modal-footer">

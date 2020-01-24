@@ -59,10 +59,10 @@ export default class AseguradorasList extends Component {
                 <Table id="tabla-aseguradoras" className="table table-bordered table-hover display">
                     <Thead>
                         <Tr>
-                            <Th><center>nit</center></Th>
-                            <Th><center>nombre</center></Th>
-                            <Th><center>telefono</center></Th>
-                            <Th><center>correo</center></Th>
+                            <Th><center>Nit</center></Th>
+                            <Th><center>Nombre</center></Th>
+                            <Th><center>Telefono</center></Th>
+                            <Th><center>Correo</center></Th>
                         </Tr>
                     </Thead>                                        
                     <Tbody>

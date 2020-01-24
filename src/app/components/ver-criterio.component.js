@@ -26,7 +26,7 @@ export default class VerCriterio extends Component {
   render() {
     return (
       <div>
-        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={"#Criterio-" + this.categoriaCriterio() + this.props.criterio.nombre.replace(/ /g,"_")}>ver más</button>
+        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={"#Criterio-" + this.categoriaCriterio() + this.props.criterio.nombre.replace(/ /g,"_")}>Ver más</button>
         <div className="modal fade" id={"Criterio-" + this.categoriaCriterio() +this.props.criterio.nombre.replace(/ /g,"_")} tabIndex="-1" role="dialog" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
