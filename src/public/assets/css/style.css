@@ -9,8 +9,12 @@ html {
 body {
   font-size: 0.9rem;
   background-color: #efefef;
-  padding-bottom: 50px; }
+  padding-bottom: 50px; 
+}
 
+.table-responsive{
+  overflow: hidden !important;
+}
 a {
     color: #0ca4ca;
     text-decoration: none; }

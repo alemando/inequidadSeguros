@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import CreateAseguradora from "./create-aseguradora.component";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
+import $ from 'jquery'
+import DataTable from 'datatables.net'
+$.DataTable = DataTable
 
 const Aseguradora = props => (
   <Tr>
@@ -34,6 +37,19 @@ export default class AseguradorasList extends Component {
             .then(res => res.json())
             .then(data => {
                 this.setState({aseguradoras: data});
+                $("#tabla-aseguradoras").DataTable({
+                  "autoWidth": false,
+                  "destroy":true,
+                  "responsive":true,
+                  "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se han encontrado registros",
+                    "info": "(_MAX_ aseguradoras) Pagina _PAGE_ de _PAGES_",
+                    "search": "Buscar",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(registros disponibles _MAX_)"
+                  }
+                });
             })
             .catch(err => console.error(err));
     }

@@ -5,6 +5,10 @@ import VerBienes from "./ver-bienes.component";
 import CreateBien from "./create-bien.component";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
+import $ from 'jquery'
+import DataTable from 'datatables.net'
+$.DataTable = DataTable
+
 const Cliente = props => (
   <Tr>
     <Td>{props.cliente.documento}</Td>
@@ -37,6 +41,19 @@ export default class ClientesList extends Component {
       .then(res => res.json())
       .then(data => {
         this.setState({ clientes: data });
+        $("#tabla-clientes").DataTable({
+          "autoWidth": false,
+          "destroy":true,
+          "responsive":true,
+          "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se han encontrado registros",
+            "info": "(_MAX_ clientes) Pagina _PAGE_ de _PAGES_",
+            "search": "Buscar",
+            "infoEmpty": "No hay registros disponibles",
+            "infoFiltered": "(registros disponibles _MAX_)"
+          }
+        });
       })
       .catch(err => console.error(err));
   }
@@ -59,7 +76,7 @@ export default class ClientesList extends Component {
               
           <div className="card-body">
               <div className="table-responsive">
-              <Table id="tabla-vendedores" className="table table-bordered table-hover display">
+              <Table id="tabla-clientes" className="table table-bordered table-hover display">
                   <Thead>
                       <Tr>
                           <Th><center>Documento</center></Th>
