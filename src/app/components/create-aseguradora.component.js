@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import $ from 'jquery'
 import Swal from 'sweetalert2'
 export default class CreateAseguradora extends Component {
 
@@ -48,8 +49,14 @@ export default class CreateAseguradora extends Component {
                   
                   Swal.fire({
                     text: data.mensaje,
-                    type: 'success'
+                    type: 'success',
+                    onClose: () => {
+                      location.reload();
+                    }
                   })
+
+                  $("#CrearAseguradora").modal('hide');
+                  $("#formAseguradora").reset();
 
                   this.setState({
                     nit: '',
@@ -78,9 +85,9 @@ export default class CreateAseguradora extends Component {
     render() {
         return (
             <div>
-            <button type="button" className="btn btn-primary  float-right" data-toggle="modal" data-target="#CrearCliente">Crear aseguradora</button>
+            <button type="button" className="btn btn-primary  float-right" data-toggle="modal" data-target="#CrearAseguradora">Crear aseguradora</button>
             
-            <div className="modal fade" id="CrearCliente" tabIndex="-1" role="dialog" aria-hidden="true">
+            <div className="modal fade" id="CrearAseguradora" tabIndex="-1" role="dialog" aria-hidden="true">
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                 <div className="modal-header">

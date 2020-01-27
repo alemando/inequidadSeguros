@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
 import Swal from 'sweetalert2'
 
 export default class CreateVendedor extends Component {
@@ -53,8 +54,14 @@ export default class CreateVendedor extends Component {
                   
                   Swal.fire({
                     text: data.mensaje,
-                    type: 'success'
+                    type: 'success',
+                    onClose: () => {
+                      location.reload();
+                    }
                   })
+
+                  $("#CrearVendedor").modal('hide');
+                  $("#formVendedor").reset();
 
                   this.setState({
                     documento: '',

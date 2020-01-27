@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import CreateCriterio from "./create-criterio-categoria.component";
 import VerCriterio from "./ver-criterio.component";
-import EditCriterio from "./edit-criterio.component";;
+import EditCriterio from "./edit-criterio.component";
+import $ from 'jquery';
 import Swal from 'sweetalert2'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
@@ -92,8 +93,14 @@ addSeguro(e){
 
             Swal.fire({
               text: data.mensaje,
-              type: 'success'
+              type: 'success',
+              onClose: () => {
+                location.reload();
+              }
             })
+
+            $("#CrearSeguro").modal('hide');
+            $("#formSeguro").reset();
 
             this.setState({
               vendedor: '',

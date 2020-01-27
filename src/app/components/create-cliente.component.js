@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import $ from 'jquery'
 import Swal from 'sweetalert2'
 
 export default class CreateCliente extends Component {
@@ -61,8 +62,14 @@ export default class CreateCliente extends Component {
                   
                   Swal.fire({
                     text: data.mensaje,
-                    type: 'success'
+                    type: 'success',
+                    onClose: () => {
+                      location.reload();
+                    }
                   })
+
+                  $("#CrearCliente").modal('hide');
+                  $("#formCliente").reset();
 
                   this.setState({
                     documento: '',

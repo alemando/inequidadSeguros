@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import $ from 'jquery'
 import Swal from 'sweetalert2'
 export default class CreateBien extends Component {
 
@@ -46,8 +47,14 @@ export default class CreateBien extends Component {
                 
                 Swal.fire({
                   text: data.mensaje,
-                  type: 'success'
+                  type: 'success',
+                  onClose: () => {
+                    location.reload();
+                  }
                 })
+
+                $("#CrearBien"+this.props.cliente).modal('hide');
+                $("#formBien-"+this.props.cliente).reset();
 
                 this.setState({
                   nombre: '',

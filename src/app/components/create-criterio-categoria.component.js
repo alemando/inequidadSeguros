@@ -22,7 +22,8 @@ export default class CreateCriterio extends Component {
             cobertura:0,
             deducible:''
         });
-        $('#CrearCriterio').modal('hide');
+        $("#CrearCriterio").modal('hide');
+        $("#formCriterio").reset();
 
         $(document).on('hidden.bs.modal', '.modal', function () {
             if ($('body').find('.modal.show').length > 0) {
