@@ -3,6 +3,10 @@ import CreateSeguro from "./create-seguro.component";
 import VerSeguro from "./ver-seguro.component";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
+import $ from 'jquery'
+import DataTable from 'datatables.net'
+$.DataTable = DataTable
+
 
 const Seguro = props => (
   <Tr>
@@ -37,8 +41,22 @@ export default class SegurosList extends Component {
             .then(res => res.json())
             .then(data => {
                 this.setState({seguros: data});
+                $("#tabla-seguros").DataTable({
+                  "autoWidth": false,
+                  "destroy":true,
+                  "responsive":true,
+                  "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                    "zeroRecords": "No se han encontrado registros",
+                    "info": "(_MAX_ seguros) Pagina _PAGE_ de _PAGES_",
+                    "search": "Buscar",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(registros disponibles _MAX_)"
+                  }
+                });
             })
             .catch(err => console.error(err));
+            
     }
 
 
