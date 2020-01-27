@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import CreateCriterio from "./create-criterio-categoria.component";
 import VerCriterio from "./ver-criterio.component";
-import EditCriterio from "./edit-criterio.component";;
+import EditCriterio from "./edit-criterio.component";
+import $ from 'jquery';
 import Swal from 'sweetalert2'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
@@ -92,8 +93,14 @@ addSeguro(e){
 
             Swal.fire({
               text: data.mensaje,
-              type: 'success'
+              type: 'success',
+              onClose: () => {
+                location.reload();
+              }
             })
+
+            $("#CrearSeguro").modal('hide');
+            $("#formSeguro").reset();
 
             this.setState({
               vendedor: '',
@@ -111,7 +118,8 @@ addSeguro(e){
               clientes: [],
               bienes: [],
               criterios: [],
-              disabled : false
+              disabledFecha : false,
+              disabledDiaPago : false
             });
           }else{
             Swal.fire({
@@ -234,11 +242,17 @@ vendedores(){
       console.log(changeEvent.target.value);
       if(changeEvent.target.value == "Contado"){
         this.setState({
-          disabled: !this.state.disabled
+          disabledDiaPago: true
         });
-      }else if (this.state.disabled) {
         this.setState({
-          disabled: !this.state.disabled
+          disabledFecha: false
+        });
+      }else if (changeEvent.target.value == "Credito") {
+        this.setState({
+          disabledFecha: true
+        });
+        this.setState({
+          disabledDiaPago: false
         });
       }
       this.setState({
@@ -353,7 +367,7 @@ vendedores(){
                                   required
                                   value={this.state.fechaFin}
                                   className="form-control"
-                                  disabled = {(this.state.disabled)? "disabled" : ""}
+                                  disabled = {(this.state.disabledFecha)? "disabled" : ""}
                                   />
                             </div>
                           </div>
@@ -366,6 +380,7 @@ vendedores(){
                                   required
                                   value={this.state.diaPago}
                                   className="form-control"
+                                  disabled = {(this.state.disabledDiaPago)? "disabled" : ""}
                                   />
                             </div>
                           </div>

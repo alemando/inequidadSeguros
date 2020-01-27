@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CreateCriterio from "./create-criterio-categoria.component";
 import VerCriterio from "./ver-criterio.component";
 import EditCriterio from "./edit-criterio.component";
+import $ from 'jquery'
 import Swal from 'sweetalert2'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
@@ -62,8 +63,14 @@ export default class CreateCategoria extends Component {
                     
                     Swal.fire({
                       text: data.mensaje,
-                      type: 'success'
+                      type: 'success',
+                      onClose: () => {
+                        location.reload();
+                      }
                     })
+
+                    $("#CrearCategoria").modal('hide');
+                    $("#formCategoria").reset();
   
                     this.setState({
                         nombre: '',
@@ -154,7 +161,7 @@ export default class CreateCategoria extends Component {
                         <div className="modal-footer">
                             <button type="submit" form="formCategoria" className="btn btn-primary">Enviar</button>
                             <CreateCriterio component={this}/>
-                            <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Cerrar</button>
                         </div>
                     </div>
                 </div>

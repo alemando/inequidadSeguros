@@ -22,7 +22,8 @@ export default class CreateCriterio extends Component {
             cobertura:0,
             deducible:''
         });
-        $('#CrearCriterio').modal('hide');
+        $("#CrearCriterio").modal('hide');
+        $("#formCriterio").reset();
 
         $(document).on('hidden.bs.modal', '.modal', function () {
             if ($('body').find('.modal.show').length > 0) {
@@ -89,7 +90,7 @@ export default class CreateCriterio extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label>* Monto a cubrir:</label>
-                                        <input name="cobertura" onChange={this.handleChange} type="number"
+                                        <input name="cobertura" onChange={this.handleChange} type="text"
                                             required
                                             value={this.state.cobertura}
                                             className="form-control"

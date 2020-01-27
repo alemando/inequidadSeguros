@@ -22,7 +22,6 @@ const clienteSchema = Schema({
     },
     apellido2: {
         type: String,
-        require: true,
         trim: true
     },
     direccion: {
@@ -31,7 +30,7 @@ const clienteSchema = Schema({
         require: true
     },
     telefono: {
-        type: String,
+        type: Number,
         trim: true,
         require: true
     },
@@ -73,40 +72,40 @@ clienteSchema.statics.guardarCliente = async (datos) => {
     let validacion = { id: "0", mensaje: "" }
     //Validacion del documento si  es un numero
     if (isNaN(datos.documento)) {
-        validacion.mensaje += "El documento no es un numero\n"
+        validacion.mensaje += "El documento no es un numero.\n"
     }
 
     //Validacion de nularidad documento o string vacio(obligatorio)
     if (datos.documento == null) {
-        validacion.mensaje += "Documento no guardado, no puedes dejar el documento null"
+        validacion.mensaje += "Documento no guardado, no puedes dejar el documento vacio."
     } else if (datos.documento == "") {
-        validacion.mensaje += "Documento no guardado, asegúrese de que el documento si este ingresado"
+        validacion.mensaje += "Documento no guardado, asegúrese de que el documento se ingreso correctamente."
     }
 
     //Validacion de nularidad nombre o string vacio(obligatorio)
     if (datos.nombre == null) {
-        validacion.mensaje += "Nombre no guardado, no puedes dejar el Nombre null"
+        validacion.mensaje += "Nombre no guardado, no puedes dejar el nombre vacio."
     } else if (datos.nombre == "") {
-        validacion.mensaje += "Nombre no guardado, asegúrese de que el Nombre si este ingresado"
+        validacion.mensaje += "Nombre no guardado, asegúrese de que el nombre se ingreso correctamente."
     }
 
     //Validacion de nularidad apellido1 o string vacio(obligatorio)
     if (datos.apellido1 == null) {
-        validacion.mensaje += "Apellido1 no guardado, no puedes dejar el Apellido1 null"
+        validacion.mensaje += "Apellido1 no guardado, no puedes dejar el Apellido1 vacio."
     } else if (datos.apellido1 == "") {
-        validacion.mensaje += "Apellido1 no guardado, asegúrese de que el Apellido1 si este ingresado"
+        validacion.mensaje += "Apellido1 no guardado, asegúrese de que el Apellido1 se ingreso correctamente."
     }
 
     //Validacion de nularidad apellido2
     if (datos.apellido2 == null) {
-        validacion.mensaje += "Apellido2 no guardado, no puedes dejar el Apellido2 null"
+        validacion.mensaje += "Apellido2 no guardado, no puedes dejar el Apellido2 vacio."
     }
 
     //Validacion de nularidad direccion o string vacio(obligatorio)
     if (datos.direccion == null) {
-        validacion.mensaje += "Direccion no guardada no puedes dejar la Direccion null"
+        validacion.mensaje += "Direccion no guardada no puedes dejar la direccion vacia."
     } else if (datos.direccion == "") {
-        validacion.mensaje += "Direccion no guardada, asegúrese de que la Direccion si este ingresado"
+        validacion.mensaje += "Direccion no guardada, asegúrese de que la direccion se ingreso correctamente."
     }
 
     //Validacion del telefono si  es un numero
@@ -116,37 +115,37 @@ clienteSchema.statics.guardarCliente = async (datos) => {
 
     //Validacion de nularidad telefono o string vacio(obligatorio)
     if (datos.telefono == null) {
-        validacion.mensaje += "Telefono no guardado, no puedes dejar el Telefono null"
+        validacion.mensaje += "Telefono no guardado, no puedes dejar el telefono vacio."
     } else if (datos.telefono == "") {
-        validacion.mensaje += "Telefono no guardado, asegúrese de que el Telefono si este ingresado"
+        validacion.mensaje += "Telefono no guardado, asegúrese de que el telefono si se ingreso correctamente."
     }
 
     //Validacion de nularidad direccion o string vacio(obligatorio)
     if (datos.direccion == null) {
-        validacion.mensaje += "Direccion no guardada, no puedes dejar la Direccion null"
+        validacion.mensaje += "Direccion no guardada, no puedes dejar la direccion vacia."
     } else if (datos.direccion == "") {
-        validacion.mensaje += "Direccion no guardada, asegúrese de que la Direccion si este ingresado"
+        validacion.mensaje += "Direccion no guardada, asegúrese de que la direccion si se ingreso correctamente."
     }
 
     //Validacion de nularidad fechaNacimiento string vacio(obligatorio)
     if (datos.fechaNacimiento == null) {
-        validacion.mensaje += "FechaNacimiento no guardado, no puedes dejar la fechaNacimiento null"
+        validacion.mensaje += "Fecha de nacimiento no guardada, no puedes dejarla vacia."
     } else if (datos.fechaNacimiento == "") {
-        validacion.mensaje += "FechaNacimiento no guardado, asegúrese de que la fechaNacimiento si este ingresado"
+        validacion.mensaje += "Fecha de nacimiento no guardada, asegúrese de que si se ingreso correctamente."
     }
 
     //Validacion de nularidad ingresos o string vacio(obligatorio)
     if (datos.ingresos == null) {
-        validacion.mensaje += "Ingresos no guardados, no puedes dejar los Ingresos null"
+        validacion.mensaje += "Ingresos no guardados, no puedes dejar los ingresos vacio."
     } else if (datos.ingresos == "") {
-        validacion.mensaje += "Ingresos no guardados, asegúrese de que los Ingresos si estan ingresados"
+        validacion.mensaje += "Ingresos no guardados, asegúrese de que los ingresos se ingresaron correctamente."
     }
 
     //Validacion de nularidad egresos o string vacio(obligatorio)
     if (datos.egresos == null) {
-        validacion.mensaje += "egresos no guardados, no puedes dejar los egresos null"
+        validacion.mensaje += "Egresos no guardados, no puedes dejar los egresos vacios."
     } else if (datos.egresos == "") {
-        validacion.mensaje += "egresos no guardado, asegúrese de que los egresos si estan ingresados"
+        validacion.mensaje += "Egresos no guardado, asegúrese de que los egresos se ingresaron correctamente."
     }
 
 
@@ -190,7 +189,7 @@ clienteSchema.statics.guardarCliente = async (datos) => {
     try {
         //Procedo a guardar en la BD
         await clienteNuevo.save();
-        return { id: "1", mensaje: "cliente guardado" };
+        return { id: "1", mensaje: "El cliente ha sido guardado correctamente." };
     } catch (error) {
         if (error.errors.documento.kind === "unique") return {
             id: "2", mensaje: "El documento ingresado ya existe en nuestra base de datos"
@@ -205,7 +204,7 @@ clienteSchema.statics.obtenerClientes = async () => {
         const listaClientes = await clientes.find();
         return listaClientes;
     } catch (error) {
-        return "ha ocurrido algo inesperado al intentar obtener los clientes\n" + error;
+        return "Ha ocurrido algo inesperado al intentar obtener los clientes\n" + error;
     }
 }
 
@@ -215,7 +214,7 @@ clienteSchema.statics.obtenerCliente = async (documento) => {
         let cliente = await clientes.findOne({ documento: documento });
         return cliente;
     } catch (error) {
-        return "ha ocurrido algo inesperado al intentar obtener el cliente con documento " + documento + "\n" + error;
+        return "Ha ocurrido algo inesperado al intentar obtener el cliente con documento " + documento + "\n" + error;
     }
 }
 
@@ -225,7 +224,7 @@ clienteSchema.statics.obtenerClienteById = async (id) => {
         let cliente = await clientes.findById(id)
         return cliente;
     } catch (error) {
-        return "ha ocurrido algo inesperado al intentar obtener el cliente con id " + id + "\n" + error;
+        return "Ha ocurrido algo inesperado al intentar obtener el cliente con id " + id + "\n" + error;
     }
 }
 

@@ -16,7 +16,7 @@ const aseguradoraSchema = Schema({
         trim:true
     },
     telefono: {
-        type: String,
+        type: Number,
         require: true,
         trim:true
     },
@@ -96,7 +96,7 @@ aseguradoraSchema.statics.guardarAseguradora = async (datos)=> {
     try {
         //Procedo a guardar en la BD
         await aseguradoraNueva.save();
-        return { id: "1", mensaje: "aseguradora guardada"};
+        return { id: "1", mensaje: "La aseguradora se guardo correctamente."};
     } catch (error) {
         if (error.errors.nit.kind==="unique") return { 
             id: "2", mensaje: "El nit ingresado ya existe en nuestra base de datos"};
