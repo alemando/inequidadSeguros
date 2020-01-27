@@ -118,7 +118,8 @@ addSeguro(e){
               clientes: [],
               bienes: [],
               criterios: [],
-              disabled : false
+              disabledFecha : false,
+              disabledDiaPago : false
             });
           }else{
             Swal.fire({
@@ -241,11 +242,17 @@ vendedores(){
       console.log(changeEvent.target.value);
       if(changeEvent.target.value == "Contado"){
         this.setState({
-          disabled: !this.state.disabled
+          disabledDiaPago: true
         });
-      }else if (this.state.disabled) {
         this.setState({
-          disabled: !this.state.disabled
+          disabledFecha: false
+        });
+      }else if (changeEvent.target.value == "Credito") {
+        this.setState({
+          disabledFecha: true
+        });
+        this.setState({
+          disabledDiaPago: false
         });
       }
       this.setState({
@@ -360,7 +367,7 @@ vendedores(){
                                   required
                                   value={this.state.fechaFin}
                                   className="form-control"
-                                  disabled = {(this.state.disabled)? "disabled" : ""}
+                                  disabled = {(this.state.disabledFecha)? "disabled" : ""}
                                   />
                             </div>
                           </div>
@@ -373,6 +380,7 @@ vendedores(){
                                   required
                                   value={this.state.diaPago}
                                   className="form-control"
+                                  disabled = {(this.state.disabledDiaPago)? "disabled" : ""}
                                   />
                             </div>
                           </div>
