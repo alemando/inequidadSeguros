@@ -290,8 +290,10 @@ o en caso de no tener nombre, el número del criterio.
 En caso de no encontrar un error, retorna un string vacio ""
 */
 const validacionesCriterios = (arreglo) => {
+
+    mensaje=""
     for(let i = 0; i<arreglo.length;i++){
-        mensaje=""
+        
         if(arreglo[i].nombre=="" || arreglo[i].nombre==null){
             mensaje+= "El nombre del criterio "+ (i+1) +" no es válido\n"
             if(arreglo[i].descripcion=="" || arreglo[i].descripcion==null){
