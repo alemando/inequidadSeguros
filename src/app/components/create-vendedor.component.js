@@ -120,7 +120,7 @@ export default class CreateVendedor extends Component {
                                     />
                             </div>
                             <div className="form-group">
-                                <label> * Segundo apellido:</label>
+                                <label> Segundo apellido:</label>
                                 <input name="apellido2" onChange={this.handleChange} type="text"
                                     value={this.state.apellido2}
                                     className="form-control"
@@ -128,7 +128,7 @@ export default class CreateVendedor extends Component {
                             </div>            
                             <div className="form-group">
                                 <label>* Telefono:</label>
-                                <input name="telefono" onChange={this.handleChange} type="text" required
+                                <input name="telefono" onChange={this.handleChange} type="number" required
                                     value={this.state.telefono}
                                     className="form-control"
                                     />
