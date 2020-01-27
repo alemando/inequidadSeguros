@@ -104,37 +104,37 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
 
     //Validacion del cliente
     if(await clienteModel.obtenerClienteById(datos.cliente) == null){
-        validacion.mensaje += "seguro no guardado, cliente no existe en la BD"
+        validacion.mensaje += "El seguro no ha sido guardado, cliente no existe en la base de datos."
     }
     if(datos.cliente == null || datos.cliente == ""){
-        validacion.mensaje += "Seguro no guardado, cliente vacío"
+        validacion.mensaje += "El seguro no ha sido guardado, cliente vacío."
     }
 
     //Validacion del bien
     if(datos.bien == null || datos.bien == ""){
-        validacion.mensaje += "Seguro no guardado, bien vacío"
+        validacion.mensaje += "El seguro no ha sido guardado, el bien está vacío."
     }
     let bienVerificado = await bienModel.obtenerBienPorId(datos.bien)
     if(bienVerificado == null){
-        validacion.mensaje += "seguro no guardado, bien no existe en la BD\n"
+        validacion.mensaje += "El seguro no ha sido guardado, el bien no existe en la base de datos.\n"
     }else if(bienVerificado.cliente._id != datos.cliente){
-        validacion.mensaje += "seguro no guardado, el bien no es del cliente\n"
+        validacion.mensaje += "El seguro no ha sido guardado, el bien no pertenece al cliente.\n"
     }
 
     //Validacion del vendedor
     if(datos.vendedor == null || datos.vendedor == ""){
-        validacion.mensaje += "Seguro no guardado, vendedor vacío\n"
+        validacion.mensaje += "El seguro no ha sido guardado, el vendedor esta vacío\n"
     }
     if(await vendedorModel.obtenerVendedorById(datos.vendedor) == null){
-        validacion.mensaje += "seguro no guardado, vendedor no existe en la BD\n"
+        validacion.mensaje += "El seguro no ha sido guardado, el vendedor no existe en la base de datos.\n"
     }
 
     //Validacion de la aseguradora
     if(await aseguradoraModel.obtenerAseguradoraById(datos.aseguradora) == null){
-        validacion.mensaje += "seguro no guardado, aseguradora no existe en la BD"
+        validacion.mensaje += "El seguro no ha sido guardado, la aseguradora no existe en la base de datos."
     }
     if(datos.aseguradora == null || datos.aseguradora == ""){
-        validacion.mensaje += "Seguro no guardado, aseguradora vacía\n"
+        validacion.mensaje += "El seguro no ha sido guardado, la aseguradora está vacía.\n"
     }
 
     //Validacion fechaInicio es una fecha valida
@@ -142,12 +142,12 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
         validacion.mensaje += "La fecha de incio tiene un formato erroneo\n"
     }
     if(datos.fechaInicio == null || datos.fechaInicio == ""){
-        validacion.mensaje += "Seguro no guadado, fecha de inicio vacía\n"
+        validacion.mensaje += "El seguro no ha sido guardado, la fecha de inicio esta vacía\n"
     }
 
     //Validacion tipoPago no es null o vacio
     if(datos.tipoPago == null || datos.tipoPago == ""){
-      validacion.mensaje += "Seguro no guardado, tipo de pago vacío\n"
+      validacion.mensaje += "El seguro no ha sido guardado, el tipo de pago esta vacío.\n"
     }
 
     //Validacion fechaFin es una fecha valida
@@ -155,11 +155,11 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
         validacion.mensaje += "La fecha de fin tiene un formato erroneo\n"
     }*/
     if(datos.tipoPago == "Credito" && (datos.fechaFin == null || datos.fechaFin == "")){
-        validacion.mensaje += "Seguro no guadado,fecha de fin vacía\n"
+        validacion.mensaje += "El seguro no ha sido guardado, fecha de finalizacion vacía\n"
     }
 
     if(datos.tipoPago == "Contado" &&  datos.fechaFin != "" ){
-      validacion.mensaje += "Seguro no guardado, fecha de fin debe ser vacia"
+      validacion.mensaje += "El seguro no ha sido guardado, la fecha de fin debe ser vacia"
     }
 
     //Validación fecha inicio menor a fecha fin
@@ -172,7 +172,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
         validacion.mensaje += "El dia de pago no es un numero\n"
     }
     if(datos.diaPago == null || datos.diaPago == ""){
-        validacion.mensaje += "Seguro no guardado, dia de pago vacío\n"
+        validacion.mensaje += "El seguro no ha sido guardado, dia de pago vacío\n"
     }
     if(datos.diaPago > 31 || datos.diaPago <=0){
         validacion.mensaje += "El día de pago debe estar entre 1 y 31\n"
@@ -226,10 +226,10 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
                                             vendedor: seguro.vendedor,
                                             aseguradora: seguro.aseguradora});
         if(seguroAux != null){
-            validacion.mensaje += "Seguro ya existe\n"
+            validacion.mensaje += "El seguro ya existe\n"
         }
     }catch(error){
-        validacion.mensaje += "Error buscando seguros";
+        validacion.mensaje += "Ha ocurrido un error buscando seguros";
     };
 
     if(validacion.mensaje.length!=0) return validacion
@@ -237,10 +237,10 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     try {
         //Procedo a guardar en la BD
         await seguro.save();
-        return {id:1, mensaje: "seguro guardado"};
+        return {id:1, mensaje: "El seguro ha sido guardado satisfactoriamente."};
     } catch (error) {
         console.log(error)
-        return {id:0, mensaje: "error desconocido"};
+        return {id:0, mensaje: "Ha ocurrido un error desconocido"};
 
     }
 };
@@ -256,7 +256,7 @@ seguroSchema.statics.obtenerSeguros = async function() {
         exec();;
         return listaSeguros;
     } catch (error) {
-        return "ha ocurrido algo inesperado al intentar obtener los seguros\n"+ error;
+        return "Ha ocurrido algo inesperado al intentar obtener los seguros\n"+ error;
     }
 }
 
@@ -266,7 +266,7 @@ seguroSchema.statics.obtenerSeguro = async function(id) {
         let seguro = await seguros.findById(id);
         return seguro;
     } catch (error) {
-        return "ha ocurrido algo inesperado al intentar obtener el seguro\n"+ error;
+        return "Ha ocurrido algo inesperado al intentar obtener el seguro\n"+ error;
     }
 }
 

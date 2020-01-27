@@ -59,26 +59,26 @@ bienSchema.statics.guardarBien = async function(datos) {
 
     //Validacion del cliente
     if(await clienteModel.obtenerClienteById(datos.body.cliente) == null){
-        validacion.mensaje += "bien no guardado, cliente no existe en la BD"
+        validacion.mensaje += "El bien no ha sido guardado, cliente no existe en la base de datos."
     }
 
     //Validacion de la existencia de la categoria
     if(await categoriaModel.obtenerCategoriaById(datos.body.categoria) == null){
-        validacion.mensaje += "bien no guardado, categoria no existe en la BD"
+        validacion.mensaje += "El bien no ha sido guardado, categoria no existe en la base de datos."
     }
 
     if(!datos.file){
-      validacion.mensaje += "El documento es obligatorio"  
+      validacion.mensaje += "El documento es obligatorio."  
     }
     else{
       //Validacion archivo es pdf
       if(datos.file.mimetype != 'application/pdf'){
-        validacion.mensaje += "bien no guardado, el archivo no es un pdf"
+        validacion.mensaje += "El bien no ha sido guardado, el archivo no es un pdf."
       }
 
     //Validacion archivo no excede 16Mb
       if(datos.file.size >= 16000000){
-        validacion.mensaje += "bien no guardado, el archivo excede el tamaño permitido 16Mb"
+        validacion.mensaje += "El bien no ha sido guardado, el archivo excede el tamaño permitido: 16Mb."
       }
     }
     
@@ -98,7 +98,7 @@ bienSchema.statics.guardarBien = async function(datos) {
 		});
     try {
         await bienNuevo.save();
-        return { id: "1", mensaje: "bien guardado"};
+        return { id: "1", mensaje: "El bien ha sido guardado correctamente."};
     } catch (error) {
 		return { id: "0", mensaje: "Error desconocido"};
     }

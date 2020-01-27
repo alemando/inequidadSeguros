@@ -109,7 +109,7 @@ export default class CreateAseguradora extends Component {
                             </div>
                             <div className="form-group">
                                 <label>* Telefono:</label>
-                                <input name="telefono" onChange={this.handleChange} type="text"
+                                <input name="telefono" onChange={this.handleChange} type="number"
                                     required
                                     value={this.state.telefono}
                                     className="form-control"

@@ -51,20 +51,20 @@ categoriaSchema.statics.guardarCategoria = async (datos)=> {
     let validacion = { id: "0", mensaje: ""}
     //Validar que datos no esta vacido
     if(Object.keys(datos).length == 0){
-      validacion.mensaje +="Categoría no guardada, JSON vacio"
+      validacion.mensaje +="La categoría no ha sido guardada, JSON vacio."
     }else{
       // Validacion si nombre es no null o string vacio
       if(datos.nombre == null){
-        validacion.mensaje +="Categoría no guardada, no puedes dejar el nombre de categoría null"
+        validacion.mensaje +="La categoría no ha sido guardada, no puedes dejar el nombre de categoría vacio."
       }else if (datos.nombre == "") {
-        validacion.mensaje +="Categoría no guardada, asegúrese de que la categoría tenga un nombre"
+        validacion.mensaje +="La categoría no ha sido guardada, asegurese de que la categoría tenga un nombre."
       }
 
      //Validacion que exista el atributo opcional criterios
       if(datos.criterios){
           //Validacion de los nombres de criterios no son repetidos
         if(verificarCriterios(datos.criterios)){
-          validacion.mensaje += "Categoría no guardada, asegúrese de que los criterios tengan nombres diferentes"
+          validacion.mensaje += "La categoría no ha sido guardada, asegúrese de que los criterios tengan nombres diferentes."
         }
       }
 
@@ -83,7 +83,7 @@ categoriaSchema.statics.guardarCategoria = async (datos)=> {
     try {
         //Procedo a guardar en la BD
         await categoriaNuevo.save()
-        return { id: "1", mensaje: "Categoría guardada."}
+        return { id: "1", mensaje: "La categoría ha sido guardada correctamente."}
     } catch (error) {
         if (error.errors.nombre.kind==="unique") return {
             id: "2", mensaje: "Ya existe una categoría "+datos.nombre+" en la base de datos."};
@@ -107,7 +107,7 @@ categoriaSchema.statics.obtenerCategoria = async (nombre) => {
         let categoria = await categorias.findOne({nombre: nombre});
         return categoria;
     } catch (error) {
-        return "ha ocurrido algo inesperado al intentar obtener el categoria "+ error;
+        return "Ha ocurrido algo inesperado al intentar obtener el categoria "+ error;
     }
 }
 
@@ -118,7 +118,7 @@ categoriaSchema.statics.obtenerCategoriaById = async (id) => {
         nombreCategoria = categoria.nombre
         return nombreCategoria;
     } catch (error) {
-        return "ha ocurrido algo inesperado al intentar obtener el categoria "+ error;
+        return "Ha ocurrido algo inesperado al intentar obtener el categoria "+ error;
     }
 }
 

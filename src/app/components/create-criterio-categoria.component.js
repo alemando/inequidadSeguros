@@ -89,7 +89,7 @@ export default class CreateCriterio extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label>* Monto a cubrir:</label>
-                                        <input name="cobertura" onChange={this.handleChange} type="number"
+                                        <input name="cobertura" onChange={this.handleChange} type="text"
                                             required
                                             value={this.state.cobertura}
                                             className="form-control"

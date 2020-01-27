@@ -25,7 +25,7 @@ const vendedorSchema = Schema({
         trim: true
     },
     telefono:{
-        type: String,
+        type: Number,
         require: true,
         trim: true
     },

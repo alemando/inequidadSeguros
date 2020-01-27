@@ -154,7 +154,7 @@ export default class CreateCategoria extends Component {
                         <div className="modal-footer">
                             <button type="submit" form="formCategoria" className="btn btn-primary">Enviar</button>
                             <CreateCriterio component={this}/>
-                            <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Cerrar</button>
                         </div>
                     </div>
                 </div>
