@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment'
 
 export default class VerCliente extends Component {
   render() {
@@ -56,7 +57,7 @@ export default class VerCliente extends Component {
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Fecha nacimiento</b></div>
-                        <div className="col-md-6 ml-auto">{this.props.cliente.fechaNacimiento}</div>
+                        <div className="col-md-6 ml-auto">{moment(this.props.cliente.fechaNacimiento, "YYYY-MM-DD").locale("es").format("DD-MMM-YYYY")}</div>
                       </div>
                     </li>
                     <li className="list-group-item">
