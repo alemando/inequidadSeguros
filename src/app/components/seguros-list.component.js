@@ -36,10 +36,6 @@ export default class SegurosList extends Component {
         this.fetchSeguros();
     }
 
-    componentWillUnmount(){
-      
-    }
-
     fetchSeguros() {
         fetch('/api/seguros')
             .then(res => res.json())
