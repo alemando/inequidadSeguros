@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import VerCriterio from "./ver-criterio-seguro.component";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
+import moment from 'moment'
 
 const Criterio = props => (
   <Tr>
@@ -81,13 +82,13 @@ export default class VerSeguro extends Component {
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Fecha Inicio</b></div>
-                        <div className="col-md-6 ml-auto">{this.props.seguro.fechaInicio}</div>
+                        <div className="col-md-6 ml-auto">{moment(this.props.seguro.fechaInicio, "YYYY-MM-DD").locale("es").format("DD-MMM-YYYY")}</div>
                       </div>
                     </li>
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Fecha Fin</b></div>
-                        <div className="col-md-6 ml-auto">{this.props.seguro.fechaFin}</div>
+                        <div className="col-md-6 ml-auto">{moment(this.props.seguro.fechaFin, "YYYY-MM-DD").locale("es").format("DD-MMM-YYYY")}</div>
                       </div>
                     </li>
                     <li className="list-group-item">
