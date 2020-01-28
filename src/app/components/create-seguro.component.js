@@ -29,7 +29,7 @@ export default class CreateSeguro extends Component {
         tipoPago: '',
         fechaFin: '',
         valorTotal: 0,
-        diaPago: 0,
+        diaPago: 1,
         observaciones: '',
         vendedores: [],
         aseguradoras: [],
@@ -111,7 +111,7 @@ addSeguro(e){
               tipoPago: '',
               fechaFin: '',
               valorTotal: 0,
-              diaPago: 0,
+              diaPago: 1,
               observaciones: '',
               vendedores: [],
               aseguradoras: [],
@@ -254,6 +254,10 @@ vendedores(){
         this.setState({
           disabledDiaPago: false
         });
+        this.setState({
+          fechaFin: ''
+        })
+        
       }
       this.setState({
         selectedOption: changeEvent.target.value,
@@ -376,7 +380,7 @@ vendedores(){
                           <div className="col-md-6">
                             <div className="form-group">
                               <label>* Dia pago:</label>
-                              <input name="diaPago" onChange={this.handleChange} type="number"
+                              <input name="diaPago" onChange={this.handleChange} type="number" min="1" max="31"
                                   required
                                   value={this.state.diaPago}
                                   className="form-control"

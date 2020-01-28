@@ -154,11 +154,11 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     /*if(isNaN(Date.parse(datos.fechaFin))){
         validacion.mensaje += "La fecha de fin tiene un formato erroneo\n"
     }*/
-    if(datos.tipoPago == "Credito" && (datos.fechaFin == null || datos.fechaFin == "")){
+    if(datos.tipoPago == "Contado" && (datos.fechaFin == null || datos.fechaFin == "")){
         validacion.mensaje += "El seguro no ha sido guardado, fecha de finalizacion vacía\n"
     }
 
-    if(datos.tipoPago == "Contado" &&  datos.fechaFin != "" ){
+    if(datos.tipoPago == "Credito" &&  datos.fechaFin != "" ){
       validacion.mensaje += "El seguro no ha sido guardado, la fecha de fin debe ser vacia"
     }
 
