@@ -23,8 +23,6 @@ export default class CreateCriterio extends Component {
             deducible:''
         });
         $("#CrearCriterio").modal('hide');
-        $("#formCriterio").reset();
-
         $(document).on('hidden.bs.modal', '.modal', function () {
             if ($('body').find('.modal.show').length > 0) {
                 $('body').addClass('modal-open');
