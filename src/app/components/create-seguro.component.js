@@ -47,16 +47,13 @@ export default class CreateSeguro extends Component {
 }
 
 criteriosList() {
-  if(this.state.criterios.length == 0){
-    return <label>Debe existir minimo un criterio</label>
-  }else{
     let index = 0;
     return this.state.criterios.map(currentCriterio => {
         currentCriterio["index"] = index
         index++;
       return <Criterio component={this} criterio={currentCriterio} key={currentCriterio.nombre} />;
     })
-  }
+  
 }
 
 addSeguro(e){
@@ -426,7 +423,7 @@ vendedores(){
                         </div>
                         <div className="row">
                           <div className="col">
-                          <h2>Criterios</h2>
+                          <h2>* Criterios</h2>
                             <Table className="table">
                               <Thead className="thead-light">
                                 <Tr>
