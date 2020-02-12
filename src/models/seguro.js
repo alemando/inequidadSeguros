@@ -94,10 +94,14 @@ const seguroSchema = Schema({
 seguroSchema.statics.guardarSeguro = async function(datos) {
 
     let validacion = { id: "0", mensaje: ""}
+    //Validacion para tener al menos un criterio 
+    if(datos.criterios.length == 0){
+        validacion.mensaje += "El seguro no ha sido guardado, debe contener al menos un criterio."
+    }
 
     //Validacion de los nombres de criterios no son repetidos
     if(verificarCriterios(datos.criterios)){
-        validacion.mensaje += "Categoría no guardada, asegúrese de que los criterios tengan nombres diferentes"
+        validacion.mensaje += "Categoría no guardada, asegúrese de que los criterios tengan nombres diferentes."
     }
 
     validacion.mensaje+= validacionesCriterios(datos.criterios)
