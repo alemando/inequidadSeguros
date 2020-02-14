@@ -274,6 +274,16 @@ seguroSchema.statics.obtenerSeguro = async function(id) {
     }
 }
 
+//Metodo para borrar un seguro por su id
+seguroSchema.statics.borrarSeguro = async function(id) {
+    try {
+        let seguro = await seguros.findByIdAndRemove(id);
+        return "Seguro borrado correctamente";
+    } catch (error) {
+        return "Ha ocurrido algo inesperado al intentar obtener el seguro\n"+ error;
+    }
+}
+
 const verificarCriterios = (arreglo) => {
     for(let i = 0; i<arreglo.length;i++){
         for(let j = i; j<arreglo.length;j++){
