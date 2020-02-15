@@ -92,7 +92,8 @@ aseguradoraSchema.statics.guardarAseguradora = async (datos)=> {
         {nit: datos.nit,
         nombre: datos.nombre,
         telefono: datos.telefono,
-        correo: datos.correo});
+        correo: datos.correo,
+        estado: true});
     try {
         //Procedo a guardar en la BD
         await aseguradoraNueva.save();
@@ -132,6 +133,23 @@ aseguradoraSchema.statics.obtenerAseguradoraById = async (id)=> {
     } catch (error) {
         return "ha ocurrido algo inesperado al intentar obtener el aseguradora\n"+ error;
     }
+}
+//Metodo para inhabilitar aseguradora
+aseguradoraSchema.statics.InhabilitarAseguradora = async (id, admin)=> {
+    
+    if(admin == true){
+        try {
+            let aseguradora = await aseguradoras.findById(id);
+            aseguradora.estado = !aseguradora.estado;
+            await aseguradora.save();
+        } catch (error) {
+            return "ha ocurrido algo inesperado al intentar inhabilitar la aseguradora\n"+ error;
+        }
+    }
+    else{
+        return "No tienes permisos para inhabilitar aseguradoras"
+    }
+       
 }
 const aseguradoras = mongoose.model('aseguradoras',aseguradoraSchema);
 
