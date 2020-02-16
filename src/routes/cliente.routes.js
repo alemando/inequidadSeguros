@@ -31,7 +31,6 @@ router.post('/withBienes', async(req, res) =>{
 
 //POST change status
 router.post('/status', async (req,res)=>{
-  //const admin = true
   resultado = await Cliente.cambiarEstadoCliente(req.body.documento, req.body.admin);
   res.json(resultado)
 })
