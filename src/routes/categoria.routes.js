@@ -16,6 +16,12 @@ router.get('/:nombre', async (req, res) => {
   res.json(categoria);
 });
 
+// Get Categoria Habilitadas
+router.get('/habilitadas', async (req, res) => {
+  const categoria = await Categoria.obtenerCategoriaHabilitadas();
+  res.json(categoria);
+});
+
 // ADD a new categoria
 router.post('/save', async (req, res) => {
   resultado = await Categoria.guardarCategoria(req.body);

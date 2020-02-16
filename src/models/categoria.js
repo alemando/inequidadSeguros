@@ -101,6 +101,16 @@ categoriaSchema.statics.obtenerCategorias = async () => {
     }
 }
 
+//Metodo para retornar todas las categoría habilitadas de la BD
+categoriaSchema.statics.obtenerCategoriaHabilitadas = async () =>{
+  try {
+      let listaCategorias = await categoria.find({estado: true})
+      return listaCategorias;
+  } catch (error) {
+    return "Ha ocurrido algo inesperado al intentar obtener las categorías: \n"+ error;
+  }
+}
+
 //Metodo para retornar una categoria por su nombre
 categoriaSchema.statics.obtenerCategoria = async (nombre) => {
     try {
