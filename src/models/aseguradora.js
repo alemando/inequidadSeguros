@@ -134,16 +134,17 @@ aseguradoraSchema.statics.obtenerAseguradoraById = async (id)=> {
         return "ha ocurrido algo inesperado al intentar obtener el aseguradora\n"+ error;
     }
 }
-//Metodo para inhabilitar aseguradora
-aseguradoraSchema.statics.InhabilitarAseguradora = async (id, admin)=> {
+//Metodo para cambiar el estado de aseguradora
+aseguradoraSchema.statics.CambiarEstadoAseguradora = async (id, admin)=> {
     
     if(admin == true){
         try {
             let aseguradora = await aseguradoras.findById(id);
             aseguradora.estado = !aseguradora.estado;
             await aseguradora.save();
+            return "Has cambiado el estado de la aseguradora"
         } catch (error) {
-            return "ha ocurrido algo inesperado al intentar inhabilitar la aseguradora\n"+ error;
+            return "ha ocurrido algo inesperado al intentar inhabilitar la aseguradora"+ error;
         }
     }
     else{

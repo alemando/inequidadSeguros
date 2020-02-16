@@ -17,12 +17,10 @@ router.get('/:nit', async (req, res) => {
   res.json(aseguradora);
 });
 
-//POST Inhabilitar aseguradora
-router.post('/disable/:id', async (req,res) =>{ 
-  await Aseguradora.InhabilitarAseguradora(req.body, true);
-  res.json({
-    hola: "hola"
-  });
+//POST Cambiar estado de aseguradora
+router.post('/disable/:id', async (req,res) => { 
+  const aseguradora = await Aseguradora.CambiarEstadoAseguradora(req.params.id, true);
+  res.json(aseguradora);
 });
 
 // ADD a new aseguradora
