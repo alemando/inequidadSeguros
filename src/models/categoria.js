@@ -112,15 +112,18 @@ categoriaSchema.statics.obtenerCategoria = async (nombre) => {
 }
 
 //Metodo para cambiar estado a una categoria
-categoriaSchema.statics.cambiarEstadoCat = async (nombre) => {
-  try {
-      let categoria = await categorias.findOne({nombre: nombre});
-      console.log("Encontro categoria con nombre "+categoria.nombre);
-      let aux = await categorias.updateOne({nombre: nombre},{$set: {estado: !categoria.estado}})
-      return { id: "1", mensaje: "El estado a la categoría ha sido cambiado correctamente."}
-  } catch (error) {
-     return { id: "0", mensaje: "Error desconocido"};
+categoriaSchema.statics.cambiarEstadoCat = async (nombre,admin) => {
+  if(admin){
+    try {
+        let categoria = await categorias.findOne({nombre: nombre});
+        console.log("Encontro categoria con nombre "+categoria.nombre);
+        let aux = await categorias.updateOne({nombre: nombre},{$set: {estado: !categoria.estado}})
+        return { id: "1", mensaje: "El estado a la categoría ha sido cambiado correctamente."}
+    } catch (error) {
+       return { id: "0", mensaje: "Error desconocido"};
+    }
   }
+  return ("No eres admin para habilitar/inhabilitar categorias")
 }
 
 //Metodo para retornar el nombre de la categoria por su ID
