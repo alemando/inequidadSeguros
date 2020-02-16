@@ -111,6 +111,18 @@ categoriaSchema.statics.obtenerCategoria = async (nombre) => {
     }
 }
 
+//Metodo para cambiar estado a una categoria
+categoriaSchema.statics.cambiarEstadoCat = async (nombre) => {
+  try {
+      let categoria = await categorias.findOne({nombre: nombre});
+      console.log("Encontro categoria con nombre "+categoria.nombre);
+      let aux = await categorias.updateOne({nombre: nombre},{$set: {estado: !categoria.estado}})
+      return { id: "1", mensaje: "El estado a la categoría ha sido cambiado correctamente."}
+  } catch (error) {
+     return { id: "0", mensaje: "Error desconocido"};
+  }
+}
+
 //Metodo para retornar el nombre de la categoria por su ID
 categoriaSchema.statics.obtenerCategoriaById = async (id) => {
     try {
@@ -142,8 +154,8 @@ o en caso de no tener nombre, el número del criterio.
 En caso de no encontrar un error, retorna un string vacio ""
 */
 const validacionesCriterios = (arreglo) => {
-    
-    
+
+
     for(let i = 0; i<arreglo.length;i++){
         mensaje=""
         if(arreglo[i].nombre=="" || arreglo[i].nombre==null){

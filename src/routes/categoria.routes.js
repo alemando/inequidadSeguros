@@ -22,4 +22,10 @@ router.post('/save', async (req, res) => {
   res.json(resultado);
 });
 
+//POST change status
+router.post('/status', async (req,res)=>{
+  resultado = await Categoria.cambiarEstadoCat(req.body.nombre);
+  res.json(resultado)
+})
+
 module.exports = router;
