@@ -7,18 +7,27 @@ export default class CreateVendedor extends Component {
     constructor() {
         super();
         this.state = {
+            type: 'password',
             documento: '',
             nombre: '',
             apellido1: '',
             apellido2: '',
             telefono: '',
-            correo: ''
+            correo: '',
+            password: ''
         }
+        this.showHide = this.showHide.bind(this);
         this.addVendedor = this.addVendedor.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.modalClose = this.modalClose.bind(this);
     }
-
+    showHide(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.setState({
+            type: this.state.type === 'input' ? 'password' : 'input'
+        })
+    }
     modalClose() {
         this.setState({
             documento: '',
@@ -26,7 +35,8 @@ export default class CreateVendedor extends Component {
             apellido1: '',
             apellido2: '',
             telefono: '',
-            correo: ''
+            correo: '',
+            password: ''
         });
     }
 
@@ -42,34 +52,34 @@ export default class CreateVendedor extends Component {
         })
             .then(res => res.json())
             .then(data => {
-                if(data.id == 0){
-                  
-                  Swal.fire({
-                    text: data.mensaje,
-                    type: 'error'
-                  })
-                }else if(data.id == 1){
+                if (data.id == 0) {
 
-                  this.props.component.fetchVendedores();
-                  
-                  Swal.fire({
-                    text: data.mensaje,
-                    type: 'success',
-                    onClose: () => {
-                      location.reload();
-                    }
-                  })
+                    Swal.fire({
+                        text: data.mensaje,
+                        type: 'error'
+                    })
+                } else if (data.id == 1) {
 
-                  $("#CrearVendedor").modal('hide');
-                  $("#formVendedor").reset();
+                    this.props.component.fetchVendedores();
 
-                  this.setState({
-                    documento: '',
-                    nombre: '',
-                    apellido1: '',
-                    apellido2: '',
-                    telefono: '',
-                    correo: ''
+                    Swal.fire({
+                        text: data.mensaje,
+                        type: 'success',
+                        onClose: () => {
+                            location.reload();
+                        }
+                    })
+
+                    $("#CrearVendedor").modal('hide');
+                    $("#formVendedor").reset();
+
+                    this.setState({
+                        documento: '',
+                        nombre: '',
+                        apellido1: '',
+                        apellido2: '',
+                        telefono: '',
+                        correo: ''
 
                     });
                 } else {
@@ -102,6 +112,12 @@ export default class CreateVendedor extends Component {
         } else {
             e.preventDefault()
         }
+    }
+    generar(longitud) {
+        var caracteres = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789!#$%&/()=?¡¿-";
+        var contraseña = "";
+        for (i = 0; i < longitud; i++) contraseña += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+        return contraseña;
     }
 
     render() {
@@ -161,6 +177,14 @@ export default class CreateVendedor extends Component {
                                             value={this.state.correo}
                                             className="form-control"
                                         />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>* Password:</label>
+                                        <input name="password" onChange={this.handleChange} type={this.state.type} required
+                                            value={this.state.password}
+                                            className="form-control"
+                                        />
+                                        <button className="btn btn-light" onClick={this.showHide}>{this.state.type === 'input' ? 'Hide' : 'Show'}</button>
                                     </div>
                                     <div className="row">
                                         <div className="col">
