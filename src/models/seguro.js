@@ -275,13 +275,18 @@ seguroSchema.statics.obtenerSeguro = async function(id) {
 }
 
 //Metodo para borrar un seguro por su id
-seguroSchema.statics.borrarSeguro = async function(id) {
-    try {
-        let seguro = await seguros.findByIdAndRemove(id);
-        return "Seguro borrado correctamente";
-    } catch (error) {
-        return "Ha ocurrido algo inesperado al intentar obtener el seguro\n"+ error;
+seguroSchema.statics.borrarSeguro = async function(id,admin) {
+    if(admin){
+        try {
+            let seguro = await seguros.findByIdAndRemove(id);
+            return "Seguro borrado correctamente";
+        } catch (error) {
+            return "Ha ocurrido algo inesperado al intentar obtener el seguro\n"+ error;
+        }
+    }else{
+        return "No tienes permisos para hacer esto";
     }
+    
 }
 
 const verificarCriterios = (arreglo) => {
