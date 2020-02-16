@@ -53,6 +53,11 @@ const clienteSchema = Schema({
         type: Number,
         trim: true,
         require: true
+    },
+    //true si es habilitado
+    estado: {
+        type: Boolean,
+        require: true
     }
 
 });
@@ -184,7 +189,8 @@ clienteSchema.statics.guardarCliente = async (datos) => {
             correo: datos.correo,
             fechaNacimiento: datos.fechaNacimiento,
             ingresos: datos.ingresos,
-            egresos: datos.egresos
+            egresos: datos.egresos,
+            estado: true
         });
     try {
         //Procedo a guardar en la BD
@@ -246,6 +252,26 @@ clienteSchema.statics.obtenerClientesConBienes = async () =>{
     catch (error){
         return "Ha ocurrido algo inesperado al intentar obtener los clientes con bienes: \n" + error;
     }
+}
+
+//Metodo para cambiar el estado del cliente
+clienteSchema.statics.cambiarEstadoCliente = async (documento, admin) => {
+    if(admin){
+      try {
+            let cliente = await clientes.findOne({documento: documento});
+            console.log("Cliente " + cliente.nombre);
+            if(cliente.estado){
+                await clientes.updateOne({documento: documento},{$set: {estado: false}})
+                return { id: "1", mensaje: "Cliente inhabilitado correctamente"}
+            }else{
+                await clientes.updateOne({documento: documento},{$set: {estado: true}})
+                return { id: "1", mensaje: "Cliente habilitado correctamente"}
+            }
+        } catch (error) {
+            return { id: "0", mensaje: "Ha ocurrido un error desconocido"};
+        }
+    }
+    return ("Sólo los administradores pueden habilitar o deshabilitar clientes.")
 }
 
 const clientes = mongoose.model('clientes', clienteSchema);
