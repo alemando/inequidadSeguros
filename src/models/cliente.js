@@ -205,9 +205,14 @@ clienteSchema.statics.guardarCliente = async (datos) => {
 };
 
 //Metodo para reotornar todos los clientes de la BD
-clienteSchema.statics.obtenerClientes = async () => {
+clienteSchema.statics.obtenerClientes = async (admin) => {
     try {
-        const listaClientes = await clientes.find();
+        let listaClientes = null
+        if(admin){
+            listaClientes = await clientes.find();
+        } else {
+            listaClientes = await clientes.find({estado: true});
+        }
         return listaClientes;
     } catch (error) {
         return "Ha ocurrido algo inesperado al intentar obtener los clientes\n" + error;
