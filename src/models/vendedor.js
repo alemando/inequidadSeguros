@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const CryptoJS  = require('crypto-js');
 var uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
 
@@ -34,6 +35,11 @@ const vendedorSchema = Schema({
         require: true,
         trim: true
     },
+    contrasena:{
+        type: String,
+        require: true,
+        trim: true        
+    },
     esAdmin:{
         type: Boolean,
         require: true,
@@ -68,6 +74,9 @@ vendedorSchema.statics.guardarVendedor = async (datos)=> {
     //Si no pasa alguna validacion retorna el mensaje correspondiente
     if(validacion.mensaje.length!=0) return validacion
 
+    //Encripto la contraseña mandada desde la petición
+    let password = encriptar(datos.contrasena);
+
     //Objeto vendedor
     const vendedorNuevo = new vendedores({
         documento: datos.documento,
@@ -75,7 +84,8 @@ vendedorSchema.statics.guardarVendedor = async (datos)=> {
         apellido1: datos.apellido1,
         apellido2: datos.apellido2,
         telefono: datos.telefono,
-        correo: datos.correo
+        correo: datos.correo,
+        contrasena: password
         });
     try {
         await vendedorNuevo.save();
@@ -91,6 +101,7 @@ vendedorSchema.statics.guardarVendedor = async (datos)=> {
 vendedorSchema.statics.obtenerVendedores = async ()=> {
     try{
         let listaVendedores = await vendedores.find();
+        listaVendedores.forEach(x => x.contrasena = desencriptar(x.contrasena));
         return listaVendedores;
     }catch(error){
         return "Error obteniendo los vendedores\n" + error;
@@ -101,6 +112,7 @@ vendedorSchema.statics.obtenerVendedores = async ()=> {
 vendedorSchema.statics.obtenerVendedor = async (id)=> {
     try{
         let vendedor = await vendedores.findOne({documento: id});
+        vendedor.contrasena = desencriptar(vendedor.contrasena);
         return vendedor;
     }catch(error){
         return "Error obteniendo vendedor por documento identidad\n" + error;
@@ -116,6 +128,18 @@ vendedorSchema.statics.obtenerVendedorById = async (id)=> {
         return "Error obteniendo vendedor por documento identidad\n" + error;
     }
 }
+
+//Funcion para encriptar contraseñas
+function encriptar(password){
+    return CryptoJS.AES.encrypt(password, 'key').toString();
+}
+
+//Funcion para desencriptar los datos
+function desencriptar(textoCifrado){
+    let bytes = CryptoJS.AES.decrypt(textoCifrado, 'key');
+    return bytes.toString(CryptoJS.enc.Utf8);
+}
+
 
 //Se retorna clase vendedores para exportar
 const vendedores = mongoose.model('vendedores',vendedorSchema);
