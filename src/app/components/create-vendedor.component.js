@@ -20,8 +20,6 @@ export default class CreateVendedor extends Component {
         this.addVendedor = this.addVendedor.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.modalClose = this.modalClose.bind(this);
-        this.showHide = this.showHide.bind(this);
-        this.generar = this.generar.bind(this);
     }
     showHide(e) {
         e.preventDefault();
@@ -81,8 +79,7 @@ export default class CreateVendedor extends Component {
                         apellido1: '',
                         apellido2: '',
                         telefono: '',
-                        correo: '',
-                        password: ''
+                        correo: ''
 
                     });
                 } else {
@@ -116,20 +113,11 @@ export default class CreateVendedor extends Component {
             e.preventDefault()
         }
     }
-    showHide(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        this.setState({
-            type: this.state.type === 'input' ? 'password' : 'input'
-        })
-    }
-    generar() {
-        var caracteres = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789!#$%&/()=?¡¿-|*+";
+    generar(longitud) {
+        var caracteres = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789!#$%&/()=?¡¿-";
         var contraseña = "";
-        for (i = 0; i < 18; i++) contraseña += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
-        this.setState({
-            password: contraseña
-        })
+        for (i = 0; i < longitud; i++) contraseña += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+        return contraseña;
     }
 
     render() {
@@ -191,13 +179,12 @@ export default class CreateVendedor extends Component {
                                         />
                                     </div>
                                     <div className="form-group">
-                                        <label>* Contraseña:</label>
+                                        <label>* Password:</label>
                                         <input name="password" onChange={this.handleChange} type={this.state.type} required
                                             value={this.state.password}
                                             className="form-control"
                                         />
-                                        <span className="btn btn-light" onClick={this.showHide}>{this.state.type === 'input' ? 'Hide' : 'Show'}</span>
-                                        <span className="btn btn-light" onClick={this.generar}>Generar contraseña</span>
+                                        <button className="btn btn-light" onClick={this.showHide}>{this.state.type === 'input' ? 'Hide' : 'Show'}</button>
                                     </div>
                                     <div className="row">
                                         <div className="col">
