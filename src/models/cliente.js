@@ -248,6 +248,7 @@ clienteSchema.statics.obtenerClientesConBienes = async () =>{
     }
 }
 
+
 const clientes = mongoose.model('clientes', clienteSchema);
 
 module.exports = clientes;
