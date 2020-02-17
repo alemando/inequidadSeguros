@@ -152,6 +152,18 @@ aseguradoraSchema.statics.CambiarEstadoAseguradora = async (id, admin)=> {
     }
        
 }
+
+//Metodo para retornar todas las aseguradoras habilitadas 
+aseguradoraSchema.statics.obtenerAseguradorasHabilitadas = async () =>{
+    try {
+        let listAseguradoras = await aseguradoras.find({estado: true})
+        return listAseguradoras;
+    } catch (error) {
+      return "Ha ocurrido algo inesperado al intentar obtener las aseguradoras: \n"+ error;
+    }
+  }
+
+
 const aseguradoras = mongoose.model('aseguradoras',aseguradoraSchema);
 
 module.exports = aseguradoras;
