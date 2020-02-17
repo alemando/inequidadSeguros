@@ -7,29 +7,20 @@ export default class CreateVendedor extends Component {
     constructor() {
         super();
         this.state = {
-            type: 'password',
             documento: '',
             nombre: '',
             apellido1: '',
             apellido2: '',
             telefono: '',
-            correo: '',
-            password: ''
+            correo: ''
         }
-        this.showHide = this.showHide.bind(this);
         this.addVendedor = this.addVendedor.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.modalClose = this.modalClose.bind(this);
         this.showHide = this.showHide.bind(this);
         this.generar = this.generar.bind(this);
     }
-    showHide(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        this.setState({
-            type: this.state.type === 'input' ? 'password' : 'input'
-        })
-    }
+
     modalClose() {
         this.setState({
             documento: '',
@@ -37,8 +28,7 @@ export default class CreateVendedor extends Component {
             apellido1: '',
             apellido2: '',
             telefono: '',
-            correo: '',
-            password: ''
+            correo: ''
         });
     }
 
@@ -54,6 +44,7 @@ export default class CreateVendedor extends Component {
         })
             .then(res => res.json())
             .then(data => {
+<<<<<<< HEAD
                 if (data.id == 0) {
 
                     Swal.fire({
@@ -83,6 +74,36 @@ export default class CreateVendedor extends Component {
                         telefono: '',
                         correo: '',
                         password: ''
+=======
+                if(data.id == 0){
+                  
+                  Swal.fire({
+                    text: data.mensaje,
+                    type: 'error'
+                  })
+                }else if(data.id == 1){
+
+                  this.props.component.fetchVendedores();
+                  
+                  Swal.fire({
+                    text: data.mensaje,
+                    type: 'success',
+                    onClose: () => {
+                      location.reload();
+                    }
+                  })
+
+                  $("#CrearVendedor").modal('hide');
+                  $("#formVendedor").reset();
+
+                  this.setState({
+                    documento: '',
+                    nombre: '',
+                    apellido1: '',
+                    apellido2: '',
+                    telefono: '',
+                    correo: ''
+>>>>>>> parent of 42c3ffa... correccion
 
                     });
                 } else {
@@ -116,6 +137,7 @@ export default class CreateVendedor extends Component {
             e.preventDefault()
         }
     }
+<<<<<<< HEAD
     showHide(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -131,6 +153,8 @@ export default class CreateVendedor extends Component {
             password: contraseña
         })
     }
+=======
+>>>>>>> parent of 42c3ffa... correccion
 
     render() {
         return (
@@ -190,6 +214,7 @@ export default class CreateVendedor extends Component {
                                             className="form-control"
                                         />
                                     </div>
+<<<<<<< HEAD
                                     <div className="form-group">
                                         <label>* Contraseña:</label>
                                         <input name="password" onChange={this.handleChange} type={this.state.type} required
@@ -199,6 +224,8 @@ export default class CreateVendedor extends Component {
                                         <span className="btn btn-light" onClick={this.showHide}>{this.state.type === 'input' ? 'Hide' : 'Show'}</span>
                                         <span className="btn btn-light" onClick={this.generar}>Generar contraseña</span>
                                     </div>
+=======
+>>>>>>> parent of 42c3ffa... correccion
                                     <div className="row">
                                         <div className="col">
                                             <div className="form-group">
