@@ -77,34 +77,16 @@ vendedorSchema.statics.guardarVendedor = async (datos)=> {
     //Encripto la contraseña mandada desde la petición
     let password = encriptar(datos.contrasena);
 
-    //esAdmin valida si la sesión ha sido abierta por un admin
-    //admin valida si se desea crear un admin o no
-    if(datos.esAdmin && datos.admin){
-        //Objeto vendedor
-        var vendedorNuevo = new vendedores({
-            documento: datos.documento,
-            nombre: datos.nombre,
-            apellido1: datos.apellido1,
-            apellido2: datos.apellido2,
-            telefono: datos.telefono,
-            correo: datos.correo,
-            contrasena: password,
-            esAdmin: true
-            });
-    }
-    else{
-        //Objeto vendedor
-        var vendedorNuevo = new vendedores({
-            documento: datos.documento,
-            nombre: datos.nombre,
-            apellido1: datos.apellido1,
-            apellido2: datos.apellido2,
-            telefono: datos.telefono,
-            correo: datos.correo,
-            contrasena: password
-            });
-    }
-    
+    //Objeto vendedor
+    const vendedorNuevo = new vendedores({
+        documento: datos.documento,
+        nombre: datos.nombre,
+        apellido1: datos.apellido1,
+        apellido2: datos.apellido2,
+        telefono: datos.telefono,
+        correo: datos.correo,
+        contrasena: password
+        });
     try {
         await vendedorNuevo.save();
         return { id: "1", mensaje: "Vendedor guardado"};
