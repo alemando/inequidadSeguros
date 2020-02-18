@@ -278,13 +278,18 @@ seguroSchema.statics.obtenerSeguro = async function(id) {
 seguroSchema.statics.borrarSeguro = async function(id,admin) {
     if(admin){
         try {
-            let seguro = await seguros.findByIdAndRemove(id);
-            return "Seguro borrado correctamente";
+            let seguro = await seguros.findById(id);
+            if(seguro.estado = "En proceso"){
+                seguro.remove();
+                return {id:1, mensaje: "Seguro borrado correctamente."};
+            
+            }
+            return {id:0, mensaje: "El seguro no esta."};
         } catch (error) {
-            return "Ha ocurrido algo inesperado al intentar obtener el seguro\n"+ error;
+            return {id:0, mensaje: "Ha ocurrido algo inesperado al intentar obtener el seguro\n"+ error};
         }
     }else{
-        return "No tienes permisos para hacer esto";
+        return {id:0, mensaje: "No tienes permisos para hacer esto"};
     }
     
 }
