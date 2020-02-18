@@ -132,7 +132,7 @@ export default class VerSeguro extends Component {
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-danger" idSeguro = {this.props.seguro.idSeguro}>Eliminar seguro</button>
+                <button type="button" className="btn btn-danger" idSeguro = {this.props.seguro._id}>Eliminar seguro</button>
                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
             </div>
