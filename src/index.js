@@ -27,8 +27,16 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json());
 
+//Sesiones
+app.use(session({
+    secret: "sesionDeInequidad",
+    resave: false,
+    saveUninitialized: false
+}))
+
 //Routes
 app.use(indexRoutes)
+app.use(sesionRoutes);
 app.use('/api/clientes', clienteRoutes);
 app.use('/api/aseguradoras', aseguradoraRoutes);
 app.use('/api/bienes', bienRoutes);
@@ -38,17 +46,6 @@ app.use('/api/vendedores', vendedorRoutes);
 
 //Static files
 app.use(express.static(path.join(__dirname, 'public')));
-
-//Sesiones
-app.use(session({
-    secret: "sesionDeInequidad",
-    resave: false,
-    saveUninitialized: false
-}))
-
-app.get('/showSession', sesionRoutes.mostrarSesion);
-app.post('/startSession', sesionRoutes.iniciarSesion);
-app.get('/closeSession', sesionRoutes.cerrarSesion);
 
 //HTML en todas las rutas para react
 app.get('*', (req, res) => res.sendFile(path.join(__dirname+'/public/index.html')));

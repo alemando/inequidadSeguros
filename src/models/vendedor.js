@@ -117,7 +117,8 @@ vendedorSchema.statics.obtenerVendedorById = async (id)=> {
     }
 }
 
-//Inicio de sesión
+//Verificación de datos para inicio de sesión
+//Ingresa usuario y contraseña, y en caso de ser correcto, retorna el _id y el esAdmin
 vendedorSchema.statics.iniciarSesionVendedor = async (datos)=>{
     try{
         let vendedor = await vendedores.findOne({documento:datos.documento,contrasena:datos.contrasena})
