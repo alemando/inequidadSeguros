@@ -29,6 +29,7 @@
     "cors": "^2.8.5",
     "datatables.net": "^1.10.20",
     "express": "^4.17.1",
+    "express-session": "^1.17.0",
     "jquery": "^3.4.1",
     "moment": "^2.24.0",
     "mongoose": "^5.8.9",

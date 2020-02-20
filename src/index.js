@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
+const session = require('express-session');
 const app = express();
 
 //DB
@@ -15,6 +16,7 @@ const bienRoutes= require('./routes/bien.routes.js')
 const categoriaRoutes = require('./routes/categoria.routes.js')
 const seguroRoutes = require('./routes/seguro.routes.js')
 const vendedorRoutes = require('./routes/vendedor.routes.js')
+const sesionRoutes = require('./routes/sesion.routes.js');
 
 //Settings
 app.set('port', process.env.PORT || 3000)
@@ -36,6 +38,17 @@ app.use('/api/vendedores', vendedorRoutes);
 
 //Static files
 app.use(express.static(path.join(__dirname, 'public')));
+
+//Sesiones
+app.use(session({
+    secret: "sesionDeInequidad",
+    resave: false,
+    saveUninitialized: false
+}))
+
+app.get('/showSession', sesionRoutes.mostrarSesion);
+app.post('/startSession', sesionRoutes.iniciarSesion);
+app.get('/closeSession', sesionRoutes.cerrarSesion);
 
 //HTML en todas las rutas para react
 app.get('*', (req, res) => res.sendFile(path.join(__dirname+'/public/index.html')));

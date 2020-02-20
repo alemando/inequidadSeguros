@@ -117,6 +117,16 @@ vendedorSchema.statics.obtenerVendedorById = async (id)=> {
     }
 }
 
+//Inicio de sesión
+vendedorSchema.statics.iniciarSesionVendedor = async (datos)=>{
+    try{
+        let vendedor = await vendedores.findOne({documento:datos.documento,contrasena:datos.contrasena})
+        return {_id: vendedor._id, esAdmin:vendedor.esAdmin}
+    }catch(error){
+        return "Usuario o contraseña incorrectos"
+    }
+}
+
 //Se retorna clase vendedores para exportar
 const vendedores = mongoose.model('vendedores',vendedorSchema);
 
