@@ -148,7 +148,6 @@ vendedorSchema.statics.obtenerVendedorById = async (id) => {
 
 //Funcion para encriptar contraseñas
 function encriptar(password) {
-    // return CryptoJS.AES.encrypt(password, 'key').toString();
     return bcrypt.hashSync(password, 10).toString();
 }
 
