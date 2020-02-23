@@ -57,7 +57,7 @@ vendedorSchema.statics.guardarVendedor = async (datos) => {
 
   //Validacion basada en regex de el formato de un correo
   if (!patronCorreo.test(datos.correo)) {
-    validacion.mensaje += "El correo no sigue el formato example@dominio.ext\n"
+    validacion.mensaje += "El correo no sigue el formato example@dominio.ext\n";
   }
 
   //Validaciones documento negativo o nulo
@@ -134,12 +134,7 @@ vendedorSchema.statics.editarVendedor = async (datos) => {
 
         //Validacion basada en regex de el formato de un correo
         if (!patronCorreo.test(datos.correo)) {
-          validacion.mensaje += "El correo no sigue el formato example@dominio.ext\n"
-        }
-
-        //Validaciones documento negativo o nulo
-        if (datos.documento == "" || datos.documento == null || parseInt(datos.documento) < 0) {
-          validacion.mensaje += "El documento de identificación no es válido\n";
+          validacion.mensaje += "El correo no sigue el formato example@dominio.ext\n";
         }
 
         //Si no pasa alguna validacion retorna el mensaje correspondiente
