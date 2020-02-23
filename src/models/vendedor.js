@@ -54,17 +54,17 @@ const patronCorreo = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+
 vendedorSchema.statics.guardarVendedor = async (datos)=> {
 
     let validacion = { id: "0", mensaje: ""}
-    
+
     //Validacion basada en regex de el formato de un correo
     if(!patronCorreo.test(datos.correo)){
         validacion.mensaje += "El correo no sigue el formato example@dominio.ext\n"
     }
-    
+
     //Validaciones documento negativo o nulo
     if(datos.documento == "" || datos.documento == null || parseInt(datos.documento) < 0){
         validacion.mensaje += "El documento de identificacion no es valido\n";
     }
-    
+
     //Si no pasa alguna validacion retorna el mensaje correspondiente
     if(validacion.mensaje.length!=0) return validacion
 
@@ -81,7 +81,7 @@ vendedorSchema.statics.guardarVendedor = async (datos)=> {
         await vendedorNuevo.save();
         return { id: "1", mensaje: "Vendedor guardado"};
     } catch (error) {
-        if (error.errors.documento.kind==="unique") return { 
+        if (error.errors.documento.kind==="unique") return {
             id: "2", mensaje: "El documento ingresado ya existe en nuestra base de datos"};
         else return { id: "0", mensaje: "Error desconocido"};
     }
@@ -123,6 +123,23 @@ vendedorSchema.statics.iniciarSesionVendedor = async (datos)=>{
     try{
         let vendedor = await vendedores.findOne({documento:datos.documento,contrasena:datos.contrasena})
         return {_id: vendedor._id, esAdmin:vendedor.esAdmin}
+    }catch(error){
+        return "Usuario o contraseña incorrectos"
+    }
+}
+
+//Cambiar contraseña del vendedor
+vendedorSchema.statics.cambiarContrasenaVendedor = async (datos)=>{
+    try{
+        let vendedor= await vendedores.findOne({documento:datos.documento,contrasena:datos.contrasena})
+        if (vendedor == "" || vendedor == null) {
+          return "Usuario o contraseña incorrectos"
+        }
+        if(datos.nuevacontrasena == "" || datos.nuevacontrasena == null){
+          return "Contraseña Nueva vacia o null"
+        }else {
+          await vendedores.updateOne({documento:datos.documento},{$set : {contrasena: datos.nuevacontrasena}})
+        }
     }catch(error){
         return "Usuario o contraseña incorrectos"
     }

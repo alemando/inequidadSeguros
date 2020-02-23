@@ -22,5 +22,10 @@ router.post('/save', async (req, res) => {
   res.json(resultado);
 });
 
+// req.body 3 parametros: documento, contrasena y nuevacontrasena
+router.post('/cambiarContrasena', async (req, res) => {
+  resultado = await Vendedor.cambiarContrasenaVendedor(req.body);
+  res.json(resultado);
+});
 
 module.exports = router;
