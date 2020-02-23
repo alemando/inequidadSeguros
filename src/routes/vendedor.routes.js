@@ -22,5 +22,9 @@ router.post('/save', async (req, res) => {
   res.json(resultado);
 });
 
+//EDIT a Vendedor
+router.post('/edit', async(req,res) => {
+  res.json(await Vendedor.editarVendedor(req.body));
+})
 
 module.exports = router;
