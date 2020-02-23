@@ -28,4 +28,8 @@ router.get('/principal/:id', async(req,res)=>{
   res.json(respuesta);
 });
 
+router.post('/finiquitar/:id', async(req,res)=>{
+  let respuesta = await Seguro.cambiarEstado(req.params.id,req.body.estado,req.body.admin)
+  res.json(respuesta);
+})
 module.exports = router;

@@ -273,6 +273,35 @@ seguroSchema.statics.obtenerSeguro = async function(id) {
         return "Ha ocurrido algo inesperado al intentar obtener el seguro\n"+ error;
     }
 }
+//Metodo para cambiar el estado de un seguro
+seguroSchema.statics.cambiarEstado = async function(id,estado,admin) {
+    let validacion = { id: "0", mensaje: ""}
+    if (admin) {
+        try {
+            let doc = await seguros.findById(id,"estado")
+            if (doc.estado == "En proceso"){
+                validacion.id="1";
+                switch (estado) {
+                    case "true":
+                        await seguros.findByIdAndUpdate(id,{estado:"Aprobado"});
+                        validacion.mensaje+="Seguro aprobado con exito!";
+                        break;
+                    case "false":
+                        await seguros.findByIdAndUpdate(id,{estado:"Rechazado"});
+                        validacion.mensaje+="Seguro rechazado con exito!";
+                        break;
+                }
+                return validacion;
+            }else{
+                validacion.mensaje+="Este seguro ya ha sido finiquitado y su estado es: "+doc.estado;
+                return validacion;
+            }      
+        } catch (error) {
+            return {id:"0",mensaje:"Algo ha salido mal:\n"+error};
+        }
+    }
+    else return {id:0, mensaje:"No posees privilegios de administrador"};
+}
 
 const verificarCriterios = (arreglo) => {
     for(let i = 0; i<arreglo.length;i++){
