@@ -113,7 +113,7 @@ categoriaSchema.statics.obtenerCategoria = async (nombre) => {
 
 //Metodo para cambiar estado a una categoria
 categoriaSchema.statics.cambiarEstadoCat = async (nombre,admin) => {
-  if(admin){
+  if(admin == true){
     try {
         let categoria = await categorias.findOne({nombre: nombre});
         console.log("Encontro categoria con nombre "+categoria.nombre);
