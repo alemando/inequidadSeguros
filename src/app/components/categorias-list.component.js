@@ -47,7 +47,7 @@ export default class CategoriasList extends Component {
     })
   }
   cambiarEstadoCat(id){
-    fetch('/api/categorias/disable', {
+    fetch('/api/categorias/status', {
       method: 'POST',
       body: JSON.stringify({'id': id}),
       headers: {
