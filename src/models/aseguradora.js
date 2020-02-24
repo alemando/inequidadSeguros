@@ -142,20 +142,20 @@ aseguradoraSchema.statics.CambiarEstadoAseguradora = async (id, admin)=> {
             let aseguradora = await aseguradoras.findById(id);
             aseguradora.estado = !aseguradora.estado;
             await aseguradora.save();
-            return "Has cambiado el estado de la aseguradora"
+            return { id: "1", mensaje: "Has cambiado el estado de la aseguradora"};
         } catch (error) {
-            return "ha ocurrido algo inesperado al intentar inhabilitar la aseguradora"+ error;
+            return { id: "0", mensaje: "ha ocurrido algo inesperado al intentar inhabilitar la aseguradora"+ error};
         }
     }
     else{
-        return "No tienes permisos para inhabilitar aseguradoras"
+        return { id: "0", mensaje: "No tienes permisos para inhabilitar aseguradoras"};
     }
        
 }
 
 //Metodo para retornar todas las aseguradoras habilitadas 
 aseguradoraSchema.statics.obtenerAseguradorasHabilitadas = async () =>{
-    try {
+        try {
         let listAseguradoras = await aseguradoras.find({estado: true})
         return listAseguradoras;
     } catch (error) {

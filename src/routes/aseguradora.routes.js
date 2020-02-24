@@ -11,22 +11,22 @@ router.get('/', async (req, res) => {
   res.json(aseguradoras);
 });
 
+// Get Aseguradoras Habilitadas
+router.get('/enabled', async (req, res) => {
+  resultado = await Aseguradora.obtenerAseguradorasHabilitadas();
+  res.json(resultado);
+});
+
 // GET aseguradora by nit
 router.get('/:nit', async (req, res) => {
   const aseguradora = await Aseguradora.obtenerAseguradora(req.params.nit);
   res.json(aseguradora);
 });
 
-// Get Aseguradoras Habilitadas
-router.get('/enabled', async (req, res) => {
-  const aseguradora = await Aseguradora.obtenerAseguradorasHabilitadas();
-  res.json(aseguradora);
-});
-
 //POST Cambiar estado de aseguradora
-router.post('/disable/:id', async (req,res) => { 
-  const aseguradora = await Aseguradora.CambiarEstadoAseguradora(req.params.id, true);
-  res.json(aseguradora);
+router.post('/disable', async (req,res) => { 
+  resultado = await Aseguradora.CambiarEstadoAseguradora(req.body.id, true);
+  res.json(resultado);
 });
 
 // ADD a new aseguradora
