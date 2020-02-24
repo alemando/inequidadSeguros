@@ -19,6 +19,7 @@ export default class VerSeguro extends Component {
     this.state = {
       criterios: []
     }
+    this.eliminarSeguro = this.eliminarSeguro.bind(this);
   }
 
   componentDidMount() {
@@ -29,6 +30,20 @@ export default class VerSeguro extends Component {
     return this.state.criterios.map(currentCriterio => {
       return <Criterio criterio={currentCriterio} key={currentCriterio._id} />;
     })
+  }
+
+  eliminarSeguro(e) {
+    fetch('/api/seguros/' + this.props.seguro._id, {
+      method: 'GET',
+      body : JSON.stringify(this.props.seguro._id),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => console.log(res.json))
+    .catch(err => console.log(err));
+
   }
 
   render() {
@@ -132,8 +147,8 @@ export default class VerSeguro extends Component {
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-danger" idSeguro = {this.props.seguro._id}>Eliminar seguro</button>
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" className="btn btn-danger" onClick={this.eliminarSeguro} >Eliminar seguro</button>
+                <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
               </div>
             </div>
           </div>
