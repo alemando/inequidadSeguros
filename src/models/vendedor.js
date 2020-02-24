@@ -119,7 +119,7 @@ vendedorSchema.statics.obtenerVendedorById = async (id) => {
 }
 
 //Editar vendedor
-vendedorSchema.statics.editarVendedor = async (datos) => {
+vendedorSchema.statics.editarVendedor = async (datos, admin) => {
   
   let validacion = { id: "0", mensaje: "" }
 
@@ -130,7 +130,7 @@ vendedorSchema.statics.editarVendedor = async (datos) => {
     }
     else {
       //Verificamos que la sesión esté abierta por un admin, 
-      if (datos.esAdmin) {
+      if (admin) {
 
         //Validacion basada en regex de el formato de un correo
         if (!patronCorreo.test(datos.correo)) {

@@ -12,7 +12,7 @@ const Vendedor = props => (
     <Td>{props.vendedor.documento}</Td>
     <Td>{props.vendedor.nombre}</Td>
     <Td>{props.vendedor.apellido1} {props.vendedor.apellido2}</Td>
-    <Td><center><VerVendedor vendedor={props.vendedor} key={props.vendedor.documento}/></center></Td>
+    <Td><center><VerVendedor component={props.component} vendedor={props.vendedor} key={props.vendedor.documento}/></center></Td>
   </Tr>
 )
 
@@ -24,7 +24,7 @@ export default class VendedoresList extends Component {
 
     vendedoresList() {
     return this.state.vendedores.map(currentVendedor => {
-      return <Vendedor vendedor={currentVendedor} key={currentVendedor._id} />;
+      return <Vendedor component={this} vendedor={currentVendedor} key={currentVendedor._id} />;
     })
   }
 
