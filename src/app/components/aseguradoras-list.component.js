@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CreateAseguradora from "./create-aseguradora.component";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
+import Swal from 'sweetalert2'
 import $ from 'jquery'
 import DataTable from 'datatables.net'
 $.DataTable = DataTable
@@ -12,6 +13,7 @@ const Aseguradora = props => (
     <Td>{props.aseguradora.nombre}</Td>
     <Td>{props.aseguradora.telefono}</Td>
     <Td>{props.aseguradora.correo}</Td>
+    <Td><button className={"btn " + (props.aseguradora.estado ? 'btn-success' : 'btn-danger')} onClick={()=>props.component.confirmDialog(props.aseguradora._id)}>{(props.aseguradora.estado ? 'Descativar' : 'Activar')}</button></Td>
   </Tr>
 )
 
@@ -24,12 +26,67 @@ export default class AseguradorasList extends Component {
 
     aseguradorasList() {
         return this.state.aseguradoras.map(currentAseguradora => {
-            return <Aseguradora aseguradora={currentAseguradora} key={currentAseguradora._id}/>;
+            return <Aseguradora component={this} aseguradora={currentAseguradora} key={currentAseguradora._id}/>;
         })
     }
 
     componentDidMount(){
         this.fetchAseguradoras();
+    }
+
+    confirmDialog(id){
+      Swal.fire({
+        title: 'Estas seguro?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#00c70a',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Confirmar'
+      }).then((result) => {
+        if (result.value) {
+          this.changeEstado(id)
+        }
+      })
+    }
+
+    changeEstado(id){
+      fetch('/api/aseguradoras/disable', {
+        method: 'POST',
+        body: JSON.stringify({'id': id}),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+            if (data.id == 0) {
+
+                Swal.fire({
+                    text: data.mensaje,
+                    type: 'error'
+                })
+            } else if (data.id == 1) {
+
+              this.fetchAseguradoras();
+              
+              Swal.fire({
+                text: data.mensaje,
+                type: 'success',
+                onClose: () => {
+                  location.reload();
+                }
+              })
+            }else{
+              Swal.fire({
+                text: data.mensaje,
+                type: 'error'
+              })
+
+            }
+        })
+        .catch(err => console.error(err));
     }
 
     fetchAseguradoras() {
@@ -79,6 +136,7 @@ export default class AseguradorasList extends Component {
                             <Th><center>Nombre</center></Th>
                             <Th><center>Telefono</center></Th>
                             <Th><center>Correo</center></Th>
+                            <Th><center>Habilitar / <br></br> Deshabilitar</center></Th>
                         </Tr>
                     </Thead>                                        
                     <Tbody>
