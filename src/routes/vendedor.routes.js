@@ -18,7 +18,7 @@ router.get('/:id', async (req, res) => {
 
 // ADD a new vendedor
 router.post('/save', async (req, res) => {
-  resultado = await Vendedor.guardarVendedor(req.body);
+  resultado = await Vendedor.guardarVendedor(req.body, true);
   res.json(resultado);
 });
 

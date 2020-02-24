@@ -57,7 +57,7 @@ const patronCorreo = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+
     recibe un arreglo json de parametros
     retorna un arreglo JSON {id: #, mensaje:...}
 */
-vendedorSchema.statics.guardarVendedor = async (datos) => {
+vendedorSchema.statics.guardarVendedor = async (datos, admin) => {
 
     let validacion = { id: "0", mensaje: "" }
 
@@ -77,9 +77,9 @@ vendedorSchema.statics.guardarVendedor = async (datos) => {
     //Encripto la contraseña mandada desde la petición
     let password = encriptar(datos.contrasena);
 
-    //esAdmin valida si la sesión ha sido abierta por un admin
-    //admin valida si se desea crear un admin o no
-    if (datos.esAdmin && datos.admin) {
+    //admin valida si la sesión ha sido abierta por un admin, por defecto está en true
+    //datos.admin valida si se desea crear un admin o no
+    if (admin && datos.admin) {
         //Objeto vendedor
         var vendedorNuevo = new vendedores({
             documento: datos.documento,
