@@ -126,7 +126,7 @@ export default class CreateVendedor extends Component {
     generar() {
         var caracteres = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789!#$%&/()=?¡¿-|*+";
         var contraseña = "";
-        for (i = 0; i < 18; i++) contraseña += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+        for (i = 0; i < 12; i++) contraseña += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
         this.setState({
             password: contraseña
         })
