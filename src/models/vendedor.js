@@ -121,10 +121,10 @@ vendedorSchema.statics.obtenerVendedorById = async (id)=> {
         return "Error obteniendo vendedor por documento identidad\n" + error;
     }
 }
-
+//Inhabilitar vendedor ??????
 vendedorSchema.statics.inhabilitar = async (id, admin) =>{
-    let validacion = { id: "0", mensaje: ""};
-    if (admin) {
+    let validacion = { id: "0", mensaje: ""}; 
+    if (true) {
         try {
             let doc = await vendedores.findById(id,"habilitado");
             if (doc.habilitado == false){
