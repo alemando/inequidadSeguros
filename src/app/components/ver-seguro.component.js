@@ -106,7 +106,14 @@ export default class VerSeguro extends Component {
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Estado</b></div>
-                        <div className="col-md-6 ml-auto">{this.props.seguro.estado}</div>
+                        <div className= "col-md-6 ml-auto"><select name="estado"  onChange={this.handleChange} 
+                                  required
+                                  value={this.state.seguro}
+                                  className="form-control">
+                                  <option  value=''>Seleccione...</option>
+                                  <option  value='true'>Aprobado</option>
+                                  <option  value='false'>Rechazado</option>
+                        </select></div>
                       </div>
                     </li>
                     <li className="list-group-item">
