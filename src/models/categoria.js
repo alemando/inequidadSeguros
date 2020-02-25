@@ -122,6 +122,17 @@ categoriaSchema.statics.obtenerCategoriaById = async (id) => {
     }
 }
 
+categoriaSchema.statics.actualizarCategoriaById = async (id,nuevoNombre) => {
+    try {
+        let categoria = await categorias.findById(id);
+        categoria.nombre = nuevoNombre
+        await categoria.save()
+        return { id: "1", mensaje: "La categoría ha sido actualizada correctamente."}
+    } catch (error) {
+        return "Ha ocurrido algo inesperado al intentar actualizar la categoria "+ error;
+    }
+}
+
 const verificarCriterios = (arreglo) => {
     for(let i = 0; i<arreglo.length;i++){
         for(let j = i; j<arreglo.length;j++){
