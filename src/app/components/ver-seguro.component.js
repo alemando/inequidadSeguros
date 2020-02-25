@@ -33,13 +33,8 @@ export default class VerSeguro extends Component {
   }
 
   eliminarSeguro(e) {
-    fetch('/api/seguros/' + this.props.seguro._id, {
-      method: 'GET',
-      body : JSON.stringify(this.props.seguro._id),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
+    fetch('/api/seguros/remove/' + this.props.seguro._id, {
+      method: 'GET'
     })
     .then(res => console.log(res.json))
     .catch(err => console.log(err));
