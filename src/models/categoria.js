@@ -115,11 +115,10 @@ categoriaSchema.statics.obtenerCategoria = async (nombre) => {
 categoriaSchema.statics.cambiarEstadoCat = async (id,admin) => {
   if(admin == true){
     try {
-        console.log("id: "+id);
         if(id != null){
           let categoria = await categorias.findOne({_id: id});
-          console.log("Encontro categoria con nombre "+ categoria.nombre);
-          let aux = await categorias.updateOne({_id: id},{$set: {estado: !categoria.estado}})
+          categoria.estado = !categoria.estado
+          await categoria.save()
           return { id: "1", mensaje: "El estado a la categoría ha sido cambiado correctamente."}
         }
         return {id: "0", mensaje: "id es indefinida"}
