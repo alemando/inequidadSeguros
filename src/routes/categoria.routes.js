@@ -23,7 +23,7 @@ router.post('/save', async (req, res) => {
 });
 //Actualizar nombre de la categoria
 router.post('/update', async (req, res) => {
-  resultado = await Categoria.actualizarCategoriaById(req.params._id,req.params.nombre,true);
+  resultado = await Categoria.actualizarCategoriaById(req.body.id,req.body.nombre,true);
   console.log(resultado);
   res.json(resultado);
 });

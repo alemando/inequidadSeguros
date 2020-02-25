@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CreateCategoria from "./create-categoria.component";
+import EditarCategoria from "./editar-categoria.component";
 import VerCriterios from "./ver-criterios.component";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
@@ -11,6 +12,7 @@ const Categoria = props => (
   <Tr>
     <Td>{props.categoria.nombre}</Td>
     <Td><center><VerCriterios categoria={props.categoria} /></center></Td>
+    <Td><center><EditarCategoria categoria={props.categoria} component={props.component} /></center></Td>
   </Tr>
 )
 
@@ -25,7 +27,7 @@ export default class CategoriasList extends Component {
 
   categoriasList() {
     return this.state.categorias.map(currentCategoria => {
-      return <Categoria categoria={currentCategoria} key={currentCategoria._id} />;
+      return <Categoria categoria={currentCategoria} key={currentCategoria._id} component={this} />;
     })
   }
 
@@ -77,6 +79,7 @@ export default class CategoriasList extends Component {
                   <Tr>
                     <Th><center>Nombre</center></Th>
                     <Th><center>Ver criterios</center></Th>
+                    <Th><center>Editar</center></Th>
                   </Tr>
                 </Thead>
                 <Tbody>
