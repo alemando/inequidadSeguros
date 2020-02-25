@@ -25,7 +25,7 @@ router.post('/save', async (req, res) => {
 //POST change status
 router.post('/status', async (req,res)=>{
   const admin = true
-  resultado = await Categoria.cambiarEstadoCat(req.body.nombre,admin);
+  resultado = await Categoria.cambiarEstadoCat(req.body.id,admin);
   res.json(resultado)
 })
 
