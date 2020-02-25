@@ -22,4 +22,9 @@ router.post('/save', async (req, res) => {
   res.json(resultado);
 });
 
+// EDIT a Criterio
+router.post('/edit', async(req,res) => {
+  res.json(await Categoria.editarCriterio(req.body, true));
+})
+
 module.exports = router;

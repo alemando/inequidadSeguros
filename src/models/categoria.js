@@ -176,4 +176,29 @@ const validacionesCriterios = (arreglo) => {
 
 const categorias = mongoose.model('categorias', categoriaSchema);
 
+// Editar criterio
+categoriaSchema.statics.editarCriterio = async(datos, admin) => {
+    
+    let validacion = { id:"0", mensaje: "" }
+
+    try{
+        criterio.nombre = datos.nombre;
+        criterio.descripcion = datos.descripcion;
+        criterio.cobertura = datos.cobertura;
+        criterio.deducible = datos.deducible;
+
+        await criterio.save();
+
+        validacion.id = '1';
+        validacion.mensaje = 'Criterio editado con éxito';
+        return validacion
+    } catch(error){
+        return {
+            id: '2',
+            mensaje: `Error al obtener el criterio: ${error}`
+        };
+    }
+}
+
+
 module.exports = categorias;
