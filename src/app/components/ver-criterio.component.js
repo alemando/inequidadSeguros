@@ -16,6 +16,8 @@ export default class VerCriterio extends Component {
     this.modalClose = this.modalClose.bind(this);
     this.edit = this.edit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.editarCriterio = this.editarCriterio.bind(this);
+
 
   }
 
@@ -52,9 +54,9 @@ export default class VerCriterio extends Component {
       edit: !this.state.edit
     })
   }
-  editarCriterio() {
+  editarCriterio(e) {
     e.preventDefault();
-    fetch('/api/categorias/edit', {
+    fetch('/api/categorias/edit', { //No se cual es la ruta jeje
       method: 'POST',
       body: JSON.stringify(this.state),
       headers: {
