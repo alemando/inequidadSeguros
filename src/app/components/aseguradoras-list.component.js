@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import VerAseguradora from "./ver-aseguradora.component";
 import CreateAseguradora from "./create-aseguradora.component";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
@@ -13,7 +14,8 @@ const Aseguradora = props => (
     <Td>{props.aseguradora.nombre}</Td>
     <Td>{props.aseguradora.telefono}</Td>
     <Td>{props.aseguradora.correo}</Td>
-    <Td><button className={"btn " + (props.aseguradora.estado ? 'btn-success' : 'btn-danger')} onClick={()=>props.component.confirmDialog(props.aseguradora._id)}>{(props.aseguradora.estado ? 'Descativar' : 'Activar')}</button></Td>
+    <Td><button className={"btn " + (props.aseguradora.estado ? 'btn-success' : 'btn-danger')} onClick={()=>props.component.confirmDialog(props.aseguradora._id)}>{(props.aseguradora.estado ? 'Desactivar' : 'Activar')}</button></Td>
+    <Td><center><VerAseguradora component={props.component} aseguradora={props.aseguradora} key={props.aseguradora.nit}/></center></Td>
   </Tr>
 )
 
@@ -137,6 +139,7 @@ export default class AseguradorasList extends Component {
                             <Th><center>Telefono</center></Th>
                             <Th><center>Correo</center></Th>
                             <Th><center>Habilitar / <br></br> Deshabilitar</center></Th>
+                            <Th><center>Ver mas</center></Th>
                         </Tr>
                     </Thead>                                        
                     <Tbody>

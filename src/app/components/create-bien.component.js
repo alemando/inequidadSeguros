@@ -166,7 +166,7 @@ export default class CreateBien extends Component {
               </div>
               <div className="modal-footer">
                 <button type="submit" form={"formBien-"+this.props.cliente} className="btn btn-primary">Enviar</button>
-                <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Close</button>
+                <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Cerrar</button>
               </div>
             </div>
           </div>

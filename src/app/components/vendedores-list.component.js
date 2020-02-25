@@ -86,7 +86,6 @@ export default class VendedoresList extends Component {
                     </Tbody>
                 </Table>
                 </div>
-                
             </div>                                                      
         </div>
       </div>  
