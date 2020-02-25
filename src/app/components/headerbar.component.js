@@ -1,5 +1,6 @@
 // sidebar.js
 import React, { Component } from 'react';
+import EditContrasena from "./edit-contrasena.component"; 
 
 export default class headerbar extends Component {
   render(){
@@ -14,10 +15,20 @@ export default class headerbar extends Component {
 
                           <ul className="list-inline menu-left mb-0">
                               <li className="float-left">
-                                  <button className="button-menu-mobile open-left">
-                      <i className="fa fa-fw fa-bars"></i>
+                                <button className="button-menu-mobile open-left">
+                                  <i className="fa fa-fw fa-bars"></i>
+                                </button>
+                              </li>   
+                              <li className="float-right">
+                                <span>Nombre</span>
+                                <button className="button-menu-mobile" title="Cambiar contraseña">
+                                  <i class="fa fa-fw fa-key"></i>
                                   </button>
-                              </li>                        
+                                  <button className="button-menu-mobile" title="Cerrar sesion">
+                                  <i className="fa fa-fw fa-sign-out"></i>
+                                  </button>
+                              </li> 
+                                                
                           </ul>
 
               </nav>
