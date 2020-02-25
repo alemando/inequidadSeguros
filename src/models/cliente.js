@@ -265,7 +265,7 @@ clienteSchema.statics.cambiarEstadoCliente = async (documento, admin) => {
                 return { id: "1", mensaje: "Cliente inhabilitado correctamente"}
             }else{
                 await clientes.updateOne({documento: documento},{$set: {estado: true}})
-                return { id: "1", mensaje: "Cliente habilitado correctamente"}
+                return { id: "2", mensaje: "Cliente habilitado correctamente"}
             }
         } catch (error) {
             return { id: "0", mensaje: "Ha ocurrido un error desconocido"};

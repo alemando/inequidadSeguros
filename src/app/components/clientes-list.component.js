@@ -18,7 +18,7 @@ const Cliente = props => (
     <Td><center><VerCliente cliente={props.cliente} key={props.cliente.documento}/></center></Td>
     <Td><center><VerBienes cliente={props.cliente._id} clienteInfo={props.cliente} key={props.cliente.documento}/></center></Td>
     <Td><center><CreateBien cliente={props.cliente._id} clienteInfo={props.cliente} key={props.cliente.documento}/></center></Td>
-    <Td><center><EstadoCliente cliente={props.cliente.documento}/></center></Td>
+    <Td><center><EstadoCliente cliente={props.cliente.documento} estadoActual={props.cliente.estado}/></center></Td>
   </Tr>
 )
 
