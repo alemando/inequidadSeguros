@@ -128,7 +128,8 @@ vendedorSchema.statics.inhabilitar = async (id, admin) =>{
         try {
             let doc = await vendedores.findById(id,"habilitado");
             if (doc.habilitado == false){
-                validacion.mensaje += "Este vendedor ya se encuentra inhabilitado"    
+                validacion.mensaje += "Este vendedor ya se encuentra inhabilitado"
+                return validacion;    
             }else{
                 await vendedores.findByIdAndUpdate(id,{habilitado:false});
                 return {id:"1",mensaje:"Vendedor inhabilitado exitosamente!"}
