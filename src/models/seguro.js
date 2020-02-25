@@ -279,19 +279,19 @@ seguroSchema.statics.borrarSeguro = async function(id,admin) {
     if(admin){
         try {
             let seguro = await seguros.findById(id);
-            if(seguro.estado = "En proceso"){
+            if(seguro.estado == "En proceso"){
                 seguro.remove();
                 return {id:1, mensaje: "Seguro borrado correctamente."};
             
             }
-            return {id:0, mensaje: "El seguro no esta."};
+            return {id:0, mensaje: "El estado del seguro no es en proceso."};
         } catch (error) {
             return {id:0, mensaje: "Ha ocurrido algo inesperado al intentar obtener el seguro\n"+ error};
         }
     }else{
         return {id:0, mensaje: "No tienes permisos para hacer esto"};
     }
-    
+
 }
 
 const verificarCriterios = (arreglo) => {
