@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import VerCliente from "./ver-cliente.component";
 import CreateCliente from "./create-cliente.component";
+import EditCliente from "./edit-cliente.component";
 import VerBienes from "./ver-bienes.component";
 import CreateBien from "./create-bien.component";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
@@ -17,6 +18,7 @@ const Cliente = props => (
     <Td><center><VerCliente cliente={props.cliente} key={props.cliente.documento}/></center></Td>
     <Td><center><VerBienes cliente={props.cliente._id} clienteInfo={props.cliente} key={props.cliente.documento}/></center></Td>
     <Td><center><CreateBien cliente={props.cliente._id} clienteInfo={props.cliente} key={props.cliente.documento}/></center></Td>
+    <Td><center><EditCliente cliente={props.cliente} component={props.component}/></center></Td>
   </Tr>
 )
 
@@ -28,7 +30,7 @@ export default class ClientesList extends Component {
 
   clientesList() {
     return this.state.clientes.map(currentCliente => {
-      return <Cliente cliente={currentCliente} key={currentCliente._id} />;
+      return <Cliente cliente={currentCliente} key={currentCliente._id} component={this}/>;
     })
   }
 
@@ -85,6 +87,7 @@ export default class ClientesList extends Component {
                           <Th><center>Ver más</center></Th>
                           <Th><center>Ver bienes</center></Th>
                           <Th><center>Crear bien</center></Th>
+                          <Th><center>Editar</center></Th>
                       </Tr>
                   </Thead>                                        
                   <Tbody>
