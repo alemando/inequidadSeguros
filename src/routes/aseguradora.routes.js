@@ -37,7 +37,7 @@ router.post('/save', async (req, res) => {
 });
 
 // UPDATE aseguradora
-router.post('/update/:nit', async (req,res) =>{ 
+router.post('/update', async (req,res) =>{ 
   const resultado = await Aseguradora.actualizarAseguradora(req.body, true);
   res.json(resultado);
 });

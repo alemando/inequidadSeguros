@@ -33,7 +33,7 @@ export default class VerAseguradora extends Component {
   }
 
   editAseguradora() {
-    fetch('/api/aseguradoras/edit', {
+    fetch('/api/aseguradoras/update', {
         method: 'POST',
         body: JSON.stringify(this.state),
         headers: {
@@ -126,7 +126,7 @@ export default class VerAseguradora extends Component {
 	                </div>
 	              </div>
 	              <div className="modal-footer">
-	              		{(this.state.editMode ? <button type="button" className="btn btn-success" onClick={this.editVendedor}>Enviar</button> 
+	              		{(this.state.editMode ? <button type="button" className="btn btn-success" onClick={this.editAseguradora}>Enviar</button> 
                 : "")}
                 {(this.state.editMode ? <button type="button" className="btn btn-danger" onClick={()=>this.setState({editMode: false})}>Cancelar</button> 
                 : <button type="button" className="btn btn-warning" onClick={()=>this.setState({editMode: true})}>Editar</button>)}

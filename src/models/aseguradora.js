@@ -177,7 +177,7 @@ aseguradoraSchema.statics.actualizarAseguradora = async (datos, admin) => {
             if (!patronCorreo.test(datos.correo)) {
                 validacion.mensaje += "El correo no sigue el formato example@dominio.ext\n";
               }  
-            if (validacion.mensaje.length != 0) return validacion
+            else if (validacion.mensaje.length != 0) return validacion
 
             aseguradora.nombre = datos.nombre;
             aseguradora.telefono = datos.telefono;
@@ -186,6 +186,7 @@ aseguradoraSchema.statics.actualizarAseguradora = async (datos, admin) => {
             await aseguradora.save();
   
             validacion.id = '1';
+            print(validacion.id)
             validacion.mensaje = 'Vendedor editado con éxito';
             return validacion;
         }
