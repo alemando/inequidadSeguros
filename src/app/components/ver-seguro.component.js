@@ -30,7 +30,59 @@ export default class VerSeguro extends Component {
       return <Criterio criterio={currentCriterio} key={currentCriterio._id} />;
     })
   }
+  confirmDialog(id){
+    Swal.fire({
+      title: 'Estas seguro?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#00c70a',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Confirmar'
+    }).then((result) => {
+      if (result.value) {
+        this.cambiarEstado(id)
+      }
+    })
+  }
+  changeEstado(id){
+    fetch('/api/seguros/finiquitar', {
+      method: 'POST',
+      body: JSON.stringify({'id': id}),
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+          if (data.id == 0) {
 
+              Swal.fire({
+                  text: data.mensaje,
+                  type: 'error'
+              })
+          } else if (data.id == 1) {
+
+            this.fetchSeguros();
+            
+            Swal.fire({
+              text: data.mensaje,
+              type: 'success',
+              onClose: () => {
+                location.reload();
+              }
+            })
+          }else{
+            Swal.fire({
+              text: data.mensaje,
+              type: 'error'
+            })
+
+          }
+      })
+      .catch(err => console.error(err));
+  }
   render() {
     return (
       <div>
@@ -106,7 +158,7 @@ export default class VerSeguro extends Component {
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Estado</b></div>
-                        <div className= "col-md-6 ml-auto"><select name="estado"  onChange={this.handleChange} 
+                        <div className= "col-md-6 ml-auto"><select name="estado"  onChange={()=>props.component.confirmDialog(props.seguro._id)}
                                   required
                                   value={this.state.seguro}
                                   className="form-control">
