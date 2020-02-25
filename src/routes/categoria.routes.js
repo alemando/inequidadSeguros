@@ -23,8 +23,9 @@ router.post('/save', async (req, res) => {
 });
 
 // EDIT a Criterio
-router.post('/edit', async(req,res) => {
-  res.json(await Categoria.editarCriterio(req.body, true));
-})
+router.post('/editCriterio', async(req,res) => {
+  resultado = await Categoria.editarCriterio(req.body);
+  res.json(resultado);
+});
 
 module.exports = router;
