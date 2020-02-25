@@ -14,7 +14,8 @@ export default class CreateVendedor extends Component {
             apellido2: '',
             telefono: '',
             correo: '',
-            password: ''
+            password: '',
+            admin: true
         }
         this.showHide = this.showHide.bind(this);
         this.addVendedor = this.addVendedor.bind(this);
@@ -38,7 +39,8 @@ export default class CreateVendedor extends Component {
             apellido2: '',
             telefono: '',
             correo: '',
-            password: ''
+            password: '',
+            admin: true
         });
     }
 
@@ -82,7 +84,8 @@ export default class CreateVendedor extends Component {
                         apellido2: '',
                         telefono: '',
                         correo: '',
-                        password: ''
+                        password: '',
+                        admin: true
 
                     });
                 } else {
@@ -199,6 +202,16 @@ export default class CreateVendedor extends Component {
                                         <span className="btn btn-light" onClick={this.showHide}>{this.state.type === 'input' ? 'Hide' : 'Show'}</span>
                                         <span className="btn btn-light" onClick={this.generar}>Generar contraseña</span>
                                     </div>
+                                    <div className="form-group">
+                                        <label>* Tipo de empleado:</label>
+                                        <select name="admin" onChange={this.handleChange}
+                                            required
+                                            value={this.state.admin}
+                                            className="form-control">
+                                            <option  value= {true}>Administrador</option>
+                                            <option  value= {false}>Vendedor</option>
+                                        </select>
+                                        </div>
                                     <div className="row">
                                         <div className="col">
                                             <div className="form-group">
