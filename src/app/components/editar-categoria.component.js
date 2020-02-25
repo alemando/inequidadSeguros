@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 
 
 
-export default class CreateCategoria extends Component {
+export default class EditCategoria extends Component {
 
     constructor(props) {
         super();
