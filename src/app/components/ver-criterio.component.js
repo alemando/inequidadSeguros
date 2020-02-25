@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import Swal from 'sweetalert2'
 export default class VerCriterio extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       edit: true,
-      id: this.props.criterio._id,
+      idCriterio: this.props.criterio._id,
+      idCategoria: this.props.categoriaId,
       nombre: this.props.criterio.nombre,
       descripcion: this.props.criterio.descripcion,
       cobertura: this.props.criterio.cobertura,
@@ -25,6 +27,8 @@ export default class VerCriterio extends Component {
     $('#Criterio-' + this.categoriaCriterio() + this.props.criterio.nombre.replace(/ /g, "_")).modal('hide');
     this.setState({
       edit: true,
+      idCriterio: this.props.criterio._id,
+      categoriaId: this.props.categoriaId,
       nombre: this.props.criterio.nombre,
       descripcion: this.props.criterio.descripcion,
       cobertura: this.props.criterio.cobertura,
@@ -56,7 +60,7 @@ export default class VerCriterio extends Component {
   }
   editarCriterio(e) {
     e.preventDefault();
-    fetch('/api/categorias/edit', { //No se cual es la ruta jeje
+    fetch('/api/categorias/editCriterio', { 
       method: 'POST',
       body: JSON.stringify(this.state),
       headers: {
@@ -82,6 +86,8 @@ export default class VerCriterio extends Component {
           })
           this.setState({
             edit: true,
+            idCriterio: this.props.criterio._id,
+            categoriaId: this.props.categoriaId,
             nombre: this.props.criterio.nombre,
             descripcion: this.props.criterio.descripcion,
             cobertura: this.props.criterio.cobertura,

@@ -6,7 +6,7 @@ import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 const Criterio = props => (
   <Tr>
     <Td>{props.criterio.nombre}</Td>
-    <Td><VerCriterio nombre={props.nombre} criterio={props.criterio} key={props.criterio.mombre}/></Td>
+    <Td><VerCriterio nombre={props.nombre} criterio={props.criterio} key={props.criterio.mombre} categoriaId = {props.categoriaId}/></Td>
   </Tr>
 )
 
@@ -26,7 +26,7 @@ export default class VerCriterios extends Component {
 
   criteriosList() {
     return this.state.criterios.map(currentCriterio => {
-      return <Criterio nombre={this.props.categoria.nombre} criterio={currentCriterio} key={currentCriterio.nombre} />;
+      return <Criterio nombre={this.props.categoria.nombre} criterio={currentCriterio} key={currentCriterio.nombre} categoriaId={this.props.categoria._id} />;
     })
   }
 
@@ -59,7 +59,7 @@ export default class VerCriterios extends Component {
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
               </div>
             </div>
           </div>
