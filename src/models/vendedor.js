@@ -38,6 +38,11 @@ const vendedorSchema = Schema({
         type: Boolean,
         require: true,
         default: false
+    },
+    habilitado:{
+        type: Boolean,
+        require:true,
+        default:true
     }
 });
 
@@ -115,6 +120,25 @@ vendedorSchema.statics.obtenerVendedorById = async (id)=> {
     }catch(error){
         return "Error obteniendo vendedor por documento identidad\n" + error;
     }
+}
+
+vendedorSchema.statics.inhabilitar = async (id, admin) =>{
+    let validacion = { id: "0", mensaje: ""};
+    if (admin) {
+        try {
+            let doc = await vendedores.findById(id,"habilitado");
+            if (doc.habilitado == false){
+                validacion.mensaje += "Este vendedor ya se encuentra inhabilitado"    
+            }else{
+                await vendedores.findByIdAndUpdate(id,{habilitado:false});
+                return {id:"1",mensaje:"Vendedor inhabilitado exitosamente!"}
+            }
+        }
+        catch(error){
+            return {id:"0",mensaje:"Algo ha salido mal:\n"+error};
+        }
+    }
+    else return {id:"0", mensaje:"No posees privilegios de administrador"};
 }
 
 //Se retorna clase vendedores para exportar

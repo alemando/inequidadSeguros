@@ -21,6 +21,9 @@ router.post('/save', async (req, res) => {
   resultado = await Vendedor.guardarVendedor(req.body);
   res.json(resultado);
 });
-
+router.post('/inhabilitar/:id', async(req,res)=>{
+  let respuesta = await Vendedor.inhabilitar(req.params.id,req.body.admin)
+  res.json(respuesta);
+})
 
 module.exports = router;
