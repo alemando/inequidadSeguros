@@ -3,6 +3,7 @@ import VerCriterio from "./ver-criterio-seguro.component";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 import moment from 'moment'
+import Swal from 'sweetalert2'
 
 const Criterio = props => (
   <Tr>
@@ -36,9 +37,31 @@ export default class VerSeguro extends Component {
     fetch('/api/seguros/remove/' + this.props.seguro._id, {
       method: 'GET'
     })
-    .then(res => console.log(res.json))
+    .then(res => res.json())
+    .then(data => {
+      if(data.id == 0){
+                  
+        Swal.fire({
+          text: data.mensaje,
+          type: 'error'
+        })
+      }else if(data.id == 1){
+        Swal.fire({
+          text: data.mensaje,
+          type: 'success',
+          onClose: () => {
+            location.reload(false);
+          }
+        })
+      } else {
+          Swal.fire({
+              text: data.mensaje,
+              type: 'error'
+          })
+      }
+    })
     .catch(err => console.log(err));
-
+    $("#Seguro" + this.props.seguro._id).modal('close');
   }
 
   render() {
