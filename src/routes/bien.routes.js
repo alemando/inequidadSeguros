@@ -36,9 +36,10 @@ router.post('/save', upload.single('documento'), async (req, res) => {
 });
 
 //Borrar un bien(si no tiene seguros registrados) y aca va simulado lo de si es admin
-router.get('/remove/:id', async(req,res)=>{
-  let respuesta = await Bienes.borrarBienesDeCliente({_id: req.url.split('/')[2]},true);
-  res.json(respuesta);
-});
+
+router.post('/remove', async (req,res)=>{
+  resultado = await Bienes.borrarBienesDeCliente(req.body.id, req.body.admin);
+  res.json(resultado)
+})
 
 module.exports = router;

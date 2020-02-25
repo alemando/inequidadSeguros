@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import VerBien from "./ver-bien.component";
+import EliminarBien from "./eliminar-bien.component";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
@@ -7,7 +8,8 @@ const TablaBien = props => (
   <Tr>
     <Td>{props.bien.nombre}</Td>
     <Td>{props.bien.categoria.nombre}</Td>
-    <Td><VerBien bien={props.bien} key={props.bien._id}/></Td>
+    <Td><center><VerBien bien={props.bien} key={props.bien._id}/></center></Td>
+    <Td><center><EliminarBien bien={props.bien} key={props.bien._id}/></center></Td>
   </Tr>
 )
 
@@ -20,6 +22,7 @@ export default class VerBienes extends Component {
       bienes: []
     }
     this.verBienes = this.verBienes.bind(this);
+
   }
 
   verBienes() {
@@ -43,6 +46,7 @@ export default class VerBienes extends Component {
       .catch(err => console.error(err));
   }
 
+
   render() {
     return (
       <div>
@@ -64,6 +68,7 @@ export default class VerBienes extends Component {
                         <Th>Nombre</Th>
                         <Th>Categoria</Th>
                         <Th>Ver mas</Th>
+                        <Th>Eliminar</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
