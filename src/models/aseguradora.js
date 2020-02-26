@@ -164,6 +164,45 @@ aseguradoraSchema.statics.obtenerAseguradorasHabilitadas = async () =>{
     }
   }
 
+//Editar aseguradora
+aseguradoraSchema.statics.actualizarAseguradora = async (datos, admin) => {
+  
+    let validacion = { id: "0", mensaje: "" }
+    try {
+      let aseguradora = await aseguradoras.findOne({ nit: datos.nit });
+      if (aseguradora == null) {
+        throw 'La aseguradora no existe';
+      }
+      else {
+        if (admin) {
+            if (!patronCorreo.test(datos.correo)) {
+                validacion.mensaje += "El correo no sigue el formato example@dominio.ext\n";
+              }  
+            else if (validacion.mensaje.length != 0) return validacion
+
+            aseguradora.nombre = datos.nombre;
+            aseguradora.telefono = datos.telefono;
+            aseguradora.correo = datos.correo;
+         
+            await aseguradora.save();
+  
+            validacion.id = '1';
+            validacion.mensaje = 'Vendedor editado con éxito';
+            return validacion;
+        }
+        else {
+          throw 'No posees permisos para ejecutar esta acción';
+        }
+      }
+    } catch (error) {
+      return {
+        id: '2',
+        mensaje: `Error obteniendo de aseguradora por nit: ${error}`
+      };
+    }
+  
+  }
+
 
 const aseguradoras = mongoose.model('aseguradoras',aseguradoraSchema);
 
