@@ -19,46 +19,53 @@ export default class Login extends Component {
           [name]: value
         })
     }
+
     login(e){
         e.preventDefault();
-    fetch('/startSession', {
-      method: 'POST',
-      body: JSON.stringify(this.state),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.id == 0) {
-
-          Swal.fire({
-            text: data.mensaje,
-            type: 'error'
-          })
-        } else if (data.id == 1) {
-
-          Swal.fire({
-            text: data.mensaje,
-            type: 'success',
-            onClose: () => {
-              location.reload();
-            }
-          })
-
-          this.setState({
-            documento: '',
-            contrasena: '',
-          });
-        } else {
-          Swal.fire({
-            text: data.mensaje,
-            type: 'error'
-          })
+        fetch('/startSession', {
+        method: 'POST',
+        body: JSON.stringify(this.state),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         }
-      })
-      .catch(err => console.error(err));
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.id == 0) {
+
+                Swal.fire({
+                    text: data.mensaje,
+                    type: 'error'
+                })
+                this.setState({
+                    documento: '',
+                    contrasena: '',
+                });
+
+            } else if (data.id == 1) {
+
+                Swal.fire({
+                    text: data.mensaje,
+                    type: 'success',
+                })
+
+                this.setState({
+                    documento: '',
+                    contrasena: '',
+                });
+            } else {
+                Swal.fire({
+                    text: data.mensaje,
+                    type: 'error'
+                })
+                this.setState({
+                    documento: '',
+                    contrasena: '',
+                });
+            }
+        })
+        .catch(err => console.error(err));
     }
 
     render(){
