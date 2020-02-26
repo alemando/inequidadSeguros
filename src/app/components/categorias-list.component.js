@@ -4,6 +4,7 @@ import EditCategoria from "./editar-categoria.component";
 import VerCriterios from "./ver-criterios.component";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
+import Swal from 'sweetalert2'
 import $ from 'jquery'
 import DataTable from 'datatables.net'
 $.DataTable = DataTable
@@ -13,26 +14,77 @@ const Categoria = props => (
     <Td>{props.categoria.nombre}</Td>
     <Td><center><VerCriterios categoria={props.categoria} /></center></Td>
     <Td><center><EditCategoria categoria={props.categoria} component={props.component} /></center></Td>
+    <Td><center><button className={"btn " + (props.categoria.estado ? 'btn-success' : 'btn-danger')} onClick={()=>props.component.confirmDialog(props.categoria._id)}>{(props.categoria.estado ? 'Habilitar' : 'Desactivar')}</button></center></Td>
   </Tr>
 )
 
 export default class CategoriasList extends Component {
   constructor() {
     super();
-    this.state = {
-
-      categorias: []
-    };
+    this.state = {categorias: []}; 
   }
 
   categoriasList() {
     return this.state.categorias.map(currentCategoria => {
-      return <Categoria categoria={currentCategoria} key={currentCategoria._id} component={this} />;
+      return <Categoria component={this}categoria={currentCategoria} key={currentCategoria._id} />;
     })
   }
 
   componentDidMount() {
     this.fetchCategorias();
+  }
+  confirmDialog(id){
+    Swal.fire({
+      title: 'Estas seguro?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#00c70a',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Confirmar'
+    }).then((result) => {
+      if (result.value) {
+        this.cambiarEstadoCat(id)
+      }
+    })
+  }
+  cambiarEstadoCat(id){
+    fetch('/api/categorias/status', {
+      method: 'POST',
+      body: JSON.stringify({'id': id}),
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+          if (data.id == 0) {
+
+              Swal.fire({
+                  text: data.mensaje,
+                  type: 'error'
+              })
+          } else if (data.id == 1) {
+
+            this.fetchCategorias();
+            
+            Swal.fire({
+              text: data.mensaje,
+              type: 'success',
+              onClose: () => {
+                location.reload();
+              }
+            })
+          }else{
+            Swal.fire({
+              text: data.mensaje,
+              type: 'error'
+            })
+
+          }
+      })
+      .catch(err => console.error(err));
   }
 
   fetchCategorias() {
@@ -80,6 +132,7 @@ export default class CategoriasList extends Component {
                     <Th><center>Nombre</center></Th>
                     <Th><center>Ver criterios</center></Th>
                     <Th><center>Editar</center></Th>
+                    <Th><center>Habilitar/Desactivar</center></Th>
                   </Tr>
                 </Thead>
                 <Tbody>
