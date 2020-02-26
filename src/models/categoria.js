@@ -101,6 +101,16 @@ categoriaSchema.statics.obtenerCategorias = async () => {
     }
 }
 
+//Metodo para retornar todas las categoría habilitadas de la BD
+categoriaSchema.statics.obtenerCategoriaHabilitadas = async () =>{
+  try {
+      let listaCategorias = await categorias.find({estado: true})
+      return listaCategorias;
+  } catch (error) {
+    return "Ha ocurrido algo inesperado al intentar obtener las categorías: \n"+ error;
+  }
+}
+
 //Metodo para retornar una categoria por su nombre
 categoriaSchema.statics.obtenerCategoria = async (nombre) => {
     try {
@@ -115,13 +125,13 @@ categoriaSchema.statics.obtenerCategoria = async (nombre) => {
 categoriaSchema.statics.cambiarEstadoCat = async (id,admin) => {
   if(admin == true){
     try {
-        if(id != null){
-          let categoria = await categorias.findOne({_id: id});
-          categoria.estado = !categoria.estado
-          await categoria.save()
-          return { id: "1", mensaje: "El estado a la categoría ha sido cambiado correctamente."}
-        }
-        return {id: "0", mensaje: "id es indefinida"}
+      if(id != null){
+        let categoria = await categorias.findOne({_id: id});
+        categoria.estado = !categoria.estado
+        await categoria.save()
+        return { id: "1", mensaje: "El estado a la categoría ha sido cambiado correctamente."}
+      }
+      return {id: "0", mensaje: "id es indefinida"}
     } catch (error) {
        return { id: "0", mensaje: "Error desconocido"};
     }
