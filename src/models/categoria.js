@@ -230,8 +230,58 @@ const validacionesCriterios = (arreglo) => {
         }
     }
     return mensaje
-}
+};
 
+// Editar criterio
+categoriaSchema.statics.editarCriterio = async(datos)=> {
+    
+    let validacion = { id:"0", mensaje: "" };
+    let criterio = null;
+
+    try{
+        let categoria = await categorias.findOne({_id: datos.idCategoria});
+        for(let i = 0; i<categoria.criterios.length;i++){
+            if(categoria.criterios[i]._id == datos.idCriterio){
+                criterio = categoria.criterios[i];
+                break;
+            }
+        }
+
+        if(criterio != null){
+            criterio.nombre = datos.nombre;
+            criterio.descripcion = datos.descripcion;
+            criterio.cobertura = datos.cobertura;
+            criterio.deducible = datos.deducible;
+
+            if(verificarCriterios(categoria.criterios) == true){
+                validacion.mensaje += "Ya existe un criterio con este nombre";
+            }
+
+            validacion.mensaje += validacionesCriterios([criterio]);
+
+            if(validacion.mensaje.length>0){
+                validacion.id='2';
+                return validacion;
+            }
+
+            await categoria.save();
+
+            validacion.mensaje = "Criterio editado con éxito";
+            validacion.id = "1";
+            return validacion;
+    
+        } else {
+            validacion.mensaje += "No se encontró el criterio \n";
+            return validacion;
+        }
+
+    }catch (error) {
+        return {
+            id: '2',
+            mensaje: `Error obteniendo el criterio: ${error}`
+        };
+    }
+};
 
 const categorias = mongoose.model('categorias', categoriaSchema);
 

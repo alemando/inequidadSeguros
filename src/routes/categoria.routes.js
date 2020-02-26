@@ -40,4 +40,10 @@ router.post('/status', async (req,res)=>{
   res.json(resultado)
 })
 
+// EDIT a Criterio
+router.post('/editCriterio', async(req,res) => {
+  resultado = await Categoria.editarCriterio(req.body);
+  res.json(resultado);
+});
+
 module.exports = router;
