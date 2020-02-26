@@ -259,12 +259,31 @@ clienteSchema.statics.obtenerClientesConBienes = async () =>{
     }
 }
 
+//Método para obtener clientes que tienen bienes
+clienteSchema.statics.obtenerClientesConBienesHabilitados = async () =>{
+    //Requerido para hacer uso de sus métodos en el método
+    const Bienes = require('./bien')
+    try{
+        const listaClientes = await clientes.find({estado: true});
+        let listaClientesBienes = []
+        for(let i = 0; i<listaClientes.length;i++){
+            bienes = await Bienes.obtenerBienesPorCliente(listaClientes[i]._id)
+            if (bienes.length!=0){
+                listaClientesBienes.push(listaClientes[i])
+            }
+        }
+        return listaClientesBienes
+    }
+    catch (error){
+        return "Ha ocurrido algo inesperado al intentar obtener los clientes con bienes: \n" + error;
+    }
+}
+
 //Metodo para cambiar el estado del cliente
 clienteSchema.statics.cambiarEstadoCliente = async (documento, admin) => {
     if(admin){
       try {
             let cliente = await clientes.findOne({documento: documento});
-            console.log("Cliente " + cliente.nombre);
             if(cliente.estado){
                 await clientes.updateOne({documento: documento},{$set: {estado: false}})
                 return { id: "1", mensaje: "Cliente inhabilitado correctamente"}

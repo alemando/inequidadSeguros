@@ -12,6 +12,14 @@ router.get('/', async (req, res) => {
   res.json(clientes);
 });
 
+
+// GET Cliente by documento
+router.get('/habilitados', async (req, res) => {
+  const cliente = await Cliente.obtenerClientesConBienesHabilitados();
+  res.json(cliente);
+});
+
+
 // GET Cliente by documento
 router.get('/:documento', async (req, res) => {
   const cliente = await Cliente.obtenerCliente(req.params.documento);
