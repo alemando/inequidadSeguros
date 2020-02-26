@@ -75,8 +75,7 @@ vendedorSchema.statics.guardarVendedor = async (datos, admin) => {
     if (validacion.mensaje.length != 0) return validacion
 
     //Encripto la contraseña mandada desde la petición
-    let password = bcrypt.hashSync(datos.contrasena, 10).toString();
-
+    let password = bcrypt.hashSync(datos.password, 10).toString();
     //admin valida si la sesión ha sido abierta por un admin, por defecto está en true
     //datos.admin valida si se desea crear un admin o no
 
