@@ -101,6 +101,16 @@ categoriaSchema.statics.obtenerCategorias = async () => {
     }
 }
 
+//Metodo para retornar todas las categoría habilitadas de la BD
+categoriaSchema.statics.obtenerCategoriaHabilitadas = async () =>{
+  try {
+      let listaCategorias = await categorias.find({estado: true})
+      return listaCategorias;
+  } catch (error) {
+    return "Ha ocurrido algo inesperado al intentar obtener las categorías: \n"+ error;
+  }
+}
+
 //Metodo para retornar una categoria por su nombre
 categoriaSchema.statics.obtenerCategoria = async (nombre) => {
     try {
@@ -109,6 +119,24 @@ categoriaSchema.statics.obtenerCategoria = async (nombre) => {
     } catch (error) {
         return "Ha ocurrido algo inesperado al intentar obtener el categoria "+ error;
     }
+}
+
+//Metodo para cambiar estado a una categoria
+categoriaSchema.statics.cambiarEstadoCat = async (nombre,admin) => {
+  if(admin){
+    try {
+      if(id != null){
+        let categoria = await categorias.findOne({_id: id});
+        categoria.estado = !categoria.estado
+        await categoria.save()
+        return { id: "1", mensaje: "El estado a la categoría ha sido cambiado correctamente."}
+      }
+      return {id: "0", mensaje: "id es indefinida"}
+    } catch (error) {
+       return { id: "0", mensaje: "Error desconocido"};
+    }
+  }
+  return ("No eres admin para habilitar/inhabilitar categorias")
 }
 
 //Metodo para retornar el nombre de la categoria por su ID
@@ -142,8 +170,8 @@ o en caso de no tener nombre, el número del criterio.
 En caso de no encontrar un error, retorna un string vacio ""
 */
 const validacionesCriterios = (arreglo) => {
-    
-    
+
+
     for(let i = 0; i<arreglo.length;i++){
         mensaje=""
         if(arreglo[i].nombre=="" || arreglo[i].nombre==null){
