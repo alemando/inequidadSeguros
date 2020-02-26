@@ -26,7 +26,7 @@ export default class VendedoresList extends Component {
 
     vendedoresList() {
     return this.state.vendedores.map(currentVendedor => {
-      return <Vendedor vendedor={currentVendedor} key={currentVendedor._id} />;
+      return <Vendedor component={this} vendedor={currentVendedor} key={currentVendedor._id} />;
     })
   }
 
