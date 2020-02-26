@@ -87,7 +87,10 @@ export default class Login extends Component {
 
     render(){
         if(this.state.session == null){
-            return(<div className="container-fluid fondo">
+            return(
+            <div className="fondo">
+            <div className="card-header fondo"></div>
+            <div className="container-fluid fondo card-body">
             <div className="container-sm wrapper">
                 <a href="#" className="logo"><img alt="logo" src="assets/images/logoColor.png" /></a>
                 <form id="#formLogin" onSubmit={this.login}>
@@ -104,7 +107,11 @@ export default class Login extends Component {
                     <button type="submit" onClick={this.login} form="formLogin" className="btn btn-primary">Enviar</button>
                 </div>
             </div>
-        </div>)
+            </div>
+            <div className="card-footer fondo"></div>
+        
+        </div>
+        )
         }else{
             return(<App session={this.state.session}/>)
         }

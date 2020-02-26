@@ -2,10 +2,8 @@
 import React, { Component } from 'react';
 import EditContrasena from "./edit-contrasena.component"; 
 
+
 export default class headerbar extends Component {
-  constructor(props){
-      super(props)
-  }
 
   closeSession(){
     fetch('/closeSession')
@@ -33,8 +31,8 @@ export default class headerbar extends Component {
                                 </button>
                               </li>   
                               <li className="float-right">
-                                <span>{this.props.session.nombre}</span>
-                                <button className="button-menu-mobile" title="Cambiar contraseña">
+                                <span className="text-white">{this.props.session.nombre}</span>
+                                <button className="button-menu-mobile" title="Cambiar contraseña" onClick={this.EditContrasena}>
                                   <i className="fa fa-fw fa-key"></i>
                                   </button>
                                   <button className="button-menu-mobile" title="Cerrar sesion" onClick={this.closeSession}>
