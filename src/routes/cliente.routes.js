@@ -29,4 +29,10 @@ router.post('/withBienes', async(req, res) =>{
   res.json(clientes);
 });
 
+// UPDATE cliente
+router.post('/update/:documento', async (req,res) =>{ 
+  const resultado = await Cliente.actualizarCliente(req.body, true);
+  res.json(resultado);
+});
+
 module.exports = router;
