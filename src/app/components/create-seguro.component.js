@@ -169,8 +169,8 @@ vendedores(){
       })
       .catch(err => console.error(err));
 
-    //Cargar lista aseguradoras
-    fetch('/api/aseguradoras/', {
+    //Cargar lista aseguradoras habilitadas
+    fetch('/api/aseguradoras/enabled', {
       method: 'GET'
     })
       .then(res => res.json())
@@ -180,8 +180,8 @@ vendedores(){
       .catch(err => console.error(err));
 
       //Cargar lista clientes
-      fetch('/api/clientes/withBienes', {
-        method: 'POST'
+      fetch('/api/clientes/habilitados', {
+        method: 'GET'
       })
       .then(res => res.json())
       .then(data => {

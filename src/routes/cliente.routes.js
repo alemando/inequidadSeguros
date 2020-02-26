@@ -7,9 +7,18 @@ const Cliente = require('../models/cliente');
 
 // GET all Clientes
 router.get('/', async (req, res) => {
-  const clientes = await Cliente.obtenerClientes();
+  let admin = true
+  const clientes = await Cliente.obtenerClientes(admin);
   res.json(clientes);
 });
+
+
+// GET Cliente by documento
+router.get('/habilitados', async (req, res) => {
+  const cliente = await Cliente.obtenerClientesConBienesHabilitados();
+  res.json(cliente);
+});
+
 
 // GET Cliente by documento
 router.get('/:documento', async (req, res) => {
