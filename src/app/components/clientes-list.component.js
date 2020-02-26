@@ -3,6 +3,7 @@ import VerCliente from "./ver-cliente.component";
 import CreateCliente from "./create-cliente.component";
 import VerBienes from "./ver-bienes.component";
 import CreateBien from "./create-bien.component";
+import EstadoCliente from "./estado-cliente.component";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 import $ from 'jquery'
@@ -17,6 +18,7 @@ const Cliente = props => (
     <Td><center><VerCliente cliente={props.cliente} key={props.cliente.documento}/></center></Td>
     <Td><center><VerBienes cliente={props.cliente._id} clienteInfo={props.cliente} key={props.cliente.documento}/></center></Td>
     <Td><center><CreateBien cliente={props.cliente._id} clienteInfo={props.cliente} key={props.cliente.documento}/></center></Td>
+    <Td><center><EstadoCliente cliente={props.cliente.documento} estadoActual={props.cliente.estado}/></center></Td>
   </Tr>
 )
 
@@ -85,6 +87,7 @@ export default class ClientesList extends Component {
                           <Th><center>Ver más</center></Th>
                           <Th><center>Ver bienes</center></Th>
                           <Th><center>Crear bien</center></Th>
+                          <Th><center>Estado</center></Th>
                       </Tr>
                   </Thead>                                        
                   <Tbody>

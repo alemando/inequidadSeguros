@@ -23,13 +23,13 @@ import React from 'react';
 
 
 
-export default function App() {
+export default function App(props) {
   return (
     <Router>
     <div id="App">
       <div id="main">
-          <Headerbar></Headerbar>
-          <LeftSidebar></LeftSidebar>
+          <Headerbar session={props.session}/>
+          <LeftSidebar/>
           <div className="content-page">
             <div className="content">
               <div className="container-fluid">
