@@ -12,7 +12,7 @@ const Categoria = props => (
   <Tr>
     <Td>{props.categoria.nombre}</Td>
     <Td><center><VerCriterios categoria={props.categoria} /></center></Td>
-    <Td><center><button className={"btn " + (props.categoria.estado ? 'btn-danger' : 'btn-success')} onClick={()=>props.component.confirmDialog(props.categoria._id)}>{(props.categoria.estado ? 'Desactivado' : 'Habilitado')}</button></center></Td>
+    <Td><center><button className={"btn " + (props.categoria.estado ? 'btn-success' : 'btn-danger')} onClick={()=>props.component.confirmDialog(props.categoria._id)}>{(props.categoria.estado ? 'Habilitar' : 'Desactivar')}</button></center></Td>
   </Tr>
 )
 

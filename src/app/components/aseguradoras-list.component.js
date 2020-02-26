@@ -13,7 +13,7 @@ const Aseguradora = props => (
     <Td>{props.aseguradora.nombre}</Td>
     <Td>{props.aseguradora.telefono}</Td>
     <Td>{props.aseguradora.correo}</Td>
-    <Td><button className={"btn " + (props.aseguradora.estado ? 'btn-success' : 'btn-danger')} onClick={()=>props.component.confirmDialog(props.aseguradora._id)}>{(props.aseguradora.estado ? 'Descativar' : 'Activar')}</button></Td>
+    <Td><button className={"btn " + (props.aseguradora.estado ? 'btn-danger' : 'btn-success' )} onClick={()=>props.component.confirmDialog(props.aseguradora._id)}>{(props.aseguradora.estado ? 'Descativar' : 'Habilitar')}</button></Td>
   </Tr>
 )
 
