@@ -85,12 +85,14 @@ export default class VerSeguro extends Component {
                         <div className="col-md-6 ml-auto">{moment(this.props.seguro.fechaInicio, "YYYY-MM-DD").locale("es").format("DD-MMM-YYYY")}</div>
                       </div>
                     </li>
+                    {moment(this.props.seguro.fechaFin, "YYYY-MM-DD").isValid() &&
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Fecha Fin</b></div>
                         <div className="col-md-6 ml-auto">{moment(this.props.seguro.fechaFin, "YYYY-MM-DD").locale("es").format("DD-MMM-YYYY")}</div>
                       </div>
                     </li>
+                    }
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Dia pago</b></div>

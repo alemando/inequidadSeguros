@@ -75,7 +75,7 @@ vendedorSchema.statics.guardarVendedor = async (datos, admin) => {
     if (validacion.mensaje.length != 0) return validacion
 
     //Encripto la contraseña mandada desde la petición
-    let password = await bcrypt.hash(datos.contrasena, 10).toString();
+    let password = bcrypt.hashSync(datos.contrasena, 10).toString();
 
     //admin valida si la sesión ha sido abierta por un admin, por defecto está en true
     //datos.admin valida si se desea crear un admin o no
@@ -160,6 +160,22 @@ vendedorSchema.statics.obtenerVendedorById = async (id) => {
         return vendedor;
     } catch (error) {
         return "Error obteniendo vendedor por documento identidad\n" + error;
+    }
+}
+
+//Verificación de datos para inicio de sesión
+//Ingresa usuario y contraseña, y en caso de ser correcto, retorna el _id y el esAdmin
+vendedorSchema.statics.iniciarSesionVendedor = async (datos)=>{
+    try{
+        let vendedor = await vendedores.findOne({documento:datos.documento})
+        if(!bcrypt.compareSync(datos.contrasena, vendedor.contrasena)){
+            return { id: "0", mensaje: "Usuario o contraseña incorrectos"}
+        }else{
+            return {_id: vendedor._id, esAdmin:vendedor.esAdmin, nombre:vendedor.nombre}
+        }
+        
+    }catch(error){
+        return { id: "0", mensaje: "Usuario o contraseña incorrectos"}
     }
 }
 
