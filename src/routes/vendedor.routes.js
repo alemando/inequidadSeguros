@@ -24,7 +24,7 @@ router.post('/save', async (req, res) => {
 
 // req.body 3 parametros: documento, contrasena y nuevacontrasena
 router.post('/cambiarContrasena', async (req, res) => {
-  resultado = await Vendedor.cambiarContrasenaVendedor(req.body);
+  resultado = await Vendedor.cambiarContrasenaVendedor(req.session._id, req.body);
   res.json(resultado);
 });
 //Inhabilitar vendedor

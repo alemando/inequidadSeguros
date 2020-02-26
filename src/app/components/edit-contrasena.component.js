@@ -18,7 +18,7 @@ export default class EditContrasena extends Component {
 
     editContrasena(e) {
         e.preventDefault();
-        fetch('/api/vendedores/update', {
+        fetch('/api/vendedores/cambiarContrasena', {
             method: 'POST',
             body: JSON.stringify(this.state),
             headers:{
@@ -34,8 +34,6 @@ export default class EditContrasena extends Component {
                       type: 'error'
                     })
                   }else if(data.id == 1){
-  
-                    this.props.component.fetchContrasena();
                     
                     Swal.fire({
                       text: data.mensaje,
@@ -86,15 +84,15 @@ export default class EditContrasena extends Component {
                         <div className="modal-body">
                             <form id={'formEditarContrasena'} onSubmit={this.editContrasena}>
                                 <div className="form-group">
-                                    <label>* Contrasena:</label>
-                                    <input name="contrasena" onChange={this.handleChange} type="text" required
+                                    <label>* Contraseña:</label>
+                                    <input name="contrasena" onChange={this.handleChange} type="password" required
                                         value={this.state.contrasena}
                                         className="form-control"
                                         />
                                 </div>
                                 <div className="form-group">
-                                    <label>* Nueva contrasena:</label>
-                                    <input name="contrasenaNueva" onChange={this.handleChange} type="text" required
+                                    <label>* Nueva contraseña:</label>
+                                    <input name="contrasenaNueva" onChange={this.handleChange} type="password" required
                                         value={this.state.contrasenaNueva}
                                         className="form-control"
                                         />

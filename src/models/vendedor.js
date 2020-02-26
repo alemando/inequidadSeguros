@@ -233,19 +233,26 @@ vendedorSchema.statics.iniciarSesionVendedor = async (datos)=>{
 }
 
 //Cambiar contraseña del vendedor
-vendedorSchema.statics.cambiarContrasenaVendedor = async (datos)=>{
+vendedorSchema.statics.cambiarContrasenaVendedor = async (vendedorId, datos)=>{
     try{
-        let vendedor= await vendedores.findOne({documento:datos.documento,contrasena:datos.contrasena})
+        let vendedor = await vendedores.findById(vendedorId);
         if (vendedor == "" || vendedor == null) {
-          return "Usuario o contraseña incorrectos"
-        }
-        if(datos.nuevacontrasena == "" || datos.nuevacontrasena == null){
-          return "Contraseña Nueva vacia o null"
+          return { id: "0", mensaje: "Usuario o contraseña incorrectos"}
+
+        } else if(datos.contrasenaNueva == "" || datos.contrasenaNueva == null){
+          return { id: "0", mensaje: "Contraseña Nueva vacia o null"}
         }else {
-          await vendedores.updateOne({documento:datos.documento},{$set : {contrasena: datos.nuevacontrasena}})
+            if(bcrypt.compareSync(datos.contrasena, vendedor.contrasena)){
+                vendedor.contrasena = bcrypt.hashSync(datos.contrasenaNueva, 10).toString();
+                await vendedor.save();
+                return { id: "1", mensaje: "Contraseña actualizada"}
+            }else{
+                return { id: "0", mensaje: "Contraseña incorrectos"}
+            }
+          
         }
     }catch(error){
-        return "Usuario o contraseña incorrectos"
+        return { id: "0", mensaje: "Usuario o contraseña incorrectos"}
     }
 }
 
