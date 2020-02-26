@@ -53,6 +53,11 @@ const clienteSchema = Schema({
         type: Number,
         trim: true,
         require: true
+    },
+    //true si es habilitado
+    estado: {
+        type: Boolean,
+        require: true
     }
 
 });
@@ -184,7 +189,8 @@ clienteSchema.statics.guardarCliente = async (datos) => {
             correo: datos.correo,
             fechaNacimiento: datos.fechaNacimiento,
             ingresos: datos.ingresos,
-            egresos: datos.egresos
+            egresos: datos.egresos,
+            estado: true
         });
     try {
         //Procedo a guardar en la BD
@@ -199,9 +205,14 @@ clienteSchema.statics.guardarCliente = async (datos) => {
 };
 
 //Metodo para reotornar todos los clientes de la BD
-clienteSchema.statics.obtenerClientes = async () => {
+clienteSchema.statics.obtenerClientes = async (admin) => {
     try {
-        const listaClientes = await clientes.find();
+        let listaClientes = null
+        if(admin){
+            listaClientes = await clientes.find();
+        } else {
+            listaClientes = await clientes.find({estado: true});
+        }
         return listaClientes;
     } catch (error) {
         return "Ha ocurrido algo inesperado al intentar obtener los clientes\n" + error;
@@ -246,6 +257,45 @@ clienteSchema.statics.obtenerClientesConBienes = async () =>{
     catch (error){
         return "Ha ocurrido algo inesperado al intentar obtener los clientes con bienes: \n" + error;
     }
+}
+
+//Método para obtener clientes que tienen bienes
+clienteSchema.statics.obtenerClientesConBienesHabilitados = async () =>{
+    //Requerido para hacer uso de sus métodos en el método
+    const Bienes = require('./bien')
+    try{
+        const listaClientes = await clientes.find({estado: true});
+        let listaClientesBienes = []
+        for(let i = 0; i<listaClientes.length;i++){
+            bienes = await Bienes.obtenerBienesPorCliente(listaClientes[i]._id)
+            if (bienes.length!=0){
+                listaClientesBienes.push(listaClientes[i])
+            }
+        }
+        return listaClientesBienes
+    }
+    catch (error){
+        return "Ha ocurrido algo inesperado al intentar obtener los clientes con bienes: \n" + error;
+    }
+}
+
+//Metodo para cambiar el estado del cliente
+clienteSchema.statics.cambiarEstadoCliente = async (documento, admin) => {
+    if(admin){
+      try {
+            let cliente = await clientes.findOne({documento: documento});
+            if(cliente.estado){
+                await clientes.updateOne({documento: documento},{$set: {estado: false}})
+                return { id: "1", mensaje: "Cliente inhabilitado correctamente"}
+            }else{
+                await clientes.updateOne({documento: documento},{$set: {estado: true}})
+                return { id: "1", mensaje: "Cliente habilitado correctamente"}
+            }
+        } catch (error) {
+            return { id: "0", mensaje: "Ha ocurrido un error desconocido"};
+        }
+    }
+    return ("Sólo los administradores pueden habilitar o deshabilitar clientes.")
 }
 
 const clientes = mongoose.model('clientes', clienteSchema);

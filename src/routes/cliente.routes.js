@@ -7,9 +7,18 @@ const Cliente = require('../models/cliente');
 
 // GET all Clientes
 router.get('/', async (req, res) => {
-  const clientes = await Cliente.obtenerClientes();
+  let admin = true
+  const clientes = await Cliente.obtenerClientes(admin);
   res.json(clientes);
 });
+
+
+// GET Cliente by documento
+router.get('/habilitados', async (req, res) => {
+  const cliente = await Cliente.obtenerClientesConBienesHabilitados();
+  res.json(cliente);
+});
+
 
 // GET Cliente by documento
 router.get('/:documento', async (req, res) => {
@@ -28,5 +37,11 @@ router.post('/withBienes', async(req, res) =>{
   const clientes = await Cliente.obtenerClientesConBienes();
   res.json(clientes);
 });
+
+//POST change status
+router.post('/status', async (req,res)=>{
+  resultado = await Cliente.cambiarEstadoCliente(req.body.documento, req.body.admin);
+  res.json(resultado)
+})
 
 module.exports = router;
