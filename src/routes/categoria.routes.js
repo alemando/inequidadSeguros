@@ -9,16 +9,15 @@ router.get('/', async (req, res) => {
   const categorias = await Categoria.obtenerCategorias();
   res.json(categorias);
 });
+// Get Categoria Habilitadas
+router.get('/habilitadas', async (req, res) => {
+  const categoria = await Categoria.obtenerCategoriaHabilitadas();
+  res.json(categoria);
+});
 
 // GET one Categoria by nombre
 router.get('/:nombre', async (req, res) => {
   const categoria = await Categoria.obtenerCategoria(req.params.nombre);
-  res.json(categoria);
-});
-
-// Get Categoria Habilitadas
-router.get('/habilitadas', async (req, res) => {
-  const categoria = await Categoria.obtenerCategoriaHabilitadas();
   res.json(categoria);
 });
 
