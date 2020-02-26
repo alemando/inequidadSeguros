@@ -64,6 +64,10 @@ categoriaSchema.statics.guardarCategoria = async (datos) => {
             validacion.mensaje += "La categoría no ha sido guardada, asegurese de que la categoría tenga un nombre."
         }
 
+        if(categorias.findOne({nombre: datos.nombre}) != null){
+            validacion.mensaje += "Ya existe una categoria con este nombre."
+        }
+
         //Validacion que exista el atributo opcional criterios
         if (datos.criterios) {
             //Validacion de los nombres de criterios no son repetidos
@@ -162,6 +166,9 @@ categoriaSchema.statics.actualizarCategoriaById = async (id, nuevoNombre, admin)
         try {
             let categoria = await categorias.findById(id);
             categoria.nombre = nuevoNombre
+            if(categorias.findOne({nombre: nuevoNombre})){
+                return { id: "0", mensaje: "Ya existe una categoria con este nombre"};
+            }
             await categoria.save()
             return { id: "1", mensaje: "La categoría ha sido actualizada correctamente." }
         } catch (error) {
