@@ -1,6 +1,6 @@
 // sidebar.js
 import React, { Component } from 'react';
-import EditContrasena from "./edit-contrasena.component"; 
+
 
 
 export default class headerbar extends Component {
@@ -21,7 +21,7 @@ export default class headerbar extends Component {
           <a href="/index" className="logo"><img alt="logo" src="assets/images/logo.png" /> <span>Seguros</span></a>
         </div>
               
-
+              
               <nav className="navbar-custom">
 
                           <ul className="list-inline menu-left mb-0">
@@ -32,7 +32,8 @@ export default class headerbar extends Component {
                               </li>   
                               <li className="float-right">
                                 <span className="text-white">{this.props.session.nombre}</span>
-                                <button className="button-menu-mobile" title="Cambiar contraseña" onClick={this.EditContrasena}>
+
+                                  <button className="button-menu-mobile" title="Cambiar contraseña" data-toggle="modal"  data-target='#EditarContrasena'>
                                   <i className="fa fa-fw fa-key"></i>
                                   </button>
                                   <button className="button-menu-mobile" title="Cerrar sesion" onClick={this.closeSession}>

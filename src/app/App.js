@@ -20,13 +20,14 @@ import Categoria from "./components/categoria.component";
 import Seguro from "./components/seguro.component";
 import Vendedor from "./components/vendedor.component";
 import React from 'react';
-
+import EditContrasena from "./components/edit-contrasena.component"; 
 
 
 export default function App(props) {
   return (
     <Router>
     <div id="App">
+     <EditContrasena/>
       <div id="main">
           <Headerbar session={props.session}/>
           <LeftSidebar/>

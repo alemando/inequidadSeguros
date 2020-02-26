@@ -6,10 +6,9 @@ import Swal from 'sweetalert2'
 
 export default class EditContrasena extends Component {
 
-    constructor(props) {
+    constructor() {
         super();
         this.state = {
-            documento: props.vendedor._documento,
             contrasena: '',
             contrasenaNueva: ''
         }
@@ -19,15 +18,9 @@ export default class EditContrasena extends Component {
 
     editContrasena(e) {
         e.preventDefault();
-        
-        var url = '/api/vendedores/update';
-        var data = {"documento": this.props.vendedor._documento,
-                    "contrasena": this.state.contrasena,
-                    "contrasenaNueva": this.state.contrasenaNueva};
-
-        fetch(url, {
+        fetch('/api/vendedores/update', {
             method: 'POST',
-            body: JSON.stringify(data),
+            body: JSON.stringify(this.state),
             headers:{
             'Content-Type': 'application/json'
             }
@@ -49,7 +42,7 @@ export default class EditContrasena extends Component {
                       type: 'success'
                     })
 
-                    $('#EditarContrasena-'+this.props.vendedor._documento).modal('hide');
+                    $('#EditarContrasena').modal('hide');
   
                     this.setState({
                         contrasena: '',
@@ -81,9 +74,7 @@ export default class EditContrasena extends Component {
     render() {
         return(
         <div>
-            <button type="button" className="btn" data-toggle="modal"  data-target={'#EditarContrasena-' + this.props.vendedor._documento}><i className="fa fa-fw fa-key"></i></button>
-        
-            <div className="modal fade" id={'EditarContrasena-' + this.props.vendedor._documento} tabIndex="-1" role="dialog" aria-hidden="true">
+            <div className="modal fade" id='EditarContrasena' tabIndex="-1" role="dialog" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -93,7 +84,7 @@ export default class EditContrasena extends Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <form id={'formEditarContrasena-'+ this.props.vendedor._documento} onSubmit={this.editContrasena}>
+                            <form id={'formEditarContrasena'} onSubmit={this.editContrasena}>
                                 <div className="form-group">
                                     <label>* Contrasena:</label>
                                     <input name="contrasena" onChange={this.handleChange} type="text" required
@@ -118,8 +109,8 @@ export default class EditContrasena extends Component {
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="submit" form={'formEditarContrasena-'+ this.props.vendedor._documento} className="btn btn-primary">Enviar</button>
-                            <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Cerrar</button>
+                            <button type="submit" form={'formEditarContrasena'} className="btn btn-primary">Enviar</button>
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         </div>
                     </div>
                 </div>
