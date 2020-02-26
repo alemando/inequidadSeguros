@@ -75,13 +75,20 @@ vendedorSchema.statics.guardarVendedor = async (datos, admin) => {
     if (validacion.mensaje.length != 0) return validacion
 
     //Encripto la contraseña mandada desde la petición
-    let password = bcrypt.hash(datos.contrasena, 10).toString();
+    let password = await bcrypt.hash(datos.contrasena, 10).toString();
 
     //admin valida si la sesión ha sido abierta por un admin, por defecto está en true
     //datos.admin valida si se desea crear un admin o no
+
+    if(datos.admin == "false"){
+        datos.admin = false
+    }else{
+        datos.admin = true
+    }
+
     if (admin && datos.admin) {
         //Objeto vendedor
-        var vendedorNuevo = new vendedores({
+        const vendedorNuevo = new vendedores({
             documento: datos.documento,
             nombre: datos.nombre,
             apellido1: datos.apellido1,
@@ -91,29 +98,39 @@ vendedorSchema.statics.guardarVendedor = async (datos, admin) => {
             contrasena: password,
             esAdmin: true
         });
+        try {
+            await vendedorNuevo.save();
+            return { id: "1", mensaje: "Vendedor guardado" };
+        } catch (error) {
+            if (error.errors.documento.kind === "unique") return {
+                id: "2", mensaje: "El documento ingresado ya existe en nuestra base de datos"
+            };
+            else return { id: "0", mensaje: "Error desconocido" };
+        }
     }
     else {
         //Objeto vendedor
-        var vendedorNuevo = new vendedores({
+        const vendedorNuevo = new vendedores({
             documento: datos.documento,
             nombre: datos.nombre,
             apellido1: datos.apellido1,
             apellido2: datos.apellido2,
             telefono: datos.telefono,
             correo: datos.correo,
-            contrasena: password
+            contrasena: password,
+            esAdmin: false
         });
+        try {
+            await vendedorNuevo.save();
+            return { id: "1", mensaje: "Vendedor guardado" };
+        } catch (error) {
+            if (error.errors.documento.kind === "unique") return {
+                id: "2", mensaje: "El documento ingresado ya existe en nuestra base de datos"
+            };
+            else return { id: "0", mensaje: "Error desconocido" };
+        }
     }
-
-    try {
-        await vendedorNuevo.save();
-        return { id: "1", mensaje: "Vendedor guardado" };
-    } catch (error) {
-        if (error.errors.documento.kind === "unique") return {
-            id: "2", mensaje: "El documento ingresado ya existe en nuestra base de datos"
-        };
-        else return { id: "0", mensaje: "Error desconocido" };
-    }
+    
 }
 
 //Obtener todos los vendedores
