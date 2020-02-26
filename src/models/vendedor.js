@@ -124,7 +124,7 @@ vendedorSchema.statics.iniciarSesionVendedor = async (datos)=>{
         let vendedor = await vendedores.findOne({documento:datos.documento,contrasena:datos.contrasena})
         return {_id: vendedor._id, esAdmin:vendedor.esAdmin}
     }catch(error){
-        return "Usuario o contraseña incorrectos"
+        return { id: "0", mensaje: "Usuario o contraseña incorrectos"}
     }
 }
 
