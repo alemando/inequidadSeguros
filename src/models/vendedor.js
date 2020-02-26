@@ -44,6 +44,11 @@ const vendedorSchema = Schema({
         type: Boolean,
         require: true,
         default: false
+    },
+    estado:{
+        type: Boolean,
+        require:true,
+        default:true
     }
 });
 
@@ -216,7 +221,7 @@ vendedorSchema.statics.editarVendedor = async (datos, admin) => {
 vendedorSchema.statics.iniciarSesionVendedor = async (datos)=>{
     try{
         let vendedor = await vendedores.findOne({documento:datos.documento})
-        if(!bcrypt.compareSync(datos.contrasena, vendedor.contrasena)){
+        if(!bcrypt.compareSync(datos.contrasena, vendedor.contrasena) || !vendedor.estado){
             return { id: "0", mensaje: "Usuario o contraseña incorrectos"}
         }else{
             return {_id: vendedor._id, esAdmin:vendedor.esAdmin, nombre:vendedor.nombre}
@@ -227,6 +232,25 @@ vendedorSchema.statics.iniciarSesionVendedor = async (datos)=>{
     }
 }
 
+//Metodo para cambiar estado vendedor 
+vendedorSchema.statics.CambiarEstadoVendedor = async (id, admin)=> {
+    
+    if(admin == true){
+        try {
+            let vendedor = await vendedores.findById(id);
+            vendedor.estado = !vendedor.estado;
+            await vendedor.save();
+            return { id: "1", mensaje: "Has cambiado el estado del vendedor"};
+        } catch (error) {
+            return { id: "0", mensaje: "ha ocurrido algo inesperado al intentar inhabilitar el vendedor"+ error};
+        }
+    }
+    else{
+        return { id: "0", mensaje: "No tienes permisos para inhabilitar vendedor"};
+    }
+       
+
+}
 //Se retorna clase vendedores para exportar
 const vendedores = mongoose.model('vendedores', vendedorSchema);
 

@@ -22,6 +22,12 @@ router.post('/save', async (req, res) => {
   res.json(resultado);
 });
 
+//Inhabilitar vendedor
+router.post('/inhabilitar', async(req,res)=>{
+  let respuesta = await Vendedor.CambiarEstadoVendedor(req.body.id, true)
+  res.json(respuesta);
+})
+
 //EDIT a Vendedor
 router.post('/edit', async(req,res) => {
   res.json(await Vendedor.editarVendedor(req.body, true));

@@ -3,6 +3,7 @@ import VerVendedor from "./ver-vendedor.component";
 import CreateVendedor from "./create-vendedor.component";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
+import Swal from 'sweetalert2'
 import $ from 'jquery'
 import DataTable from 'datatables.net'
 $.DataTable = DataTable
@@ -13,6 +14,7 @@ const Vendedor = props => (
     <Td>{props.vendedor.nombre}</Td>
     <Td>{props.vendedor.apellido1} {props.vendedor.apellido2}</Td>
     <Td><center><VerVendedor component={props.component} vendedor={props.vendedor} key={props.vendedor.documento}/></center></Td>
+    <Td><center><button className={"btn " + (props.vendedor.estado ? 'btn-success' : 'btn-danger')} onClick={()=>props.component.confirmDialog(props.vendedor._id)}>{(props.vendedor.estado ? 'Descativar' : 'Activar')}</button></center></Td>
   </Tr>
 )
 
@@ -30,6 +32,60 @@ export default class VendedoresList extends Component {
 
   componentDidMount() {
     this.fetchVendedores();
+  }
+  
+  confirmDialog(id){
+    Swal.fire({
+      title: 'Estas seguro?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#00c70a',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Confirmar'
+    }).then((result) => {
+      if (result.value) {
+        this.inhabilitar(id)
+      }
+    })
+  }
+  inhabilitar(id){
+    fetch('/api/vendedores/inhabilitar', {
+      method: 'POST',
+      body: JSON.stringify({'id': id}),
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+          if (data.id == 0) {
+
+              Swal.fire({
+                  text: data.mensaje,
+                  type: 'error'
+              })
+          } else if (data.id == 1) {
+
+            this.fetchVendedores();
+            
+            Swal.fire({
+              text: data.mensaje,
+              type: 'success',
+              onClose: () => {
+                location.reload();
+              }
+            })
+          }else{
+            Swal.fire({
+              text: data.mensaje,
+              type: 'error'
+            })
+
+          }
+      })
+      .catch(err => console.error(err));
   }
 
   fetchVendedores() {
@@ -79,6 +135,7 @@ export default class VendedoresList extends Component {
                             <Th><center>Nombre</center></Th>
                             <Th><center>Apellidos</center></Th>
                             <Th><center>Ver más</center></Th>
+                            <Th><center>Habilitar/Inhabilitar</center></Th>
                         </Tr>
                     </Thead>                                        
                     <Tbody>
