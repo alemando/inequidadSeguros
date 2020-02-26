@@ -92,7 +92,8 @@ aseguradoraSchema.statics.guardarAseguradora = async (datos)=> {
         {nit: datos.nit,
         nombre: datos.nombre,
         telefono: datos.telefono,
-        correo: datos.correo});
+        correo: datos.correo,
+        estado: true});
     try {
         //Procedo a guardar en la BD
         await aseguradoraNueva.save();
@@ -133,6 +134,36 @@ aseguradoraSchema.statics.obtenerAseguradoraById = async (id)=> {
         return "ha ocurrido algo inesperado al intentar obtener el aseguradora\n"+ error;
     }
 }
+//Metodo para cambiar el estado de aseguradora
+aseguradoraSchema.statics.CambiarEstadoAseguradora = async (id, admin)=> {
+    
+    if(admin == true){
+        try {
+            let aseguradora = await aseguradoras.findById(id);
+            aseguradora.estado = !aseguradora.estado;
+            await aseguradora.save();
+            return { id: "1", mensaje: "Has cambiado el estado de la aseguradora"};
+        } catch (error) {
+            return { id: "0", mensaje: "ha ocurrido algo inesperado al intentar inhabilitar la aseguradora"+ error};
+        }
+    }
+    else{
+        return { id: "0", mensaje: "No tienes permisos para inhabilitar aseguradoras"};
+    }
+       
+}
+
+//Metodo para retornar todas las aseguradoras habilitadas 
+aseguradoraSchema.statics.obtenerAseguradorasHabilitadas = async () =>{
+        try {
+        let listAseguradoras = await aseguradoras.find({estado: true})
+        return listAseguradoras;
+    } catch (error) {
+      return "Ha ocurrido algo inesperado al intentar obtener las aseguradoras: \n"+ error;
+    }
+  }
+
+
 const aseguradoras = mongoose.model('aseguradoras',aseguradoraSchema);
 
 module.exports = aseguradoras;

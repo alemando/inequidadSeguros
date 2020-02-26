@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
+const session = require('express-session');
 const app = express();
 
 //DB
@@ -15,6 +16,7 @@ const bienRoutes= require('./routes/bien.routes.js')
 const categoriaRoutes = require('./routes/categoria.routes.js')
 const seguroRoutes = require('./routes/seguro.routes.js')
 const vendedorRoutes = require('./routes/vendedor.routes.js')
+const sesionRoutes = require('./routes/sesion.routes.js');
 
 //Settings
 app.set('port', process.env.PORT || 3000)
@@ -25,8 +27,16 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json());
 
+//Sesiones
+app.use(session({
+    secret: "sesionDeInequidad",
+    resave: false,
+    saveUninitialized: false
+}))
+
 //Routes
 app.use(indexRoutes)
+app.use(sesionRoutes);
 app.use('/api/clientes', clienteRoutes);
 app.use('/api/aseguradoras', aseguradoraRoutes);
 app.use('/api/bienes', bienRoutes);
