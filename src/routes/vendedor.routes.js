@@ -18,9 +18,24 @@ router.get('/:id', async (req, res) => {
 
 // ADD a new vendedor
 router.post('/save', async (req, res) => {
-  resultado = await Vendedor.guardarVendedor(req.body);
+  resultado = await Vendedor.guardarVendedor(req.body, true);
   res.json(resultado);
 });
 
+// req.body 3 parametros: documento, contrasena y nuevacontrasena
+router.post('/cambiarContrasena', async (req, res) => {
+  resultado = await Vendedor.cambiarContrasenaVendedor(req.session._id, req.body);
+  res.json(resultado);
+});
+//Inhabilitar vendedor
+router.post('/inhabilitar', async(req,res)=>{
+  let respuesta = await Vendedor.CambiarEstadoVendedor(req.body.id, true)
+  res.json(respuesta);
+})
+
+//EDIT a Vendedor
+router.post('/edit', async(req,res) => {
+  res.json(await Vendedor.editarVendedor(req.body, true));
+})
 
 module.exports = router;

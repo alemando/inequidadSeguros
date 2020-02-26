@@ -1208,3 +1208,18 @@ a.btn:focus {
 .label-info {
     background-color: #5bc0de;
 }
+
+.wrapper{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column; 
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  background-color: #e8e8e8;
+}
+
+.fondo{
+  background-color: #007bb6;
+}
