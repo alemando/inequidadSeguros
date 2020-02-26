@@ -221,7 +221,7 @@ vendedorSchema.statics.editarVendedor = async (datos, admin) => {
 vendedorSchema.statics.iniciarSesionVendedor = async (datos)=>{
     try{
         let vendedor = await vendedores.findOne({documento:datos.documento})
-        if(!bcrypt.compareSync(datos.contrasena, vendedor.contrasena)){
+        if(!bcrypt.compareSync(datos.contrasena, vendedor.contrasena) || !vendedor.estado){
             return { id: "0", mensaje: "Usuario o contraseña incorrectos"}
         }else{
             return {_id: vendedor._id, esAdmin:vendedor.esAdmin, nombre:vendedor.nombre}
