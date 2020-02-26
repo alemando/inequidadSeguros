@@ -17,31 +17,31 @@ export default class VerVendedor extends Component {
               <div className="modal-body">
                 <div className="container">
                   <ul className="list-group">
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Documento</b></div>
                         <div className="col-md-6 ml-auto">{this.props.vendedor.documento}</div>
                       </div>
                     </li>
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Nombre</b></div>
                         <div className="col-md-6 ml-auto">{this.props.vendedor.nombre}</div>
                       </div>
                     </li>
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Apellidos</b></div>
                         <div className="col-md-6 ml-auto">{this.props.vendedor.apellido1 + " " + this.props.vendedor.apellido2}</div>
                       </div>
                     </li>
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Telefono</b></div>
                         <div className="col-md-6 ml-auto">{this.props.vendedor.telefono}</div>
                       </div>
                     </li>
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Correo</b></div>
                         <div className="col-md-6 ml-auto">{this.props.vendedor.correo}</div>
