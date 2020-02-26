@@ -186,7 +186,6 @@ aseguradoraSchema.statics.actualizarAseguradora = async (datos, admin) => {
             await aseguradora.save();
   
             validacion.id = '1';
-            print(validacion.id)
             validacion.mensaje = 'Vendedor editado con éxito';
             return validacion;
         }

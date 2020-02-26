@@ -139,7 +139,7 @@ export default class AseguradorasList extends Component {
                             <Th><center>Telefono</center></Th>
                             <Th><center>Correo</center></Th>
                             <Th><center>Habilitar / <br></br> Deshabilitar</center></Th>
-                            <Th><center>Ver mas</center></Th>
+                            <Th><center>Editar</center></Th>
                         </Tr>
                     </Thead>                                        
                     <Tbody>
