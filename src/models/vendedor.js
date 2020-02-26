@@ -75,7 +75,7 @@ vendedorSchema.statics.guardarVendedor = async (datos, admin) => {
     if (validacion.mensaje.length != 0) return validacion
 
     //Encripto la contraseña mandada desde la petición
-    let password = encriptar(datos.contrasena);
+    let password = bcrypt.hash(datos.contrasena, 10).toString();
 
     //admin valida si la sesión ha sido abierta por un admin, por defecto está en true
     //datos.admin valida si se desea crear un admin o no
@@ -144,11 +144,6 @@ vendedorSchema.statics.obtenerVendedorById = async (id) => {
     } catch (error) {
         return "Error obteniendo vendedor por documento identidad\n" + error;
     }
-}
-
-//Funcion para encriptar contraseñas
-function encriptar(password) {
-    return bcrypt.hashSync(password, 10).toString();
 }
 
 //Se retorna clase vendedores para exportar
