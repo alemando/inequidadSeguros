@@ -122,8 +122,8 @@ categoriaSchema.statics.obtenerCategoria = async (nombre) => {
 }
 
 //Metodo para cambiar estado a una categoria
-categoriaSchema.statics.cambiarEstadoCat = async (nombre,admin) => {
-  if(admin){
+categoriaSchema.statics.cambiarEstadoCat = async (id,admin) => {
+  if(admin == true){
     try {
       if(id != null){
         let categoria = await categorias.findOne({_id: id});
