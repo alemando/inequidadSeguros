@@ -19,6 +19,7 @@ function  eliminarBien(id) {
       text: data,
       type: 'info'
     });
+    location.reload()
   })
 }
 
