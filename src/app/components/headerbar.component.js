@@ -6,6 +6,16 @@ export default class headerbar extends Component {
   constructor(props){
       super(props)
   }
+
+  closeSession(){
+    fetch('/closeSession')
+        .then(res => res.json())
+        .then(data => {
+          location.reload();
+        })
+        .catch(err => console.error(err));
+  }
+
   render(){
     return (
       <div className="headerbar">
@@ -27,7 +37,7 @@ export default class headerbar extends Component {
                                 <button className="button-menu-mobile" title="Cambiar contraseña">
                                   <i className="fa fa-fw fa-key"></i>
                                   </button>
-                                  <button className="button-menu-mobile" title="Cerrar sesion">
+                                  <button className="button-menu-mobile" title="Cerrar sesion" onClick={this.closeSession}>
                                   <i className="fa fa-fw fa-sign-out"></i>
                                   </button>
                               </li> 
@@ -40,4 +50,3 @@ export default class headerbar extends Component {
     );
   }
 }
-
