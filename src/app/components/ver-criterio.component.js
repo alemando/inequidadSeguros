@@ -17,7 +17,6 @@ export default class VerCriterio extends Component {
     }
     
     this.modalClose = this.modalClose.bind(this);
-    this.edit = this.edit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.editarCriterio = this.editarCriterio.bind(this);
 
@@ -54,11 +53,6 @@ export default class VerCriterio extends Component {
     const { name, value } = e.target;
     this.setState({
       [name]: value
-    })
-  }
-  edit() {
-    this.setState({
-      edit: !this.state.edit
     })
   }
   editarCriterio(e) {
@@ -158,8 +152,10 @@ export default class VerCriterio extends Component {
                   </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-primary" onClick={this.edit}>Editar</button>
-                <button type="submit" className="btn btn-success" disabled={this.state.edit} onClick={this.editarCriterio}>Enviar</button>
+                {(!this.state.edit ? <button type="button" className="btn btn-success" onClick={this.editarCriterio}>Enviar</button> 
+                : "")}
+                {(!this.state.edit ? <button type="button" className="btn btn-danger" onClick={()=>this.setState({edit: true})}>Cancelar</button> 
+                : <button type="button" className="btn btn-warning" onClick={()=>this.setState({edit: false})}>Editar</button>)}
                 <button type="button" className="btn btn-secondary" onClick={this.modalClose}>Cerrar</button>
               </div>
             </div>
