@@ -17,9 +17,11 @@ function  eliminarBien(id) {
   .then(data => {
     Swal.fire({
       text: data,
-      type: 'info'
+      type: 'info',
+      onClose: () => {
+        location.reload();
+      }
     });
-    location.reload()
   })
 }
 
