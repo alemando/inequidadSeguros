@@ -6,12 +6,12 @@ import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 const Criterio = props => (
   <Tr>
     <Td>{props.criterio.nombre}</Td>
-    <Td><VerCriterio nombre={props.nombre} criterio={props.criterio} key={props.criterio.mombre} categoriaId = {props.categoriaId}/></Td>
+    <Td><VerCriterio nombre={props.nombre} criterio={props.criterio} key={props.criterio.mombre} categoria={props.categoria} /></Td>
   </Tr>
 )
 
 export default class VerCriterios extends Component {
-  
+
   constructor() {
     super();
 
@@ -20,25 +20,25 @@ export default class VerCriterios extends Component {
     }
   }
 
-  componentDidMount(){
-    this.setState({criterios : this.props.categoria.criterios})
+  componentDidMount() {
+    this.setState({ criterios: this.props.categoria.criterios })
   }
 
   criteriosList() {
     return this.state.criterios.map(currentCriterio => {
-      return <Criterio nombre={this.props.categoria.nombre} criterio={currentCriterio} key={currentCriterio.nombre} categoriaId={this.props.categoria._id} />;
+      return <Criterio nombre={this.props.categoria.nombre} criterio={currentCriterio} key={currentCriterio.nombre} categoria={this.props.categoria} />;
     })
   }
 
   render() {
     return (
       <div>
-        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={"#Criterios-" + this.props.categoria.nombre.replace(/ /g,"_")}>Ver criterios</button>
-        <div className="modal fade" id={"Criterios-" +this.props.categoria.nombre.replace(/ /g,"_")} tabIndex="-1" role="dialog" aria-hidden="true">
+        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={"#Criterios-" + this.props.categoria.nombre.replace(/ /g, "_")}>Ver criterios</button>
+        <div className="modal fade" id={"Criterios-" + this.props.categoria.nombre.replace(/ /g, "_")} tabIndex="-1" role="dialog" aria-hidden="true">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-    <h5 className="modal-title"><b>Criterios</b> {this.props.categoria.nombre}</h5>
+                <h5 className="modal-title"><b>Criterios</b> {this.props.categoria.nombre}</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>

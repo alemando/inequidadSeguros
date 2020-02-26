@@ -7,14 +7,15 @@ export default class VerCriterio extends Component {
     super(props);
     this.state = {
       edit: true,
-      idCriterio: this.props.criterio._id,
-      idCategoria: this.props.categoriaId,
-      nombre: this.props.criterio.nombre,
-      descripcion: this.props.criterio.descripcion,
-      cobertura: this.props.criterio.cobertura,
-      deducible: this.props.criterio.deducible
+      idCriterio: '',
+      idCategoria: '',
+      nombre: '',
+      descripcion: '',
+      cobertura: '',
+      deducible: ''
 
     }
+    
     this.modalClose = this.modalClose.bind(this);
     this.edit = this.edit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -25,15 +26,6 @@ export default class VerCriterio extends Component {
 
   modalClose() {
     $('#Criterio-' + this.categoriaCriterio() + this.props.criterio.nombre.replace(/ /g, "_")).modal('hide');
-    this.setState({
-      edit: true,
-      idCriterio: this.props.criterio._id,
-      categoriaId: this.props.categoriaId,
-      nombre: this.props.criterio.nombre,
-      descripcion: this.props.criterio.descripcion,
-      cobertura: this.props.criterio.cobertura,
-      deducible: this.props.criterio.deducible
-    })
     $(document).on('hidden.bs.modal', '.modal', function () {
       if ($('body').find('.modal.show').length > 0) {
         $('body').addClass('modal-open');
@@ -46,6 +38,17 @@ export default class VerCriterio extends Component {
       return this.props.nombre.replace(/ /g, "_") + "-"
     }
     return ""
+  }
+  componentDidMount(){
+    this.setState({
+      edit: true,
+      idCriterio: this.props.criterio._id,
+      idCategoria: this.props.categoria._id,
+      nombre: this.props.criterio.nombre,
+      descripcion: this.props.criterio.descripcion,
+      cobertura: this.props.criterio.cobertura,
+      deducible: this.props.criterio.deducible
+    })
   }
   handleChange(e) {
     const { name, value } = e.target;
@@ -77,6 +80,7 @@ export default class VerCriterio extends Component {
             type: 'error'
           })
         } else if (data.id == 1) {
+          console.log(this.state);
           Swal.fire({
             text: data.mensaje,
             type: 'success',
@@ -84,15 +88,6 @@ export default class VerCriterio extends Component {
               location.reload();
             }
           })
-          this.setState({
-            edit: true,
-            idCriterio: this.props.criterio._id,
-            categoriaId: this.props.categoriaId,
-            nombre: this.props.criterio.nombre,
-            descripcion: this.props.criterio.descripcion,
-            cobertura: this.props.criterio.cobertura,
-            deducible: this.props.criterio.deducible
-          });
         } else {
           Swal.fire({
             text: data.mensaje,
@@ -117,7 +112,6 @@ export default class VerCriterio extends Component {
                 </button>
               </div>
               <div className="modal-body">
-                <form id="formEditCriterio" onSubmit={this.editarCriterio}>
                   <div className="container">
                     <ul className="list-group">
                       <li className="list-group-item">
@@ -133,7 +127,7 @@ export default class VerCriterio extends Component {
                       <li className="list-group-item">
                         <div className="row">
                           <div className="col-md-6 ml-auto"><b>Descripcion</b></div>
-                          <input name="descripcion" onChange={this.handleChange} type="text"
+                          <textarea name="descripcion" onChange={this.handleChange} type="text"
                             value={this.state.descripcion}
                             className="form-control col-md-6 ml-auto"
                             disabled={this.state.edit}
@@ -162,11 +156,10 @@ export default class VerCriterio extends Component {
                       </li>
                     </ul>
                   </div>
-                </form>
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-primary" onClick={this.edit}>Editar</button>
-                <button type="submit" form="formEditCriterio" className="btn btn-success" disabled={this.state.edit}>Enviar</button>
+                <button type="submit" className="btn btn-success" disabled={this.state.edit} onClick={this.editarCriterio}>Enviar</button>
                 <button type="button" className="btn btn-secondary" onClick={this.modalClose}>Cerrar</button>
               </div>
             </div>
