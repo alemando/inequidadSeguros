@@ -232,6 +232,30 @@ vendedorSchema.statics.iniciarSesionVendedor = async (datos)=>{
     }
 }
 
+//Cambiar contraseña del vendedor
+vendedorSchema.statics.cambiarContrasenaVendedor = async (vendedorId, datos)=>{
+    try{
+        let vendedor = await vendedores.findById(vendedorId);
+        if (vendedor == "" || vendedor == null) {
+          return { id: "0", mensaje: "Usuario o contraseña incorrectos"}
+
+        } else if(datos.contrasenaNueva == "" || datos.contrasenaNueva == null){
+          return { id: "0", mensaje: "Contraseña Nueva vacia o null"}
+        }else {
+            if(bcrypt.compareSync(datos.contrasena, vendedor.contrasena)){
+                vendedor.contrasena = bcrypt.hashSync(datos.contrasenaNueva, 10).toString();
+                await vendedor.save();
+                return { id: "1", mensaje: "Contraseña actualizada"}
+            }else{
+                return { id: "0", mensaje: "Contraseña incorrectos"}
+            }
+          
+        }
+    }catch(error){
+        return { id: "0", mensaje: "Usuario o contraseña incorrectos"}
+    }
+}
+
 //Metodo para cambiar estado vendedor 
 vendedorSchema.statics.CambiarEstadoVendedor = async (id, admin)=> {
     
