@@ -3,6 +3,7 @@ import VerCriterio from "./ver-criterio-seguro.component";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 import moment from 'moment'
+import Swal from 'sweetalert2'
 
 const Criterio = props => (
   <Tr>
@@ -19,6 +20,7 @@ export default class VerSeguro extends Component {
     this.state = {
       criterios: []
     }
+    this.eliminarSeguro = this.eliminarSeguro.bind(this);
   }
 
   componentDidMount() {
@@ -29,6 +31,37 @@ export default class VerSeguro extends Component {
     return this.state.criterios.map(currentCriterio => {
       return <Criterio criterio={currentCriterio} key={currentCriterio._id} />;
     })
+  }
+
+  eliminarSeguro(e) {
+    fetch('/api/seguros/remove/' + this.props.seguro._id, {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.id == 0){
+                  
+        Swal.fire({
+          text: data.mensaje,
+          type: 'error'
+        })
+      }else if(data.id == 1){
+        Swal.fire({
+          text: data.mensaje,
+          type: 'success',
+          onClose: () => {
+            location.reload(false);
+          }
+        })
+      } else {
+          Swal.fire({
+              text: data.mensaje,
+              type: 'error'
+          })
+      }
+    })
+    .catch(err => console.log(err));
+    $("#Seguro" + this.props.seguro._id).modal('close');
   }
 
   render() {
@@ -134,7 +167,8 @@ export default class VerSeguro extends Component {
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" className="btn btn-danger" onClick={this.eliminarSeguro} >Eliminar seguro</button>
+                <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
               </div>
             </div>
           </div>
