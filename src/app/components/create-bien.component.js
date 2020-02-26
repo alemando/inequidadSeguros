@@ -75,7 +75,8 @@ export default class CreateBien extends Component {
     }
 
     componentDidMount(){
-      this.setState({cliente: this.props.cliente})
+      this.setState({cliente: this.props.cliente
+      })
     }
 
     categorias(){
@@ -85,7 +86,7 @@ export default class CreateBien extends Component {
     }
     
     cargarCategorias(){
-      fetch('/api/categorias', {
+      fetch('/api/categorias/habilitadas', {
         method: 'GET'
       })
         .then(res => res.json())

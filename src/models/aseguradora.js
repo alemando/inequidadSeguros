@@ -134,6 +134,7 @@ aseguradoraSchema.statics.obtenerAseguradoraById = async (id)=> {
         return "ha ocurrido algo inesperado al intentar obtener el aseguradora\n"+ error;
     }
 }
+
 //Metodo para cambiar el estado de aseguradora
 aseguradoraSchema.statics.CambiarEstadoAseguradora = async (id, admin)=> {
     
