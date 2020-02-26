@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import EditContrasena from "./edit-contrasena.component"; 
 
 export default class headerbar extends Component {
+  constructor(props){
+      super(props)
+  }
   render(){
     return (
       <div className="headerbar">
@@ -20,9 +23,9 @@ export default class headerbar extends Component {
                                 </button>
                               </li>   
                               <li className="float-right">
-                                <span>Nombre</span>
+                                <span>{this.props.session.nombre}</span>
                                 <button className="button-menu-mobile" title="Cambiar contraseña">
-                                  <i class="fa fa-fw fa-key"></i>
+                                  <i className="fa fa-fw fa-key"></i>
                                   </button>
                                   <button className="button-menu-mobile" title="Cerrar sesion">
                                   <i className="fa fa-fw fa-sign-out"></i>

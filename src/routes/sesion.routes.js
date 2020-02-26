@@ -11,6 +11,7 @@ router.get('/closeSession', async (req,res)=>{
     if(req.session._id  || req.session.esAdmin ){
         req.session._id = null
         req.session.esAdmin = null
+        req.session.nombre = null
         res.json("Sesión cerrada")
     }
     else{
@@ -30,6 +31,7 @@ router.post('/startSession', async(req, res)=>{
         if (info.id == null){
             req.session._id = info._id
             req.session.esAdmin = info.esAdmin
+            req.session.nombre = info.nombre
             res.json({ id: "1", mensaje: "Sesion iniciada"})
         }else{
             res.json(info)
@@ -41,9 +43,9 @@ router.post('/startSession', async(req, res)=>{
 */
 router.get('/showSession', async (req,res) =>{
     if (req.session._id || req.session.esAdmin){
-        res.json({_id: req.session._id, esAdmin: req.session.esAdmin})
+        res.json({_id: req.session._id, esAdmin: req.session.esAdmin, nombre: req.session.nombre})
     }else{
-        res.json("No hay sesión para mostrar")
+        res.json(null)
     }
 })
 
