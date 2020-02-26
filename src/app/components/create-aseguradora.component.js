@@ -46,9 +46,6 @@ export default class CreateAseguradora extends Component {
                     })
                 } else if (data.id == 1) {
 
-                    this.props.component.fetchAseguradoras();
-
-
                   this.props.component.fetchAseguradoras();
                   
                   Swal.fire({
