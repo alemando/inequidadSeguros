@@ -14,7 +14,7 @@ const Vendedor = props => (
     <Td>{props.vendedor.nombre}</Td>
     <Td>{props.vendedor.apellido1} {props.vendedor.apellido2}</Td>
     <Td><center><VerVendedor component={props.component} vendedor={props.vendedor} key={props.vendedor.documento}/></center></Td>
-    <Td><center><button className={"btn " + (props.vendedor.habilitado ? 'btn-danger' : 'btn-success')} onClick={()=>props.component.confirmDialog(props.vendedor._id)}>{(props.vendedor.habilitado ? 'Desactivado' : 'Habilitado')}</button></center></Td>
+    <Td><center><button className={"btn " + (props.vendedor.estado ? 'btn-success' : 'btn-danger')} onClick={()=>props.component.confirmDialog(props.vendedor._id)}>{(props.vendedor.estado ? 'Descativar' : 'Activar')}</button></center></Td>
   </Tr>
 )
 
@@ -50,7 +50,7 @@ export default class VendedoresList extends Component {
     })
   }
   inhabilitar(id){
-    fetch('/api/vendedores/inhabilitar/:id', {
+    fetch('/api/vendedores/inhabilitar', {
       method: 'POST',
       body: JSON.stringify({'id': id}),
       headers: {

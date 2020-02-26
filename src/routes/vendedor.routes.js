@@ -24,7 +24,7 @@ router.post('/save', async (req, res) => {
 
 //Inhabilitar vendedor
 router.post('/inhabilitar', async(req,res)=>{
-  let respuesta = await Vendedor.inhabilitar(req.body.id, true)
+  let respuesta = await Vendedor.CambiarEstadoVendedor(req.body.id, true)
   res.json(respuesta);
 })
 

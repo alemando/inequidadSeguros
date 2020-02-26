@@ -45,7 +45,7 @@ const vendedorSchema = Schema({
         require: true,
         default: false
     },
-    habilitado:{
+    estado:{
         type: Boolean,
         require:true,
         default:true
@@ -231,27 +231,26 @@ vendedorSchema.statics.iniciarSesionVendedor = async (datos)=>{
         return { id: "0", mensaje: "Usuario o contraseña incorrectos"}
     }
 }
-//Inhabilitar vendedor ??????
-vendedorSchema.statics.inhabilitar = async (id, admin) =>{
-    let validacion = { id: "0", mensaje: ""}; 
-    if (true) {
+
+//Metodo para cambiar estado vendedor 
+vendedorSchema.statics.CambiarEstadoVendedor = async (id, admin)=> {
+    
+    if(admin == true){
         try {
-            let doc = await vendedores.findById(id,"habilitado");
-            if (doc.habilitado == false){
-                validacion.mensaje += "Este vendedor ya se encuentra inhabilitado"
-                return validacion;    
-            }else{
-                await vendedores.findByIdAndUpdate(id,{habilitado:false});
-                return {id:"1",mensaje:"Vendedor inhabilitado exitosamente!"}
-            }
-        }
-        catch(error){
-            return {id:"0",mensaje:"Algo ha salido mal:\n"+error};
+            let vendedor = await vendedores.findById(id);
+            vendedor.estado = !vendedor.estado;
+            await vendedor.save();
+            return { id: "1", mensaje: "Has cambiado el estado del vendedor"};
+        } catch (error) {
+            return { id: "0", mensaje: "ha ocurrido algo inesperado al intentar inhabilitar el vendedor"+ error};
         }
     }
-    else return {id:"0", mensaje:"No posees privilegios de administrador"};
-}
+    else{
+        return { id: "0", mensaje: "No tienes permisos para inhabilitar vendedor"};
+    }
+       
 
+}
 //Se retorna clase vendedores para exportar
 const vendedores = mongoose.model('vendedores', vendedorSchema);
 
