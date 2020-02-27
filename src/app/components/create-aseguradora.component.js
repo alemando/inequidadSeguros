@@ -133,7 +133,7 @@ export default class CreateAseguradora extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label>* Telefono:</label>
-                                        <input name="telefono" onChange={this.handleChange} onKeyDown={this.handleKeypress} type="number"
+                                        <input name="telefono" onChange={this.handleChange} onKeyDown={this.handleKeypress} type="number" min="0"
                                             required
                                             value={this.state.telefono}
                                             className="form-control"

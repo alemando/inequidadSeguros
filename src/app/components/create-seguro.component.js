@@ -386,7 +386,7 @@ vendedores(){
                           <div className="col-md-6">
                             <div className="form-group">
                               <label>* Valor total:</label>
-                              <input name="valorTotal" onChange={this.handleChange} type="number"
+                              <input name="valorTotal" onChange={this.handleChange} type="number" min="0"
                                   required
                                   value={this.state.valorTotal}
                                   className="form-control"

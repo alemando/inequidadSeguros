@@ -152,7 +152,7 @@ export default class CreateVendedor extends Component {
                             <div className="modal-body">
                                 <form id="formVendedor" onSubmit={this.addVendedor}>
                                     <div className="form-group">
-                                        <label>* Numero de documento:</label>
+                                        <label>* Documento:</label>
                                         <input name="documento" onChange={this.handleChange} type="text" required
                                             value={this.state.documento}
                                             className="form-control"
@@ -181,7 +181,8 @@ export default class CreateVendedor extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label>* Telefono:</label>
-                                        <input name="telefono" onChange={this.handleChange} onKeyDown={this.handleKeypress} type="number" required
+                                        <input name="telefono" onChange={this.handleChange} onKeyDown={this.handleKeypress} type="number" min="0"
+                                            required
                                             value={this.state.telefono}
                                             className="form-control"
                                         />

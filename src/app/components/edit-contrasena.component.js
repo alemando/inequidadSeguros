@@ -84,7 +84,7 @@ export default class EditContrasena extends Component {
                         <div className="modal-body">
                             <form id={'formEditarContrasena'} onSubmit={this.editContrasena}>
                                 <div className="form-group">
-                                    <label>* Contraseña:</label>
+                                    <label>* Contraseña actual:</label>
                                     <input name="contrasena" onChange={this.handleChange} type="password" required
                                         value={this.state.contrasena}
                                         className="form-control"

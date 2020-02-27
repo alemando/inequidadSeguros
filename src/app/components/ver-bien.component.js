@@ -70,7 +70,7 @@ export default class VerBien extends Component {
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={this.modalClose}>Close</button>
+                <button type="button" className="btn btn-secondary" onClick={this.modalClose}>Cerrar</button>
               </div>
             </div>
           </div>

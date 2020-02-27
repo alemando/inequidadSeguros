@@ -102,8 +102,12 @@ export default class CategoriasList extends Component {
             "info": "(_MAX_ categorias) Pagina _PAGE_ de _PAGES_",
             "search": "Buscar",
             "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(registros disponibles _MAX_)"
-          }
+            "infoFiltered": "(registros disponibles _MAX_)",
+            "paginate":{
+              "previous":"Anterior",
+              "next":"Siguiente"
+            }
+          },
         });
       })
       .catch(err => console.error(err));

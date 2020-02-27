@@ -14,7 +14,7 @@ const Vendedor = props => (
     <Td>{props.vendedor.nombre}</Td>
     <Td>{props.vendedor.apellido1} {props.vendedor.apellido2}</Td>
     <Td><center><VerVendedor component={props.component} vendedor={props.vendedor} key={props.vendedor.documento}/></center></Td>
-    <Td><center><button className={"btn " + (props.vendedor.estado ?  'btn-danger' : 'btn-success')} onClick={()=>props.component.confirmDialog(props.vendedor._id)}>{(props.vendedor.estado ? 'Descativar' : 'Habilitar')}</button></center></Td>
+    <Td><center><button className={"btn " + (props.vendedor.estado ?  'btn-danger' : 'btn-success')} onClick={()=>props.component.confirmDialog(props.vendedor._id)}>{(props.vendedor.estado ? 'Desactivar' : 'Habilitar')}</button></center></Td>
   </Tr>
 )
 
@@ -103,8 +103,12 @@ export default class VendedoresList extends Component {
             "info": "(_MAX_ vendedores) Pagina _PAGE_ de _PAGES_",
             "search": "Buscar",
             "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(registros disponibles _MAX_)"
-          }
+            "infoFiltered": "(registros disponibles _MAX_)",
+            "paginate":{
+              "previous":"Anterior",
+              "next":"Siguiente"
+            }
+          },
         });
       })
       .catch(err => console.error(err));
