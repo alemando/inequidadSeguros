@@ -43,7 +43,10 @@ export default class EditCategoria extends Component {
                     
                     Swal.fire({
                       text: data.mensaje,
-                      type: 'success'
+                      type: 'success',
+                      onClose: () => {
+                        location.reload();
+                      }
                     })
 
                     $('#EditarCategoria-'+this.props.categoria._id).modal('hide');

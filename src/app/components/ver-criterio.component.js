@@ -39,15 +39,28 @@ export default class VerCriterio extends Component {
     return ""
   }
   componentDidMount(){
-    this.setState({
-      edit: true,
-      idCriterio: this.props.criterio._id,
-      idCategoria: this.props.categoria._id,
-      nombre: this.props.criterio.nombre,
-      descripcion: this.props.criterio.descripcion,
-      cobertura: this.props.criterio.cobertura,
-      deducible: this.props.criterio.deducible
-    })
+
+    if(this.props.categoria){
+      this.setState({
+        edit: true,
+        idCriterio: this.props.criterio._id,
+        
+        idCategoria: this.props.categoria._id,
+        nombre: this.props.criterio.nombre,
+        descripcion: this.props.criterio.descripcion,
+        cobertura: this.props.criterio.cobertura,
+        deducible: this.props.criterio.deducible
+      })
+    }else{
+      this.setState({
+        edit: true,
+        idCriterio: this.props.criterio._id,
+        nombre: this.props.criterio.nombre,
+        descripcion: this.props.criterio.descripcion,
+        cobertura: this.props.criterio.cobertura,
+        deducible: this.props.criterio.deducible
+      })
+    }
   }
   handleChange(e) {
     const { name, value } = e.target;

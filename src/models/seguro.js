@@ -98,7 +98,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     if(datos.criterios.length == 0){
         validacion.mensaje += "El seguro no ha sido guardado, debe contener al menos un criterio."
     }
-
+    console.log(datos)
     //Validacion de los nombres de criterios no son repetidos
     if(verificarCriterios(datos.criterios)){
         validacion.mensaje += "Categoría no guardada, asegúrese de que los criterios tengan nombres diferentes."
