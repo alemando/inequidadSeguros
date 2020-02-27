@@ -98,6 +98,7 @@ export default class VerSeguro extends Component {
                 </button>
               </div>
               <div className="modal-body">
+              
                 <div className="container">
                   <ul className="list-group">
                     <li className="list-group-item">
@@ -156,20 +157,29 @@ export default class VerSeguro extends Component {
                         <div className="col-md-6 ml-auto">{this.props.seguro.valorTotal}</div>
                       </div>
                     </li>
+                    
                     <li className="list-group-item">
-                      <form id= 'estado' onSubmit = {this.confirmDialog()}>
+                    <form id='estado' onSubmit={console.log(this.props.seguro._id)}>
                       <div className="row">
+                      
                         <div className="col-md-6 ml-auto"><b>Estado</b></div>
-                        <div className= "col-md-6 ml-auto"><select name="estado"
+                        <div className= "col-md-6 ml-auto">
+                        
+                        <div className="form-group">
+                          <select name="estado"
                                   required
                                   value={this.state.seguro}
                                   className="form-control">
                                   <option  value=''>Seleccione...</option>
                                   <option  value={true}>Aprobado</option>
                                   <option  value={false}>Rechazado</option>
-                        </select></div>
+                          </select>
+                          </div>
+                         
+                        </div>                       
                       </div>
-                      </form>
+                      <button type="submit" className="btn btn-primary" form='estado'>Confirmar</button>
+                        </form>
                     </li>
                     <li className="list-group-item">
                       <div className="row">
@@ -194,7 +204,6 @@ export default class VerSeguro extends Component {
                 </div>
               </div>
               <div className="modal-footer">
-              <button type="submit" className="btn btn-primary" data-dismiss="modal"   form='estado'>Confirmar</button>
                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
             </div>
