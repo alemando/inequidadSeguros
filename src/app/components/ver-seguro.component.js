@@ -3,6 +3,7 @@ import VerCriterio from "./ver-criterio-seguro.component";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 import moment from 'moment'
+import Swal from 'sweetalert2'
 
 const Criterio = props => (
   <Tr>
@@ -159,7 +160,7 @@ export default class VerSeguro extends Component {
                     </li>
                     
                     <li className="list-group-item">
-                    <form id='estado' onSubmit={console.log(this.props.seguro._id)}>
+                    <form id='estadoForm' onSubmit={this.confirmDialog(this.props.seguro._id)}>
                       <div className="row">
                       
                         <div className="col-md-6 ml-auto"><b>Estado</b></div>
@@ -178,7 +179,7 @@ export default class VerSeguro extends Component {
                          
                         </div>                       
                       </div>
-                      <button type="submit" className="btn btn-primary" form='estado'>Confirmar</button>
+                      <button type="submit" className="btn btn-primary" form='estadoForm'>Confirmar</button>
                         </form>
                     </li>
                     <li className="list-group-item">
