@@ -18,7 +18,9 @@ export default class VerSeguro extends Component {
     super();
 
     this.state = {
-      criterios: []
+      criterios: [],
+      id: this.props.seguro._id
+      
     }
   }
 
@@ -31,7 +33,7 @@ export default class VerSeguro extends Component {
       return <Criterio criterio={currentCriterio} key={currentCriterio._id} />;
     })
   }
-  confirmDialog(id){
+  confirmDialog(){
     console.log('vivo')
     Swal.fire({
       title: 'Estas seguro?',
@@ -160,7 +162,7 @@ export default class VerSeguro extends Component {
                     </li>
                     
                     <li className="list-group-item">
-                    <form id='estadoForm' onSubmit={this.confirmDialog(this.props.seguro._id)}>
+                    <form id='estadoForm' onClick={this.confirmDialog(this.props.seguro._id)}>
                       <div className="row">
                       
                         <div className="col-md-6 ml-auto"><b>Estado</b></div>
