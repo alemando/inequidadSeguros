@@ -56,7 +56,7 @@ export default class EstadoCliente extends Component {
       return (
       
         <center>
-          <button type="button" id={this.props.cliente} className="btn btn-success" onClick={() => statusCliente(this.props.cliente)}>Activar</button>
+          <button type="button" id={this.props.cliente} className="btn btn-success" onClick={() => statusCliente(this.props.cliente)}>Habilitar</button>
         </center>
       )
     }

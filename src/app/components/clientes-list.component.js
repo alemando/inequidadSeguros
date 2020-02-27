@@ -92,7 +92,7 @@ export default class ClientesList extends Component {
                           <Th><center>Ver más</center></Th>
                           <Th><center>Ver bienes</center></Th>
                           <Th><center>Crear bien</center></Th>
-                          {(this.props.session.esAdmin ? <Th><center>Estado</center></Th>: "")}
+                          {(this.props.session.esAdmin ? <Th><center>Habilitar / <br></br> Deshabilitar</center></Th>: "")}
                           
                       </Tr>
                   </Thead>                                        
