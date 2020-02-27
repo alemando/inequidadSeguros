@@ -19,8 +19,8 @@ const Seguro = props => (
 )
 
 export default class SegurosList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {seguros: []};
   }
@@ -74,7 +74,7 @@ export default class SegurosList extends Component {
                         <h3><i className="fa fa-shield"></i> Seguros disponibles</h3>
                     </div>
                     <div className="col-xs-6 col-sm-6 col-md-4 col-lg-2 col-xl-2">
-                        <CreateSeguro component={this}/>
+                        <CreateSeguro session={this.props.session} component={this}/>
                     </div>
                 </div>
             </div>

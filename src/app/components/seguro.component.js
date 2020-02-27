@@ -11,7 +11,7 @@ export default class Seguro extends Component {
     	<div className="container-fluid">
     	    <TitlePage page="Seguros"/>
     	    <div className="row">              
-    	        <SegurosList />
+    	        <SegurosList session={this.props.session}/>
     	    </div>
     	</div>
     );
