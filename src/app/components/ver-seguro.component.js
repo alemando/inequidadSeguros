@@ -31,6 +31,7 @@ export default class VerSeguro extends Component {
     })
   }
   confirmDialog(id){
+    console.log('vivo')
     Swal.fire({
       title: 'Estas seguro?',
       type: 'warning',
@@ -156,17 +157,19 @@ export default class VerSeguro extends Component {
                       </div>
                     </li>
                     <li className="list-group-item">
+                      <form id= 'estado' onSubmit = {this.confirmDialog()}>
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Estado</b></div>
-                        <div className= "col-md-6 ml-auto"><select name="estado"  onChange={()=>props.component.confirmDialog(props.seguro._id)}
+                        <div className= "col-md-6 ml-auto"><select name="estado"
                                   required
                                   value={this.state.seguro}
                                   className="form-control">
                                   <option  value=''>Seleccione...</option>
-                                  <option  value='true'>Aprobado</option>
-                                  <option  value='false'>Rechazado</option>
+                                  <option  value={true}>Aprobado</option>
+                                  <option  value={false}>Rechazado</option>
                         </select></div>
                       </div>
+                      </form>
                     </li>
                     <li className="list-group-item">
                       <div className="row">
@@ -191,6 +194,7 @@ export default class VerSeguro extends Component {
                 </div>
               </div>
               <div className="modal-footer">
+              <button type="submit" className="btn btn-primary" data-dismiss="modal"   form='estado'>Confirmar</button>
                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
             </div>

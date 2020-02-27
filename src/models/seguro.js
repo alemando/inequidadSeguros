@@ -276,6 +276,7 @@ seguroSchema.statics.obtenerSeguro = async function(id) {
 //Metodo para cambiar el estado de un seguro
 seguroSchema.statics.cambiarEstado = async function(id,estado,admin) {
     let validacion = { id: "0", mensaje: ""}
+    admin = true
     if (admin) {
         try {
             let doc = await seguros.findById(id,"estado")
