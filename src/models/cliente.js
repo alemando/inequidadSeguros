@@ -253,7 +253,7 @@ clienteSchema.statics.actualizarCliente = async (datos, admin) => {
   
     let validacion = { id: "0", mensaje: "" }
     try {
-      let cliente = await clientes.findOne({ nit: datos.nit });
+      let cliente = await clientes.findOne({ documento: datos.documento });
       if (cliente == null) {
         throw 'El cliente no existe';
       }
@@ -360,7 +360,6 @@ clienteSchema.statics.actualizarCliente = async (datos, admin) => {
             if (validacion.mensaje.length != 0) return validacion
             
             cliente.nombre = datos.nombre;
-            cliente.documento= datos.documento;
             cliente.apellido1= datos.apellido1;
             cliente.apellido2= datos.apellido2;
             cliente.direccion= datos.direccion;

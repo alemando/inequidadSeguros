@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment'
+import Swal from 'sweetalert2'
 
 export default class VerCliente extends Component {
   constructor(props) {
@@ -17,7 +18,7 @@ export default class VerCliente extends Component {
       ingresos: props.cliente.ingresos,
       egresos: props.cliente.egresos
     }
-    this.EditCliente = this.editCliente.bind(this);
+    this.editCliente = this.editCliente.bind(this);
     this.handleChange = this.handleChange.bind(this);
 
   }
@@ -46,7 +47,10 @@ export default class VerCliente extends Component {
 
           Swal.fire({
             text: data.mensaje,
-            type: 'success'
+            type: 'success',
+            onClose: () => {
+              location.reload();
+            }
           })
 
           $('EditarCliente-' + this.props.cliente._id).modal('hide');
@@ -113,12 +117,7 @@ export default class VerCliente extends Component {
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Documento</b></div>
-                        {(this.state.editMode ? <div className="col-md-6 ml-auto"><input name="documento" onChange={this.handleChange} type="text"
-                          required
-                          value={this.state.documento}
-                          className="form-control"
-                        /></div>
-                          : <div className="col-md-6 ml-auto">{this.props.cliente.documento}</div>)}
+                        <div className="col-md-6 ml-auto">{this.props.cliente.documento}</div>
 
                       </div>
                     </li>

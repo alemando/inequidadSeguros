@@ -14,7 +14,7 @@ const Cliente = props => (
     <Td>{props.cliente.documento}</Td>
     <Td>{props.cliente.nombre}</Td>
     <Td>{props.cliente.apellido1} {props.cliente.apellido2}</Td>
-    <Td><center><VerCliente cliente={props.cliente} key={props.cliente.documento}/></center></Td>
+    <Td><center><VerCliente component={props.component} cliente={props.cliente} key={props.cliente.documento}/></center></Td>
     <Td><center><VerBienes cliente={props.cliente._id} clienteInfo={props.cliente} key={props.cliente.documento}/></center></Td>
     <Td><center><CreateBien cliente={props.cliente._id} clienteInfo={props.cliente} key={props.cliente.documento}/></center></Td>
   </Tr>

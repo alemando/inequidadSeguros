@@ -30,7 +30,7 @@ router.post('/withBienes', async(req, res) =>{
 });
 
 // UPDATE cliente
-router.post('/update/:documento', async (req,res) =>{ 
+router.post('/update', async (req,res) =>{ 
   const resultado = await Cliente.actualizarCliente(req.body, true);
   res.json(resultado);
 });
