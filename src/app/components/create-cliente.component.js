@@ -172,7 +172,7 @@ export default class CreateCliente extends Component {
                   </div>
                   <div className="form-group">
                     <label>* Telefono:</label>
-                    <input name="telefono" onChange={this.handleChange} onKeyDown={this.handleKeypress} type="number"
+                    <input name="telefono" onChange={this.handleChange} onKeyDown={this.handleKeypress} type="number" min="0"
                       required
                       value={this.state.telefono}
                       className="form-control"
@@ -196,7 +196,7 @@ export default class CreateCliente extends Component {
                   </div>
                   <div className="form-group">
                     <label>* Ingresos:</label>
-                    <input name="ingresos" onChange={this.handleChange} type="number"
+                    <input name="ingresos" onChange={this.handleChange} type="number" min="0"
                       required
                       value={this.state.ingresos}
                       className="form-control"
@@ -204,7 +204,7 @@ export default class CreateCliente extends Component {
                   </div>
                   <div className="form-group">
                     <label>* Egresos:</label>
-                    <input name="egresos" onChange={this.handleChange} type="number"
+                    <input name="egresos" onChange={this.handleChange} type="number" min="0"
                       required
                       value={this.state.egresos}
                       className="form-control"

@@ -155,7 +155,7 @@ export default class VerVendedor extends Component {
                 : "")}
                 {(this.state.editMode ? <button type="button" className="btn btn-danger" onClick={()=>this.setState({editMode: false})}>Cancelar</button> 
                 : <button type="button" className="btn btn-warning" onClick={()=>this.setState({editMode: true})}>Editar</button>)}
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
               </div>
             </div>
           </div>

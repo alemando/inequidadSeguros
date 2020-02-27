@@ -54,6 +54,10 @@ export default class ClientesList extends Component {
             "search": "Buscar",
             "infoEmpty": "No hay registros disponibles",
             "infoFiltered": "(registros disponibles _MAX_)"
+          },
+          "paginate":{
+            "previous":"Anterior",
+            "next":"Siguiente"
           }
         });
       })

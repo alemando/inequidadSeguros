@@ -247,7 +247,7 @@ vendedorSchema.statics.cambiarContrasenaVendedor = async (vendedorId, datos)=>{
                 await vendedor.save();
                 return { id: "1", mensaje: "Contraseña actualizada"}
             }else{
-                return { id: "0", mensaje: "Contraseña incorrectos"}
+                return { id: "0", mensaje: "Los datos ingresados son incorrectos"}
             }
           
         }
