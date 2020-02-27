@@ -60,7 +60,7 @@ addSeguro(e){
     e.preventDefault();
 
     let datos = {
-      vendedor: this.state.vendedor,
+      vendedor: this.state.vendedor._id,
         cliente: this.state.cliente,
         bien: this.state.bien,
         aseguradora: this.state.aseguradora,
@@ -114,7 +114,7 @@ addSeguro(e){
               valorTotal: 0,
               diaPago: 1,
               observaciones: '',
-              vendedores: [],
+              vendedor: null,
               aseguradoras: [],
               clientes: [],
               bienes: [],
@@ -160,12 +160,12 @@ vendedores(){
   componentDidMount() {
 
     //Cargar lista vendedores
-    fetch('/api/vendedores/', {
+    fetch('/showSession', {
       method: 'GET'
     })
       .then(res => res.json())
       .then(data => {
-        this.setState({ vendedores: data })
+        this.setState({ vendedor: data })
       })
       .catch(err => console.error(err));
 
@@ -287,13 +287,7 @@ vendedores(){
                           <div className="col-md-6">
                             <div className="form-group">
                               <label>* Vendedor:</label>
-                              <select name="vendedor" onChange={this.handleChange}
-                                  required
-                                  value={this.state.vendedor}
-                                  className="form-control">
-                                  <option  value=''>Seleccione...</option>
-                                  {this.vendedores()}
-                              </select>
+                              <label className="form-control">{this.state.vendedor.nombre}</label>
                             </div>
                           </div>
                           <div className="col-md-6">
