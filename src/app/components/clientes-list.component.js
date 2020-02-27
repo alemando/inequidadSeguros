@@ -15,7 +15,7 @@ const Cliente = props => (
     <Td>{props.cliente.documento}</Td>
     <Td>{props.cliente.nombre}</Td>
     <Td>{props.cliente.apellido1} {props.cliente.apellido2}</Td>
-    <Td><center><VerCliente cliente={props.cliente} key={props.cliente.documento}/></center></Td>
+    <Td><center><VerCliente component={props.component} cliente={props.cliente} key={props.cliente.documento}/></center></Td>
     <Td><center><VerBienes cliente={props.cliente._id} clienteInfo={props.cliente} key={props.cliente.documento}/></center></Td>
     <Td><center><CreateBien cliente={props.cliente._id} clienteInfo={props.cliente} key={props.cliente.documento}/></center></Td>
     <Td><center><EstadoCliente cliente={props.cliente.documento} estadoActual={props.cliente.estado}/></center></Td>
@@ -30,7 +30,7 @@ export default class ClientesList extends Component {
 
   clientesList() {
     return this.state.clientes.map(currentCliente => {
-      return <Cliente cliente={currentCliente} key={currentCliente._id} />;
+      return <Cliente cliente={currentCliente} key={currentCliente._id} component={this}/>;
     })
   }
 

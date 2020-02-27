@@ -166,9 +166,6 @@ categoriaSchema.statics.actualizarCategoriaById = async (id, nuevoNombre, admin)
         try {
             let categoria = await categorias.findById(id);
             categoria.nombre = nuevoNombre
-            if(categorias.findOne({nombre: nuevoNombre})){
-                return { id: "0", mensaje: "Ya existe una categoria con este nombre"};
-            }
             await categoria.save()
             return { id: "1", mensaje: "La categoría ha sido actualizada correctamente." }
         } catch (error) {
