@@ -3,7 +3,9 @@ import TitlePage from "./title-page.component";
 import AseguradorasList from "./aseguradoras-list.component";
 
 export default class Cliente extends Component {
-
+	constructor(props) {
+		super(props);
+	}
   render() {
     return (
     	<div className="container-fluid">

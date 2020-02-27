@@ -13,20 +13,23 @@ const Categoria = props => (
   <Tr>
     <Td>{props.categoria.nombre}</Td>
     <Td><center><VerCriterios categoria={props.categoria} /></center></Td>
-    <Td><center><EditCategoria categoria={props.categoria} component={props.component} /></center></Td>
-    <Td><center><button className={"btn " + (props.categoria.estado ? 'btn-success' : 'btn-danger')} onClick={()=>props.component.confirmDialog(props.categoria._id)}>{(props.categoria.estado ? 'Habilitar' : 'Desactivar')}</button></center></Td>
+    {(this.props.session.esAdmin ? <Td><center><EditCategoria categoria={props.categoria} component={props.component} /></center></Td> 
+                : "")}
+    {(this.props.session.esAdmin ? <Td><center><button className={"btn " + (props.categoria.estado ? 'btn-success' : 'btn-danger')} onClick={()=>props.component.confirmDialog(props.categoria._id)}>{(props.categoria.estado ? 'Habilitar' : 'Desactivar')}</button></center></Td>
+                : "")}
+    
   </Tr>
 )
 
 export default class CategoriasList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {categorias: []}; 
   }
 
   categoriasList() {
     return this.state.categorias.map(currentCategoria => {
-      return <Categoria component={this}categoria={currentCategoria} key={currentCategoria._id} />;
+      return <Categoria session={props.session} component={this}categoria={currentCategoria} key={currentCategoria._id} />;
     })
   }
 
