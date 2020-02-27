@@ -19,13 +19,19 @@ export default class VerSeguro extends Component {
 
     this.state = {
       criterios: [],
-      id: this.props.seguro._id
-      
+      estado: '',
+      id : ''
     }
+    this.handleChange = this.handleChange.bind(this);
+    this.confirmDialog = this.confirmDialog.bind(this);
   }
 
   componentDidMount() {
-    this.setState({ criterios: this.props.seguro.criterios })
+    this.setState({ 
+      criterios: this.props.seguro.criterios,
+      estado: this.props.seguro.estado,
+      id: this.props.seguro._id
+    })
   }
 
   criteriosList() {
@@ -33,8 +39,7 @@ export default class VerSeguro extends Component {
       return <Criterio criterio={currentCriterio} key={currentCriterio._id} />;
     })
   }
-  confirmDialog(){
-    console.log('vivo')
+  confirmDialog() {
     Swal.fire({
       title: 'Estas seguro?',
       type: 'warning',
@@ -45,48 +50,51 @@ export default class VerSeguro extends Component {
       confirmButtonText: 'Confirmar'
     }).then((result) => {
       if (result.value) {
-        this.cambiarEstado(id)
-      }
-    })
-  }
-  changeEstado(id){
-    fetch('/api/seguros/finiquitar', {
-      method: 'POST',
-      body: JSON.stringify({'id': id}),
-      headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-      }
-    })
-      .then(res => res.json())
-      .then(data => {
-          if (data.id == 0) {
-
-              Swal.fire({
-                  text: data.mensaje,
-                  type: 'error'
-              })
-          } else if (data.id == 1) {
-
-            this.fetchSeguros();
-            
-            Swal.fire({
-              text: data.mensaje,
-              type: 'success',
-              onClose: () => {
-                location.reload();
-              }
-            })
-          }else{
-            Swal.fire({
-              text: data.mensaje,
-              type: 'error'
-            })
-
+        fetch('/api/seguros/finiquitar/' + this.state.id, {
+          method: 'POST',
+          body: JSON.stringify({ estado: this.state.estado }),
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
           }
-      })
-      .catch(err => console.error(err));
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.id == 0) {
+    
+              Swal.fire({
+                text: data.mensaje,
+                type: 'error'
+              })
+            } else if (data.id == 1) {
+    
+              Swal.fire({
+                text: data.mensaje,
+                type: 'success',
+                onClose: () => {
+                  location.reload();
+                }
+              })
+            } else {
+              Swal.fire({
+                text: data.mensaje,
+                type: 'error'
+              })
+    
+            }
+          })
+          .catch(err => console.error(err));
+      }
+    })
   }
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value
+    })
+    console.log(this.state)
+  }
+
   render() {
     return (
       <div>
@@ -101,7 +109,7 @@ export default class VerSeguro extends Component {
                 </button>
               </div>
               <div className="modal-body">
-              
+
                 <div className="container">
                   <ul className="list-group">
                     <li className="list-group-item">
@@ -160,29 +168,27 @@ export default class VerSeguro extends Component {
                         <div className="col-md-6 ml-auto">{this.props.seguro.valorTotal}</div>
                       </div>
                     </li>
-                    
+
                     <li className="list-group-item">
-                    <form id='estadoForm' onClick={this.confirmDialog(this.props.seguro._id)}>
                       <div className="row">
-                      
+
                         <div className="col-md-6 ml-auto"><b>Estado</b></div>
-                        <div className= "col-md-6 ml-auto">
-                        
-                        <div className="form-group">
-                          <select name="estado"
-                                  required
-                                  value={this.state.seguro}
-                                  className="form-control">
-                                  <option  value=''>Seleccione...</option>
-                                  <option  value={true}>Aprobado</option>
-                                  <option  value={false}>Rechazado</option>
-                          </select>
+                        <div className="col-md-6 ml-auto">
+                          <div className="form-group">
+                            <select name="estado"
+                              onChange = {this.handleChange}
+                              required
+                              value={this.state.estado}
+                              className="form-control">
+                              <option value=''>Seleccione...</option>
+                              <option value={true}>Aprobado</option>
+                              <option value={false}>Rechazado</option>
+                            </select>
                           </div>
-                         
-                        </div>                       
+
+                        </div>
                       </div>
-                      <button type="submit" className="btn btn-primary" form='estadoForm'>Confirmar</button>
-                        </form>
+                      <button type="submit" className="btn btn-primary" onClick={this.confirmDialog}>Confirmar</button>
                     </li>
                     <li className="list-group-item">
                       <div className="row">
