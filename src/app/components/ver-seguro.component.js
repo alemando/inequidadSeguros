@@ -175,7 +175,7 @@ export default class VerSeguro extends Component {
                         <div className="col-md-6 ml-auto"><b>Estado</b></div>
                         <div className="col-md-6 ml-auto">
                           <div className="form-group">
-                            <select name="estado"
+                            {(this.props.seguro.estado != "En proceso" ? <div>{this.props.seguro.estado }</div> : <select name="estado"
                               onChange = {this.handleChange}
                               required
                               value={this.state.estado}
@@ -183,12 +183,14 @@ export default class VerSeguro extends Component {
                               <option value=''>Seleccione...</option>
                               <option value={true}>Aprobado</option>
                               <option value={false}>Rechazado</option>
-                            </select>
+                            </select>)}
+                            
                           </div>
 
                         </div>
                       </div>
-                      <button type="submit" className="btn btn-primary" onClick={this.confirmDialog}>Confirmar</button>
+                      {(this.props.seguro.estado != "En proceso" ? "" : <button type="submit" className="btn btn-primary" onClick={this.confirmDialog}>Confirmar</button>)}
+                      
                     </li>
                     <li className="list-group-item">
                       <div className="row">
