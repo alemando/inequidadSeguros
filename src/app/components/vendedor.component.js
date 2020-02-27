@@ -11,7 +11,7 @@ export default class Vendedor extends Component {
     	<div className="container-fluid">
     	    <TitlePage page="Vendedores"/>
     	    <div className="row">              
-    	        <VendedoresList/>
+    	        <VendedoresList session={this.props.session}/>
     	    </div>
     	</div>
     );

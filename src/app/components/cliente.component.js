@@ -11,7 +11,7 @@ export default class Cliente extends Component {
     	<div className="container-fluid">
     	    <TitlePage page="Clientes"/>
     	    <div className="row">              
-    	        <ClientesList />
+    	        <ClientesList session={this.props.session}/>
     	    </div>
     	</div>
     );

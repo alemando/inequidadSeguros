@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Swal from 'sweetalert2'
 
 export default class VerVendedor extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       editMode: false,
       documento: '',
@@ -154,7 +154,7 @@ export default class VerVendedor extends Component {
                 {(this.state.editMode ? <button type="button" className="btn btn-success" onClick={this.editVendedor}>Enviar</button> 
                 : "")}
                 {(this.state.editMode ? <button type="button" className="btn btn-danger" onClick={()=>this.setState({editMode: false})}>Cancelar</button> 
-                : <button type="button" className="btn btn-warning" onClick={()=>this.setState({editMode: true})}>Editar</button>)}
+                : (this.props.session.esAdmin ? <button type="button" className="btn btn-warning" onClick={()=>this.setState({editMode: true})}>Editar</button>: ""))}
                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
               </div>
             </div>
