@@ -31,7 +31,7 @@ router.get('/principal/:id', async(req,res)=>{
 //Borrar seguro por Id de seguro
 router.get('/remove/:id', async(req,res)=>{
   let { id } = req.params;
-  let respuesta = await Seguro.borrarSeguro(id,true);
+  let respuesta = await Seguro.borrarSeguro(id, req.session.esAdmin);
   res.json(respuesta);
 });
 module.exports = router;

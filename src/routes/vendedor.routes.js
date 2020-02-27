@@ -18,7 +18,7 @@ router.get('/:id', async (req, res) => {
 
 // ADD a new vendedor
 router.post('/save', async (req, res) => {
-  resultado = await Vendedor.guardarVendedor(req.body, true);
+  resultado = await Vendedor.guardarVendedor(req.body, req.session.esAdmin);
   res.json(resultado);
 });
 
@@ -29,13 +29,13 @@ router.post('/cambiarContrasena', async (req, res) => {
 });
 //Inhabilitar vendedor
 router.post('/inhabilitar', async(req,res)=>{
-  let respuesta = await Vendedor.CambiarEstadoVendedor(req.body.id, true)
+  let respuesta = await Vendedor.CambiarEstadoVendedor(req.body.id, req.session.esAdmin)
   res.json(respuesta);
 })
 
 //EDIT a Vendedor
 router.post('/edit', async(req,res) => {
-  res.json(await Vendedor.editarVendedor(req.body, true));
+  res.json(await Vendedor.editarVendedor(req.body, req.session.esAdmin));
 })
 
 module.exports = router;

@@ -147,7 +147,7 @@ categoriaSchema.statics.cambiarEstadoCat = async (id,admin) => {
        return { id: "0", mensaje: "Error desconocido"};
     }
   }
-  return ("No eres admin para habilitar/inhabilitar categorias")
+  return { id: "0", mensaje: "No eres admin para habilitar/inhabilitar categorias"}
 }
 
 //Metodo para retornar el nombre de la categoria por su ID

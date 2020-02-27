@@ -7,8 +7,7 @@ const Cliente = require('../models/cliente');
 
 // GET all Clientes
 router.get('/', async (req, res) => {
-  let admin = true
-  const clientes = await Cliente.obtenerClientes(admin);
+  const clientes = await Cliente.obtenerClientes(req.session.esAdmin);
   res.json(clientes);
 });
 
@@ -40,12 +39,12 @@ router.post('/withBienes', async(req, res) =>{
 
 // UPDATE cliente
 router.post('/update', async (req,res) =>{ 
-  const resultado = await Cliente.actualizarCliente(req.body, true);
+  const resultado = await Cliente.actualizarCliente(req.body, req.session.esAdmin);
   res.json(resultado);
 });
 //POST change status
 router.post('/status', async (req,res)=>{
-  resultado = await Cliente.cambiarEstadoCliente(req.body.documento, req.body.admin);
+  resultado = await Cliente.cambiarEstadoCliente(req.body.documento, req.session.esAdmin);
   res.json(resultado)
 })
 

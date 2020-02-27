@@ -25,7 +25,7 @@ router.get('/:nit', async (req, res) => {
 
 //POST Cambiar estado de aseguradora
 router.post('/disable', async (req,res) => { 
-  resultado = await Aseguradora.CambiarEstadoAseguradora(req.body.id, true);
+  resultado = await Aseguradora.CambiarEstadoAseguradora(req.body.id, req.session.esAdmin);
   res.json(resultado);
 });
 
@@ -38,7 +38,7 @@ router.post('/save', async (req, res) => {
 
 // UPDATE aseguradora
 router.post('/update', async (req,res) =>{ 
-  const resultado = await Aseguradora.actualizarAseguradora(req.body, true);
+  const resultado = await Aseguradora.actualizarAseguradora(req.body, req.session.esAdmin);
   res.json(resultado);
 });
 

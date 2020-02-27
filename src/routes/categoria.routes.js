@@ -28,15 +28,14 @@ router.post('/save', async (req, res) => {
 });
 //Actualizar nombre de la categoria
 router.post('/update', async (req, res) => {
-  resultado = await Categoria.actualizarCategoriaById(req.body.id,req.body.nombre,true);
+  resultado = await Categoria.actualizarCategoriaById(req.body.id,req.body.nombre,req.session.esAdmin);
   console.log(resultado);
   res.json(resultado);
 });
 
 //POST change status
 router.post('/status', async (req,res)=>{
-  const admin = true
-  resultado = await Categoria.cambiarEstadoCat(req.body.id,admin);
+  resultado = await Categoria.cambiarEstadoCat(req.body.id,req.session.esAdmin);
   res.json(resultado)
 })
 
