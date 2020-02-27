@@ -19,8 +19,8 @@ const Seguro = props => (
 )
 
 export default class SegurosList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {seguros: []};
   }
@@ -51,8 +51,12 @@ export default class SegurosList extends Component {
                     "info": "(_MAX_ seguros) Pagina _PAGE_ de _PAGES_",
                     "search": "Buscar",
                     "infoEmpty": "No hay registros disponibles",
-                    "infoFiltered": "(registros disponibles _MAX_)"
-                  }
+                    "infoFiltered": "(registros disponibles _MAX_)",
+                    "paginate":{
+                      "previous":"Anterior",
+                      "next":"Siguiente"
+                    }
+                  },
                 });
             })
             .catch(err => console.error(err));
@@ -70,7 +74,7 @@ export default class SegurosList extends Component {
                         <h3><i className="fa fa-shield"></i> Seguros disponibles</h3>
                     </div>
                     <div className="col-xs-6 col-sm-6 col-md-4 col-lg-2 col-xl-2">
-                        <CreateSeguro component={this}/>
+                        <CreateSeguro session={this.props.session} component={this}/>
                     </div>
                 </div>
             </div>

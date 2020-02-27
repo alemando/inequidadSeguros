@@ -32,4 +32,10 @@ router.post('/finiquitar/:id', async(req,res)=>{
   let respuesta = await Seguro.cambiarEstado(req.params.id,req.body.estado,req.body.admin)
   res.json(respuesta);
 })
+//Borrar seguro por Id de seguro
+router.get('/remove/:id', async(req,res)=>{
+  let { id } = req.params;
+  let respuesta = await Seguro.borrarSeguro(id, req.session.esAdmin);
+  res.json(respuesta);
+});
 module.exports = router;

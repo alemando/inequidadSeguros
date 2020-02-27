@@ -24,6 +24,7 @@ export default class VerSeguro extends Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.confirmDialog = this.confirmDialog.bind(this);
+    this.eliminarSeguro = this.eliminarSeguro.bind(this);
   }
 
   componentDidMount() {
@@ -95,6 +96,37 @@ export default class VerSeguro extends Component {
     console.log(this.state)
   }
 
+  eliminarSeguro(e) {
+    fetch('/api/seguros/remove/' + this.props.seguro._id, {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.id == 0){
+                  
+        Swal.fire({
+          text: data.mensaje,
+          type: 'error'
+        })
+      }else if(data.id == 1){
+        Swal.fire({
+          text: data.mensaje,
+          type: 'success',
+          onClose: () => {
+            location.reload(false);
+          }
+        })
+      } else {
+          Swal.fire({
+              text: data.mensaje,
+              type: 'error'
+          })
+      }
+    })
+    .catch(err => console.log(err));
+    $("#Seguro" + this.props.seguro._id).modal('close');
+  }
+
   render() {
     return (
       <div>
@@ -150,12 +182,14 @@ export default class VerSeguro extends Component {
                         <div className="col-md-6 ml-auto">{moment(this.props.seguro.fechaInicio, "YYYY-MM-DD").locale("es").format("DD-MMM-YYYY")}</div>
                       </div>
                     </li>
+                    {moment(this.props.seguro.fechaFin, "YYYY-MM-DD").isValid() &&
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Fecha Fin</b></div>
                         <div className="col-md-6 ml-auto">{moment(this.props.seguro.fechaFin, "YYYY-MM-DD").locale("es").format("DD-MMM-YYYY")}</div>
                       </div>
                     </li>
+                    }
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Dia pago</b></div>
@@ -215,7 +249,9 @@ export default class VerSeguro extends Component {
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                {//<button type="button" className="btn btn-danger" onClick={this.eliminarSeguro} >Eliminar seguro</button>
+                }
+                <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
               </div>
             </div>
           </div>

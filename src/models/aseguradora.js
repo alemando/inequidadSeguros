@@ -92,7 +92,8 @@ aseguradoraSchema.statics.guardarAseguradora = async (datos)=> {
         {nit: datos.nit,
         nombre: datos.nombre,
         telefono: datos.telefono,
-        correo: datos.correo});
+        correo: datos.correo,
+        estado: true});
     try {
         //Procedo a guardar en la BD
         await aseguradoraNueva.save();
@@ -133,6 +134,76 @@ aseguradoraSchema.statics.obtenerAseguradoraById = async (id)=> {
         return "ha ocurrido algo inesperado al intentar obtener el aseguradora\n"+ error;
     }
 }
+
+//Metodo para cambiar el estado de aseguradora
+aseguradoraSchema.statics.CambiarEstadoAseguradora = async (id, admin)=> {
+    
+    if(admin == true){
+        try {
+            let aseguradora = await aseguradoras.findById(id);
+            aseguradora.estado = !aseguradora.estado;
+            await aseguradora.save();
+            return { id: "1", mensaje: "Has cambiado el estado de la aseguradora"};
+        } catch (error) {
+            return { id: "0", mensaje: "ha ocurrido algo inesperado al intentar inhabilitar la aseguradora"+ error};
+        }
+    }
+    else{
+        return { id: "0", mensaje: "No tienes permisos para inhabilitar aseguradoras"};
+    }
+       
+}
+
+//Metodo para retornar todas las aseguradoras habilitadas 
+aseguradoraSchema.statics.obtenerAseguradorasHabilitadas = async () =>{
+        try {
+        let listAseguradoras = await aseguradoras.find({estado: true})
+        return listAseguradoras;
+    } catch (error) {
+      return "Ha ocurrido algo inesperado al intentar obtener las aseguradoras: \n"+ error;
+    }
+  }
+
+//Editar aseguradora
+aseguradoraSchema.statics.actualizarAseguradora = async (datos, admin) => {
+  
+    let validacion = { id: "0", mensaje: "" }
+    try {
+      let aseguradora = await aseguradoras.findOne({ nit: datos.nit });
+      if (aseguradora == null) {
+        throw 'La aseguradora no existe';
+      }
+      else {
+        if (admin) {
+            if (!patronCorreo.test(datos.correo)) {
+                validacion.mensaje += "El correo no sigue el formato example@dominio.ext\n";
+              }  
+            else if (validacion.mensaje.length != 0) return validacion
+
+            aseguradora.nombre = datos.nombre;
+            aseguradora.telefono = datos.telefono;
+            aseguradora.correo = datos.correo;
+         
+            await aseguradora.save();
+  
+            validacion.id = '1';
+            validacion.mensaje = 'Vendedor editado con éxito';
+            return validacion;
+        }
+        else {
+          throw 'No posees permisos para ejecutar esta acción';
+        }
+      }
+    } catch (error) {
+      return {
+        id: '2',
+        mensaje: `Error obteniendo de aseguradora por nit: ${error}`
+      };
+    }
+  
+  }
+
+
 const aseguradoras = mongoose.model('aseguradoras',aseguradoraSchema);
 
 module.exports = aseguradoras;

@@ -98,7 +98,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     if(datos.criterios.length == 0){
         validacion.mensaje += "El seguro no ha sido guardado, debe contener al menos un criterio."
     }
-
+    console.log(datos)
     //Validacion de los nombres de criterios no son repetidos
     if(verificarCriterios(datos.criterios)){
         validacion.mensaje += "Categoría no guardada, asegúrese de que los criterios tengan nombres diferentes."
@@ -302,6 +302,26 @@ seguroSchema.statics.cambiarEstado = async function(id,estado,admin) {
         }
     }
     else return {id:0, mensaje:"No posees privilegios de administrador"};
+}
+
+//Metodo para borrar un seguro por su id
+seguroSchema.statics.borrarSeguro = async function(id,admin) {
+    if(admin){
+        try {
+            let seguro = await seguros.findById(id);
+            if(seguro.estado == "En proceso"){
+                seguro.remove();
+                return {id:1, mensaje: "Seguro borrado correctamente."};
+            
+            }
+            return {id:0, mensaje: "El estado del seguro no es en proceso."};
+        } catch (error) {
+            return {id:0, mensaje: "Ha ocurrido algo inesperado al intentar obtener el seguro\n"+ error};
+        }
+    }else{
+        return {id:0, mensaje: "No tienes permisos para hacer esto"};
+    }
+
 }
 
 const verificarCriterios = (arreglo) => {

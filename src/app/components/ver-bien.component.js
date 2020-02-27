@@ -32,13 +32,13 @@ export default class VerBien extends Component {
               <div className="modal-body">
                 <div className="container">
                   <ul className="list-group">
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Nombre</b></div>
                         <div className="col-md-6 ml-auto">{this.props.bien.nombre}</div>
                       </div>
                     </li>
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Cliente</b></div>
                         <div className="col-md-6 ml-auto">
@@ -46,19 +46,19 @@ export default class VerBien extends Component {
                             ' ' + this.props.bien.cliente.apellido2}</div>
                       </div>
                     </li>
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Categoria</b></div>
                         <div className="col-md-6 ml-auto">{this.props.bien.categoria.nombre}</div>
                       </div>
                     </li>
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Caracteristicas</b></div>
                         <div className="col-md-6 ml-auto">{this.props.bien.caracteristicas}</div>
                       </div>
                     </li>
-                    <li class="list-group-item">
+                    <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Documento</b></div>
                         <div className="col-md-6 ml-auto"><a target="_blank" rel="noopener noreferrer"
@@ -70,7 +70,7 @@ export default class VerBien extends Component {
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={this.modalClose}>Close</button>
+                <button type="button" className="btn btn-secondary" onClick={this.modalClose}>Cerrar</button>
               </div>
             </div>
           </div>

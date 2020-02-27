@@ -46,9 +46,6 @@ export default class CreateAseguradora extends Component {
                     })
                 } else if (data.id == 1) {
 
-                    this.props.component.fetchAseguradoras();
-
-
                   this.props.component.fetchAseguradoras();
                   
                   Swal.fire({
@@ -136,7 +133,7 @@ export default class CreateAseguradora extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label>* Telefono:</label>
-                                        <input name="telefono" onChange={this.handleChange} onKeyDown={this.handleKeypress} type="number"
+                                        <input name="telefono" onChange={this.handleChange} onKeyDown={this.handleKeypress} type="number" min="0"
                                             required
                                             value={this.state.telefono}
                                             className="form-control"
@@ -161,7 +158,7 @@ export default class CreateAseguradora extends Component {
                             </div>
                             <div className="modal-footer">
                                 <button type="submit" form="formAseguradora" className="btn btn-primary">Enviar</button>
-                                <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
                     </div>

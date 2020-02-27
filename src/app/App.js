@@ -20,24 +20,25 @@ import Categoria from "./components/categoria.component";
 import Seguro from "./components/seguro.component";
 import Vendedor from "./components/vendedor.component";
 import React from 'react';
+import EditContrasena from "./components/edit-contrasena.component"; 
 
 
-
-export default function App() {
+export default function App(props) {
   return (
     <Router>
     <div id="App">
+     <EditContrasena/>
       <div id="main">
-          <Headerbar></Headerbar>
-          <LeftSidebar></LeftSidebar>
+          <Headerbar session={props.session}/>
+          <LeftSidebar/>
           <div className="content-page">
             <div className="content">
               <div className="container-fluid">
-                  <Route path="/clientes" component={Cliente} />
-                  <Route path="/vendedores" component={Vendedor} />
-                  <Route path="/aseguradoras" component={Aseguradora} />
-                  <Route path="/categorias" component={Categoria} />
-                  <Route path="/seguros" component={Seguro} />
+                  <Route path="/clientes" component={()=><Cliente session={props.session}/>} />
+                  <Route path="/vendedores" component={()=><Vendedor session={props.session}/>} />
+                  <Route path="/aseguradoras" component={()=><Aseguradora session={props.session}/>} />
+                  <Route path="/categorias" component={()=><Categoria session={props.session}/>} />
+                  <Route path="/seguros" component={()=><Seguro session={props.session}/>} />
               </div>
             </div>
           </div>

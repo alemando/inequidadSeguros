@@ -10,7 +10,7 @@ import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 const Criterio = props => (
   <Tr>
     <Td>{props.criterio.nombre}</Td>
-    <Td><VerCriterio criterio={props.criterio} key={props.criterio.mombre} /></Td>
+    <Td><VerCriterio session={props.session} criterio={props.criterio} key={props.criterio.mombre} /></Td>
     <Td><EditCriterio component={props.component} criterio={props.criterio} key={props.criterio.nombre} /></Td>
     <Td><button type="button" onClick={() => props.component.removeCriterio(props.criterio.index)} className="btn btn-danger">X</button></Td>
   </Tr>
@@ -18,8 +18,8 @@ const Criterio = props => (
 
 export default class CreateSeguro extends Component {
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
         vendedor: '',
         cliente: '',
@@ -51,7 +51,7 @@ criteriosList() {
     return this.state.criterios.map(currentCriterio => {
         currentCriterio["index"] = index
         index++;
-      return <Criterio component={this} criterio={currentCriterio} key={currentCriterio.nombre} />;
+      return <Criterio session={this.props.session} component={this} criterio={currentCriterio} key={currentCriterio.nombre} />;
     })
   
 }
@@ -60,7 +60,7 @@ addSeguro(e){
     e.preventDefault();
 
     let datos = {
-      vendedor: this.state.vendedor,
+      vendedor: this.state.vendedor._id,
         cliente: this.state.cliente,
         bien: this.state.bien,
         aseguradora: this.state.aseguradora,
@@ -114,7 +114,7 @@ addSeguro(e){
               valorTotal: 0,
               diaPago: 1,
               observaciones: '',
-              vendedores: [],
+              vendedor: null,
               aseguradoras: [],
               clientes: [],
               bienes: [],
@@ -160,17 +160,17 @@ vendedores(){
   componentDidMount() {
 
     //Cargar lista vendedores
-    fetch('/api/vendedores/', {
+    fetch('/showSession', {
       method: 'GET'
     })
       .then(res => res.json())
       .then(data => {
-        this.setState({ vendedores: data })
+        this.setState({ vendedor: data })
       })
       .catch(err => console.error(err));
 
-    //Cargar lista aseguradoras
-    fetch('/api/aseguradoras/', {
+    //Cargar lista aseguradoras habilitadas
+    fetch('/api/aseguradoras/enabled', {
       method: 'GET'
     })
       .then(res => res.json())
@@ -180,8 +180,8 @@ vendedores(){
       .catch(err => console.error(err));
 
       //Cargar lista clientes
-      fetch('/api/clientes/withBienes', {
-        method: 'POST'
+      fetch('/api/clientes/habilitados', {
+        method: 'GET'
       })
       .then(res => res.json())
       .then(data => {
@@ -287,13 +287,7 @@ vendedores(){
                           <div className="col-md-6">
                             <div className="form-group">
                               <label>* Vendedor:</label>
-                              <select name="vendedor" onChange={this.handleChange}
-                                  required
-                                  value={this.state.vendedor}
-                                  className="form-control">
-                                  <option  value=''>Seleccione...</option>
-                                  {this.vendedores()}
-                              </select>
+                              <label className="form-control">{this.state.vendedor.nombre}</label>
                             </div>
                           </div>
                           <div className="col-md-6">
@@ -392,7 +386,7 @@ vendedores(){
                           <div className="col-md-6">
                             <div className="form-group">
                               <label>* Valor total:</label>
-                              <input name="valorTotal" onChange={this.handleChange} type="number"
+                              <input name="valorTotal" onChange={this.handleChange} type="number" min="0"
                                   required
                                   value={this.state.valorTotal}
                                   className="form-control"
@@ -445,7 +439,7 @@ vendedores(){
                       <div className="modal-footer">
                           <button type="submit" form="formSeguro" className="btn btn-primary">Enviar</button>
                           <CreateCriterio component={this} bien={this.state.bien} />
-                          <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Close</button>
+                          <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Cerrar</button>
                       </div>
                   </div>
               </div>
