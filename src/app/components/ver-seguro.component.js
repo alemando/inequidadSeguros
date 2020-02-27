@@ -223,7 +223,7 @@ export default class VerSeguro extends Component {
 
                         </div>
                       </div>
-                      {(this.props.seguro.estado != "En proceso" ? "" : <button type="submit" className="btn btn-primary" onClick={this.confirmDialog}>Confirmar</button>)}
+                      {((this.props.seguro.estado != "En proceso" || !this.props.session.esAdmin) ? "" : <button type="submit" className="btn btn-primary" onClick={this.confirmDialog}>Confirmar</button>)}
                       
                     </li>
                     <li className="list-group-item">
