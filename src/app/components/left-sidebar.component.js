@@ -10,7 +10,6 @@ export default class LeftSidebar extends Component {
                   <div id="sidebar-menu">
               
                   <ul>
-
                           <li className="submenu">
                               <a href="/index"><i className="fa fa-fw fa-home"></i><span> Pagina principal </span> </a>
                           </li>

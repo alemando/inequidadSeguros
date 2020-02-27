@@ -7,18 +7,30 @@ export default class CreateVendedor extends Component {
     constructor() {
         super();
         this.state = {
+            type: 'password',
             documento: '',
             nombre: '',
             apellido1: '',
             apellido2: '',
             telefono: '',
-            correo: ''
+            correo: '',
+            password: '',
+            admin: true
         }
+        this.showHide = this.showHide.bind(this);
         this.addVendedor = this.addVendedor.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.modalClose = this.modalClose.bind(this);
+        this.showHide = this.showHide.bind(this);
+        this.generar = this.generar.bind(this);
     }
-
+    showHide(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.setState({
+            type: this.state.type === 'input' ? 'password' : 'input'
+        })
+    }
     modalClose() {
         this.setState({
             documento: '',
@@ -26,7 +38,9 @@ export default class CreateVendedor extends Component {
             apellido1: '',
             apellido2: '',
             telefono: '',
-            correo: ''
+            correo: '',
+            password: '',
+            admin: true
         });
     }
 
@@ -42,34 +56,36 @@ export default class CreateVendedor extends Component {
         })
             .then(res => res.json())
             .then(data => {
-                if(data.id == 0){
-                  
-                  Swal.fire({
-                    text: data.mensaje,
-                    type: 'error'
-                  })
-                }else if(data.id == 1){
+                if (data.id == 0) {
 
-                  this.props.component.fetchVendedores();
-                  
-                  Swal.fire({
-                    text: data.mensaje,
-                    type: 'success',
-                    onClose: () => {
-                      location.reload();
-                    }
-                  })
+                    Swal.fire({
+                        text: data.mensaje,
+                        type: 'error'
+                    })
+                } else if (data.id == 1) {
 
-                  $("#CrearVendedor").modal('hide');
-                  $("#formVendedor").reset();
+                    this.props.component.fetchVendedores();
 
-                  this.setState({
-                    documento: '',
-                    nombre: '',
-                    apellido1: '',
-                    apellido2: '',
-                    telefono: '',
-                    correo: ''
+                    Swal.fire({
+                        text: data.mensaje,
+                        type: 'success',
+                        onClose: () => {
+                            location.reload();
+                        }
+                    })
+
+                    $("#CrearVendedor").modal('hide');
+                    $("#formVendedor").reset();
+
+                    this.setState({
+                        documento: '',
+                        nombre: '',
+                        apellido1: '',
+                        apellido2: '',
+                        telefono: '',
+                        correo: '',
+                        password: '',
+                        admin: true
 
                     });
                 } else {
@@ -102,6 +118,21 @@ export default class CreateVendedor extends Component {
         } else {
             e.preventDefault()
         }
+    }
+    showHide(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.setState({
+            type: this.state.type === 'input' ? 'password' : 'input'
+        })
+    }
+    generar() {
+        var caracteres = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789!#$%&/()=?¡¿-|*+";
+        var contraseña = "";
+        for (i = 0; i < 12; i++) contraseña += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+        this.setState({
+            password: contraseña
+        })
     }
 
     render() {
@@ -162,6 +193,25 @@ export default class CreateVendedor extends Component {
                                             className="form-control"
                                         />
                                     </div>
+                                    <div className="form-group">
+                                        <label>* Contraseña:</label>
+                                        <input name="password" onChange={this.handleChange} type={this.state.type} required
+                                            value={this.state.password}
+                                            className="form-control"
+                                        />
+                                        <span className="btn btn-light" onClick={this.showHide}>{this.state.type === 'input' ? 'Hide' : 'Show'}</span>
+                                        <span className="btn btn-light" onClick={this.generar}>Generar contraseña</span>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>* Tipo de empleado:</label>
+                                        <select name="admin" onChange={this.handleChange}
+                                            required
+                                            value={this.state.admin}
+                                            className="form-control">
+                                            <option  value= {true}>Administrador</option>
+                                            <option  value= {false}>Vendedor</option>
+                                        </select>
+                                        </div>
                                     <div className="row">
                                         <div className="col">
                                             <div className="form-group">
@@ -173,7 +223,7 @@ export default class CreateVendedor extends Component {
                             </div>
                             <div className="modal-footer">
                                 <button type="submit" form="formVendedor" className="btn btn-primary">Enviar</button>
-                                <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
                     </div>

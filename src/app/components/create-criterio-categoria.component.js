@@ -113,7 +113,7 @@ export default class CreateCriterio extends Component {
                             </div>
                             <div className="modal-footer">
                                 <button type="submit" form="formCriterio" className="btn btn-primary">Enviar</button>
-                                <button type="button" className="btn btn-secondary" onClick={this.modalClose} >Close</button>
+                                <button type="button" className="btn btn-secondary" onClick={this.modalClose} >Cerrar</button>
                             </div>
                         </div>
                     </div>

@@ -60,7 +60,7 @@ addSeguro(e){
     e.preventDefault();
 
     let datos = {
-      vendedor: this.state.vendedor,
+      vendedor: this.state.vendedor._id,
         cliente: this.state.cliente,
         bien: this.state.bien,
         aseguradora: this.state.aseguradora,
@@ -114,7 +114,7 @@ addSeguro(e){
               valorTotal: 0,
               diaPago: 1,
               observaciones: '',
-              vendedores: [],
+              vendedor: null,
               aseguradoras: [],
               clientes: [],
               bienes: [],
@@ -160,12 +160,12 @@ vendedores(){
   componentDidMount() {
 
     //Cargar lista vendedores
-    fetch('/api/vendedores/', {
+    fetch('/showSession', {
       method: 'GET'
     })
       .then(res => res.json())
       .then(data => {
-        this.setState({ vendedores: data })
+        this.setState({ vendedor: data })
       })
       .catch(err => console.error(err));
 
@@ -180,8 +180,8 @@ vendedores(){
       .catch(err => console.error(err));
 
       //Cargar lista clientes
-      fetch('/api/clientes/withBienes', {
-        method: 'POST'
+      fetch('/api/clientes/habilitados', {
+        method: 'GET'
       })
       .then(res => res.json())
       .then(data => {
@@ -287,13 +287,7 @@ vendedores(){
                           <div className="col-md-6">
                             <div className="form-group">
                               <label>* Vendedor:</label>
-                              <select name="vendedor" onChange={this.handleChange}
-                                  required
-                                  value={this.state.vendedor}
-                                  className="form-control">
-                                  <option  value=''>Seleccione...</option>
-                                  {this.vendedores()}
-                              </select>
+                              <label className="form-control">{this.state.vendedor.nombre}</label>
                             </div>
                           </div>
                           <div className="col-md-6">
@@ -445,7 +439,7 @@ vendedores(){
                       <div className="modal-footer">
                           <button type="submit" form="formSeguro" className="btn btn-primary">Enviar</button>
                           <CreateCriterio component={this} bien={this.state.bien} />
-                          <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Close</button>
+                          <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Cerrar</button>
                       </div>
                   </div>
               </div>
