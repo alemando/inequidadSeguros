@@ -34,11 +34,11 @@ export default function App(props) {
           <div className="content-page">
             <div className="content">
               <div className="container-fluid">
-                  <Route path="/clientes" component={Cliente} />
-                  <Route path="/vendedores" component={Vendedor} />
-                  <Route path="/aseguradoras" component={Aseguradora} />
-                  <Route path="/categorias" component={Categoria} />
-                  <Route path="/seguros" component={Seguro} />
+                  <Route path="/clientes" component={()=><Cliente session={props.session}/>} />
+                  <Route path="/vendedores" component={()=><Vendedor session={props.session}/>} />
+                  <Route path="/aseguradoras" component={()=><Aseguradora session={props.session}/>} />
+                  <Route path="/categorias" component={()=><Categoria session={props.session}/>} />
+                  <Route path="/seguros" component={()=><Seguro session={props.session}/>} />
               </div>
             </div>
           </div>

@@ -165,10 +165,11 @@ export default class VerCriterio extends Component {
                   </div>
               </div>
               <div className="modal-footer">
+                
                 {(!this.state.edit ? <button type="button" className="btn btn-success" onClick={this.editarCriterio}>Enviar</button> 
                 : "")}
                 {(!this.state.edit ? <button type="button" className="btn btn-danger" onClick={()=>this.setState({edit: true})}>Cancelar</button> 
-                : <button type="button" className="btn btn-warning" onClick={()=>this.setState({edit: false})}>Editar</button>)}
+                : (this.props.session.esAdmin ? <button type="button" className="btn btn-warning" onClick={()=>this.setState({edit: false})}>Editar</button> : ""))}
                 <button type="button" className="btn btn-secondary" onClick={this.modalClose}>Cerrar</button>
               </div>
             </div>

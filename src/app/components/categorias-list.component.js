@@ -12,21 +12,24 @@ $.DataTable = DataTable
 const Categoria = props => (
   <Tr>
     <Td>{props.categoria.nombre}</Td>
-    <Td><center><VerCriterios categoria={props.categoria} /></center></Td>
-    <Td><center><EditCategoria categoria={props.categoria} component={props.component} /></center></Td>
-    <Td><center><button className={"btn " + (props.categoria.estado ? 'btn-success' : 'btn-danger')} onClick={()=>props.component.confirmDialog(props.categoria._id)}>{(props.categoria.estado ? 'Habilitar' : 'Desactivar')}</button></center></Td>
+    <Td><center><VerCriterios session={props.session} categoria={props.categoria} /></center></Td>
+    {(props.session.esAdmin ? <Td><center><EditCategoria categoria={props.categoria} component={props.component} /></center></Td> 
+                : "")}
+    {(props.session.esAdmin ? <Td><center><button className={"btn " + (props.categoria.estado ? 'btn-success' : 'btn-danger')} onClick={()=>props.component.confirmDialog(props.categoria._id)}>{(props.categoria.estado ? 'Habilitar' : 'Desactivar')}</button></center></Td>
+                : "")}
+    
   </Tr>
 )
 
 export default class CategoriasList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {categorias: []}; 
   }
 
   categoriasList() {
     return this.state.categorias.map(currentCategoria => {
-      return <Categoria component={this}categoria={currentCategoria} key={currentCategoria._id} />;
+      return <Categoria session={this.props.session} component={this}categoria={currentCategoria} key={currentCategoria._id} />;
     })
   }
 
@@ -135,8 +138,8 @@ export default class CategoriasList extends Component {
                   <Tr>
                     <Th><center>Nombre</center></Th>
                     <Th><center>Ver criterios</center></Th>
-                    <Th><center>Editar</center></Th>
-                    <Th><center>Habilitar/Desactivar</center></Th>
+                    {(this.props.session.esAdmin ? <Th><center>Editar</center></Th>: "")}
+                    {(this.props.session.esAdmin ? <Th><center>Habilitar/Desactivar</center></Th> : "")}
                   </Tr>
                 </Thead>
                 <Tbody>

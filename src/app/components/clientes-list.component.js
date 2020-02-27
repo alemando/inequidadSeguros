@@ -18,19 +18,20 @@ const Cliente = props => (
     <Td><center><VerCliente component={props.component} cliente={props.cliente} key={props.cliente.documento}/></center></Td>
     <Td><center><VerBienes cliente={props.cliente._id} clienteInfo={props.cliente} key={props.cliente.documento}/></center></Td>
     <Td><center><CreateBien cliente={props.cliente._id} clienteInfo={props.cliente} key={props.cliente.documento}/></center></Td>
-    <Td><center><EstadoCliente cliente={props.cliente.documento} estadoActual={props.cliente.estado}/></center></Td>
+    {(props.session.esAdmin ? <Td><center><EstadoCliente cliente={props.cliente.documento} estadoActual={props.cliente.estado}/></center></Td>: "")}
+    
   </Tr>
 )
 
 export default class ClientesList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { clientes: [] };
   }
 
   clientesList() {
     return this.state.clientes.map(currentCliente => {
-      return <Cliente cliente={currentCliente} key={currentCliente._id} component={this}/>;
+      return <Cliente session={this.props.session} cliente={currentCliente} key={currentCliente._id} component={this}/>;
     })
   }
 
@@ -91,7 +92,8 @@ export default class ClientesList extends Component {
                           <Th><center>Ver más</center></Th>
                           <Th><center>Ver bienes</center></Th>
                           <Th><center>Crear bien</center></Th>
-                          <Th><center>Estado</center></Th>
+                          {(this.props.session.esAdmin ? <Th><center>Estado</center></Th>: "")}
+                          
                       </Tr>
                   </Thead>                                        
                   <Tbody>

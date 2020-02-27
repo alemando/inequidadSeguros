@@ -3,7 +3,9 @@ import TitlePage from "./title-page.component";
 import SegurosList from "./seguros-list.component";
 
 export default class Seguro extends Component {
-
+	constructor(props) {
+		super(props);
+	}
   render() {
     return (
     	<div className="container-fluid">

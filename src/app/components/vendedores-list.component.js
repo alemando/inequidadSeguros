@@ -13,20 +13,21 @@ const Vendedor = props => (
     <Td>{props.vendedor.documento}</Td>
     <Td>{props.vendedor.nombre}</Td>
     <Td>{props.vendedor.apellido1} {props.vendedor.apellido2}</Td>
-    <Td><center><VerVendedor component={props.component} vendedor={props.vendedor} key={props.vendedor.documento}/></center></Td>
-    <Td><center><button className={"btn " + (props.vendedor.estado ?  'btn-danger' : 'btn-success')} onClick={()=>props.component.confirmDialog(props.vendedor._id)}>{(props.vendedor.estado ? 'Desactivar' : 'Habilitar')}</button></center></Td>
+    <Td><center><VerVendedor session={props.session.esAdmin} component={props.component} vendedor={props.vendedor} key={props.vendedor.documento}/></center></Td>
+    {(props.session.esAdmin ? <Td><center><button className={"btn " + (props.vendedor.estado ?  'btn-danger' : 'btn-success')} onClick={()=>props.component.confirmDialog(props.vendedor._id)}>{(props.vendedor.estado ? 'Desactivar' : 'Habilitar')}</button></center></Td>: "")}
+    
   </Tr>
 )
 
 export default class VendedoresList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { vendedores: [] };
   }
 
     vendedoresList() {
     return this.state.vendedores.map(currentVendedor => {
-      return <Vendedor component={this} vendedor={currentVendedor} key={currentVendedor._id} />;
+      return <Vendedor session={this.props.session} component={this} vendedor={currentVendedor} key={currentVendedor._id} />;
     })
   }
 
@@ -125,7 +126,8 @@ export default class VendedoresList extends Component {
                         <h3><i className="fa fa-id-card-o"></i> Vendedores disponibles</h3>
                     </div>
                     <div className="col-xs-6 col-sm-6 col-md-4 col-lg-2 col-xl-2">
-                        <CreateVendedor component={this}/>
+                        {(this.props.session.esAdmin ? <CreateVendedor component={this}/>: "")}
+                        
                     </div>
                 </div>
             </div>
@@ -139,7 +141,8 @@ export default class VendedoresList extends Component {
                             <Th><center>Nombre</center></Th>
                             <Th><center>Apellidos</center></Th>
                             <Th><center>Ver más</center></Th>
-                            <Th><center>Habilitar/Inhabilitar</center></Th>
+                            {(this.props.session.esAdmin ? <Th><center>Habilitar/Inhabilitar</center></Th>: "")}
+                            
                         </Tr>
                     </Thead>                                        
                     <Tbody>

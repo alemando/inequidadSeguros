@@ -14,21 +14,23 @@ const Aseguradora = props => (
     <Td>{props.aseguradora.nombre}</Td>
     <Td>{props.aseguradora.telefono}</Td>
     <Td>{props.aseguradora.correo}</Td>
-    <Td><button className={"btn " + (props.aseguradora.estado ? 'btn-success' : 'btn-danger')} onClick={()=>props.component.confirmDialog(props.aseguradora._id)}>{(props.aseguradora.estado ? 'Desactivar' : 'Activar')}</button></Td>
-    <Td><center><VerAseguradora component={props.component} aseguradora={props.aseguradora} key={props.aseguradora.nit}/></center></Td>
+    {(props.session.esAdmin ? <Td><button className={"btn " + (props.aseguradora.estado ? 'btn-success' : 'btn-danger')} onClick={()=>props.component.confirmDialog(props.aseguradora._id)}>{(props.aseguradora.estado ? 'Desactivar' : 'Activar')}</button></Td>: "")}
+    
+    {(props.session.esAdmin ? <Td><center><VerAseguradora component={props.component} aseguradora={props.aseguradora} key={props.aseguradora.nit}/></center></Td>: "")}
+    
   </Tr>
 )
 
 export default class AseguradorasList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {aseguradoras: []};
   }
 
     aseguradorasList() {
         return this.state.aseguradoras.map(currentAseguradora => {
-            return <Aseguradora component={this} aseguradora={currentAseguradora} key={currentAseguradora._id}/>;
+            return <Aseguradora session={this.props.session} component={this} aseguradora={currentAseguradora} key={currentAseguradora._id}/>;
         })
     }
 
@@ -128,7 +130,7 @@ export default class AseguradorasList extends Component {
                         <h3><i className="fa fa-handshake-o"></i> Aseguradoras disponibles</h3>
                     </div>
                     <div className="col-xs-6 col-sm-6 col-md-4 col-lg-2 col-xl-2">
-                        <CreateAseguradora component={this}/>
+                      {(this.props.session.esAdmin ? <CreateAseguradora component={this}/>: "")}
                     </div>
                 </div>
             </div>
@@ -142,8 +144,9 @@ export default class AseguradorasList extends Component {
                             <Th><center>Nombre</center></Th>
                             <Th><center>Telefono</center></Th>
                             <Th><center>Correo</center></Th>
-                            <Th><center>Habilitar / <br></br> Deshabilitar</center></Th>
-                            <Th><center>Editar</center></Th>
+                            {(this.props.session.esAdmin ? <Th><center>Habilitar / <br></br> Deshabilitar</center></Th>: "")}
+                            {(this.props.session.esAdmin ? <Th><center>Editar</center></Th>: "")}
+                            
                         </Tr>
                     </Thead>                                        
                     <Tbody>
