@@ -38,6 +38,11 @@ router.post('/withBienes', async(req, res) =>{
   res.json(clientes);
 });
 
+// UPDATE cliente
+router.post('/update', async (req,res) =>{ 
+  const resultado = await Cliente.actualizarCliente(req.body, true);
+  res.json(resultado);
+});
 //POST change status
 router.post('/status', async (req,res)=>{
   resultado = await Cliente.cambiarEstadoCliente(req.body.documento, req.body.admin);
