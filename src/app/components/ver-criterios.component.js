@@ -6,14 +6,14 @@ import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 const Criterio = props => (
   <Tr>
     <Td>{props.criterio.nombre}</Td>
-    <Td><VerCriterio nombre={props.nombre} criterio={props.criterio} key={props.criterio.mombre} categoria={props.categoria} /></Td>
+    <Td><VerCriterio session={props.session} nombre={props.nombre} criterio={props.criterio} key={props.criterio.mombre} categoria={props.categoria} /></Td>
   </Tr>
 )
 
 export default class VerCriterios extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       criterios: []
@@ -26,7 +26,7 @@ export default class VerCriterios extends Component {
 
   criteriosList() {
     return this.state.criterios.map(currentCriterio => {
-      return <Criterio nombre={this.props.categoria.nombre} criterio={currentCriterio} key={currentCriterio.nombre} categoria={this.props.categoria} />;
+      return <Criterio session={this.props.session} nombre={this.props.categoria.nombre} criterio={currentCriterio} key={currentCriterio.nombre} categoria={this.props.categoria} />;
     })
   }
 

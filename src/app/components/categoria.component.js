@@ -11,7 +11,7 @@ export default class Categoria extends Component {
     	<div className="container-fluid">
     	    <TitlePage page="Categorias"/>
     	    <div className="row">              
-    	        <CategoriasList session={props.session}/>
+    	        <CategoriasList session={this.props.session}/>
     	    </div>
     	</div>
     );
