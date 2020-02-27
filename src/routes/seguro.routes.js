@@ -29,7 +29,7 @@ router.get('/principal/:id', async(req,res)=>{
 });
 
 router.post('/finiquitar/:id', async(req,res)=>{
-  let respuesta = await Seguro.cambiarEstado(req.params.id,req.body.estado,req.body.admin)
+  let respuesta = await Seguro.cambiarEstado(req.params.id,req.body.estado, req.session.esAdmin)
   res.json(respuesta);
 })
 //Borrar seguro por Id de seguro
