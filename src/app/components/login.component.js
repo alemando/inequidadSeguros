@@ -23,7 +23,9 @@ export default class Login extends Component {
     }
 
     componentDidMount(){
-        this.validSession()
+        if(this.state.session == null){
+            this.validSession()
+        }
     }
 
     validSession(){
