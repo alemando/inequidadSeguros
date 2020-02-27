@@ -14,23 +14,86 @@ const Criterio = props => (
 
 export default class VerSeguro extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      criterios: []
+      criterios: [],
+      estado: '',
+      id : ''
     }
+    this.handleChange = this.handleChange.bind(this);
+    this.confirmDialog = this.confirmDialog.bind(this);
     this.eliminarSeguro = this.eliminarSeguro.bind(this);
   }
 
   componentDidMount() {
-    this.setState({ criterios: this.props.seguro.criterios })
+    this.setState({ 
+      criterios: this.props.seguro.criterios,
+      estado: this.props.seguro.estado,
+      id: this.props.seguro._id
+    })
   }
 
   criteriosList() {
     return this.state.criterios.map(currentCriterio => {
       return <Criterio criterio={currentCriterio} key={currentCriterio._id} />;
     })
+  }
+  confirmDialog() {
+    Swal.fire({
+      title: 'Estas seguro?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#00c70a',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Confirmar'
+    }).then((result) => {
+      if (result.value) {
+        fetch('/api/seguros/finiquitar/' + this.state.id, {
+          method: 'POST',
+          body: JSON.stringify({ estado: this.state.estado }),
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.id == 0) {
+    
+              Swal.fire({
+                text: data.mensaje,
+                type: 'error'
+              })
+            } else if (data.id == 1) {
+    
+              Swal.fire({
+                text: data.mensaje,
+                type: 'success',
+                onClose: () => {
+                  location.reload();
+                }
+              })
+            } else {
+              Swal.fire({
+                text: data.mensaje,
+                type: 'error'
+              })
+    
+            }
+          })
+          .catch(err => console.error(err));
+      }
+    })
+  }
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value
+    })
+    console.log(this.state)
   }
 
   eliminarSeguro(e) {
@@ -78,6 +141,7 @@ export default class VerSeguro extends Component {
                 </button>
               </div>
               <div className="modal-body">
+
                 <div className="container">
                   <ul className="list-group">
                     <li className="list-group-item">
@@ -138,11 +202,29 @@ export default class VerSeguro extends Component {
                         <div className="col-md-6 ml-auto">{this.props.seguro.valorTotal}</div>
                       </div>
                     </li>
+
                     <li className="list-group-item">
                       <div className="row">
+
                         <div className="col-md-6 ml-auto"><b>Estado</b></div>
-                        <div className="col-md-6 ml-auto">{this.props.seguro.estado}</div>
+                        <div className="col-md-6 ml-auto">
+                          <div className="form-group">
+                            {((this.props.seguro.estado != "En proceso" || !this.props.session.esAdmin) ? <div>{this.props.seguro.estado }</div> : <select name="estado"
+                              onChange = {this.handleChange}
+                              required
+                              value={this.state.estado}
+                              className="form-control">
+                              <option value=''>Seleccione...</option>
+                              <option value={true}>Aprobado</option>
+                              <option value={false}>Rechazado</option>
+                            </select>)}
+                            
+                          </div>
+
+                        </div>
                       </div>
+                      {(this.props.seguro.estado != "En proceso" ? "" : <button type="submit" className="btn btn-primary" onClick={this.confirmDialog}>Confirmar</button>)}
+                      
                     </li>
                     <li className="list-group-item">
                       <div className="row">
