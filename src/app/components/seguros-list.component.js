@@ -14,7 +14,7 @@ const Seguro = props => (
     <Td>{props.seguro.bien.nombre}</Td>
     <Td>{props.seguro.aseguradora.nombre}</Td>
     <Td>{props.seguro.vendedor.nombre+" "+props.seguro.vendedor.apellido1+" "+props.seguro.vendedor.apellido2 }</Td>
-    <Td><center><VerSeguro seguro={props.seguro} key={props.seguro._id}/></center></Td>
+    <Td><center><VerSeguro session={props.session} seguro={props.seguro} key={props.seguro._id}/></center></Td>
   </Tr>
 )
 
@@ -27,7 +27,7 @@ export default class SegurosList extends Component {
 
     segurosList() {
         return this.state.seguros.map(currentSeguro => {
-            return <Seguro seguro={currentSeguro} key={currentSeguro._id}/>;
+            return <Seguro session={this.props.session} seguro={currentSeguro} key={currentSeguro._id}/>;
         })
     }
 

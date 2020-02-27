@@ -14,8 +14,8 @@ const Criterio = props => (
 
 export default class VerSeguro extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       criterios: [],
@@ -209,7 +209,7 @@ export default class VerSeguro extends Component {
                         <div className="col-md-6 ml-auto"><b>Estado</b></div>
                         <div className="col-md-6 ml-auto">
                           <div className="form-group">
-                            {(this.props.seguro.estado != "En proceso" ? <div>{this.props.seguro.estado }</div> : <select name="estado"
+                            {((this.props.seguro.estado != "En proceso" || !this.props.session.esAdmin) ? <div>{this.props.seguro.estado }</div> : <select name="estado"
                               onChange = {this.handleChange}
                               required
                               value={this.state.estado}
