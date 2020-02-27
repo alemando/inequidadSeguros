@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
 import Swal from 'sweetalert2'
 import App from '../App';
 
@@ -89,9 +88,8 @@ export default class Login extends Component {
         if(this.state.session == null){
             return(
             <div className="fondo">
-            <div className="card-header fondo"></div>
-            <div className="container-fluid fondo card-body">
-            <div className="container-sm wrapper">
+            <div className="container-fluid card-body">
+            <div className="container wrapper container-logo">
                 <a href="#" className="logo"><img alt="logo" src="assets/images/logoColor.png" /></a>
                 <form id="#formLogin" onSubmit={this.login}>
                     <div className="form-group">
@@ -105,10 +103,9 @@ export default class Login extends Component {
                 </form>
                 <div id="formFooter">
                     <button type="submit" onClick={this.login} form="formLogin" className="btn btn-primary">Enviar</button>
-                </div>
+                </div>  
             </div>
             </div>
-            <div className="card-footer fondo"></div>
         
         </div>
         )
