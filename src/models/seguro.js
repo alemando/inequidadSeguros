@@ -4,6 +4,7 @@ const clienteModel = require('../models/cliente');
 const vendedorModel = require('../models/vendedor');
 const bienModel = require('../models/bien');
 const aseguradoraModel = require('../models/aseguradora');
+const moment = require('moment')
 
 //Clase criterio, especial para un subdocumento
 const criterioSchema = Schema({
@@ -31,6 +32,12 @@ const seguroSchema = Schema({
     type: Date,
     require: true,
     trim: true,
+  },
+  fechaCreacion: {
+    type: Date,
+    require: true,
+    trim: true,
+    default: moment().format("YYYY-MM-DD")
   },
   tipoPago:{
     type: String,
@@ -169,6 +176,10 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     //Validación fecha inicio menor a fecha fin
     if(Date.parse(datos.fechaInicio) > Date.parse(datos.fechaFin)){
         validacion.mensaje += "La fecha inicio debe ser menor que la fecha fin "
+    }
+
+    if(Date.parse(datos.fechaInicio)<= Date.parse(fechaActual()+" 00:00:00.000Z")){
+        validacion.mensaje += "La fecha de inicio debe ser posterior a la fecha actual"
     }
 
     //Validacion diaPago es un numero
@@ -324,6 +335,25 @@ seguroSchema.statics.borrarSeguro = async function(id,admin) {
 
 }
 
+
+/*Método para encontrar la cantidad de seguros vendidos entre un rango determinado de fechas
+por defecto, el rango se calcula desde el inicio del mes actual hasta el día en el que se haga la consulta*/
+seguroSchema.statics.segurosEntreFechas = async function(fechaInicio=fechaMesInicio(), fechaFin=fechaActual()) {
+    try{
+        let inicioRango = moment(fechaInicio,"YYYY-MM-DD")
+        let finRango = moment(fechaFin,"YYYY-MM-DD")
+        if (inicioRango<=finRango){
+            let lista = await seguros.find()
+            let listaFiltrada = lista.filter(seguro => moment(seguro.fechaCreacion, "YYYY-MM-DD")>=inicioRango && moment(seguro.fechaCreacion, "YYYY-MM-DD")<=finRango)
+            return listaFiltrada.length
+        }else{
+            return "La fecha de inicio debe ser igual o superior a la fecha final del rango"
+        }
+    }catch(error){
+        return "Ha ocurrido un error al consultar entre fechas: \n"+error
+    }
+}
+
 const verificarCriterios = (arreglo) => {
     for(let i = 0; i<arreglo.length;i++){
         for(let j = i; j<arreglo.length;j++){
@@ -373,6 +403,19 @@ const validacionesCriterios = (arreglo) => {
         }
     }
     return mensaje
+}
+
+
+//Estas dos funciones permiten retornar las fechas actual y de principio de mes en un formato estándar
+const fechaActual = () => {
+    let ahora = moment().format("YYYY-MM-DD")
+    return ahora
+}
+
+const fechaMesInicio = () => {
+    let ahora = fechaActual().split("-").map(x => parseInt(x))
+    primerDia = moment({year:ahora[0], month:ahora[1]-1, day:1}).format("YYYY-MM-DD")
+    return primerDia
 }
 
 const seguros = mongoose.model('seguros',seguroSchema);
