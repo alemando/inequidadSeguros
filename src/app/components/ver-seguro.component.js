@@ -234,36 +234,21 @@ export default class VerSeguro extends Component {
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Tipo de pago</b></div>
-                        {(this.state.editMode ? <div className="col-md-6 ml-auto"><input name="tipoPago" onChange={this.handleChange} type="text"
-                        required
-                        value={this.state.tipoPago}
-                        className="form-control"
-                        /></div>
-                        : <div className="col-md-6 ml-auto">{this.props.seguro.tipoPago}</div>)}
+                         <div className="col-md-6 ml-auto">{this.props.seguro.tipoPago}</div>
 
                       </div>
                     </li>
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Fecha Inicio</b></div>
-                        {(this.state.editMode ? <div className="col-md-6 ml-auto"><input name="fechaInicio" onChange={this.handleChange} type="date"
-                            required
-                            value={moment(this.props.seguro.fechaInicio, "YYYY-MM-DD").locale("es").format("YYYY-MM-DD")}
-                            className="form-control"
-                          /></div>
-                            : <div className="col-md-6 ml-auto">{moment(this.props.seguro.fechaInicio, "YYYY-MM-DD").locale("es").format("DD-MMM-YYYY")}</div>)}
+                         <div className="col-md-6 ml-auto">{moment(this.props.seguro.fechaInicio, "YYYY-MM-DD").locale("es").format("DD-MMM-YYYY")}</div>
                       </div>
                     </li>
                     {moment(this.props.seguro.fechaFin, "YYYY-MM-DD").isValid() &&
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Fecha Fin</b></div>
-                        {(this.state.editMode ? <div className="col-md-6 ml-auto"><input name="fechaFin" onChange={this.handleChange} type="date"
-                          required
-                          value={moment(this.props.seguro.fechaFin, "YYYY-MM-DD").locale("es").format("YYYY-MM-DD")}
-                          className="form-control"
-                        /></div>
-                          : <div className="col-md-6 ml-auto">{moment(this.props.seguro.fechaFin, "YYYY-MM-DD").locale("es").format("DD-MMM-YYYY")}</div>)}
+                        <div className="col-md-6 ml-auto">{moment(this.props.seguro.fechaFin, "YYYY-MM-DD").locale("es").format("DD-MMM-YYYY")}</div>
                       </div>
                     </li>
                     }
@@ -281,12 +266,7 @@ export default class VerSeguro extends Component {
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Valor total</b></div>
-                        {(this.state.editMode ? <div className="col-md-6 ml-auto"><input name="valorTotal" onChange={this.handleChange} type="number"
-                          required
-                          value={this.state.valorTotal}
-                          className="form-control"
-                        /></div>
-                          : <div className="col-md-6 ml-auto">{this.props.seguro.valorTotal}</div>)}
+                         <div className="col-md-6 ml-auto">{this.props.seguro.valorTotal}</div>
                       </div>
                     </li>
 
