@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 var uniqueValidator = require('mongoose-unique-validator');
+const vendedorModel = require('../models/vendedor');
 const Schema = mongoose.Schema;
 
 //Clase cliente
