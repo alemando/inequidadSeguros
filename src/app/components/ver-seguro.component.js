@@ -20,15 +20,76 @@ export default class VerSeguro extends Component {
     this.state = {
       criterios: [],
       estado: '',
-      id : ''
+      id : '',
+      tipoPago: props.seguro.tipoPago,
+      fechaInicio: props.seguro.fechaInicio,
+      fechaFin: props.seguro.fechaFin,
+      diaPago: props.seguro.diaPago,
+      valorTotal: props.seguro.valorTotal,
+      observaciones: props.seguro.observaciones
     }
+    this.editSeguro = this.editSeguro.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.confirmDialog = this.confirmDialog.bind(this);
     this.eliminarSeguro = this.eliminarSeguro.bind(this);
+
   }
 
+  editSeguro(e) {
+    e.preventDefault();
+    fetch('/api/seguros/update', {
+      method: 'POST',
+      body: JSON.stringify(this.state),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.id == 0) {
+
+          Swal.fire({
+            text: data.mensaje,
+            type: 'error'
+          })
+        } else if (data.id == 1) {
+
+          this.props.component.fetchSeguros();
+
+          Swal.fire({
+            text: data.mensaje,
+            type: 'success',
+            onClose: () => {
+              location.reload();
+            }
+          })
+
+          $('EditarSeguro-' + this.props.seguro.vendedor).modal('hide');
+          $('formEditarSeguro-' + this.props.seguro.vendedor).reset();
+
+          this.setState({
+            vendedor: '',
+            aseguradora: '',
+            cliente: '',
+            Bien: '',
+            tipoPago: '',
+            fechaInicio: '',
+            diaPago: 0,
+            valorTotal: 0,
+            estado: '',
+          });
+        } else {
+          Swal.fire({
+            text: data.mensaje,
+            type: 'error'
+          })
+        }
+      })
+      .catch(err => console.error(err));
+  }
   componentDidMount() {
-    this.setState({ 
+    this.setState({
       criterios: this.props.seguro.criterios,
       estado: this.props.seguro.estado,
       id: this.props.seguro._id
@@ -62,13 +123,13 @@ export default class VerSeguro extends Component {
           .then(res => res.json())
           .then(data => {
             if (data.id == 0) {
-    
+
               Swal.fire({
                 text: data.mensaje,
                 type: 'error'
               })
             } else if (data.id == 1) {
-    
+
               Swal.fire({
                 text: data.mensaje,
                 type: 'success',
@@ -81,7 +142,7 @@ export default class VerSeguro extends Component {
                 text: data.mensaje,
                 type: 'error'
               })
-    
+
             }
           })
           .catch(err => console.error(err));
@@ -103,7 +164,7 @@ export default class VerSeguro extends Component {
     .then(res => res.json())
     .then(data => {
       if(data.id == 0){
-                  
+
         Swal.fire({
           text: data.mensaje,
           type: 'error'
@@ -173,33 +234,59 @@ export default class VerSeguro extends Component {
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Tipo de pago</b></div>
-                        <div className="col-md-6 ml-auto">{this.props.seguro.tipoPago}</div>
+                        {(this.state.editMode ? <div className="col-md-6 ml-auto"><input name="tipoPago" onChange={this.handleChange} type="text"
+                        required
+                        value={this.state.tipoPago}
+                        className="form-control"
+                        /></div>
+                        : <div className="col-md-6 ml-auto">{this.props.seguro.tipoPago}</div>)}
+
                       </div>
                     </li>
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Fecha Inicio</b></div>
-                        <div className="col-md-6 ml-auto">{moment(this.props.seguro.fechaInicio, "YYYY-MM-DD").locale("es").format("DD-MMM-YYYY")}</div>
+                        {(this.state.editMode ? <div className="col-md-6 ml-auto"><input name="fechaInicio" onChange={this.handleChange} type="date"
+                            required
+                            value={moment(this.props.seguro.fechaInicio, "YYYY-MM-DD").locale("es").format("YYYY-MM-DD")}
+                            className="form-control"
+                          /></div>
+                            : <div className="col-md-6 ml-auto">{moment(this.props.seguro.fechaInicio, "YYYY-MM-DD").locale("es").format("DD-MMM-YYYY")}</div>)}
                       </div>
                     </li>
                     {moment(this.props.seguro.fechaFin, "YYYY-MM-DD").isValid() &&
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Fecha Fin</b></div>
-                        <div className="col-md-6 ml-auto">{moment(this.props.seguro.fechaFin, "YYYY-MM-DD").locale("es").format("DD-MMM-YYYY")}</div>
+                        {(this.state.editMode ? <div className="col-md-6 ml-auto"><input name="fechaFin" onChange={this.handleChange} type="date"
+                          required
+                          value={moment(this.props.seguro.fechaFin, "YYYY-MM-DD").locale("es").format("YYYY-MM-DD")}
+                          className="form-control"
+                        /></div>
+                          : <div className="col-md-6 ml-auto">{moment(this.props.seguro.fechaFin, "YYYY-MM-DD").locale("es").format("DD-MMM-YYYY")}</div>)}
                       </div>
                     </li>
                     }
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Dia pago</b></div>
-                        <div className="col-md-6 ml-auto">{this.props.seguro.diaPago}</div>
+                        {(this.state.editMode ? <div className="col-md-6 ml-auto"><input name="diaPago" onChange={this.handleChange} type="number"
+                          required
+                          value={this.state.diaPago}
+                          className="form-control"
+                        /></div>
+                          : <div className="col-md-6 ml-auto">{this.props.seguro.diaPago}</div>)}
                       </div>
                     </li>
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Valor total</b></div>
-                        <div className="col-md-6 ml-auto">{this.props.seguro.valorTotal}</div>
+                        {(this.state.editMode ? <div className="col-md-6 ml-auto"><input name="valorTotal" onChange={this.handleChange} type="number"
+                          required
+                          value={this.state.valorTotal}
+                          className="form-control"
+                        /></div>
+                          : <div className="col-md-6 ml-auto">{this.props.seguro.valorTotal}</div>)}
                       </div>
                     </li>
 
@@ -218,18 +305,23 @@ export default class VerSeguro extends Component {
                               <option value={true}>Aprobado</option>
                               <option value={false}>Rechazado</option>
                             </select>)}
-                            
+
                           </div>
 
                         </div>
                       </div>
                       {((this.props.seguro.estado != "En proceso" || !this.props.session.esAdmin) ? "" : <button type="submit" className="btn btn-primary" onClick={this.confirmDialog}>Confirmar</button>)}
-                      
+
                     </li>
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Observaciones</b></div>
-                        <div className="col-md-6 ml-auto">{this.props.seguro.observaciones}</div>
+                        {(this.state.editMode ? <div className="col-md-6 ml-auto"><input name="Observaciones" onChange={this.handleChange} type="text"
+                          required
+                          value={this.state.Observaciones}
+                          className="form-control"
+                        /></div>
+                          : <div className="col-md-6 ml-auto">{this.props.seguro.Observaciones}</div>)}
                       </div>
                     </li>
                   </ul>
@@ -249,8 +341,13 @@ export default class VerSeguro extends Component {
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-danger" onClick={this.eliminarSeguro} >Eliminar seguro</button>
-                
+
+              {(this.state.editMode ? <button type="button" className="btn btn-success" onClick={this.editSeguro}>Enviar</button>
+                : "")}
+              {(this.state.editMode ? <button type="button" className="btn btn-danger" onClick={() => this.setState({ editMode: false })}>Cancelar</button>
+                  : <button type="button" className="btn btn-warning" onClick={() => this.setState({ editMode: true })}>Editar</button>)}
+                  <button type="button" className="btn btn-danger" onClick={this.eliminarSeguro} >Eliminar seguro</button>
+
                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
               </div>
             </div>
