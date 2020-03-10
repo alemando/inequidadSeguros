@@ -27,7 +27,7 @@ router.get('/:documento', async (req, res) => {
 
 // ADD a new cliente
 router.post('/save', async (req, res) => {
-  let resultado = await Cliente.guardarCliente(req.body);
+  let resultado = await Cliente.guardarCliente(req.body, req.session._id);
   res.json(resultado);
 });
 
@@ -38,7 +38,7 @@ router.post('/withBienes', async(req, res) =>{
 });
 
 // UPDATE cliente
-router.post('/update', async (req,res) =>{ 
+router.post('/update', async (req,res) =>{
   const resultado = await Cliente.actualizarCliente(req.body, req.session.esAdmin);
   res.json(resultado);
 });
