@@ -4,7 +4,7 @@ const clienteModel = require('../models/cliente');
 const vendedorModel = require('../models/vendedor');
 const bienModel = require('../models/bien');
 const aseguradoraModel = require('../models/aseguradora');
-const moment = require('moment')
+const moment = require('moment');
 
 //Clase criterio, especial para un subdocumento
 const criterioSchema = Schema({

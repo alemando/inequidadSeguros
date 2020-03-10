@@ -48,4 +48,16 @@ router.post('/status', async (req,res)=>{
   res.json(resultado)
 })
 
+//POST Cantidad de clientes registrados entre fechas
+router.post('/cantidadClientesFechas', async(req,res) => {
+  if (req.body.fechaInicio && req.body.fechaFin){
+    let respuesta = await Cliente.clientesCreadosEntreFechas(req.session._id,req.body.fechaInicio,req.body.fechaFin);
+    res.json(respuesta);
+  }else{ //Por defecto envia los clientes creados entre hoy y un mes antes
+    let respuesta = await Cliente.clientesCreadosEntreFechas();
+    res.json(respuesta);
+  }
+})
+
+
 module.exports = router;
