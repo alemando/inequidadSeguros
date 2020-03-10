@@ -178,9 +178,9 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
         validacion.mensaje += "La fecha inicio debe ser menor que la fecha fin "
     }
 
-    if(Date.parse(datos.fechaInicio)<= Date.parse(fechaActual()+" 00:00:00.000Z")){
+    /*if(Date.parse(datos.fechaInicio)<= Date.parse(fechaActual()+" 00:00:00.000Z")){
         validacion.mensaje += "La fecha de inicio debe ser posterior a la fecha actual"
-    }
+    }*/
 
     //Validacion diaPago es un numero
     if(isNaN(datos.diaPago)){
@@ -338,13 +338,13 @@ seguroSchema.statics.borrarSeguro = async function(id,admin) {
 
 /*Método para encontrar la cantidad de seguros vendidos entre un rango determinado de fechas
 por defecto, el rango se calcula desde el inicio del mes actual hasta el día en el que se haga la consulta*/
-seguroSchema.statics.segurosEntreFechas = async function(fechaInicio=fechaMesInicio(), fechaFin=fechaActual()) {
+seguroSchema.statics.segurosEntreFechas = async function(idVendedor,fechaInicio=fechaMesInicio(), fechaFin=fechaActual()) {
     try{
         let inicioRango = moment(fechaInicio,"YYYY-MM-DD")
         let finRango = moment(fechaFin,"YYYY-MM-DD")
         if (inicioRango<=finRango){
             let lista = await seguros.find()
-            let listaFiltrada = lista.filter(seguro => moment(seguro.fechaCreacion, "YYYY-MM-DD")>=inicioRango && moment(seguro.fechaCreacion, "YYYY-MM-DD")<=finRango)
+            let listaFiltrada = lista.filter(seguro => moment(seguro.fechaCreacion, "YYYY-MM-DD")>=inicioRango && moment(seguro.fechaCreacion, "YYYY-MM-DD")<=finRango && idVendedor == seguro.vendedor && seguro.estado=="Aprobado")
             return listaFiltrada.length
         }else{
             return "La fecha de inicio debe ser igual o superior a la fecha final del rango"
