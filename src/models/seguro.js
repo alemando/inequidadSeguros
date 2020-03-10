@@ -418,6 +418,27 @@ const fechaMesInicio = () => {
     return primerDia
 }
 
+//Metodo para retornar los clientes de todos los seguros registrados
+seguroSchema.statics.obtenerClientesSeguros = async function() {
+    try {
+        let listaClientesSeguros = await seguros.find();
+        let clientes = []
+        console.log("hola");
+        console.log("hola");
+        for (let i = 0; i < listaClientesSeguros.length; i++) {
+            if (listaClientesSeguros[i] != null) {
+              let elCliente = listaClientesSeguros[i].cliente;
+              console.log(elCliente);
+              clientes.push(elCliente);
+            }
+          }
+        console.log("hola");
+        return clientes;
+    } catch (error) {
+        return "Ha ocurrido algo inesperado al intentar obtener los seguros\n"+ error;
+    }
+}
+
 const seguros = mongoose.model('seguros',seguroSchema);
 
 module.exports = seguros;

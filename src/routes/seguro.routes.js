@@ -48,4 +48,10 @@ router.post('/betweenDates', async(req,res)=>{
     res.json(respuesta)
   }
 })
+
+router.get('/obtenerClientes', async(req,res)=>{
+  const segurocliente = await Seguro.obtenerClientesSeguros();
+  res.json(segurocliente);
+})
+
 module.exports = router;
