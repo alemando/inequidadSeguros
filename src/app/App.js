@@ -41,7 +41,10 @@ export default function App(props) {
                   <Route path="/seguros" component={()=><Seguro session={props.session}/>} />
               </div>
               <div>
-              <h1>aquí van las cosas de clientes</h1>
+              <center><h3><p>Acá voy a hacer el cuadrito para mostrar la</p>
+                  <p>CANTIDAD </p>
+                  <p>de clientes creados entre ciertas fechas.</p>
+              </h3>
               <label for="start">Fecha Inicio:</label>
               <input type="date" id="start" name="trip-start"
                     
@@ -50,6 +53,7 @@ export default function App(props) {
               <input type="date" id="start" name="trip-start"
                     
                     min="2015-01-01" max="2030-12-31"></input>      
+            </center>
             </div>
             </div>
           </div>
