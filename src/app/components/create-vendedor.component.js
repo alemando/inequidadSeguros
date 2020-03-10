@@ -200,7 +200,7 @@ export default class CreateVendedor extends Component {
                                             value={this.state.password}
                                             className="form-control"
                                         />
-                                        <span className="btn btn-light" onClick={this.showHide}>{this.state.type === 'input' ? 'Hide' : 'Show'}</span>
+                                        <span className="btn btn-light" onClick={this.showHide}>{this.state.type === 'input' ? 'Esconder' : 'Mostrar'}</span>
                                         <span className="btn btn-light" onClick={this.generar}>Generar contraseña</span>
                                     </div>
                                     <div className="form-group">
