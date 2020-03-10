@@ -18,6 +18,10 @@ router.get('/habilitados', async (req, res) => {
   res.json(cliente);
 });
 
+router.get('/topcinco', async(req,res)=>{
+  resultado = await Cliente.topCinco();
+  res.json(resultado)
+})
 
 // GET Cliente by documento
 router.get('/:documento', async (req, res) => {
@@ -47,5 +51,7 @@ router.post('/status', async (req,res)=>{
   resultado = await Cliente.cambiarEstadoCliente(req.body.documento, req.session.esAdmin);
   res.json(resultado)
 })
+
+
 
 module.exports = router;
