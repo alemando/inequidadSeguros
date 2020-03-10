@@ -12,8 +12,8 @@ router.get('/', async (req,res)=>{
 
 // GET seguros pendientes
 router.get('/pendientes', async (req,res)=>{
-  const seguros = await Seguro.obtenerSegurosPendientes();
-  res.json(seguros);
+  const pendientes = await Seguro.obtenerSegurosPendientes();
+  res.json(pendientes);
 });
 
 // GET one seguro by id

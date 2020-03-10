@@ -263,7 +263,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
 //Metodo para retornar todos los seguros
 seguroSchema.statics.obtenerSeguros = async function() {
     try {
-        let listaSeguros = await seguros.find({estado: 'En proceso'}).
+        let listaSeguros = await seguros.find().
         populate('cliente', ['nombre', "apellido1","apellido2"]).
         populate('vendedor', ['nombre', "apellido1","apellido2"]).
         populate('bien', 'nombre').
