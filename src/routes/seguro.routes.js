@@ -38,4 +38,11 @@ router.get('/remove/:id', async(req,res)=>{
   let respuesta = await Seguro.borrarSeguro(id, req.session.esAdmin);
   res.json(respuesta);
 });
+
+//Editar un seguro
+router.post('/editar', async(req,res)=>{
+  //return(res.json(await Seguro.editarSeguro(req.body,true)));
+  return(res.json(await Seguro.editarSeguro(req.body,req.session.esAdmin)));
+});
+
 module.exports = router;
