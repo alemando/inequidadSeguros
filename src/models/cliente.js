@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 var uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
+const seguroModel = require('../models/seguro');
 
 //Clase cliente
 const clienteSchema = Schema({
@@ -445,6 +446,18 @@ clienteSchema.statics.cambiarEstadoCliente = async (documento, admin) => {
         }
     }
     return ("Sólo los administradores pueden habilitar o deshabilitar clientes.")
+}
+
+clienteSchema.statics.topCinco = async () => {
+    let top = []
+    lista_clientes = await clientes.find({},["_id","documento","nombre","apellido1","apellido2"])
+    for (const cli of lista_clientes) {  
+        numero_seguros = await seguroModel.countDocuments({cliente:cli._id})
+        top.push({"id":cli._id})
+        } 
+    console.log(top);
+    
+    return lista_clientes
 }
 
 const clientes = mongoose.model('clientes', clienteSchema);
