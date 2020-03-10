@@ -304,6 +304,109 @@ seguroSchema.statics.cambiarEstado = async function(id,estado,admin) {
     else return {id:0, mensaje:"No posees privilegios de administrador"};
 }
 
+seguroSchema.statics.editarSeguro = async (datos,admin) => {
+
+    let validacion = {id: "0", mensaje: ''};
+
+    try{
+
+        let seguro =  await seguros.findById(datos._id);
+        if(seguro == null){
+            throw 'El seguro no existe';
+        }
+        else{
+            //Verificamos que la sesión esté abierta por un admin
+            if(admin){
+                //Validaciones propias de los seguros
+
+                //Validacion fechaInicio es una fecha valida
+                if(isNaN(Date.parse(datos.fechaInicio))){
+                    validacion.mensaje += "La fecha de incio tiene un formato erroneo\n"
+                }
+                if(datos.fechaInicio == null || datos.fechaInicio == ""){
+                    validacion.mensaje += "El seguro no ha sido editado, la fecha de inicio esta vacía\n"
+                }
+
+                //Validacion tipoPago no es null o vacio
+                if(datos.tipoPago == null || datos.tipoPago == ""){
+                validacion.mensaje += "El seguro no ha sido editado, el tipo de pago esta vacío.\n"
+                }
+
+                //Validacion fechaFin es una fecha valida
+                /*if(isNaN(Date.parse(datos.fechaFin))){
+                    validacion.mensaje += "La fecha de fin tiene un formato erroneo\n"
+                }*/
+                if(datos.tipoPago == "Contado" && (datos.fechaFin == null || datos.fechaFin == "")){
+                    validacion.mensaje += "El seguro no ha sido editado, fecha de finalizacion vacía\n"
+                }
+
+                if(datos.tipoPago == "Credito" &&  datos.fechaFin != "" ){
+                validacion.mensaje += "El seguro no ha sido editado, la fecha de fin debe ser vacia"
+                }
+
+                //Validación fecha inicio menor a fecha fin
+                if(Date.parse(datos.fechaInicio) > Date.parse(datos.fechaFin)){
+                    validacion.mensaje += "La fecha inicio debe ser menor que la fecha fin "
+                }
+
+                //Validacion diaPago es un numero
+                if(isNaN(datos.diaPago)){
+                    validacion.mensaje += "El dia de pago no es un numero\n"
+                }
+                if(datos.diaPago == null || datos.diaPago == ""){
+                    validacion.mensaje += "El seguro no ha sido guardado, dia de pago vacío\n"
+                }
+                if(datos.diaPago > 31 || datos.diaPago <=0){
+                    validacion.mensaje += "El día de pago debe estar entre 1 y 31\n"
+                }
+
+                //Validacion valorTotal es un numero
+                if(datos.valorTotal == null || datos.valorTotal == ""){
+                    validacion.mensaje += "El valor total está vacío\n"
+                }
+                if(datos.valorTotal < 0){
+                    validacion.mensaje += "El valor total debe ser mayor a cero"
+                }
+                if(isNaN(datos.valorTotal)){
+                    validacion.mensaje += "El valor total no es un numero\n"
+                }
+
+                //Si no pasa alguna validacion retorna el mensaje correspondiente
+                if(validacion.mensaje.length!=0) return validacion
+
+                //Actualizamos el objeto seguro
+                seguro.estado = datos.estado;
+                seguro.observaciones = datos.observaciones;
+                seguro.fechaInicio = datos.fechaInicio;
+                seguro.tipoPago = datos.tipoPago;
+                seguro.fechaFin = datos.fechaFin;
+                seguro.valorTotal = datos.valorTotal;
+                seguro.diaPago = datos.diaPago;
+
+                //Guardamos el seguro
+                await seguro.save();
+
+                validacion.id = '1';
+                validacion.mensaje = 'Seguro editado con éxito';
+                return validacion;
+                
+            }
+            else{
+                throw 'No posees permisos para ejecutar esta acción';
+            }
+        }
+
+    } catch(error){
+        return{
+            id: '2',
+            mensaje: `Error editando el seguro: \n ${error}`
+        };
+    }
+
+}
+
+
+
 //Metodo para borrar un seguro por su id
 seguroSchema.statics.borrarSeguro = async function(id,admin) {
     if(admin){
