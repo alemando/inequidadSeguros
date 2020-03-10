@@ -40,6 +40,17 @@ export default function App(props) {
                   <Route path="/categorias" component={()=><Categoria session={props.session}/>} />
                   <Route path="/seguros" component={()=><Seguro session={props.session}/>} />
               </div>
+              <div>
+              <h1>aquí van las cosas de clientes</h1>
+              <label for="start">Fecha Inicio:</label>
+              <input type="date" id="start" name="trip-start"
+                    
+                    min="2015-01-01" max="2030-12-31"></input>
+              <label for="start">Fecha Final</label>
+              <input type="date" id="start" name="trip-start"
+                    
+                    min="2015-01-01" max="2030-12-31"></input>      
+            </div>
             </div>
           </div>
           <Footer></Footer>
