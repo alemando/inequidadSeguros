@@ -10,6 +10,12 @@ router.get('/', async (req,res)=>{
   res.json(seguros);
 });
 
+// GET seguros pendientes
+router.get('/pendientes', async (req,res)=>{
+  const seguros = await Seguro.obtenerSegurosPendientes();
+  res.json(seguros);
+});
+
 // GET one seguro by id
 router.get('/:id', async (req, res) => {
   const seguro = await Seguro.obtenerSeguro(req.params._id);
@@ -48,4 +54,5 @@ router.post('/betweenDates', async(req,res)=>{
     res.json(respuesta)
   }
 })
+
 module.exports = router;

@@ -263,7 +263,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
 //Metodo para retornar todos los seguros
 seguroSchema.statics.obtenerSeguros = async function() {
     try {
-        let listaSeguros = await seguros.find().
+        let listaSeguros = await seguros.find({estado: 'En proceso'}).
         populate('cliente', ['nombre', "apellido1","apellido2"]).
         populate('vendedor', ['nombre', "apellido1","apellido2"]).
         populate('bien', 'nombre').
@@ -272,6 +272,21 @@ seguroSchema.statics.obtenerSeguros = async function() {
         return listaSeguros;
     } catch (error) {
         return "Ha ocurrido algo inesperado al intentar obtener los seguros\n"+ error;
+    }
+}
+
+//Metodo para retornar todos los seguros pendientes
+seguroSchema.statics.obtenerSegurosPendientes = async function() {
+    try {
+        let pendientes = await seguros.find({estado: 'En proceso'}).
+        populate('cliente', ['nombre', "apellido1","apellido2"]).
+        populate('vendedor', ['nombre', "apellido1","apellido2"]).
+        populate('bien', 'nombre').
+        populate('aseguradora', 'nombre').
+        exec();;
+        return pendientes;
+    } catch (error) {
+        return "Ha ocurrido algo inesperado al intentar obtener los seguros pendientes\n"+ error;
     }
 }
 
@@ -284,6 +299,7 @@ seguroSchema.statics.obtenerSeguro = async function(id) {
         return "Ha ocurrido algo inesperado al intentar obtener el seguro\n"+ error;
     }
 }
+
 //Metodo para cambiar el estado de un seguro
 seguroSchema.statics.cambiarEstado = async function(id,estado,admin) {
     let validacion = { id: "0", mensaje: ""}
