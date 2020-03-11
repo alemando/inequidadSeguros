@@ -46,7 +46,7 @@ router.post('/update', async (req,res) =>{
 router.post('/status', async (req,res)=>{
   resultado = await Cliente.cambiarEstadoCliente(req.body.documento, req.session.esAdmin);
   res.json(resultado)
-})
+});
 
 //POST Cantidad de clientes registrados entre fechas
 router.post('/cantidadClientesFechas', async(req,res) => {
@@ -54,10 +54,10 @@ router.post('/cantidadClientesFechas', async(req,res) => {
     let respuesta = await Cliente.clientesCreadosEntreFechas(req.session._id,req.body.fechaInicio,req.body.fechaFin);
     res.json(respuesta);
   }else{ //Por defecto envia los clientes creados entre hoy y un mes antes
-    let respuesta = await Cliente.clientesCreadosEntreFechas();
+    let respuesta = await Cliente.clientesCreadosEntreFechas(req.session._id);
     res.json(respuesta);
   }
-})
+});
 
 
 module.exports = router;
