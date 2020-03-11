@@ -38,4 +38,14 @@ router.get('/remove/:id', async(req,res)=>{
   let respuesta = await Seguro.borrarSeguro(id, req.session.esAdmin);
   res.json(respuesta);
 });
+
+router.post('/betweenDates', async(req,res)=>{
+  if (req.body.fechaInicio && req.body.fechaFin){
+    let respuesta = await Seguro.segurosEntreFechas(req.session._id,req.body.fechaInicio,req.body.fechaFin)
+    res.json(respuesta)
+  }else{
+    let respuesta = await Seguro.segurosEntreFechas()
+    res.json(respuesta)
+  }
+})
 module.exports = router;
