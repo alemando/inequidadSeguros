@@ -9,34 +9,32 @@ $.DataTable = DataTable
 //(this.props.session.esAdmin ? <Th><center>Habilitar/Inhabilitar</center></Th> : "")
 //{this.vendedoresList()}
 
-const Vendedor = props => (
+const Aseguradora = props => (
     <Tr>
-        <Td>{props.vendedor.documento}</Td>
-        <Td>{props.vendedor.nombre}</Td>
-        <Td>{props.vendedor.celular}</Td>
-        <Td>{props.vendedor.seguros}</Td>  {/* esto no se que va a ser*/}
-
+        <Td>{props.aseguradora.nit}</Td>
+        <Td>{props.aseguradora.nombre}</Td>
+        <Td>{props.aseguradora.seguros}</Td>
     </Tr>
 )
 
 
-export default class MejoresVendedores extends Component {
+export default class MejoresAseguradoras extends Component {
     constructor(props) {
         super(props);
-        this.state = { vendedores: [] };
+        this.state = { aseguradoras: [] };
     }
 
-    vendedoresList() {
-        if (this.state.vendedores != null) {//hay que cambiar a length 0 despues
-            return this.state.vendedores.map(currentVendedor => {
-                return <Vendedor session={this.props.session} component={this} vendedor={currentVendedor} key={currentVendedor._id} />;
+    aseguradorasList() {
+        if (this.state.aseguradoras != null) {//hay que cambiar a length 0 despues
+            return this.state.aseguradoras.map(currentAseguradora => {
+                return <Aseguradora session={this.props.session} component={this} aseguradora={currentAseguradora} key={currentAseguradora._id} />;
             })
         } else {
             return (
                 <Tr>
                     <td colSpan="4">
                         <div class="alert alert-warning" role="alert">
-                            No hay mejores vendedores
+                            No hay mejores aseguradoras
                     </div>
                     </td>
                 </Tr>)
@@ -44,14 +42,14 @@ export default class MejoresVendedores extends Component {
     }
 
     componentDidMount() {
-        this.fetchMejoresVendedores();
+        this.fetchMejoresAseguradoras();
     }
 
-    fetchMejoresVendedores() {
-        fetch('/api/Vendedores/mejores')
+    fetchMejoresAseguradoras() {
+        fetch('/api/Aseguradoras/mejores')
             .then(res => res.json())
             .then(data => {
-                this.setState({ vendedores: data });
+                this.setState({ aseguradoras: data });
             })
             .catch(err => console.error(err));
     }
@@ -61,18 +59,17 @@ export default class MejoresVendedores extends Component {
                 <div className="col-12">
                     <div className="card-body">
                         <div className="table-responsive">
-                            <center><h3>Top 5 vendedores:</h3></center>
+                            <center><h3>Top 5 aseguradoras:</h3></center>
                             <Table id="tabla-mejores-vendedores" className="table table-sm ">
                                 <Thead>
                                     <Tr>
-                                        <Th><center>Documento</center></Th>
+                                        <Th><center>Nit</center></Th>
                                         <Th><center>Nombre</center></Th>
-                                        <Th><center>Celular</center></Th>
                                         <Th><center>Seguros vendidos</center></Th>
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                    {this.vendedoresList()}
+                                    {this.aseguradorasList()}
                                 </Tbody>
                             </Table>
                         </div>
