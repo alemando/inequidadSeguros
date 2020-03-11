@@ -447,7 +447,7 @@ clienteSchema.statics.cambiarEstadoCliente = async (documento, admin) => {
     }
     return ("Sólo los administradores pueden habilitar o deshabilitar clientes.")
 }
-
+//metodo para calcular el top 5 de clientes que mas seguros tienen. Si se da un empate devuelve todos los clientes que quedaron empatados.
 clienteSchema.statics.topCinco = async () => {
     let top = [];
     try {
@@ -461,6 +461,7 @@ clienteSchema.statics.topCinco = async () => {
         else {
             top=top.sort((a,b)=>b.seguros-a.seguros)
             let mensaje = "top generado con exito!."
+            //el siguiente if comprueba si se generan empates.
             if (top.length > 5) {
                 let empate = 5;
                 while (top[empate]) {
