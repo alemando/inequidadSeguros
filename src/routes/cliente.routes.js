@@ -19,7 +19,7 @@ router.get('/habilitados', async (req, res) => {
 });
 
 router.get('/topcinco', async(req,res)=>{
-  resultado = await Cliente.topCinco();
+  resultado = await Cliente.topCinco(req.session.esAdmin);
   res.json(resultado)
 })
 

@@ -448,33 +448,36 @@ clienteSchema.statics.cambiarEstadoCliente = async (documento, admin) => {
     return ("Sólo los administradores pueden habilitar o deshabilitar clientes.")
 }
 //metodo para calcular el top 5 de clientes que mas seguros tienen. Si se da un empate devuelve todos los clientes que quedaron empatados.
-clienteSchema.statics.topCinco = async () => {
-    let top = [];
-    try {
-        lista_clientes = await clientes.find({},["_id","documento","nombre","apellido1","apellido2"]);
-        if(lista_clientes.length==0) return {id:0, mensaje:"No hay clientes registrados!"}
-        for (const cli of lista_clientes) {  
-            numero_seguros = await seguroModel.countDocuments({cliente:cli._id,estado:"Aprobado"});
-            if(numero_seguros!=0) top.push({id:cli._id,documento:cli.documento,nombres:cli.nombre,apellidos: cli.apellido1 + ' '+ cli.apellido2,seguros:numero_seguros});
-        }
-        if (top.length==0) return {id:0, mensaje:"No hay clientes con seguros aprobados, no se pudo generar el top"}
-        else {
-            top=top.sort((a,b)=>b.seguros-a.seguros)
-            let mensaje = "top generado con exito!."
-            //el siguiente if comprueba si se generan empates.
-            if (top.length > 5) {
-                let empate = 5;
-                while (top[empate]) {
-                    if (top[empate-1].seguros == top[empate].seguros) empate = empate + 1;
-                }
-                top = top.slice(0,empate);
-                mensaje = mensaje + " se produjo un empate, se daran " + empate + " resultados"
+clienteSchema.statics.topCinco = async (admin) => {
+    admin =true
+    if(admin){
+        let top = [];
+        try {
+            lista_clientes = await clientes.find({},["_id","documento","nombre","apellido1","apellido2"]);
+            if(lista_clientes.length==0) return {id:0, mensaje:"No hay clientes registrados!"}
+            for (const cli of lista_clientes) {  
+                numero_seguros = await seguroModel.countDocuments({cliente:cli._id,estado:"Aprobado"});
+                if(numero_seguros!=0) top.push({id:cli._id,documento:cli.documento,nombres:cli.nombre,apellidos: cli.apellido1 + ' '+ cli.apellido2,seguros:numero_seguros});
             }
-            return {id:1, mensaje:mensaje, top:top}    
+            if (top.length==0) return {id:0, mensaje:"No hay clientes con seguros aprobados, no se pudo generar el top"}
+            else {
+                top=top.sort((a,b)=>b.seguros-a.seguros)
+                let mensaje = "top generado con exito!."
+                //el siguiente if comprueba si se generan empate.
+                if (top.length > 5) {
+                    let empate = 5;
+                    while (top[empate]) {
+                        if (top[empate-1].seguros == top[empate].seguros) empate = empate + 1;
+                    }
+                    top = top.slice(0,empate);
+                    mensaje = mensaje + " se produjo un empate, se daran " + empate + " resultados"
+                }
+                return {id:1, mensaje:mensaje, top:top}    
+            }
+        } catch (error) {
+            return {id:0, mensaje:"ha ocurrido algo inesperado\n" + error}
         }
-    } catch (error) {
-        return {id:0, mensaje:"ha ocurrido algo inesperado\n" + error}
-    }
+    }else return {id:0, mensaje:"no eres administrador, no puedes generar este top." }
 }
 
 const clientes = mongoose.model('clientes', clienteSchema);
