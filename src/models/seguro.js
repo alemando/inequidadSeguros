@@ -94,7 +94,7 @@ const seguroSchema = Schema({
 seguroSchema.statics.guardarSeguro = async function(datos) {
 
     let validacion = { id: "0", mensaje: ""}
-    //Validacion para tener al menos un criterio 
+    //Validacion para tener al menos un criterio
     if(datos.criterios.length == 0){
         validacion.mensaje += "El seguro no ha sido guardado, debe contener al menos un criterio."
     }
@@ -197,13 +197,13 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     if(validacion.mensaje.length!=0) return validacion
 
     console.log(datos.criterios)
-    
+
     for(let i = 0; i<datos.criterios.length;i++){
         delete datos.criterios[i]._id;
     }
 
     console.log(datos.criterios)
-    
+
     //Objeto seguro
     const seguro = new seguros({
       fechaInicio: datos.fechaInicio,
@@ -221,7 +221,7 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
 
     //Verificar si ya existe un seguro con los mismos atributos ingresados
     try{
-        seguroAux = await seguros.findOne({fechaInicio: seguro.fechaInicio, 
+        seguroAux = await seguros.findOne({fechaInicio: seguro.fechaInicio,
                                             fechaFin: seguro.fechaFin,
                                             valorTotal: seguro.valorTotal,
                                             diaPago: seguro.diaPago,
@@ -296,7 +296,7 @@ seguroSchema.statics.cambiarEstado = async function(id,estado,admin) {
             }else{
                 validacion.mensaje+="Este seguro ya ha sido finiquitado y su estado es: "+doc.estado;
                 return validacion;
-            }      
+            }
         } catch (error) {
             return {id:"0",mensaje:"Algo ha salido mal:\n"+error};
         }
@@ -312,7 +312,7 @@ seguroSchema.statics.borrarSeguro = async function(id,admin) {
             if(seguro.estado == "En proceso"){
                 seguro.remove();
                 return {id:1, mensaje: "Seguro borrado correctamente."};
-            
+
             }
             return {id:0, mensaje: "El estado del seguro no es en proceso."};
         } catch (error) {
@@ -322,6 +322,62 @@ seguroSchema.statics.borrarSeguro = async function(id,admin) {
         return {id:0, mensaje: "No tienes permisos para hacer esto"};
     }
 
+}
+
+//Metodo que extrae los mejores clientes del vendedor en session ej:"5e5608358c330d3c1404ee04"
+seguroSchema.statics.MejoresClientes = async (idVendedor) =>{
+  try {
+    //Query el cual agrupa por cliente,vendedor,estado y cuenta las estancias.
+    // Luego las filtra con el vendedor en session y las aprobado. ordenandolo al final
+    const aggregatorOpts = [
+    {
+        $group: {
+            _id: "$cliente",
+            vendedor: { $first : "$vendedor" },
+            estado: { $first: "$estado"},
+            count: { $sum: 1 }
+        }
+    },
+    {
+      $match: {
+        vendedor: mongoose.Types.ObjectId(idVendedor),
+        estado: "Aprobado"
+       }
+    },
+    {$sort:{"count":-1}}
+  ]
+  //Aplica el query al la tabla seguros
+  let res= await seguros.aggregate(aggregatorOpts).exec();;
+  //variable para determinar el tamaño de corte
+  let size = 0
+  // si el tamaño de la respuesta es menor o igual a 5
+  if (res.length <= 5) {
+    for(let i = 0; i < res.length; i++) {
+      let obj = res[i]
+      obj.cliente = await clienteModel.obtenerClienteById(obj._id)
+    }
+    size = res.length
+  }else{
+    // si no devuelvo los 5 primero, si hay empate los envio todos los que tengas igual valor
+    for(let i = 0; i < res.length; i++) {
+      let obj = res[i]
+      if (i<=5) {
+        obj.cliente = await clienteModel.obtenerClienteById(obj._id)
+      }else {
+        if(obj.count == res[i-1].count){
+          obj.cliente = await clienteModel.obtenerClienteById(obj._id)
+          size = i+1
+        }
+        break
+      }
+    }
+  }
+  //corto la respuesta al tamaño
+  res = res.slice(0,size)
+  return res
+  } catch (e) {
+    return {id:0,mensaje:"error: "+e}
+  }
 }
 
 const verificarCriterios = (arreglo) => {
@@ -347,7 +403,7 @@ const validacionesCriterios = (arreglo) => {
 
     mensaje=""
     for(let i = 0; i<arreglo.length;i++){
-        
+
         if(arreglo[i].nombre=="" || arreglo[i].nombre==null){
             mensaje+= "El nombre del criterio "+ (i+1) +" no es válido\n"
             if(arreglo[i].descripcion=="" || arreglo[i].descripcion==null){

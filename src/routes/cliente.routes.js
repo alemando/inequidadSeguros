@@ -4,6 +4,7 @@ const router = express.Router();
 
 // Cliente Model
 const Cliente = require('../models/cliente');
+const Seguro = require('../models/seguro');
 
 // GET all Clientes
 router.get('/', async (req, res) => {
@@ -18,6 +19,12 @@ router.get('/habilitados', async (req, res) => {
   res.json(cliente);
 });
 
+// Get top clientes por vendedor
+router.get('/bestclients', async (req,res)=>{
+  // Si se quiere probar con postman cambiar parametro req.body._id y enviar el id del vendedor como json
+  const seguros = await Seguro.MejoresClientes(req.session._id);
+  res.json(seguros);
+})
 
 // GET Cliente by documento
 router.get('/:documento', async (req, res) => {
