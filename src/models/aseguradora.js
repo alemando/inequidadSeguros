@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 var uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
 
+const Seguro = require('../models/seguro');
+
 //Clase Aseguradora
 const aseguradoraSchema = Schema({
     nit: {
@@ -97,13 +99,14 @@ aseguradoraSchema.statics.guardarAseguradora = async (datos)=> {
     try {
         //Procedo a guardar en la BD
         await aseguradoraNueva.save();
-        return { id: "1", mensaje: "La aseguradora se guardo correctamente."};
+        return { id: "1", mensaje: "La aseguradora se guardó correctamente."};
     } catch (error) {
         if (error.errors.nit.kind==="unique") return { 
             id: "2", mensaje: "El nit ingresado ya existe en nuestra base de datos"};
         else return { id: "0", mensaje: "Error desconocido"};
     }
 };
+
 
 //Metodo para retornar todas las aseguradoras de la BD
 aseguradoraSchema.statics.obtenerAseguradoras = async ()=> {
@@ -200,9 +203,38 @@ aseguradoraSchema.statics.actualizarAseguradora = async (datos, admin) => {
         mensaje: `Error obteniendo de aseguradora por nit: ${error}`
       };
     }
-  
-  }
+};
 
+//Obtener las 5 aseguradoras con más seguros aprobados
+aseguradoraSchema.statics.mejoresAseguradoras = async function() {
+    let validacion = { id: "0", mensaje: "" }
+    try {
+        lista = []
+        listaAseguradoras = await aseguradoras.find();
+        if (listAseguradoras.length == 0){
+            validacion.mensaje = "No hay aseguradoras por mostrar"
+            return validacion
+        }
+        for(aseguradora of listaAseguradoras){
+            segurosAprobados = await Seguro.obtenerSegurosAprobados(aseguradora);
+            lista.push({aseguradora: aseguradora, totalSeguros: segurosAprobados.length})
+        }
+        lista.sort(function (a, b){
+            return (b.totalSeguros - a.totalSeguros)
+        })
+        mejores = []
+        for(i of lista){
+            if(i.totalSeguros==0){ break }
+            mejores.push(i)
+            if(mejores.length==5){ break }
+        }
+        return mejores;
+    } catch (error) {
+        validacion.id = '2';
+        validacion.mensaje = `Error al obtener aseguradoras con más seguros aprobados: ${error}`
+        return validacion;
+    }
+  };
 
 const aseguradoras = mongoose.model('aseguradoras',aseguradoraSchema);
 
