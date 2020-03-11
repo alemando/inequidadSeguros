@@ -464,7 +464,7 @@ clienteSchema.statics.clientesCreadosEntreFechas = async function(idVendedor,fec
             let listaFiltrada = lista.filter(cliente => moment(cliente.fechaCreacion, "YYYY-MM-DD")>=inicioRango && moment(cliente.fechaCreacion, "YYYY-MM-DD")<=finRango && idVendedor == cliente.vendedor)
             return { id: "1", mensaje: listaFiltrada.length}
         }else{
-            return { id: "0", mensaje: "No tienes permisos para inhabilitar vendedor"}
+            return { id: "0", mensaje: "Las fechas no tienen logica"}
         }
     }catch(error){
         return { id: "0", mensaje: "Ha ocurrido un error al consultar entre fechas: \n"+error }
