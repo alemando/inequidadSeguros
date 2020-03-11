@@ -146,6 +146,12 @@ export default class VerSeguro extends Component {
                   <ul className="list-group">
                     <li className="list-group-item">
                       <div className="row">
+                        <div className="col-md-6 ml-auto"><b>Fecha de creación</b></div>
+                        <div className="col-md-6 ml-auto">{moment(this.props.seguro.fechaCreacion, "YYYY-MM-DD").locale("es").format("DD-MMM-YYYY")}</div>
+                      </div>
+                    </li>
+                    <li className="list-group-item">
+                      <div className="row">
                         <div className="col-md-6 ml-auto"><b>Vendedor</b></div>
                         <div className="col-md-6 ml-auto">{this.props.seguro.vendedor.nombre +
                           " " + this.props.seguro.vendedor.apellido1 + " " + this.props.seguro.vendedor.apellido2}</div>
