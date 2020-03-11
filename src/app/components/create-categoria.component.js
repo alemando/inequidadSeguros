@@ -10,8 +10,8 @@ import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 const Criterio = props => (
     <Tr>
         <Td>{props.criterio.nombre}</Td>
-        <Td><VerCriterio criterio={props.criterio} key={props.criterio.nombre}/></Td>
-        <Td><EditCriterio component={props.component} criterio={props.criterio} key={props.criterio.nombre}/></Td>
+        <Td><VerCriterio session={props.session} criterio={props.criterio} key={props.criterio.nombre}/></Td>
+        <Td><EditCriterio session={props.session} component={props.component} criterio={props.criterio} key={props.criterio.nombre}/></Td>
         <Td><button type="button" onClick={() => props.component.removeCriterio(props.criterio.index)} className="btn btn-danger">X</button></Td>
     </Tr>
 )
@@ -35,7 +35,7 @@ export default class CreateCategoria extends Component {
         return this.state.criterios.map(currentCriterio => {
             currentCriterio["index"] = index
             index++;
-          return <Criterio component={this} criterio={currentCriterio} key={currentCriterio.nombre} />;
+          return <Criterio session={this.props.session} component={this} criterio={currentCriterio} key={currentCriterio.nombre} />;
         })
     }
 
