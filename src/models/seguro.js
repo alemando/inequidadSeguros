@@ -358,18 +358,16 @@ seguroSchema.statics.MejoresClientes = async (idVendedor) => {
         //Query el cual agrupa por cliente,vendedor,estado y cuenta las estancias.
         // Luego las filtra con el vendedor en session y las aprobado. ordenandolo al final
         const aggregatorOpts = [
-            {
+          {
+            $match: {
+              vendedor: mongoose.Types.ObjectId(idVendedor),
+              estado: "Aprobado"
+            }
+          },
+          {
                 $group: {
                     _id: "$cliente",
-                    vendedor: { $first: "$vendedor" },
-                    estado: { $first: "$estado" },
                     count: { $sum: 1 }
-                }
-            },
-            {
-                $match: {
-                    vendedor: mongoose.Types.ObjectId(idVendedor),
-                    estado: "Aprobado"
                 }
             },
             { $sort: { "count": -1 } }
@@ -378,27 +376,18 @@ seguroSchema.statics.MejoresClientes = async (idVendedor) => {
         let res = await seguros.aggregate(aggregatorOpts).exec();;
         //variable para determinar el tamaño de corte
         let size = 0
-        // si el tamaño de la respuesta es menor o igual a 5
-        if (res.length <= 5) {
-            for (let i = 0; i < res.length; i++) {
-                let obj = res[i]
-                obj.cliente = await clienteModel.obtenerClienteById(obj._id)
-            }
-            size = res.length
-        } else {
-            // si no devuelvo los 5 primero, si hay empate los envio todos los que tengas igual valor
-            for (let i = 0; i < res.length; i++) {
-                let obj = res[i]
-                if (i <= 5) {
-                    obj.cliente = await clienteModel.obtenerClienteById(obj._id)
-                } else {
-                    if (obj.count == res[i - 1].count) {
-                        obj.cliente = await clienteModel.obtenerClienteById(obj._id)
-                        size = i + 1
-                    }
-                    break
-                }
-            }
+        let mayor = 0
+        // Sacando si hay empate
+        console.log(res);
+        for (let i = 0; i < res.length; i++) {
+          let obj = res[i]
+          if(obj.count >= mayor){
+            obj.cliente = await clienteModel.obtenerClienteById(obj._id)
+            size = i + 1
+            mayor= obj.count
+          }else {
+            break
+          }
         }
         //corto la respuesta al tamaño
         res = res.slice(0, size)
