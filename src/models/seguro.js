@@ -284,6 +284,17 @@ seguroSchema.statics.obtenerSeguro = async function(id) {
         return "Ha ocurrido algo inesperado al intentar obtener el seguro\n"+ error;
     }
 }
+
+//Metodo para retornar todos los seguros aprobados
+seguroSchema.statics.obtenerSegurosAprobados = async function(aseguradora) {
+    try {
+        let segurosAprobados = await seguros.find({aseguradora: aseguradora._id, estado: "Aprobado"});
+        return segurosAprobados;
+    } catch (error) {
+        return "Ha ocurrido algo inesperado al intentar obtener los seguros aprobados\n"+ error;
+    }
+}
+
 //Metodo para cambiar el estado de un seguro
 seguroSchema.statics.cambiarEstado = async function(id,estado,admin) {
     let validacion = { id: "0", mensaje: ""}
