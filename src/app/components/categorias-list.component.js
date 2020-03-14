@@ -139,7 +139,7 @@ export default class CategoriasList extends Component {
                     <Th><center>Nombre</center></Th>
                     <Th><center>Ver criterios</center></Th>
                     {(this.props.session.esAdmin ? <Th><center>Editar</center></Th>: "")}
-                    {(this.props.session.esAdmin ? <Th><center>Habilitar/Desactivar</center></Th> : "")}
+                    {(this.props.session.esAdmin ? <Th><center>Habilitar/Deshabilitar</center></Th> : "")}
                   </Tr>
                 </Thead>
                 <Tbody>
