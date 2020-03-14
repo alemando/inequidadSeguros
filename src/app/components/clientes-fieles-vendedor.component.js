@@ -6,15 +6,13 @@ import $ from 'jquery'
 import DataTable from 'datatables.net'
 $.DataTable = DataTable
 
-//(this.props.session.esAdmin ? <Th><center>Habilitar/Inhabilitar</center></Th> : "")
-//{this.vendedoresList()}
 
 const Cliente = props => (
     <Tr>
-        <Td>{props.cliente.documento}</Td>
-        <Td>{props.vendedor.nombre}</Td>
-        <Td>{props.vendedor.celular}</Td>
-        <Td>{props.vendedor.seguros}</Td>  {/* Definir bien esto para pajoy*/}
+        <Td>{props.cliente.cliente.documento}</Td>
+        <Td>{props.cliente.cliente.nombre}</Td>
+        <Td>{props.cliente.cliente.celular}</Td>
+        <Td>{props.cliente.count}</Td>
 
     </Tr>
 )
@@ -27,32 +25,35 @@ export default class ClientesFieles extends Component {
         this.state = { clientes: [] };
     }
 
-    vendedoresList() {
-        if (this.state.clientes != null) {//hay que cambiar a length 0 despues
+    clientesList() {
+        
+        if (this.state.clientes.length > 0) {
             return this.state.clientes.map(currentCliente => {
-                return <Vendedor session={this.props.session} component={this} cliente={currentCliente} key={currentCliente._id} />;
+                return <Cliente session={this.props.session} component={this} cliente={currentCliente} key={currentCliente._id} />;
             })
         } else {
             return (
                 <Tr>
-                    <td colSpan="4">
+                    <Td colSpan="4">
                         <div class="alert alert-warning" role="alert">
                             Aun no has vendido seguros
                     </div>
-                    </td>
+                    </Td>
                 </Tr>)
         }
     }
 
     componentDidMount() {
-        this.fetchMejoresVendedores();
+        this.fetchClientesFileles();
     }
 
-    fetchMejoresVendedores() {
-        fetch('/api/Clientes/bestclients')
+    fetchClientesFileles() {
+        fetch('/api/clientes/bestclients')
             .then(res => res.json())
             .then(data => {
-                this.setState({ vendedores: data });
+                console.log(data);
+                this.setState({ clientes: data });
+                console.log(data.length);
             })
             .catch(err => console.error(err));
     }
@@ -62,18 +63,18 @@ export default class ClientesFieles extends Component {
                 <div className="col-12">
                     <div className="card-body">
                         <div className="table-responsive">
-                            <center><h3>Top 5 vendedores:</h3></center>
-                            <Table id="tabla-mejores-vendedores" className="table table-sm ">
+                            <center><h3>Cliente(s) mas fiel(es):</h3></center>
+                            <Table id="tabla-clientes-fieles" className="table table-sm table-bordered table-warning">
                                 <Thead>
                                     <Tr>
                                         <Th><center>Documento</center></Th>
                                         <Th><center>Nombre</center></Th>
-                                        <Th><center>Celular</center></Th>
-                                        <Th><center>Seguros vendidos</center></Th>
+                                        <Th><center>Apellido</center></Th>
+                                        <Th><center>Seguros comprados</center></Th>
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                    {this.vendedoresList()}
+                                    {this.clientesList()}
                                 </Tbody>
                             </Table>
                         </div>
