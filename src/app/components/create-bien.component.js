@@ -139,7 +139,7 @@ export default class CreateBien extends Component {
                     </select>
                   </div>
                   <div className="form-group">
-                    <label>* Caracteristicas:</label>
+                    <label>Caracteristicas:</label>
                     <textarea
                       className="md-textarea form-control" 
                       name="caracteristicas" 

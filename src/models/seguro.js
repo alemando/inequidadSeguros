@@ -205,16 +205,29 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
         validacion.mensaje += "El valor total no es un numero\n"
     }
 
+    //Verificar si ya existe un seguro con los mismos atributos ingresados
+
+    let seguroAux = await seguros.findOne({
+        fechaInicio: datos.fechaInicio,
+        tipoPago: datos.tipoPago,
+        fechaFin: datos.fechaFin,
+        valorTotal: datos.valorTotal,
+        diaPago: datos.diaPago,
+        cliente: datos.cliente,
+        bien: datos.bien,
+        vendedor: datos.vendedor,
+        aseguradora: datos.aseguradora});
+    if(seguroAux != null){
+        validacion.mensaje += "El seguro ya existe\n"
+    }
+
     //Si no pasa alguna validacion retorna el mensaje correspondiente
     if(validacion.mensaje.length!=0) return validacion
 
-    console.log(datos.criterios)
     
     for(let i = 0; i<datos.criterios.length;i++){
         delete datos.criterios[i]._id;
     }
-
-    console.log(datos.criterios)
     
     //Objeto seguro
     const seguro = new seguros({
@@ -230,25 +243,6 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
       aseguradora: datos.aseguradora,
       criterios: datos.criterios
     });
-
-    //Verificar si ya existe un seguro con los mismos atributos ingresados
-    try{
-        seguroAux = await seguros.findOne({fechaInicio: seguro.fechaInicio, 
-                                            fechaFin: seguro.fechaFin,
-                                            valorTotal: seguro.valorTotal,
-                                            diaPago: seguro.diaPago,
-                                            cliente: seguro.cliente,
-                                            bien: seguro.bien,
-                                            vendedor: seguro.vendedor,
-                                            aseguradora: seguro.aseguradora});
-        if(seguroAux != null){
-            validacion.mensaje += "El seguro ya existe\n"
-        }
-    }catch(error){
-        validacion.mensaje += "Ha ocurrido un error buscando seguros";
-    };
-
-    if(validacion.mensaje.length!=0) return validacion
 
     try {
         //Procedo a guardar en la BD
