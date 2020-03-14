@@ -208,6 +208,22 @@ seguroSchema.statics.guardarSeguro = async function (datos) {
         validacion.mensaje += "El valor total no es un numero\n"
     }
 
+    //Verificar si ya existe un seguro con los mismos atributos ingresados
+
+    let seguroAux = await seguros.findOne({
+        fechaInicio: datos.fechaInicio,
+        tipoPago: datos.tipoPago,
+        fechaFin: datos.fechaFin,
+        valorTotal: datos.valorTotal,
+        diaPago: datos.diaPago,
+        cliente: datos.cliente,
+        bien: datos.bien,
+        vendedor: datos.vendedor,
+        aseguradora: datos.aseguradora});
+    if(seguroAux != null){
+        validacion.mensaje += "El seguro ya existe\n"
+    }
+
     //Si no pasa alguna validacion retorna el mensaje correspondiente
     if (validacion.mensaje.length != 0) return validacion
 

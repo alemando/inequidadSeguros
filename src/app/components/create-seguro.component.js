@@ -36,6 +36,7 @@ export default class CreateSeguro extends Component {
         clientes: [],
         bienes: [],
         criterios: [],
+        send: false,
         disabled : false
     }
     this.addSeguro = this.addSeguro.bind(this);
@@ -58,6 +59,10 @@ criteriosList() {
 
 addSeguro(e){
     e.preventDefault();
+
+    this.setState({
+      send:true
+    })
 
     let datos = {
       vendedor: this.state.vendedor._id,
@@ -83,6 +88,10 @@ addSeguro(e){
         .then(res => res.json())
         .then(data => {
           if(data.id == 0){
+
+            this.setState({
+              send:false
+            })
 
             Swal.fire({
               text: data.mensaje,
@@ -120,9 +129,13 @@ addSeguro(e){
               bienes: [],
               criterios: [],
               disabledFecha : false,
-              disabledDiaPago : false
+              disabledDiaPago : false,
+              send:false
             });
           }else{
+            this.setState({
+              send:false
+            })
             Swal.fire({
               text: data.mensaje,
               type: 'error'
@@ -437,7 +450,7 @@ vendedores(){
                       </form>
                       </div>
                       <div className="modal-footer">
-                          <button type="submit" form="formSeguro" className="btn btn-primary">Enviar</button>
+                          <button type="submit" form="formSeguro" className="btn btn-primary" disabled={this.state.send}>Enviar</button>
                           <CreateCriterio component={this} bien={this.state.bien} />
                           <button type="button" className="btn btn-secondary" onClick={this.modalClose} data-dismiss="modal">Cerrar</button>
                       </div>
