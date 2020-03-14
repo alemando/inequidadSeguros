@@ -15,7 +15,7 @@ const Categoria = props => (
     <Td><center><VerCriterios session={props.session} categoria={props.categoria} /></center></Td>
     {(props.session.esAdmin ? <Td><center><EditCategoria categoria={props.categoria} component={props.component} /></center></Td> 
                 : "")}
-    {(props.session.esAdmin ? <Td><center><button className={"btn " + (props.categoria.estado ? 'btn-success' : 'btn-danger')} onClick={()=>props.component.confirmDialog(props.categoria._id)}>{(props.categoria.estado ? 'Habilitar' : 'Deshabilitar')}</button></center></Td>
+    {(props.session.esAdmin ? <Td><center><button className={"btn " + (props.categoria.estado ? 'btn-danger' : 'btn-success')} onClick={()=>props.component.confirmDialog(props.categoria._id)}>{(props.categoria.estado ? 'Desactivar' : 'Habilitar' )}</button></center></Td>
                 : "")}
     
   </Tr>
@@ -126,7 +126,7 @@ export default class CategoriasList extends Component {
                 <h3><i className="fa fa-archive"></i>Categorias disponibles</h3>
               </div>
               <div className="col-xs-6 col-sm-6 col-md-4 col-lg-2 col-xl-2">
-                <CreateCategoria component={this} />
+                <CreateCategoria session={this.props.session} component={this} />
               </div>
             </div>
           </div>

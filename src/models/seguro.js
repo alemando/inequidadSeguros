@@ -4,6 +4,7 @@ const clienteModel = require('../models/cliente');
 const vendedorModel = require('../models/vendedor');
 const bienModel = require('../models/bien');
 const aseguradoraModel = require('../models/aseguradora');
+const moment = require('moment')
 
 //Clase criterio, especial para un subdocumento
 const criterioSchema = Schema({
@@ -31,6 +32,12 @@ const seguroSchema = Schema({
     type: Date,
     require: true,
     trim: true,
+  },
+  fechaCreacion: {
+    type: Date,
+    require: true,
+    trim: true,
+    default: moment().format("YYYY-MM-DD")
   },
   tipoPago:{
     type: String,
@@ -171,6 +178,10 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
         validacion.mensaje += "La fecha inicio debe ser menor que la fecha fin "
     }
 
+    /*if(Date.parse(datos.fechaInicio)<= Date.parse(fechaActual()+" 00:00:00.000Z")){
+        validacion.mensaje += "La fecha de inicio debe ser posterior a la fecha actual"
+    }*/
+
     //Validacion diaPago es un numero
     if(isNaN(datos.diaPago)){
         validacion.mensaje += "El dia de pago no es un numero\n"
@@ -193,16 +204,29 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
         validacion.mensaje += "El valor total no es un numero\n"
     }
 
+    //Verificar si ya existe un seguro con los mismos atributos ingresados
+
+    let seguroAux = await seguros.findOne({
+        fechaInicio: datos.fechaInicio,
+        tipoPago: datos.tipoPago,
+        fechaFin: datos.fechaFin,
+        valorTotal: datos.valorTotal,
+        diaPago: datos.diaPago,
+        cliente: datos.cliente,
+        bien: datos.bien,
+        vendedor: datos.vendedor,
+        aseguradora: datos.aseguradora});
+    if(seguroAux != null){
+        validacion.mensaje += "El seguro ya existe\n"
+    }
+
     //Si no pasa alguna validacion retorna el mensaje correspondiente
     if(validacion.mensaje.length!=0) return validacion
 
-    console.log(datos.criterios)
     
     for(let i = 0; i<datos.criterios.length;i++){
         delete datos.criterios[i]._id;
     }
-
-    console.log(datos.criterios)
     
     //Objeto seguro
     const seguro = new seguros({
@@ -218,25 +242,6 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
       aseguradora: datos.aseguradora,
       criterios: datos.criterios
     });
-
-    //Verificar si ya existe un seguro con los mismos atributos ingresados
-    try{
-        seguroAux = await seguros.findOne({fechaInicio: seguro.fechaInicio, 
-                                            fechaFin: seguro.fechaFin,
-                                            valorTotal: seguro.valorTotal,
-                                            diaPago: seguro.diaPago,
-                                            cliente: seguro.cliente,
-                                            bien: seguro.bien,
-                                            vendedor: seguro.vendedor,
-                                            aseguradora: seguro.aseguradora});
-        if(seguroAux != null){
-            validacion.mensaje += "El seguro ya existe\n"
-        }
-    }catch(error){
-        validacion.mensaje += "Ha ocurrido un error buscando seguros";
-    };
-
-    if(validacion.mensaje.length!=0) return validacion
 
     try {
         //Procedo a guardar en la BD
@@ -324,6 +329,25 @@ seguroSchema.statics.borrarSeguro = async function(id,admin) {
 
 }
 
+
+/*Método para encontrar la cantidad de seguros vendidos entre un rango determinado de fechas
+por defecto, el rango se calcula desde el inicio del mes actual hasta el día en el que se haga la consulta*/
+seguroSchema.statics.segurosEntreFechas = async function(idVendedor,fechaInicio=fechaMesInicio(), fechaFin=fechaActual()) {
+    try{
+        let inicioRango = moment(fechaInicio,"YYYY-MM-DD")
+        let finRango = moment(fechaFin,"YYYY-MM-DD")
+        if (inicioRango<=finRango){
+            let lista = await seguros.find()
+            let listaFiltrada = lista.filter(seguro => moment(seguro.fechaCreacion, "YYYY-MM-DD")>=inicioRango && moment(seguro.fechaCreacion, "YYYY-MM-DD")<=finRango && idVendedor == seguro.vendedor && seguro.estado=="Aprobado")
+            return listaFiltrada.length
+        }else{
+            return "La fecha de inicio debe ser igual o superior a la fecha final del rango"
+        }
+    }catch(error){
+        return "Ha ocurrido un error al consultar entre fechas: \n"+error
+    }
+}
+
 const verificarCriterios = (arreglo) => {
     for(let i = 0; i<arreglo.length;i++){
         for(let j = i; j<arreglo.length;j++){
@@ -373,6 +397,19 @@ const validacionesCriterios = (arreglo) => {
         }
     }
     return mensaje
+}
+
+
+//Estas dos funciones permiten retornar las fechas actual y de principio de mes en un formato estándar
+const fechaActual = () => {
+    let ahora = moment().format("YYYY-MM-DD")
+    return ahora
+}
+
+const fechaMesInicio = () => {
+    let ahora = fechaActual().split("-").map(x => parseInt(x))
+    primerDia = moment({year:ahora[0], month:ahora[1]-1, day:1}).format("YYYY-MM-DD")
+    return primerDia
 }
 
 const seguros = mongoose.model('seguros',seguroSchema);

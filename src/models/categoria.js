@@ -64,16 +64,18 @@ categoriaSchema.statics.guardarCategoria = async (datos) => {
             validacion.mensaje += "La categoría no ha sido guardada, asegurese de que la categoría tenga un nombre."
         }
 
-        if(categorias.findOne({nombre: datos.nombre}) != null){
+        if(await categorias.findOne({nombre: datos.nombre}) != null){
             validacion.mensaje += "Ya existe una categoria con este nombre."
         }
 
         //Validacion que exista el atributo opcional criterios
-        if (datos.criterios) {
+        if (datos.criterios.length != 0) {
             //Validacion de los nombres de criterios no son repetidos
             if (verificarCriterios(datos.criterios)) {
                 validacion.mensaje += "La categoría no ha sido guardada, asegúrese de que los criterios tengan nombres diferentes."
             }
+        }else{
+            validacion.mensaje += "No se puede crear una categoria sin criterios"
         }
 
     }
@@ -199,9 +201,9 @@ En caso de no encontrar un error, retorna un string vacio ""
 */
 const validacionesCriterios = (arreglo) => {
 
+    let mensaje = ""
 
     for (let i = 0; i < arreglo.length; i++) {
-        mensaje = ""
         if (arreglo[i].nombre == "" || arreglo[i].nombre == null) {
             mensaje += "El nombre del criterio " + (i + 1) + " no es válido\n"
             if (arreglo[i].descripcion == "" || arreglo[i].descripcion == null) {
