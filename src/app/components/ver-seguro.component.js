@@ -20,7 +20,7 @@ export default class VerSeguro extends Component {
     this.state = {
       criterios: [],
       estado: '',
-      id : '',
+      _id : props.seguro._id,
       tipoPago: props.seguro.tipoPago,
       fechaInicio: props.seguro.fechaInicio,
       fechaFin: props.seguro.fechaFin,
@@ -37,7 +37,7 @@ export default class VerSeguro extends Component {
 
   editSeguro(e) {
     e.preventDefault();
-    fetch('/api/seguros/update', {
+    fetch('/api/seguros/editar', {
       method: 'POST',
       body: JSON.stringify(this.state),
       headers: {
@@ -54,8 +54,6 @@ export default class VerSeguro extends Component {
             type: 'error'
           })
         } else if (data.id == 1) {
-
-          this.props.component.fetchSeguros();
 
           Swal.fire({
             text: data.mensaje,
@@ -301,7 +299,7 @@ export default class VerSeguro extends Component {
                           value={this.state.observaciones}
                           className="form-control"
                         /></div>
-                          : <div className="col-md-6 ml-auto">{this.props.seguro.Observaciones}</div>)}
+                          : <div className="col-md-6 ml-auto">{this.props.seguro.observaciones}</div>)}
                       </div>
                     </li>
                   </ul>
