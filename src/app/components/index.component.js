@@ -5,6 +5,7 @@ export default class Index extends Component {
   render() {
     return (
       <div>
+        hola
       </div>
     );
   }
