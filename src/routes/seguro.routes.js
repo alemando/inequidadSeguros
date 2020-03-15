@@ -10,6 +10,11 @@ router.get('/', async (req,res)=>{
   res.json(seguros);
 });
 
+// GET seguros pendientes
+router.get('/pendientes', async (req,res)=>{
+  const pendientes = await Seguro.obtenerSegurosPendientes();
+  res.json(pendientes);
+});
 //Get vendedores de todos los seguros
 router.get('/top5vendedores', async(req,res)=>{
   const segurocliente = await Seguro.obtenerVendedoresSeguros();
@@ -48,11 +53,11 @@ router.get('/remove/:id', async(req,res)=>{
 
 router.post('/betweenDates', async(req,res)=>{
   if (req.body.fechaInicio && req.body.fechaFin){
-    let respuesta = await Seguro.segurosEntreFechas(req.session._id,req.body.fechaInicio,req.body.fechaFin)
-    res.json(respuesta)
+    let respuesta = await Seguro.segurosEntreFechas(req.session._id,req.body.fechaInicio,req.body.fechaFin);
+    res.json(respuesta);
   }else{
-    let respuesta = await Seguro.segurosEntreFechas()
-    res.json(respuesta)
+    let respuesta = await Seguro.segurosEntreFechas(req.session._id);
+    res.json(respuesta);
   }
 })
 

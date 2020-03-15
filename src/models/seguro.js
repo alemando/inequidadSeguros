@@ -303,6 +303,21 @@ seguroSchema.statics.obtenerSeguros = async function() {
     }
 }
 
+//Metodo para retornar todos los seguros pendientes
+seguroSchema.statics.obtenerSegurosPendientes = async function() {
+    try {
+        let pendientes = await seguros.find({estado: 'En proceso'}).
+        populate('cliente', ['nombre', "apellido1","apellido2"]).
+        populate('vendedor', ['nombre', "apellido1","apellido2"]).
+        populate('bien', 'nombre').
+        populate('aseguradora', 'nombre').
+        exec();;
+        return pendientes;
+    } catch (error) {
+        return "Ha ocurrido algo inesperado al intentar obtener los seguros pendientes\n"+ error;
+    }
+}
+
 //Metodo para retornar un seguro por su id
 seguroSchema.statics.obtenerSeguro = async function(id) {
     try {
@@ -326,7 +341,6 @@ seguroSchema.statics.obtenerSegurosAprobados = async function(aseguradora) {
 //Metodo para cambiar el estado de un seguro
 seguroSchema.statics.cambiarEstado = async function(id,estado,admin) {
     let validacion = { id: "0", mensaje: ""}
-    admin = true
     if (admin) {
         try {
             let doc = await seguros.findById(id,"estado")
