@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MejoresVendedores from './admin-mejores-vendedores.component';
 import MejoresAseguradoras from './admin-mejores-aseguradoras.component';
+import ClientesFieles from './clientes-fieles-vendedor.component';
 import CantidadClientes from './cantidad-clientes.component'
 import SegurosPendientes from './seguros-pendientes.component'
 export default class Index extends Component {
@@ -19,6 +20,9 @@ export default class Index extends Component {
           </div>
           <div className="col-sm-4">
             <CantidadClientes session={this.props.session}></CantidadClientes>
+          </div>
+          <div className="col-sm-6">
+            <ClientesFieles session={this.props.session}></ClientesFieles>
           </div>
           
       </div>
