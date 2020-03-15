@@ -17,6 +17,11 @@ router.get('/enabled', async (req, res) => {
   res.json(resultado);
 });
 
+router.get('/mostSold', async (req,res) =>{
+  resultado = await Aseguradora.mejoresAseguradoras();
+  res.json(resultado);
+});
+
 // GET aseguradora by nit
 router.get('/:nit', async (req, res) => {
   const aseguradora = await Aseguradora.obtenerAseguradora(req.params.nit);

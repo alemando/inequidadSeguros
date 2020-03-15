@@ -5,7 +5,6 @@ const vendedorModel = require('../models/vendedor');
 const bienModel = require('../models/bien');
 const aseguradoraModel = require('../models/aseguradora');
 const moment = require('moment')
-
 //Clase criterio, especial para un subdocumento
 const criterioSchema = Schema({
     nombre:{
@@ -92,6 +91,8 @@ const seguroSchema = Schema({
   },
   criterios: [criterioSchema]
 });
+
+
 
 /*
     Metodo para guardar un seguro
@@ -254,6 +255,39 @@ seguroSchema.statics.guardarSeguro = async function(datos) {
     }
 };
 
+//Metodo para retornar los clientes de todos los seguros registrados
+seguroSchema.statics.obtenerVendedoresSeguros = async function() {
+    try {
+        let listaVendedoresSeguros = await seguros.find();
+        let vendedores = []
+        for (let i = 0; i < listaVendedoresSeguros.length; i++) {
+            if (listaVendedoresSeguros[i] != null) {
+              let elVendedor = listaVendedoresSeguros[i].vendedor;
+              vendedores.push(elVendedor);
+            }
+          }
+        var repetidos = {};
+        var listarepetidos = [];
+        vendedores.forEach(function(numero){
+            repetidos[numero] = (repetidos[numero] || 0) + 1;
+        });
+        for(var i in repetidos){
+            listarepetidos.push([i, repetidos[i]]);
+        }
+        listarepetidos.sort(function(elem1,elem2){
+            return elem2[1]-elem1[1];
+        });
+        var top5 = [];
+        var paso;
+        for (paso = 0; paso < 5; paso++) {
+          top5.push([await vendedorModel.obtenerVendedorById(listarepetidos[paso][0]),listarepetidos[paso][1]]);
+        };
+        return top5;
+    } catch (error) {
+        return "Ha ocurrido algo inesperado al intentar obtener el top 5 vendedores\n"+ error;
+    }
+}
+
 //Metodo para retornar todos los seguros
 seguroSchema.statics.obtenerSeguros = async function() {
     try {
@@ -278,6 +312,17 @@ seguroSchema.statics.obtenerSeguro = async function(id) {
         return "Ha ocurrido algo inesperado al intentar obtener el seguro\n"+ error;
     }
 }
+
+//Metodo para retornar todos los seguros aprobados
+seguroSchema.statics.obtenerSegurosAprobados = async function(aseguradora) {
+    try {
+        let segurosAprobados = await seguros.find({aseguradora: aseguradora._id, estado: "Aprobado"});
+        return segurosAprobados;
+    } catch (error) {
+        return "Ha ocurrido algo inesperado al intentar obtener los seguros aprobados\n"+ error;
+    }
+}
+
 //Metodo para cambiar el estado de un seguro
 seguroSchema.statics.cambiarEstado = async function(id,estado,admin) {
     let validacion = { id: "0", mensaje: ""}
@@ -411,6 +456,7 @@ const fechaMesInicio = () => {
     primerDia = moment({year:ahora[0], month:ahora[1]-1, day:1}).format("YYYY-MM-DD")
     return primerDia
 }
+
 
 const seguros = mongoose.model('seguros',seguroSchema);
 
