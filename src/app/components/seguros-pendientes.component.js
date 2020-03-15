@@ -11,10 +11,11 @@ $.DataTable = DataTable
 
 const Seguro = props =>(
     <Tr>
-        <Td>{props.seguro.vendedor}</Td>
-        <Td>{props.seguro.aseguradora}</Td>
-        <Td>{props.seguro.cliente}</Td>
-        <Td>{props.seguro.bien}</Td>
+        <Td>{props.seguro.cliente.nombre+" "+props.seguro.cliente.apellido1+" "+props.seguro.cliente.apellido2 }</Td>
+        <Td>{props.seguro.bien.nombre}</Td>
+        <Td>{props.seguro.aseguradora.nombre}</Td>
+        <Td>{props.seguro.vendedor.nombre+" "+props.seguro.vendedor.apellido1+" "+props.seguro.vendedor.apellido2 }</Td>
+        <Td><center><VerSeguro session={props.session} seguro={props.seguro} key={props.seguro._id}/></center></Td>
     </Tr>
 )
 
@@ -74,7 +75,7 @@ export default class SegurosPendientes extends Component{
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                    
+                                    {this.segurosPendientesList()}
                                 </Tbody>
                             </Table>
                         </div>
