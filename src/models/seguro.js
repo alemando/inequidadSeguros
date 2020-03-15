@@ -286,7 +286,7 @@ seguroSchema.statics.obtenerVendedoresSeguros = async function() {
         var top5 = [];
         var paso;
         for (paso = 0; paso < 5; paso++) {
-          top5.push(await vendedorModel.obtenerVendedorById(listarepetidos[paso][0]));
+          top5.push([await vendedorModel.obtenerVendedorById(listarepetidos[paso][0]),listarepetidos[paso][1]]);
         };
         return top5;
     } catch (error) {
