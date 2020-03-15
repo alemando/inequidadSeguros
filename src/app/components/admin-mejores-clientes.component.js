@@ -1,96 +1,86 @@
-
 import React, { Component } from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
+import Swal from 'sweetalert2'
 import $ from 'jquery'
 import DataTable from 'datatables.net'
 $.DataTable = DataTable
 
-const Cliente = props => (
-  <Tr>
-    <Td>{props.cliente.documento}</Td>
-    <Td>{props.cliente.nombre}</Td>
-    <Td>{props.cliente.apellido1} {props.cliente.apellido2}</Td>
-    <Td>{props.cliente.topClientes.numero_seguros}</Td>
-    
-  </Tr>
+//(this.props.session.esAdmin ? <Th><center>Habilitar/Inhabilitar</center></Th> : "")
+//{this.vendedoresList()}
+
+const Vendedor = props => (
+    <Tr>
+        <Td>{props.cliente[0].documento}</Td>
+        <Td>{props.cliente[0].nombre}</Td>
+        <Td>{props.cliente[0].apellido1}{props.cliente.apellido2}</Td>
+        <Td>{props.cliente[1]}</Td>
+
+    </Tr>
 )
 
-export default class MejoresClientes extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { clientes: [] };
-  }
 
-  topClientes() {
-    return this.state.clientes.topClientes.map(currentCliente => {
-      return <Cliente session={this.props.session} cliente={currentCliente} key={currentCliente._id} component={this}/>;
-    })
-  }
+export default class MejoresVendedores extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { clientes: [] };
+    }
 
-  componentDidMount() {
-    this.fetchClientes();
-  }
+    clientesList() {
+        if (this.state.clientes != null) {//hay que cambiar a length 0 despues
+            return this.state.clientes.map(currentCliente => {
+                return <Cliente session={this.props.session} component={this} cliente={currentCliente} key={currentVendedor._id} />;
+            })
+        } else {
+            return (
+                <Tr>
+                    <Td colSpan="4">
+                        <div class="alert alert-warning" role="alert">
+                            Ningun cliente a comprado seguros aun
+                    </div>
+                    </Td>
+                </Tr>)
+        }
+    }
 
-  fetchClientes() {
-    fetch('/api/clientes')
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ clientes: data });
-        $("#tabla-clientes").DataTable({
-          "autoWidth": false,
-          "destroy":true,
-          "responsive":true,
-          "language": {
-            "lengthMenu": "Mostrar _MENU_ registros por pagina",
-            "zeroRecords": "No se han encontrado registros",
-            "info": "(_MAX_ clientes) Pagina _PAGE_ de _PAGES_",
-            "search": "Buscar",
-            "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(registros disponibles _MAX_)",
-            "paginate":{
-              "previous":"Anterior",
-              "next":"Siguiente"
-            }
-          },
-        });
-      })
-      .catch(err => console.error(err));
-  }
+    componentDidMount() {
+        this.fetchMejoresClientes();
+    }
 
+    fetchMejoresClientes() {
+        fetch('/api/seguros/top5clientes')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                this.setState({ clientes: data });
+            })
+            .catch(err => console.error(err));
+    }
+    render() {
+        return (
+            <div className="row">
+                <div className="col-12">
+                    <div className="card-body">
+                        <div className="table-responsive">
+                            <center><h3>Top 5 clientes:</h3></center>
+                            <Table id="tabla-mejores-clientes" className="table table-sm table-success table-bordered">
+                                <Thead>
+                                    <Tr>
+                                        <Th><center>Documento</center></Th>
+                                        <Th><center>Nombre</center></Th>
+                                        <Th><center>Apellidos</center></Th>
+                                        <Th><center>Seguros comprados</center></Th>
+                                    </Tr>
+                                </Thead>
+                                <Tbody>
+                                    {this.clientesList()}
+                                </Tbody>
+                            </Table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
-  render() {
-    return (
-    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-      <div className="card mb-3">
-          <div className="card-header">
-              <div className="row">
-                  <div className="col-xs-6 col-sm-6 col-md-8 col-lg-10 col-xl-10">
-                      <h3><i className="fa fa-users"></i> Top 5 mejores clientes</h3>
-                  </div>
-              </div>
-          </div>
-              
-          <div className="card-body">
-              <div className="table-responsive">
-              <Table id="tabla-clientes" className="table table-bordered table-hover display">
-                  <Thead>
-                      <Tr>
-                          <Th><center>Documento</center></Th>
-                          <Th><center>Nombre</center></Th>
-                          <Th><center>Apellidos</center></Th>
-                          <Th><center>Numero de seguros</center></Th>
-                      </Tr>
-                  </Thead>                                        
-                  <Tbody>
-                      {this.topClientes()}
-                  </Tbody>
-              </Table>
-              </div>
-              
-          </div>                                                      
-      </div>
-    </div>  
-    )
-  }
 }
