@@ -45,4 +45,13 @@ router.post('/editar', async(req,res)=>{
   return(res.json(await Seguro.editarSeguro(req.body,req.session.esAdmin)));
 });
 
+router.post('/betweenDates', async(req,res)=>{
+  if (req.body.fechaInicio && req.body.fechaFin){
+    let respuesta = await Seguro.segurosEntreFechas(req.session._id,req.body.fechaInicio,req.body.fechaFin)
+    res.json(respuesta)
+  }else{
+    let respuesta = await Seguro.segurosEntreFechas()
+    res.json(respuesta)
+  }
+})
 module.exports = router;

@@ -14,7 +14,7 @@ const Vendedor = props => (
     <Td>{props.vendedor.nombre}</Td>
     <Td>{props.vendedor.apellido1} {props.vendedor.apellido2}</Td>
     <Td><center><VerVendedor session={props.session} component={props.component} vendedor={props.vendedor} key={props.vendedor.documento}/></center></Td>
-    {(props.session.esAdmin ? <Td><center><button className={"btn " + (props.vendedor.estado ?  'btn-danger' : 'btn-success')} onClick={()=>props.component.confirmDialog(props.vendedor._id)}>{(props.vendedor.estado ? 'Desactivar' : 'Habilitar')}</button></center></Td>: "")}
+    {(props.session.esAdmin ? <Td><center><button className={"btn " + (props.vendedor.estado ?  'btn-danger' : 'btn-success')} onClick={()=>props.component.confirmDialog(props.vendedor._id)}>{(props.vendedor.estado ? 'Deshabilitar' : 'Habilitar')}</button></center></Td>: "")}
     
   </Tr>
 )
@@ -141,7 +141,7 @@ export default class VendedoresList extends Component {
                             <Th><center>Nombre</center></Th>
                             <Th><center>Apellidos</center></Th>
                             <Th><center>Ver más</center></Th>
-                            {(this.props.session.esAdmin ? <Th><center>Habilitar/Inhabilitar</center></Th>: "")}
+                            {(this.props.session.esAdmin ? <Th><center>Habilitar/Deshabilitar</center></Th>: "")}
                             
                         </Tr>
                     </Thead>                                        
