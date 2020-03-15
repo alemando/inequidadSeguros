@@ -18,7 +18,7 @@ const Seguro = props =>(
         <Td>{props.seguro.aseguradora.nombre}</Td>
         <Td>{props.seguro.vendedor.nombre+" "+props.seguro.vendedor.apellido1+" "+props.seguro.vendedor.apellido2 }</Td>
         <Td><center><VerSeguro session={props.session} seguro={props.seguro} key={props.seguro._id}/></center></Td>
-        {(props.session.esAdmin ? <Td><center><button className={"btn btn-success"} onClick={()=>props.component.confirmDialog(props.seguro._id)}>{'Aprobar'}</button>  <button className={"btn btn-danger"} onClick={()=>props.component.confirmDialog(props.seguro._id)}>{'Rechazar'}</button></center></Td>: "")}
+        {(props.session.esAdmin ? <Td><center><button className={"btn btn-success"} onClick={()=>props.component.confirmDialog(props.seguro._id, "true")}>{'Aprobar'}</button>  <button className={"btn btn-danger"} onClick={()=>props.component.confirmDialog(props.seguro._id, "false")}>{'Rechazar'}</button></center></Td>: "")}
     </Tr>
 )
 
@@ -39,7 +39,7 @@ export default class SegurosPendientes extends Component{
     componentDidMount(){
         this.fetchSegurosPendientes();
     }
-    confirmDialog(){
+    confirmDialog(id, status){
         Swal.fire({
             title: '¿Estás seguro?',
             type: 'warning',
@@ -50,9 +50,9 @@ export default class SegurosPendientes extends Component{
             confirmButtonText: 'Confirmar'
         }).then((result)=>{
             if (result.value) {
-                fetch('/api/seguros/finiquitar/' + this.state.id, {
+                fetch('/api/seguros/finiquitar/' + id, {
                     method: 'POST',
-                    body: JSON.stringify({ estado: this.state.estado }),
+                    body: JSON.stringify({ estado: status }),
                     headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json'
