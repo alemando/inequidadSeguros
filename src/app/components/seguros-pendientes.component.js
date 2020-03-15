@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 import Swal from 'sweetalert2'
+import VerSeguro from "./ver-seguro.component"
 import $ from 'jquery'
 import DataTable from 'datatables.net'
 $.DataTable = DataTable
@@ -27,21 +28,9 @@ export default class SegurosPendientes extends Component{
     }
 
     segurosPendientesList() {
-        if (this.state.seguros != null) {
             return this.state.seguros.map(currentSeguro =>{
                 return <Seguro session={this.props.session} component= {this} seguro= {currentSeguro} key={currentSeguro._id}/>;
             })
-        } else{
-            return(
-                <Tr>
-                    <Td colSpan="4">
-                        <div class="alert alert-warning" role="alert">
-                            No hay seguros pendientes
-                        </div>
-                    </Td>
-                </Tr>
-            )
-        }
     }
     componentDidMount(){
         this.fetchSegurosPendientes();
@@ -50,9 +39,25 @@ export default class SegurosPendientes extends Component{
         fetch('/api/seguros/pendientes')
         .then(res => res.json())
         .then(data => {
-            console.log(data);
             this.setState({ seguros: data });
-        })
+            $("#seguros-pendientes").DataTable({
+                "autoWidth": false,
+                "destroy":true,
+                "responsive":true,
+                "language": {
+                  "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                  "zeroRecords": "No se han encontrado registros",
+                  "info": "(_MAX_ seguros) Pagina _PAGE_ de _PAGES_",
+                  "search": "Buscar",
+                  "infoEmpty": "No hay registros disponibles",
+                  "infoFiltered": "(registros disponibles _MAX_)",
+                  "paginate":{
+                    "previous":"Anterior",
+                    "next":"Siguiente"
+                  }
+                },
+              });
+          })
         .catch(err => console.error(err));
     }
 
@@ -63,7 +68,7 @@ export default class SegurosPendientes extends Component{
                     <div className="card-body">
                         <div className="table-responsive">
                             <center><h3>Seguros Pendientes:</h3></center>
-                            <Table id="seguros-pendientes" className="table table-sm table-success table-bordered">
+                            <Table id="seguros-pendientes" className="table table-bordered table-hover display">
                                 <Thead>
                                     <Tr>
                                         <Th><center>Vendedor</center></Th>
