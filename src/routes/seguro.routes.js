@@ -15,6 +15,12 @@ router.get('/pendientes', async (req,res)=>{
   const pendientes = await Seguro.obtenerSegurosPendientes();
   res.json(pendientes);
 });
+//Get vendedores de todos los seguros
+router.get('/top5vendedores', async(req,res)=>{
+  const segurocliente = await Seguro.obtenerVendedoresSeguros();
+  res.json(segurocliente);
+})
+
 
 // GET one seguro by id
 router.get('/:id', async (req, res) => {
