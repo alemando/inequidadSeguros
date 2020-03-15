@@ -9,11 +9,11 @@ $.DataTable = DataTable
 //(this.props.session.esAdmin ? <Th><center>Habilitar/Inhabilitar</center></Th> : "")
 //{this.vendedoresList()}
 
-const Clientes = props => (
+const Cliente = props => (
     <Tr>
         <Td>{props.cliente[0].documento}</Td>
         <Td>{props.cliente[0].nombre}</Td>
-        <Td>{props.cliente[0].apellido1}{props.cliente.apellido2}</Td>
+        <Td>{props.cliente[0].apellido1}{props.cliente[0].apellido2}</Td>
         <Td>{props.cliente[1]}</Td>
 
     </Tr>
@@ -29,8 +29,8 @@ export default class MejoresClientes extends Component {
     clientesList() {
         if (this.state.clientes != null) {//hay que cambiar a length 0 despues
             return this.state.clientes.map(currentCliente => {
-                return <Cliente session={this.props.session} component={this} cliente={currentCliente} key={currentVendedor._id} />;
-            })
+                return <Cliente session={this.props.session} cliente={currentCliente} key={currentCliente._id} component={this}/>;
+              })
         } else {
             return (
                 <Tr>
@@ -48,7 +48,7 @@ export default class MejoresClientes extends Component {
     }
 
     fetchMejoresClientes() {
-        fetch('/api/seguros/top5clientes')
+        fetch('/api/seguros/topCinco')
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -63,7 +63,7 @@ export default class MejoresClientes extends Component {
                     <div className="card-body">
                         <div className="table-responsive">
                             <center><h3>Top 5 clientes:</h3></center>
-                            <Table id="tabla-mejores-clientes" className="table table-sm table-success table-bordered">
+                            <Table id="tabla-mejores-clientes" className="table table-sm table-bordered">
                                 <Thead>
                                     <Tr>
                                         <Th><center>Documento</center></Th>
