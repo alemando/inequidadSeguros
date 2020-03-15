@@ -20,7 +20,7 @@ export default class VerSeguro extends Component {
     this.state = {
       criterios: [],
       estado: '',
-      _id : props.seguro._id,
+      id : '',
       tipoPago: props.seguro.tipoPago,
       fechaInicio: props.seguro.fechaInicio,
       fechaFin: props.seguro.fechaFin,
@@ -37,7 +37,7 @@ export default class VerSeguro extends Component {
 
   editSeguro(e) {
     e.preventDefault();
-    fetch('/api/seguros/editar', {
+    fetch('/api/seguros/update', {
       method: 'POST',
       body: JSON.stringify(this.state),
       headers: {
@@ -54,6 +54,8 @@ export default class VerSeguro extends Component {
             type: 'error'
           })
         } else if (data.id == 1) {
+
+          this.props.component.fetchSeguros();
 
           Swal.fire({
             text: data.mensaje,
@@ -205,12 +207,6 @@ export default class VerSeguro extends Component {
                   <ul className="list-group">
                     <li className="list-group-item">
                       <div className="row">
-                        <div className="col-md-6 ml-auto"><b>Fecha de creación</b></div>
-                        <div className="col-md-6 ml-auto">{moment(this.props.seguro.fechaCreacion, "YYYY-MM-DD").locale("es").format("DD-MMM-YYYY")}</div>
-                      </div>
-                    </li>
-                    <li className="list-group-item">
-                      <div className="row">
                         <div className="col-md-6 ml-auto"><b>Vendedor</b></div>
                         <div className="col-md-6 ml-auto">{this.props.seguro.vendedor.nombre +
                           " " + this.props.seguro.vendedor.apellido1 + " " + this.props.seguro.vendedor.apellido2}</div>
@@ -300,9 +296,9 @@ export default class VerSeguro extends Component {
                     <li className="list-group-item">
                       <div className="row">
                         <div className="col-md-6 ml-auto"><b>Observaciones</b></div>
-                        {(this.state.editMode ? <div className="col-md-6 ml-auto"><input name="Observaciones" onChange={this.handleChange} type="text"
+                        {(this.state.editMode ? <div className="col-md-6 ml-auto"><input name="observaciones" onChange={this.handleChange} type="text"
                           required
-                          value={this.state.Observaciones}
+                          value={this.state.observaciones}
                           className="form-control"
                         /></div>
                           : <div className="col-md-6 ml-auto">{this.props.seguro.Observaciones}</div>)}
