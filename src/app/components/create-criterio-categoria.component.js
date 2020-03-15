@@ -43,6 +43,20 @@ export default class CreateCriterio extends Component {
         });
     }
 
+    handleKeypress(e) {
+        const characterCode = e.key
+        if (characterCode === 'Backspace') return
+
+        const characterNumber = Number(characterCode)
+        if (characterNumber >= 0 && characterNumber <= 9) {
+            if (e.currentTarget.value && e.currentTarget.value.length) {
+                return
+            }
+        } else {
+            e.preventDefault()
+        }
+    }
+
     activateButton(bien){
         if(bien == ''){
             return true
@@ -88,7 +102,7 @@ export default class CreateCriterio extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label>* Monto a cubrir:</label>
-                                        <input name="cobertura" onChange={this.handleChange} type="text"
+                                        <input name="cobertura" onChange={this.handleChange} type="numer" onKeyDown={this.handleKeypress} in="0"
                                             required
                                             value={this.state.cobertura}
                                             className="form-control"

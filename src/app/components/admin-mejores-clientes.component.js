@@ -9,7 +9,7 @@ $.DataTable = DataTable
 //(this.props.session.esAdmin ? <Th><center>Habilitar/Inhabilitar</center></Th> : "")
 //{this.vendedoresList()}
 
-const Vendedor = props => (
+const Clientes = props => (
     <Tr>
         <Td>{props.cliente[0].documento}</Td>
         <Td>{props.cliente[0].nombre}</Td>
@@ -20,7 +20,7 @@ const Vendedor = props => (
 )
 
 
-export default class MejoresVendedores extends Component {
+export default class MejoresClientes extends Component {
     constructor(props) {
         super(props);
         this.state = { clientes: [] };

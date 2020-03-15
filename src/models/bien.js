@@ -83,6 +83,8 @@ bienSchema.statics.guardarBien = async function (datos) {
     }
   }
 
+  validacion.mensaje += await bienes.verificarBienesRepetidos(datos.body)
+
   //Si no pasa alguna validacion retorna el mensaje correspondiente
   if (validacion.mensaje.length != 0) return validacion
 
@@ -170,6 +172,17 @@ bienSchema.statics.borrarBienesDeCliente = async function (id, admin) {
     return "No tienes permisos para hacer esto";
   }
 }
+
+//Verificación básica de los bienes para saber si se repite al momento de su creación
+bienSchema.statics.verificarBienesRepetidos= async function (datos) {
+  let listaBienes = await bienes.find({cliente:datos.cliente,nombre:datos.nombre,categoria:datos.categoria})
+  if (listaBienes.length>0){
+    return "Ya hay un bien con estas características para este cliente"
+  }else{
+    return ""
+  }
+}
+
 const bienes = mongoose.model('bienes', bienSchema);
 
 module.exports = bienes;
