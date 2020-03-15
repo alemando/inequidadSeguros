@@ -18,7 +18,7 @@ export default class headerbar extends Component {
     return (
       <div className="headerbar">
         <div className="headerbar-left">
-          <a href="/index" className="logo"><img alt="logo" src="assets/images/logo.png" /> <span>Seguros</span></a>
+          <a href="/" className="logo"><img alt="logo" src="assets/images/logo.png" /> <span>Seguros</span></a>
         </div>
           <nav className="navbar-custom">
             <ul className="list-inline menu-left mb-0">
