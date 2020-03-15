@@ -14,13 +14,26 @@ $.DataTable = DataTable
 export default class CantidadClientes extends Component {
     constructor(props) {
         super(props);
-        this.state = { Clientes: [] };
+        this.state = { clientes: [] };
     }
 
 
+cantidadClientes(){
 
+}
 
-
+componentDidMount(){
+    this.fetchClientesenFechas();
+}
+fetchClientesenFechas() { 
+    fetch('api/cantidadClientesFechas')
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            this.setState({ clientes: data });
+        })
+        .catch(err => console.error(err));
+}
 
 render() {
     return(
@@ -47,7 +60,9 @@ render() {
                                         value="2020-03-16"
                                         min="2015-01-01" max="2030-12-31"
                                         ></input></Td> 
-                                <Td></Td>
+                                <Td>
+                                    
+                                </Td>
                             </Tbody>
                         </Table>
                     </div>
