@@ -206,29 +206,36 @@ aseguradoraSchema.statics.actualizarAseguradora = async (datos, admin) => {
 };
 
 //Obtener las 5 aseguradoras con más seguros aprobados
-aseguradoraSchema.statics.mejoresAseguradoras = async function() {
+aseguradoraSchema.statics.mejoresAseguradoras = async function(admin) {
     let validacion = { id: "0", mensaje: "" }
     try {
-        lista = []
-        listaAseguradoras = await aseguradoras.find();
-        if (listAseguradoras.length == 0){
-            validacion.mensaje = "No hay aseguradoras por mostrar"
-            return validacion
+        if(!admin){
+            validacion.mensaje = "No tienes permisos para ver las mejores aseguradoras"
+            return validacion;
+        } else {
+            lista = []
+            listaAseguradoras = await aseguradoras.find();
+            if (listaAseguradoras.length == 0){
+                validacion.mensaje = "No hay aseguradoras con seguros aprobados"
+                return validacion
+            }
+            for(aseguradora of listaAseguradoras){
+                segurosAprobados = await Seguro.obtenerSegurosAprobados(aseguradora);
+                lista.push({aseguradora: aseguradora, totalSeguros: segurosAprobados.length})
+            }
+            lista.sort(function (a, b){
+                return (b.totalSeguros - a.totalSeguros)
+            })
+            mejores = []
+            aux = 0
+            for(i of lista){
+                if(i.totalSeguros==0){ break }
+                mejores.push(i)
+                if(mejores.length>=5 && aux != i.totalSeguros){ break }
+                aux = i.totalSeguros
+            }
+            return mejores;
         }
-        for(aseguradora of listaAseguradoras){
-            segurosAprobados = await Seguro.obtenerSegurosAprobados(aseguradora);
-            lista.push({aseguradora: aseguradora, totalSeguros: segurosAprobados.length})
-        }
-        lista.sort(function (a, b){
-            return (b.totalSeguros - a.totalSeguros)
-        })
-        mejores = []
-        for(i of lista){
-            if(i.totalSeguros==0){ break }
-            mejores.push(i)
-            if(mejores.length==5){ break }
-        }
-        return mejores;
     } catch (error) {
         validacion.id = '2';
         validacion.mensaje = `Error al obtener aseguradoras con más seguros aprobados: ${error}`
