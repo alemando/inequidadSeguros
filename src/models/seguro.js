@@ -336,16 +336,13 @@ seguroSchema.statics.editarSeguro = async (datos,admin) => {
                 /*if(isNaN(Date.parse(datos.fechaFin))){
                     validacion.mensaje += "La fecha de fin tiene un formato erroneo\n"
                 }*/
+
                 if(datos.tipoPago == "Contado" && (datos.fechaFin == null || datos.fechaFin == "")){
                     validacion.mensaje += "El seguro no ha sido editado, fecha de finalizacion vacía\n"
                 }
 
-                if(datos.tipoPago == "Credito" &&  datos.fechaFin != "" ){
-                validacion.mensaje += "El seguro no ha sido editado, la fecha de fin debe ser vacia"
-                }
-
                 //Validación fecha inicio menor a fecha fin
-                if(Date.parse(datos.fechaInicio) > Date.parse(datos.fechaFin)){
+                if(datos.tipoPago == "Contado" &&  Date.parse(datos.fechaInicio) > Date.parse(datos.fechaFin)){
                     validacion.mensaje += "La fecha inicio debe ser menor que la fecha fin "
                 }
 
