@@ -5,7 +5,6 @@ const vendedorModel = require('../models/vendedor');
 const bienModel = require('../models/bien');
 const aseguradoraModel = require('../models/aseguradora');
 const moment = require('moment')
-
 //Clase criterio, especial para un subdocumento
 const criterioSchema = Schema({
     nombre: {
@@ -96,6 +95,8 @@ const seguroSchema = Schema({
     },
     criterios: [criterioSchema]
 });
+
+
 
 /*
     Metodo para guardar un seguro
@@ -282,6 +283,39 @@ seguroSchema.statics.guardarSeguro = async function (datos) {
     }
 };
 
+//Metodo para retornar los clientes de todos los seguros registrados
+seguroSchema.statics.obtenerVendedoresSeguros = async function() {
+    try {
+        let listaVendedoresSeguros = await seguros.find();
+        let vendedores = []
+        for (let i = 0; i < listaVendedoresSeguros.length; i++) {
+            if (listaVendedoresSeguros[i] != null) {
+              let elVendedor = listaVendedoresSeguros[i].vendedor;
+              vendedores.push(elVendedor);
+            }
+          }
+        var repetidos = {};
+        var listarepetidos = [];
+        vendedores.forEach(function(numero){
+            repetidos[numero] = (repetidos[numero] || 0) + 1;
+        });
+        for(var i in repetidos){
+            listarepetidos.push([i, repetidos[i]]);
+        }
+        listarepetidos.sort(function(elem1,elem2){
+            return elem2[1]-elem1[1];
+        });
+        var top5 = [];
+        var paso;
+        for (paso = 0; paso < 5; paso++) {
+          top5.push([await vendedorModel.obtenerVendedorById(listarepetidos[paso][0]),listarepetidos[paso][1]]);
+        };
+        return top5;
+    } catch (error) {
+        return "Ha ocurrido algo inesperado al intentar obtener el top 5 vendedores\n"+ error;
+    }
+}
+
 //Metodo para retornar todos los seguros
 seguroSchema.statics.obtenerSeguros = async function () {
     try {
@@ -294,6 +328,21 @@ seguroSchema.statics.obtenerSeguros = async function () {
         return listaSeguros;
     } catch (error) {
         return "Ha ocurrido algo inesperado al intentar obtener los seguros\n" + error;
+    }
+}
+
+//Metodo para retornar todos los seguros pendientes
+seguroSchema.statics.obtenerSegurosPendientes = async function() {
+    try {
+        let pendientes = await seguros.find({estado: 'En proceso'}).
+        populate('cliente', ['nombre', "apellido1","apellido2"]).
+        populate('vendedor', ['nombre', "apellido1","apellido2"]).
+        populate('bien', 'nombre').
+        populate('aseguradora', 'nombre').
+        exec();;
+        return pendientes;
+    } catch (error) {
+        return "Ha ocurrido algo inesperado al intentar obtener los seguros pendientes\n"+ error;
     }
 }
 
@@ -318,9 +367,8 @@ seguroSchema.statics.obtenerSegurosAprobados = async function (aseguradora) {
 }
 
 //Metodo para cambiar el estado de un seguro
-seguroSchema.statics.cambiarEstado = async function (id, estado, admin) {
-    let validacion = { id: "0", mensaje: "" }
-    admin = true
+seguroSchema.statics.cambiarEstado = async function(id,estado,admin) {
+    let validacion = { id: "0", mensaje: ""}
     if (admin) {
         try {
             let doc = await seguros.findById(id, "estado")
@@ -494,6 +542,7 @@ const fechaMesInicio = () => {
     return primerDia
 }
 
-const seguros = mongoose.model('seguros', seguroSchema);
+
+const seguros = mongoose.model('seguros',seguroSchema);
 
 module.exports = seguros;

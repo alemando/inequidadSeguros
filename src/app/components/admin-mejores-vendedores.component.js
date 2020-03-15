@@ -11,10 +11,10 @@ $.DataTable = DataTable
 
 const Vendedor = props => (
     <Tr>
-        <Td>{props.vendedor.documento}</Td>
-        <Td>{props.vendedor.nombre}</Td>
-        <Td>{props.vendedor.celular}</Td>
-        <Td>{props.vendedor.seguros}</Td>  {/* esto no se que va a ser*/}
+        <Td>{props.vendedor[0].documento}</Td>
+        <Td>{props.vendedor[0].nombre}</Td>
+        <Td>{props.vendedor[0].telefono}</Td>
+        <Td>{props.vendedor[1]}</Td>
 
     </Tr>
 )
@@ -34,11 +34,11 @@ export default class MejoresVendedores extends Component {
         } else {
             return (
                 <Tr>
-                    <td colSpan="4">
+                    <Td colSpan="4">
                         <div class="alert alert-warning" role="alert">
-                            No hay mejores vendedores
+                            No se han vendido seguros
                     </div>
-                    </td>
+                    </Td>
                 </Tr>)
         }
     }
@@ -48,9 +48,10 @@ export default class MejoresVendedores extends Component {
     }
 
     fetchMejoresVendedores() {
-        fetch('/api/Vendedores/mejores')
+        fetch('/api/seguros/top5vendedores')
             .then(res => res.json())
             .then(data => {
+                console.log(data);
                 this.setState({ vendedores: data });
             })
             .catch(err => console.error(err));
@@ -62,7 +63,7 @@ export default class MejoresVendedores extends Component {
                     <div className="card-body">
                         <div className="table-responsive">
                             <center><h3>Top 5 vendedores:</h3></center>
-                            <Table id="tabla-mejores-vendedores" className="table table-sm ">
+                            <Table id="tabla-mejores-vendedores" className="table table-sm table-success table-bordered">
                                 <Thead>
                                     <Tr>
                                         <Th><center>Documento</center></Th>
