@@ -4,7 +4,7 @@ const clienteModel = require('../models/cliente');
 const vendedorModel = require('../models/vendedor');
 const bienModel = require('../models/bien');
 const aseguradoraModel = require('../models/aseguradora');
-const moment = require('moment')
+const moment = require('moment');
 
 //Clase criterio, especial para un subdocumento
 const criterioSchema = Schema({
@@ -291,6 +291,16 @@ seguroSchema.statics.obtenerSeguro = async function(id) {
         return seguro;
     } catch (error) {
         return "Ha ocurrido algo inesperado al intentar obtener el seguro\n"+ error;
+    }
+}
+
+//Metodo para retornar todos los seguros aprobados
+seguroSchema.statics.obtenerSegurosAprobados = async function(aseguradora) {
+    try {
+        let segurosAprobados = await seguros.find({aseguradora: aseguradora._id, estado: "Aprobado"});
+        return segurosAprobados;
+    } catch (error) {
+        return "Ha ocurrido algo inesperado al intentar obtener los seguros aprobados\n"+ error;
     }
 }
 

@@ -43,6 +43,7 @@ app.use('/api/bienes', bienRoutes);
 app.use('/api/categorias', categoriaRoutes);
 app.use('/api/seguros', seguroRoutes);
 app.use('/api/vendedores', vendedorRoutes);
+app.use('/api/index', indexRoutes);
 
 //Static files
 app.use(express.static(path.join(__dirname, 'public')));
