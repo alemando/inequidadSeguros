@@ -52,12 +52,12 @@ render() {
                             </Thead>
                             <Tbody>
                                 <Td><input type="date" id="start" name="trip-start"
-                                        value="2020-03-01"
+                                        
                                         min="2015-01-01" max="2030-12-31"
                                         ></input></Td>
                                 
                                 <Td><input type="date" id="end" name="trip-start"
-                                        value="2020-03-16"
+                                        
                                         min="2015-01-01" max="2030-12-31"
                                         ></input></Td> 
                                 <Td>
