@@ -64,20 +64,24 @@ export default class ClientesFieles extends Component {
                     <div className="row">
                         <div className="col-sm-12">
                             <h3><i className="fa fa-user"></i> Cliente(s) mas fiel(es):</h3>
-                            <Table id="tabla-clientes-fieles" className="table table-sm table-bordered table-warning table-hover table-striped">
-                                <Thead>
-                                    <Tr>
-                                        <Th><center>Documento</center></Th>
-                                        <Th><center>Nombre</center></Th>
-                                        <Th><center>Apellidos</center></Th>
-                                        <Th><center>Seguros comprados</center></Th>
-                                    </Tr>
-                                </Thead>
-                                <Tbody>
-                                    {this.clientesList()}
-                                </Tbody>
-                            </Table>
                         </div>
+                    </div>
+                </div>
+                <div className="card-body">
+                    <div className="table-responsive">
+                        <Table id="tabla-clientes-fieles" className="table table-sm table-bordered table-hover table-striped">
+                            <Thead>
+                                <Tr>
+                                    <Th><center>Documento</center></Th>
+                                    <Th><center>Nombre</center></Th>
+                                    <Th><center>Apellidos</center></Th>
+                                    <Th><center>Seguros comprados</center></Th>
+                                </Tr>
+                            </Thead>
+                            <Tbody>
+                                {this.clientesList()}
+                            </Tbody>
+                        </Table>
                     </div>
                 </div>
             </div>
