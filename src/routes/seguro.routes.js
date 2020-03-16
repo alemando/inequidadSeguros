@@ -56,8 +56,8 @@ router.post('/betweenDates', async(req,res)=>{
     let respuesta = await Seguro.segurosEntreFechas(req.session._id,req.body.fechaInicio,req.body.fechaFin);
     res.json(respuesta);
   }else{
-    let respuesta = await Seguro.segurosEntreFechas(req.session._id);
-    res.json(respuesta);
+    let respuesta = await Seguro.segurosEntreFechas(req.session._id)
+    res.json(respuesta)
   }
 })
 

@@ -36,7 +36,7 @@ export default function App(props) {
           <div className="content-page">
             <div className="content">
               <div className="container-fluid">
-                <Route path="/index" component={() => <Index session={props.session} />} />
+                <Route exact path="/" component={() => <Index session={props.session} />} />
                 <Route path="/clientes" component={() => <Cliente session={props.session} />} />
                 <Route path="/vendedores" component={() => <Vendedor session={props.session} />} />
                 <Route path="/aseguradoras" component={() => <Aseguradora session={props.session} />} />

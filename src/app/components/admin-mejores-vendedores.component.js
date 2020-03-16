@@ -11,10 +11,10 @@ $.DataTable = DataTable
 
 const Vendedor = props => (
     <Tr>
-        <Td>{props.vendedor.documento}</Td>
-        <Td>{props.vendedor.nombre}</Td>
-        <Td>{props.vendedor.telefono}</Td>
-        <Td>{props.vendedor.seguros}</Td>
+        <Td>{props.vendedor[0].documento}</Td>
+        <Td>{props.vendedor[0].nombre}</Td>
+        <Td>{props.vendedor[0].telefono}</Td>
+        <Td>{props.vendedor[1]}</Td>
 
     </Tr>
 )
@@ -35,7 +35,7 @@ export default class MejoresVendedores extends Component {
             return (
                 <Tr>
                     <Td colSpan="4">
-                        <div class="alert alert-warning" role="alert">
+                        <div className="alert alert-warning" role="alert">
                             No se han vendido seguros
                     </div>
                     </Td>
@@ -51,32 +51,35 @@ export default class MejoresVendedores extends Component {
         fetch('/api/seguros/top5vendedores')
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 this.setState({ vendedores: data });
             })
             .catch(err => console.error(err));
     }
     render() {
         return (
-            <div className="row">
-                <div className="col-12">
-                    <div className="card-body">
-                        <div className="table-responsive">
-                            <center><h3>Top 5 vendedores:</h3></center>
-                            <Table id="tabla-mejores-vendedores" className="table table-sm table-success table-bordered">
-                                <Thead>
-                                    <Tr>
-                                        <Th><center>Documento</center></Th>
-                                        <Th><center>Nombre</center></Th>
-                                        <Th><center>Celular</center></Th>
-                                        <Th><center>Seguros vendidos</center></Th>
-                                    </Tr>
-                                </Thead>
-                                <Tbody>
-                                    {this.vendedoresList()}
-                                </Tbody>
-                            </Table>
+            <div className="card mt-3 mb-5">
+                <div className="card-header">
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <h3><i className="fa fa-users"></i> Top 5 vendedores:</h3>
                         </div>
+                    </div>
+                </div>
+                <div className="card-body">
+                    <div className="table-responsive">
+                        <Table id="tabla-mejores-vendedores" className="table table-sm table-hover table-striped table-bordered">
+                            <Thead>
+                                <Tr>
+                                    <Th><center>Documento</center></Th>
+                                    <Th><center>Nombre</center></Th>
+                                    <Th><center>Celular</center></Th>
+                                    <Th><center>Seguros vendidos</center></Th>
+                                </Tr>
+                            </Thead>
+                            <Tbody>
+                                {this.vendedoresList()}
+                            </Tbody>
+                        </Table>
                     </div>
                 </div>
             </div>
