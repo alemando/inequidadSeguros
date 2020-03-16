@@ -6,10 +6,6 @@ import $ from 'jquery'
 import DataTable from 'datatables.net'
 $.DataTable = DataTable
 
-
-
-
-
 export default class CantidadSeguros extends Component {
     constructor(props) {
         super(props);
@@ -56,10 +52,6 @@ export default class CantidadSeguros extends Component {
             </Td>
         )
       }
-
-
-
-
 
     render() {
         return (
