@@ -12,7 +12,7 @@ export default class CantidadSeguros extends Component {
         this.state = {
             fechaInicio: '',
             fechaFin: '',
-            seguros: ''
+            seguros: null
          }
         this.searchSeguros = this.searchSeguros.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -44,13 +44,22 @@ export default class CantidadSeguros extends Component {
       }
 
       getSeguros() {
-        return (
-            <Td>
-                <center>
-                    {this.state.seguros}
-                </center>
-            </Td>
-        )
+        if (this.state.seguros!=null) {
+            return (
+                <Td>
+                    <center>
+                        {this.state.seguros}
+                    </center>
+                </Td>
+            )
+        } else {
+            return (
+                <Td>
+                    <div className="alert alert-sm alert-info" role="alert">
+                            Seleccione una fecha
+                    </div>
+                </Td>)
+        }
       }
 
     render() {

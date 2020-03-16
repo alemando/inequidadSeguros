@@ -1230,3 +1230,9 @@ a.btn:focus {
   margin-bottom: 5%;
   padding: 4.5% 0 4.5% 0;
 }
+
+.alert-sm{
+  margin-bottom: 0px !important;
+  height:75%;
+  line-height:75%;
+}
