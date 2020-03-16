@@ -11,10 +11,10 @@ $.DataTable = DataTable
 
 const Cliente = props => (
     <Tr>
-        <Td>{props.cliente[0].documento}</Td>
-        <Td>{props.cliente[0].nombre}</Td>
-        <Td>{props.cliente[0].apellido1}{props.cliente[0].apellido2}</Td>
-        <Td>{props.cliente[1]}</Td>
+        <Td>{props.cliente.documento}</Td>
+        <Td>{props.cliente.nombres}</Td>
+        <Td>{props.cliente.apellidos}</Td>
+        <Td>{props.cliente.seguros}</Td>
 
     </Tr>
 )
@@ -48,11 +48,11 @@ export default class MejoresClientes extends Component {
     }
 
     fetchMejoresClientes() {
-        fetch('/api/seguros/topCinco')
+        fetch('/api/clientes/topcinco')
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                this.setState({ clientes: data });
+                this.setState({ clientes: data.top });
             })
             .catch(err => console.error(err));
     }
