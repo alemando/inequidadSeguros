@@ -237,7 +237,7 @@ aseguradoraSchema.statics.mejoresAseguradoras = async function(admin) {
             return mejores;
         }
     } catch (error) {
-        console.log(e)
+        console.log(error)
         validacion.id = '2';
         validacion.mensaje = `Error al obtener aseguradoras con más seguros aprobados: ${error}`
         return validacion;
