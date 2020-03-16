@@ -38,4 +38,6 @@ router.post('/edit', async(req,res) => {
   res.json(await Vendedor.editarVendedor(req.body, req.session.esAdmin));
 })
 
+
+
 module.exports = router;
