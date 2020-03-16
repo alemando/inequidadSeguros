@@ -11,7 +11,7 @@ const Cliente = props => (
     <Tr>
         <Td>{props.cliente.cliente.documento}</Td>
         <Td>{props.cliente.cliente.nombre}</Td>
-        <Td>{props.cliente.cliente.celular}</Td>
+        <Td>{props.cliente.cliente.apellido1} {props.cliente.cliente.apellido2}</Td>
         <Td>{props.cliente.count}</Td>
 
     </Tr>
@@ -26,7 +26,7 @@ export default class ClientesFieles extends Component {
     }
 
     clientesList() {
-        
+
         if (this.state.clientes.length > 0) {
             return this.state.clientes.map(currentCliente => {
                 return <Cliente session={this.props.session} component={this} cliente={currentCliente} key={currentCliente._id} />;
@@ -69,7 +69,7 @@ export default class ClientesFieles extends Component {
                                     <Tr>
                                         <Th><center>Documento</center></Th>
                                         <Th><center>Nombre</center></Th>
-                                        <Th><center>Apellido</center></Th>
+                                        <Th><center>Apellidos</center></Th>
                                         <Th><center>Seguros comprados</center></Th>
                                     </Tr>
                                 </Thead>
