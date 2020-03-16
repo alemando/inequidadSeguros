@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 var uniqueValidator = require('mongoose-unique-validator');
+const vendedorModel = require('../models/vendedor');
 const moment = require('moment');
 const Schema = mongoose.Schema;
 const seguroModel = require('../models/seguro');
