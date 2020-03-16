@@ -6,17 +6,13 @@ import $ from 'jquery'
 import DataTable from 'datatables.net'
 $.DataTable = DataTable
 
-
-
-
-
 export default class CantidadSeguros extends Component {
     constructor(props) {
         super(props);
         this.state = {
             fechaInicio: '',
             fechaFin: '',
-            seguros: ''
+            seguros: null
          }
         this.searchSeguros = this.searchSeguros.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -48,18 +44,23 @@ export default class CantidadSeguros extends Component {
       }
 
       getSeguros() {
-        return (
-            <Td>
-                <center>
-                    {this.state.seguros}
-                </center>
-            </Td>
-        )
+        if (this.state.seguros!=null) {
+            return (
+                <Td>
+                    <center>
+                        {this.state.seguros}
+                    </center>
+                </Td>
+            )
+        } else {
+            return (
+                <Td>
+                    <div className="alert alert-sm alert-info" role="alert">
+                            Seleccione una fecha
+                    </div>
+                </Td>)
+        }
       }
-
-
-
-
 
     render() {
         return (
@@ -82,11 +83,11 @@ export default class CantidadSeguros extends Component {
                                 </Tr>
                             </Thead>
                             <Tbody>
-                                <Td><input type="date" id="fechaInicio" name="fechaInicio"
+                                <Td><input className="form-control" type="date" id="fechaInicio" name="fechaInicio"
                                     min="2015-01-01" max="2030-12-31" onChange={this.handleChange}
                                 ></input></Td>
 
-                                <Td><input type="date" id="fechaFin" name="fechaFin"
+                                <Td><input className="form-control" type="date" id="fechaFin" name="fechaFin"
                                     min={this.state.fechaInicio} max="2030-12-31" onChange={this.handleChange}
                                 ></input></Td>
                                 {this.getSeguros()}

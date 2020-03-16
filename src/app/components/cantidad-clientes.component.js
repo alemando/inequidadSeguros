@@ -4,23 +4,63 @@ import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 import Swal from 'sweetalert2'
 import $ from 'jquery'
 import DataTable from 'datatables.net'
-import { render } from 'react-dom';
 $.DataTable = DataTable
-
-
-
-
 
 export default class CantidadClientes extends Component {
     constructor(props) {
         super(props);
-        this.state = { Clientes: [] };
+        this.state = {
+            fechaInicio: '',
+            fechaFin: '',
+            clientes: null
+         }
+        this.searchClientes = this.searchClientes.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
+    searchClientes() {
+        console.log(JSON.stringify(this.state));
+        fetch('/api/clientes/cantidadClientesFechas', {
+          method: 'POST',
+          body: JSON.stringify(this.state),
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+            this.setState({ clientes: data.mensaje });
+          })
+          .catch(err => console.error(err));
+      }
+    
+      handleChange(e) {
+        const { name, value } = e.target;
+        this.setState({[name]: value}, () => { 
+            this.searchClientes();
+        });
+      }
 
-
-
-
+      getClientes() {
+        if (this.state.clientes!=null) {
+            return (
+                <Td>
+                    <center>
+                        {this.state.clientes}
+                    </center>
+                </Td>
+            )
+        } else {
+            return (
+                <Td>
+                    <div className="alert alert-sm alert-info" role="alert">
+                            Seleccione una fecha
+                    </div>
+                </Td>)
+        }
+      }
 
     render() {
         return (
@@ -43,14 +83,14 @@ export default class CantidadClientes extends Component {
                                 </Tr>
                             </Thead>
                             <Tbody>
-                                <Td><input type="date" id="start" name="trip-start"
-                                    min="2015-01-01" max="2030-12-31"
+                                <Td><input className="form-control" type="date" id="fechaInicio" name="fechaInicio"
+                                    min="2015-01-01" max="2030-12-31" onChange={this.handleChange}
                                 ></input></Td>
 
-                                <Td><input type="date" id="end" name="trip-start"
-                                    min="2015-01-01" max="2030-12-31"
+                                <Td><input className="form-control" type="date" id="fechaFin" name="fechaFin"
+                                    min={this.state.fechaInicio} max="2030-12-31" onChange={this.handleChange}
                                 ></input></Td>
-                                <Td></Td>
+                                {this.getClientes()}
                             </Tbody>
                         </Table>
                     </div>
