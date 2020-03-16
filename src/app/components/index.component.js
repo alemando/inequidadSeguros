@@ -9,36 +9,36 @@ export default class Index extends Component {
 
   render() {
     return (
-          <div>
-            <div className="row">
-					    <div className="col-sm-12">
-                {this.props.session.esAdmin ? <SegurosPendientes session={this.props.session}></SegurosPendientes> :""}
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-6">
-                <CantidadClientes session={this.props.session}></CantidadClientes>
-              </div>
-              <div className="col-sm-6">
-                <CantidadSeguros session={this.props.session}></CantidadSeguros>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-6">
-                {this.props.session.esAdmin ? <MejoresVendedores session={this.props.session}></MejoresVendedores> : ""}
-              </div>
-              <div className="col-sm-6">
-                {this.props.session.esAdmin ? <MejoresAseguradoras session={this.props.session}></MejoresAseguradoras> : ""}
-              </div>
-            </div>
+      <div>
+        <div className="row">
+          <div className="col-sm-12">
+            {this.props.session.esAdmin ? <SegurosPendientes session={this.props.session}></SegurosPendientes> : ""}
           </div>
-          <div className="col-sm-4">
+        </div>
+        <div className="row">
+          <div className="col-sm-6">
+            <CantidadClientes session={this.props.session}></CantidadClientes>
+          </div>
+          <div className="col-sm-6">
+            <CantidadSeguros session={this.props.session}></CantidadSeguros>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-6">
+            {this.props.session.esAdmin ? <MejoresVendedores session={this.props.session}></MejoresVendedores> : ""}
+          </div>
+          <div className="col-sm-6">
+            {this.props.session.esAdmin ? <MejoresAseguradoras session={this.props.session}></MejoresAseguradoras> : ""}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-6">
             <CantidadClientes session={this.props.session}></CantidadClientes>
           </div>
           <div className="col-sm-6">
             <ClientesFieles session={this.props.session}></ClientesFieles>
           </div>
-          
+        </div>
       </div>
     );
   }
