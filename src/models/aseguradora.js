@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 var uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
 
-const Seguro = require('../models/seguro');
+
 
 //Clase Aseguradora
 const aseguradoraSchema = Schema({
@@ -207,6 +207,7 @@ aseguradoraSchema.statics.actualizarAseguradora = async (datos, admin) => {
 
 //Obtener las 5 aseguradoras con más seguros aprobados
 aseguradoraSchema.statics.mejoresAseguradoras = async function(admin) {
+    const Seguro = require('../models/seguro');
     let validacion = { id: "0", mensaje: "" }
     try {
         if(!admin){

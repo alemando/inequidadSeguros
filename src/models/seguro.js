@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
-const clienteModel = require('../models/cliente');
+
 const vendedorModel = require('../models/vendedor');
 const bienModel = require('../models/bien');
 const aseguradoraModel = require('../models/aseguradora');
@@ -104,6 +104,8 @@ const seguroSchema = Schema({
     retorna un arreglo JSON {id: #, mensaje:...}
 */
 seguroSchema.statics.guardarSeguro = async function (datos) {
+
+    const clienteModel = require('../models/cliente');
 
     let validacion = { id: "0", mensaje: "" }
     //Validacion para tener al menos un criterio
@@ -485,6 +487,7 @@ seguroSchema.statics.borrarSeguro = async function (id, admin) {
 
 //Metodo que extrae los mejores clientes del vendedor en session ej:"5e5608358c330d3c1404ee04"
 seguroSchema.statics.MejoresClientes = async (idVendedor) => {
+    const clienteModel = require('../models/cliente');
     try {
         //Query el cual agrupa por cliente,vendedor,estado y cuenta las estancias.
         // Luego las filtra con el vendedor en session y las aprobado. ordenandolo al final
