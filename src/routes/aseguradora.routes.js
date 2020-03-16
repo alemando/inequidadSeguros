@@ -17,8 +17,9 @@ router.get('/enabled', async (req, res) => {
   res.json(resultado);
 });
 
+// GET aseguradoras con más seguros aprobados
 router.get('/mostSold', async (req,res) =>{
-  resultado = await Aseguradora.mejoresAseguradoras();
+  resultado = await Aseguradora.mejoresAseguradoras(req.session.esAdmin);
   res.json(resultado);
 });
 
