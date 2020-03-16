@@ -46,7 +46,7 @@ export default class MejoresAseguradoras extends Component {
     }
 
     fetchMejoresAseguradoras() {
-        fetch('/api/Aseguradoras/mejores')
+        fetch('/api/Aseguradoras/mostSold')
             .then(res => res.json())
             .then(data => {
                 this.setState({ aseguradoras: data });
