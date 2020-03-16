@@ -74,11 +74,11 @@ export default class CantidadSeguros extends Component {
                                 </Tr>
                             </Thead>
                             <Tbody>
-                                <Td><input type="date" id="fechaInicio" name="fechaInicio"
+                                <Td><input className="form-control" type="date" id="fechaInicio" name="fechaInicio"
                                     min="2015-01-01" max="2030-12-31" onChange={this.handleChange}
                                 ></input></Td>
 
-                                <Td><input type="date" id="fechaFin" name="fechaFin"
+                                <Td><input className="form-control" type="date" id="fechaFin" name="fechaFin"
                                     min={this.state.fechaInicio} max="2030-12-31" onChange={this.handleChange}
                                 ></input></Td>
                                 {this.getSeguros()}
