@@ -22,13 +22,18 @@ export default class CantidadClientes extends Component {
 
 
 
-render() {
-    return(
-        <div className="row">
-            <div className="col-12">
+    render() {
+        return (
+            <div className="card mt-3">
+                <div className="card-header">
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <h3><i className="fa fa-calendar-alt"></i> Cantidad de clientes nuevos:</h3>
+                        </div>
+                    </div>
+                </div>
                 <div className="card-body">
                     <div className="table responsive">
-                        <center><h3>Cantidad de clientes nuevos:</h3></center>
                         <Table id="cantidad-clientes" className="table table-sm">
                             <Thead>
                                 <Tr>
@@ -39,22 +44,19 @@ render() {
                             </Thead>
                             <Tbody>
                                 <Td><input type="date" id="start" name="trip-start"
-                                        value="2020-03-01"
-                                        min="2015-01-01" max="2030-12-31"
-                                        ></input></Td>
-                                
+                                    min="2015-01-01" max="2030-12-31"
+                                ></input></Td>
+
                                 <Td><input type="date" id="end" name="trip-start"
-                                        value="2020-03-16"
-                                        min="2015-01-01" max="2030-12-31"
-                                        ></input></Td> 
+                                    min="2015-01-01" max="2030-12-31"
+                                ></input></Td>
                                 <Td></Td>
                             </Tbody>
                         </Table>
                     </div>
                 </div>
             </div>
-        </div>
-    )
-}
+        )
+    }
 
 }

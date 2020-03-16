@@ -33,7 +33,7 @@ export default class MejoresAseguradoras extends Component {
             return (
                 <Tr>
                     <td colSpan="4">
-                        <div class="alert alert-warning" role="alert">
+                        <div className="alert alert-warning" role="alert">
                             No hay mejores aseguradoras
                     </div>
                     </td>
@@ -55,24 +55,28 @@ export default class MejoresAseguradoras extends Component {
     }
     render() {
         return (
-            <div className="row">
-                <div className="col-12">
-                    <div className="card-body">
-                        <div className="table-responsive">
-                            <center><h3>Top 5 aseguradoras:</h3></center>
-                            <Table id="tabla-mejores-vendedores" className="table table-sm ">
-                                <Thead>
-                                    <Tr>
-                                        <Th><center>Nit</center></Th>
-                                        <Th><center>Nombre</center></Th>
-                                        <Th><center>Seguros vendidos</center></Th>
-                                    </Tr>
-                                </Thead>
-                                <Tbody>
-                                    {this.aseguradorasList()}
-                                </Tbody>
-                            </Table>
+            <div className="card mt-3 mb-5">
+                <div className="card-header">
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <h3><i className="fa fa-address-book"></i> Top 5 aseguradoras:</h3>
                         </div>
+                    </div>
+                </div>
+                <div className="card-body">
+                    <div className="table-responsive">
+                        <Table id="tabla-mejores-vendedores" className="table table-sm ">
+                            <Thead>
+                                <Tr>
+                                    <Th><center>Nit</center></Th>
+                                    <Th><center>Nombre</center></Th>
+                                    <Th><center>Seguros vendidos</center></Th>
+                                </Tr>
+                            </Thead>
+                            <Tbody>
+                                {this.aseguradorasList()}
+                            </Tbody>
+                        </Table>
                     </div>
                 </div>
             </div>
