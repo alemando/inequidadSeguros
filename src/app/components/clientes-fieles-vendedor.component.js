@@ -59,12 +59,12 @@ export default class ClientesFieles extends Component {
     }
     render() {
         return (
-            <div className="row">
-                <div className="col-12">
-                    <div className="card-body">
-                        <div className="table-responsive">
-                            <center><h3>Cliente(s) mas fiel(es):</h3></center>
-                            <Table id="tabla-clientes-fieles" className="table table-sm table-bordered table-warning">
+            <div className="card mt-3 mb-5">
+                <div className="card-header">
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <h3><i className="fa fa-user"></i> Cliente(s) mas fiel(es):</h3>
+                            <Table id="tabla-clientes-fieles" className="table table-sm table-bordered table-warning table-hover table-striped">
                                 <Thead>
                                     <Tr>
                                         <Th><center>Documento</center></Th>
