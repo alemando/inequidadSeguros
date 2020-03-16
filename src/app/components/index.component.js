@@ -1,3 +1,5 @@
+
+import MejoresClientes from './admin-mejores-clientes.component';
 import React, { Component } from 'react';
 import MejoresVendedores from './admin-mejores-vendedores.component';
 import MejoresAseguradoras from './admin-mejores-aseguradoras.component';
@@ -33,11 +35,13 @@ export default class Index extends Component {
         </div>
         <div className="row">
           <div className="col-sm-6">
-            <CantidadClientes session={this.props.session}></CantidadClientes>
-          </div>
-          <div className="col-sm-6">
             <ClientesFieles session={this.props.session}></ClientesFieles>
           </div>
+          <div className="col-sm-6">
+            {this.props.session.esAdmin ? <MejoresClientes session={this.props.session}></MejoresClientes> : ""}
+          </div>
+        </div>
+        <div className="row">
         </div>
       </div>
     );

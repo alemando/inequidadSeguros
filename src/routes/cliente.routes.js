@@ -19,6 +19,10 @@ router.get('/habilitados', async (req, res) => {
   res.json(cliente);
 });
 
+router.get('/topcinco', async(req,res)=>{
+  resultado = await Cliente.topCinco(req.session.esAdmin);
+  res.json(resultado)
+})
 // Get top clientes por vendedor
 router.get('/bestclients', async (req,res)=>{
   // Si se quiere probar con postman cambiar parametro req.body._id y enviar el id del vendedor como json
@@ -65,6 +69,8 @@ router.post('/cantidadClientesFechas', async(req,res) => {
     res.json(respuesta);
   }
 });
+
+
 
 
 module.exports = router;
