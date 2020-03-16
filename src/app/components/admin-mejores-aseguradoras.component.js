@@ -25,7 +25,7 @@ export default class MejoresAseguradoras extends Component {
     }
 
     aseguradorasList() {
-        if (this.state.aseguradoras != null) {//hay que cambiar a length 0 despues
+        if (this.state.aseguradoras.length > 0) {//hay que cambiar a length 0 despues
             return this.state.aseguradoras.map(currentAseguradora => {
                 return <Aseguradora session={this.props.session} component={this} aseguradora={currentAseguradora} key={currentAseguradora._id} />;
             })
