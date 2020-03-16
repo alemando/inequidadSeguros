@@ -11,9 +11,9 @@ $.DataTable = DataTable
 
 const Aseguradora = props => (
     <Tr>
-        <Td>{props.aseguradora.nit}</Td>
-        <Td>{props.aseguradora.nombre}</Td>
-        <Td>{props.aseguradora.seguros}</Td>
+        <Td>{props.aseguradora.aseguradora.nit}</Td>
+        <Td>{props.aseguradora.aseguradora.nombre}</Td>
+        <Td>{props.aseguradora.totalSeguros}</Td>
     </Tr>
 )
 
@@ -46,7 +46,7 @@ export default class MejoresAseguradoras extends Component {
     }
 
     fetchMejoresAseguradoras() {
-        fetch('/api/Aseguradoras/mejores')
+        fetch('/api/Aseguradoras/mostSold')
             .then(res => res.json())
             .then(data => {
                 this.setState({ aseguradoras: data });
