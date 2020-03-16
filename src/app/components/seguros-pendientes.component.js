@@ -123,30 +123,34 @@ export default class SegurosPendientes extends Component{
 
     render(){
         return(
-            <div className="row">
-                <div className="col-12">
-                    <div className="card-body">
-                        <div className="table-responsive">
-                            <center><h3>Seguros Pendientes:</h3></center>
-                            <Table id="seguros-pendientes" className="table table-bordered table-hover display">
-                                <Thead>
-                                    <Tr>
-                                        <Th><center>Vendedor</center></Th>
-                                        <Th><center>Aseguradora</center></Th>
-                                        <Th><center>Cliente</center></Th>
-                                        <Th><center>Bien</center></Th>
-                                        <Th><center>Ver más</center></Th>
-                                        <Th><center>Cambiar Estado</center></Th>
-                                    </Tr>
-                                </Thead>
-                                <Tbody>
-                                    {this.segurosPendientesList()}
-                                </Tbody>
-                            </Table>
-                        </div>
-                    </div>
+          <div className="card mt-3">
+            <div className="card-header">
+              <div className="row">
+                <div className="col-sm-12">
+                  <h3><i className="fa fa-plus-square"></i> Seguros pendientes</h3>
                 </div>
-            </div>
+              </div>
+            </div>							
+            <div className="card-body">
+              <div className="table-responsive">
+                  <Table id="seguros-pendientes" className="table table-bordered table-hover display">
+                      <Thead>
+                          <Tr>
+                              <Th><center>Vendedor</center></Th>
+                              <Th><center>Aseguradora</center></Th>
+                              <Th><center>Cliente</center></Th>
+                              <Th><center>Bien</center></Th>
+                              <Th><center>Ver más</center></Th>
+                              <Th><center>Cambiar Estado</center></Th>
+                          </Tr>
+                      </Thead>
+                      <Tbody>
+                          {this.segurosPendientesList()}
+                      </Tbody>
+                  </Table>
+              </div>
+            </div>													
+          </div>
         )
     }
 
