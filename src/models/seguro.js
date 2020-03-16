@@ -524,6 +524,7 @@ seguroSchema.statics.MejoresClientes = async (idVendedor) => {
         res = res.slice(0, size)
         return res
     } catch (e) {
+        console.log(e)
         return { id: 0, mensaje: "error: " + e }
     }
 }
