@@ -6,21 +6,21 @@ import $ from 'jquery'
 import DataTable from 'datatables.net'
 $.DataTable = DataTable
 
-export default class CantidadClientes extends Component {
+export default class CantidadSeguros extends Component {
     constructor(props) {
         super(props);
         this.state = {
             fechaInicio: '',
             fechaFin: '',
-            clientes: null
+            seguros: null
          }
-        this.searchClientes = this.searchClientes.bind(this);
+        this.searchSeguros = this.searchSeguros.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
-    searchClientes() {
+    searchSeguros() {
         console.log(JSON.stringify(this.state));
-        fetch('/api/clientes/cantidadClientesFechas', {
+        fetch('/api/seguros/betweenDates', {
           method: 'POST',
           body: JSON.stringify(this.state),
           headers: {
@@ -31,7 +31,7 @@ export default class CantidadClientes extends Component {
           .then(res => res.json())
           .then(data => {
             console.log(data);
-            this.setState({ clientes: data.mensaje });
+            this.setState({ seguros: data });
           })
           .catch(err => console.error(err));
       }
@@ -39,16 +39,16 @@ export default class CantidadClientes extends Component {
       handleChange(e) {
         const { name, value } = e.target;
         this.setState({[name]: value}, () => { 
-            this.searchClientes();
+            this.searchSeguros();
         });
       }
 
-      getClientes() {
-        if (this.state.clientes!=null) {
+      getSeguros() {
+        if (this.state.seguros!=null) {
             return (
                 <Td>
                     <center>
-                        {this.state.clientes}
+                        {this.state.seguros}
                     </center>
                 </Td>
             )
@@ -68,7 +68,7 @@ export default class CantidadClientes extends Component {
                 <div className="card-header">
                     <div className="row">
                         <div className="col-sm-12">
-                            <h3><i className="fa fa-calendar-alt"></i> Cantidad de clientes nuevos:</h3>
+                            <h3><i className="fa fa-calendar-alt"></i> Cantidad de seguros vendidos:</h3>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@ export default class CantidadClientes extends Component {
                                 <Tr>
                                     <Th>Fecha Inicial</Th>
                                     <Th>Fecha Final</Th>
-                                    <Th>Cantidad de clientes nuevos</Th>
+                                    <Th>Cantidad de seguros nuevos</Th>
                                 </Tr>
                             </Thead>
                             <Tbody>
@@ -90,7 +90,7 @@ export default class CantidadClientes extends Component {
                                 <Td><input className="form-control" type="date" id="fechaFin" name="fechaFin"
                                     min={this.state.fechaInicio} max="2030-12-31" onChange={this.handleChange}
                                 ></input></Td>
-                                {this.getClientes()}
+                                {this.getSeguros()}
                             </Tbody>
                         </Table>
                     </div>
