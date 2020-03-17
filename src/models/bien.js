@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
-const clienteModel = require('./cliente')
+
 const categoriaModel = require('./categoria')
 
 //Clase file, especial para un subdocumento
@@ -46,6 +46,8 @@ const bienSchema = Schema({
     retorna un arreglo JSON {id: #, mensaje:...}
 */
 bienSchema.statics.guardarBien = async function (datos) {
+
+  const clienteModel = require('./cliente')
   let validacion = { id: "0", mensaje: "" }
 
   //Validacion del nombre
