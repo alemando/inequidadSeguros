@@ -474,8 +474,10 @@ clienteSchema.statics.topCinco = async (admin) => {
                 //el siguiente if comprueba si se generan empate.
                 if (top.length > 5) {
                     let empate = 5;
+                    console.log(top);
                     while (top[empate]) {
                         if (top[empate-1].seguros == top[empate].seguros) empate = empate + 1;
+                        else break;
                     }
                     top = top.slice(0,empate);
                     mensaje = mensaje + " se produjo un empate, se daran " + empate + " resultados"
