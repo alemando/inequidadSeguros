@@ -26,9 +26,22 @@ export default class VendedoresList extends Component {
   }
 
     vendedoresList() {
-    return this.state.vendedores.map(currentVendedor => {
-      return <Vendedor session={this.props.session} component={this} vendedor={currentVendedor} key={currentVendedor._id} />;
-    })
+      if(this.state.vendedores.length > 0){
+        return this.state.vendedores.map(currentVendedor => {
+          return <Vendedor session={this.props.session} component={this} vendedor={currentVendedor} key={currentVendedor._id} />;
+        })
+      }else{
+        return(
+          <Tr>
+          <Td colSpan="4">
+            <div className="alert alert-warning" role="alert">
+              No hay vendedores
+        </div>
+          </Td>
+        </Tr>
+        )
+      }
+
   }
 
   componentDidMount() {

@@ -27,7 +27,7 @@ export default class MejoresVendedores extends Component {
     }
 
     vendedoresList() {
-        if (this.state.vendedores != null) {//hay que cambiar a length 0 despues
+        if (this.state.vendedores.length > 0) {//hay que cambiar a length 0 despues
             return this.state.vendedores.map(currentVendedor => {
                 return <Vendedor session={this.props.session} component={this} vendedor={currentVendedor} key={currentVendedor._id} />;
             })
@@ -51,6 +51,8 @@ export default class MejoresVendedores extends Component {
         fetch('/api/seguros/top5vendedores')
             .then(res => res.json())
             .then(data => {
+                console.log("hola");
+                console.log(data);
                 this.setState({ vendedores: data });
             })
             .catch(err => console.error(err));

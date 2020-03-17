@@ -287,9 +287,9 @@ seguroSchema.statics.guardarSeguro = async function (datos) {
 
 //Metodo para retornar los clientes de todos los seguros registrados
 seguroSchema.statics.obtenerVendedoresSeguros = async function() {
+    let vendedores = [];
     try {
         let listaVendedoresSeguros = await seguros.find();
-        let vendedores = []
         for (let i = 0; i < listaVendedoresSeguros.length; i++) {
             if (listaVendedoresSeguros[i] != null) {
               let elVendedor = listaVendedoresSeguros[i].vendedor;
@@ -314,7 +314,7 @@ seguroSchema.statics.obtenerVendedoresSeguros = async function() {
         };
         return top5;
     } catch (error) {
-        return "Ha ocurrido algo inesperado al intentar obtener el top 5 vendedores\n"+ error;
+        return vendedores;
     }
 }
 
