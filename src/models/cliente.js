@@ -471,8 +471,7 @@ clienteSchema.statics.topCinco = async (admin) => {
             else {
                 top=top.sort((a,b)=>b.seguros-a.seguros)
 
-                let mensaje = "top generado con exito!."
-<<<<<<< HEAD
+                let mensaje = "top generado con exito!.";
                 //el siguiente if comprueba si se generan empate.
                 if (top.length > 5) {
                     let empate = 5;
@@ -484,8 +483,6 @@ clienteSchema.statics.topCinco = async (admin) => {
                     top = top.slice(0,empate);
                     mensaje = mensaje + " se produjo un empate, se daran " + empate + " resultados"
                 }
-=======
->>>>>>> 7cea253cfe2b08ca7c47dd28d349efb65bca2f22
                 return {id:1, mensaje:mensaje, top:top}    
             }
         } catch (error) {
