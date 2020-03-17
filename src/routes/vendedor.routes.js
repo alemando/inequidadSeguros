@@ -29,7 +29,7 @@ router.post('/cambiarContrasena', async (req, res) => {
 });
 //Inhabilitar vendedor
 router.post('/inhabilitar', async(req,res)=>{
-  let respuesta = await Vendedor.CambiarEstadoVendedor(req.body.id, req.session.esAdmin)
+  let respuesta = await Vendedor.CambiarEstadoVendedor(req.body.id, req.session)
   res.json(respuesta);
 })
 

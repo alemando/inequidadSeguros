@@ -259,9 +259,12 @@ vendedorSchema.statics.cambiarContrasenaVendedor = async (vendedorId, datos)=>{
 //Metodo para cambiar estado vendedor 
 vendedorSchema.statics.CambiarEstadoVendedor = async (id, admin)=> {
     
-    if(admin == true){
+    if(admin.esAdmin){
         try {
             let vendedor = await vendedores.findById(id);
+            if(vendedor._id == admin._id){
+                return { id: "0", mensaje: "No puedes desahibilitar tu propia cuenta"};
+            }
             vendedor.estado = !vendedor.estado;
             await vendedor.save();
             return { id: "1", mensaje: "Has cambiado el estado del vendedor"};
