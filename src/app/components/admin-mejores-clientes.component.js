@@ -29,8 +29,8 @@ export default class MejoresClientes extends Component {
     clientesList() {
         if (this.state.clientes != null) {//hay que cambiar a length 0 despues
             return this.state.clientes.map(currentCliente => {
-                return <Cliente session={this.props.session} cliente={currentCliente} key={currentCliente._id} component={this} />;
-            })
+                return <Cliente session={this.props.session} cliente={currentCliente} key={currentCliente._id} component={this}/>;
+              })
         } else {
             return (
                 <Tr>
@@ -58,30 +58,25 @@ export default class MejoresClientes extends Component {
     }
     render() {
         return (
-            <div className="card mt-3 mb-5">
-                <div className="card-header">
-                    <div className="row">
-                        <div className="col-sm-12">
-                            <h3><i className="fa fa-users"></i> Top 5 clientes:</h3>
+            <div className="row">
+                <div className="col-12">
+                    <div className="card-body">
+                        <div className="table-responsive">
+                            <center><h3>Top 5 clientes:</h3></center>
+                            <Table id="tabla-mejores-clientes" className="table table-sm table-bordered">
+                                <Thead>
+                                    <Tr>
+                                        <Th><center>Documento</center></Th>
+                                        <Th><center>Nombre</center></Th>
+                                        <Th><center>Apellidos</center></Th>
+                                        <Th><center>Seguros comprados</center></Th>
+                                    </Tr>
+                                </Thead>
+                                <Tbody>
+                                    {this.clientesList()}
+                                </Tbody>
+                            </Table>
                         </div>
-                    </div>
-                </div>
-                <div className="card-body">
-                    <div className="table-responsive">
-
-                        <Table id="tabla-mejores-clientes" className="table table-sm table-bordered table-hover table-striped">
-                            <Thead>
-                                <Tr>
-                                    <Th><center>Documento</center></Th>
-                                    <Th><center>Nombre</center></Th>
-                                    <Th><center>Apellidos</center></Th>
-                                    <Th><center>Seguros comprados</center></Th>
-                                </Tr>
-                            </Thead>
-                            <Tbody>
-                                {this.clientesList()}
-                            </Tbody>
-                        </Table>
                     </div>
                 </div>
             </div>
