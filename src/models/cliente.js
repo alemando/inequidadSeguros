@@ -463,14 +463,16 @@ clienteSchema.statics.topCinco = async (admin) => {
         try {
             lista_clientes = await clientes.find({},["_id","documento","nombre","apellido1","apellido2"]);
             if(lista_clientes.length==0) return {id:0, mensaje:"No hay clientes registrados!"}
-            for (const cli of lista_clientes) {  
+            for (cli of lista_clientes) {  
                 numero_seguros = await seguroModel.countDocuments({cliente:cli._id,estado:"Aprobado"});
                 if(numero_seguros!=0) top.push({id:cli._id,documento:cli.documento,nombres:cli.nombre,apellidos: cli.apellido1 + ' '+ cli.apellido2,seguros:numero_seguros});
             }
             if (top.length==0) return {id:0, mensaje:"No hay clientes con seguros aprobados, no se pudo generar el top"}
             else {
                 top=top.sort((a,b)=>b.seguros-a.seguros)
+
                 let mensaje = "top generado con exito!."
+<<<<<<< HEAD
                 //el siguiente if comprueba si se generan empate.
                 if (top.length > 5) {
                     let empate = 5;
@@ -482,6 +484,8 @@ clienteSchema.statics.topCinco = async (admin) => {
                     top = top.slice(0,empate);
                     mensaje = mensaje + " se produjo un empate, se daran " + empate + " resultados"
                 }
+=======
+>>>>>>> 7cea253cfe2b08ca7c47dd28d349efb65bca2f22
                 return {id:1, mensaje:mensaje, top:top}    
             }
         } catch (error) {
