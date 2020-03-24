@@ -11,7 +11,7 @@ export default class Index extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <div className="row">
           <div className="col-sm-12">
             {this.props.session.esAdmin ? <SegurosPendientes session={this.props.session}></SegurosPendientes> : ""}

@@ -68,7 +68,7 @@ export default class ClientesFieles extends Component {
                     </div>
                 </div>
                 <div className="card-body">
-                    <div className="table-responsive">
+                    <div className="Table-responsive">
                         <Table id="tabla-clientes-fieles" className="table table-sm table-bordered table-hover table-striped">
                             <Thead>
                                 <Tr>
