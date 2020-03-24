@@ -6,52 +6,47 @@ import $ from 'jquery'
 import DataTable from 'datatables.net'
 $.DataTable = DataTable
 
-
-const Cliente = props => (
+//Revisar los nombres de los elementos
+const Categoria = props => (
     <Tr>
-        <Td>{props.cliente.cliente.documento}</Td>
-        <Td>{props.cliente.cliente.nombre}</Td>
-        <Td>{props.cliente.cliente.apellido1} {props.cliente.cliente.apellido2}</Td>
-        <Td>{props.cliente.count}</Td>
-
+        <Td>{props.categoria.nombre}</Td>
+        <Td>{props.categoria.bienes}</Td>
     </Tr>
 )
 
 
-
-export default class ClientesFieles extends Component {
+export default class CategoriasComunes extends Component {
     constructor(props) {
         super(props);
-        this.state = { clientes: [] };
+        this.state = { categorias: [] };
     }
 
-    clientesList() {
-
-        if (this.state.clientes.length > 0) {
-            return this.state.clientes.map(currentCliente => {
-                return <Cliente session={this.props.session} component={this} cliente={currentCliente} key={currentCliente._id} />;
+    categoriasList() {
+        if (! typeof this.state.categorias === 'string') {
+            return this.state.categorias.map(currentCategoria => {
+                return <Categoria session={this.props.session} component={this} categoria={currentCategoria} key={currentCategoria._id} />;
             })
         } else {
             return (
                 <Tr>
                     <Td colSpan="4">
-                        <div class="alert alert-warning" role="alert">
-                            Aun no has vendido seguros
-                    </div>
+                        <div className="alert alert-warning" role="alert">
+                            {this.state.categorias}
+                        </div>
                     </Td>
                 </Tr>)
         }
     }
 
     componentDidMount() {
-        this.fetchClientesFileles();
+        this.fetchCategoriasComunes();
     }
 
-    fetchClientesFileles() {
-        fetch('/api/clientes/bestclients')
+    fetchCategoriasComunes() {
+        fetch('/api/bienes/categoriesTopFive')
             .then(res => res.json())
             .then(data => {
-                this.setState({ clientes: data });
+                this.setState({ categorias: data });
             })
             .catch(err => console.error(err));
     }
@@ -61,23 +56,21 @@ export default class ClientesFieles extends Component {
                 <div className="card-header">
                     <div className="row">
                         <div className="col-sm-12">
-                            <h3><i className="fa fa-user"></i> Cliente(s) mas fiel(es):</h3>
+                            <h3><i className="fa fa-sitemap"></i> Top 5 categorias:</h3>
                         </div>
                     </div>
                 </div>
                 <div className="card-body">
                     <div className="table-responsive">
-                        <Table id="tabla-clientes-fieles" className="table table-sm table-bordered table-hover table-striped">
+                        <Table id="tabla-categorias-comunes" className="table table-sm table-bordered table-hover table-striped">
                             <Thead>
                                 <Tr>
-                                    <Th><center>Documento</center></Th>
                                     <Th><center>Nombre</center></Th>
-                                    <Th><center>Apellidos</center></Th>
-                                    <Th><center>Seguros comprados</center></Th>
+                                    <Th><center>Cantidad de bienes</center></Th>
                                 </Tr>
                             </Thead>
                             <Tbody>
-                                {this.clientesList()}
+                                {this.categoriasList()}
                             </Tbody>
                         </Table>
                     </div>

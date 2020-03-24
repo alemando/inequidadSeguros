@@ -4,9 +4,10 @@ import React, { Component } from 'react';
 import MejoresVendedores from './admin-mejores-vendedores.component';
 import MejoresAseguradoras from './admin-mejores-aseguradoras.component';
 import ClientesFieles from './clientes-fieles-vendedor.component';
-import CantidadClientes from './cantidad-clientes.component'
-import CantidadSeguros from './cantidad-seguros.component'
-import SegurosPendientes from './seguros-pendientes.component'
+import CantidadClientes from './cantidad-clientes.component';
+import CantidadSeguros from './cantidad-seguros.component';
+import SegurosPendientes from './seguros-pendientes.component';
+import CategoriasComunes from './admin-categorias-comunes.component';
 export default class Index extends Component {
 
   render() {
@@ -42,6 +43,9 @@ export default class Index extends Component {
           </div>
         </div>
         <div className="row">
+          <div className="col-sm-6">
+            {this.props.session.esAdmin ? <CategoriasComunes session={this.props.session}></CategoriasComunes> : ""}
+          </div>
         </div>
       </div>
     );

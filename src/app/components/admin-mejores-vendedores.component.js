@@ -51,8 +51,6 @@ export default class MejoresVendedores extends Component {
         fetch('/api/seguros/top5vendedores')
             .then(res => res.json())
             .then(data => {
-                console.log("hola");
-                console.log(data);
                 this.setState({ vendedores: data });
             })
             .catch(err => console.error(err));
