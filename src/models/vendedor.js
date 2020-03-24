@@ -285,15 +285,18 @@ vendedorSchema.statics.cambiarContrasenaVendedorDesdeAdmin = async (vendedorId, 
         if(admin){
             let vendedor = await vendedores.findById(vendedorId);
             if (vendedor == "" || vendedor == null) {
-              return { id: "0", mensaje: "Usuario incorrecto"}
-    
-            } else if(contrasenaNueva == "" || contrasenaNueva == null){
-              return { id: "0", mensaje: "Contraseña nueva vacia o null"}
-            }else {
-                vendedor.contrasena = bcrypt.hashSync(contrasenaNueva, 10).toString();
-                await vendedor.save();
-                return { id: "1", mensaje: "Contraseña actualizada"}
+                return { id: "0", mensaje: "Usuario incorrecto: "+ vendedor}
             }
+            if(contrasenaNueva == "" || contrasenaNueva == null){
+                return { id: "0", mensaje: "Contraseña nueva vacia o null: "+ contrasenaNueva}
+            }
+            if(vendedor.esAdmin){
+                return { id: "0", mensaje: "El usuario que intentas modificar es un administrador"}
+            }
+            vendedor.contrasena = bcrypt.hashSync(contrasenaNueva, 10).toString();
+            await vendedor.save();
+            return { id: "1", mensaje: "Contraseña actualizada"}
+            
         }else{
             return { id: "0", mensaje: "No tienes permisos para esto"} 
         }

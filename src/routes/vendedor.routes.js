@@ -22,12 +22,15 @@ router.post('/save', async (req, res) => {
   res.json(resultado);
 });
 
+
 // Cambiar una constraseña de vende
 router.post('/cambiarContrasenaAdmin', async (req, res) => {
   let {vendedorId,nuevaContrasena} = req.params
-  resultado = await Vendedor.cambiarContrasenaVendedor(vendedorId,nuevaContrasena,req.session.esAdmin);
+  resultado = await Vendedor.cambiarContrasenaVendedorDesdeAdmin(vendedorId,nuevaContrasena,req.session.esAdmin);
   res.json(resultado);
 });
+
+
 // req.body 3 parametros: documento, contrasena y nuevacontrasena
 router.post('/cambiarContrasena', async (req, res) => {
   resultado = await Vendedor.cambiarContrasenaVendedor(req.session._id, req.body);
