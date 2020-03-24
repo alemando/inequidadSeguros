@@ -9,8 +9,8 @@ $.DataTable = DataTable
 //Revisar los nombres de los elementos
 const Categoria = props => (
     <Tr>
-        <Td>{props.categoria.nombre}</Td>
-        <Td>{props.categoria.bienes}</Td>
+        <Td>{props.categoria[0]}</Td>
+        <Td>{props.categoria[1]}</Td>
     </Tr>
 )
 
@@ -22,11 +22,11 @@ export default class CategoriasComunes extends Component {
     }
 
     categoriasList() {
-        if (! typeof this.state.categorias === 'string') {
+        try {
             return this.state.categorias.map(currentCategoria => {
                 return <Categoria session={this.props.session} component={this} categoria={currentCategoria} key={currentCategoria._id} />;
             })
-        } else {
+        } catch (error) {
             return (
                 <Tr>
                     <Td colSpan="4">
@@ -43,10 +43,18 @@ export default class CategoriasComunes extends Component {
     }
 
     fetchCategoriasComunes() {
-        fetch('/api/bienes/categoriesTopFive')
+        fetch('/api/bienes/categoriesTopFive',{
+            method: 'POST'
+        })
             .then(res => res.json())
             .then(data => {
-                this.setState({ categorias: data });
+                var array = [];
+
+                for (const key in data) {
+                    array.push([key, data[key]]);
+                }
+                console.log(array);
+                this.setState({ categorias: array });
             })
             .catch(err => console.error(err));
     }
