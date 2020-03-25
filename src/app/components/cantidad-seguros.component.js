@@ -9,9 +9,22 @@ $.DataTable = DataTable
 export default class CantidadSeguros extends Component {
     constructor(props) {
         super(props);
+        var f = new Date();
+        function addZero(i) {
+            if (i < 10) {
+                i = '0' + i;
+            }
+            return i;
+        }
+        var ma = f.getMonth()
+        var dd = f.getDate();
+        var mm = f.getMonth()+1;
+        dd=addZero(dd);
+        mm=addZero(mm);
+        ma=addZero(ma)
         this.state = {
-            fechaInicio: '',
-            fechaFin: '',
+            fechaInicio: f.getFullYear() + "-" + ma  + "-" + dd ,
+            fechaFin: f.getFullYear() + "-" + mm + "-" + dd ,
             seguros: null
          }
         this.searchSeguros = this.searchSeguros.bind(this);
@@ -83,11 +96,11 @@ export default class CantidadSeguros extends Component {
                                 </Tr>
                             </Thead>
                             <Tbody>
-                                <Td><input className="form-control" type="date" id="fechaInicio" name="fechaInicio"
+                                <Td><input className="form-control" type="date" defaultValue={this.state.fechaInicio} id="fechaInicio" name="fechaInicio"
                                     min="2015-01-01" max="2030-12-31" onChange={this.handleChange}
                                 ></input></Td>
 
-                                <Td><input className="form-control" type="date" id="fechaFin" name="fechaFin"
+                                <Td><input className="form-control" type="date" defaultValue={this.state.fechaFin} id="fechaFin" name="fechaFin"
                                     min={this.state.fechaInicio} max="2030-12-31" onChange={this.handleChange}
                                 ></input></Td>
                                 {this.getSeguros()}
