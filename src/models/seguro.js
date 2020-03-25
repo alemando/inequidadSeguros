@@ -397,7 +397,7 @@ seguroSchema.statics.cambiarEstado = async function(id,estado,admin) {
             return { id: "0", mensaje: "Algo ha salido mal:\n" + error };
         }
     }
-    else return { id: 0, mensaje: "No posees privilegios de administrador" };
+    else return { id: "0", mensaje: "No posees privilegios de administrador" };
 }
 
 seguroSchema.statics.editarSeguro = async (datos,admin) => {
