@@ -230,7 +230,51 @@ const validacionesCriterios = (arreglo) => {
     }
     return mensaje
 };
-
+//Añadir un criterio
+categoriaSchema.statics.addCriterio = async(datos,admin)=>{
+    let criterio = datos.criterio;
+    admin = true
+    if (admin) {
+        if(criterio.nombre==null||criterio.nombre=="")return{id:"0",mensaje:"El criterio debe tener un nombre"};
+        else if (criterio.descripcion==null||criterio.descripcion=="")return{id:"0",mensaje:"El criterio debe tener una descripción"};
+        else if (criterio.deducible==null||criterio.deducible=="")return{id:"0",mensaje:"El criterio debe especificar un deducible"};
+        else if (criterio.cobertura==null)return{id:"0",mensaje:"El criterio debe especificar un monto a cubrir"};
+        else if (criterio.cobertura<0)return{id:"0",mensaje:"El monto a cubrir debe ser mayor o igual a 0"};
+        try {
+            let categoria = await categorias.findById(datos.idCategoria,"criterios");          
+            for(cri of categoria.criterios){
+                if(criterio.nombre == cri.nombre) return {id: "0", mensaje: "Ya existe un criterio con este nombre para esta categoría"};
+            };
+            let criterioNuevo = new criterios({
+                nombre:criterio.nombre,
+                descripcion:criterio.descripcion,
+                cobertura:criterio.cobertura,
+                deducible:criterio.deducible
+            });
+            await categorias.findByIdAndUpdate(datos.idCategoria,{$push:{criterios:criterioNuevo}});
+            return { id: "1", mensaje: "Criterio añadido con exito"};
+        } 
+        catch (error) {
+            return { id: "0", mensaje: "Algo ha salido mal:\n" + error}
+        };
+    } 
+    else return { id: "0", mensaje: "No posees privilegios de administrador" };
+}
+//Eliminar un criterio
+categoriaSchema.statics.removeCriterio = async(datos,admin) =>{
+    admin = true;
+    if (admin) {
+        try {
+            let categoria = await categorias.findById(datos.idCategoria,"criterios");
+            if(categoria.criterios.length == 1) return { id: "0", mensaje: "No se puede dejar una categoria sin criterios base" };
+            await categorias.findByIdAndUpdate(datos.idCategoria,{$pull:{criterios:{nombre:datos.nombreCriterio}}});
+            return { id: "1", mensaje: "El criterio ha sido eliminado con exito!"};
+        } catch (error) {
+            return { id: "0", mensaje: "Algo ha salido mal:\n" + error}
+        };
+    }
+    else return { id: "0", mensaje: "No posees privilegios de administrador" };
+}
 // Editar criterio
 categoriaSchema.statics.editarCriterio = async(datos)=> {
     
@@ -238,7 +282,7 @@ categoriaSchema.statics.editarCriterio = async(datos)=> {
     let criterio = null;
 
     try{
-        let categoria = await categorias.findOne({_id: datos.idCategoria});
+        let categoria = await categorias.findById(datos.idCategoria);
         for(let i = 0; i<categoria.criterios.length;i++){
             if(categoria.criterios[i]._id == datos.idCriterio){
                 criterio = categoria.criterios[i];
@@ -283,5 +327,6 @@ categoriaSchema.statics.editarCriterio = async(datos)=> {
 };
 
 const categorias = mongoose.model('categorias', categoriaSchema);
+const criterios = mongoose.model('criterios', criterioSchema);
 
 module.exports = categorias;
