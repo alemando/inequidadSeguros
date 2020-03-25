@@ -42,4 +42,9 @@ router.post('/remove', async (req,res)=>{
   res.json(resultado)
 })
 
+router.post('/categoriesTopFive', async (req,res)=>{
+  const resultado = await Bienes.topCincoCategorias();
+  res.json(resultado);
+})
+
 module.exports = router;

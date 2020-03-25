@@ -51,7 +51,6 @@ export default class MejoresClientes extends Component {
         fetch('/api/clientes/topcinco')
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 this.setState({ clientes: data.top });
             })
             .catch(err => console.error(err));
