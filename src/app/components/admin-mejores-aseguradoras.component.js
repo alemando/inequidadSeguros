@@ -64,7 +64,7 @@ export default class MejoresAseguradoras extends Component {
                     </div>
                 </div>
                 <div className="card-body">
-                    <div className="table-responsive">
+                    <div className="Table-responsive">
                         <Table id="tabla-mejores-vendedores" className="table table-sm table-bordered table-hover table-striped">
                             <Thead>
                                 <Tr>
