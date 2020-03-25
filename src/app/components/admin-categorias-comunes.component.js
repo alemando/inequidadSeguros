@@ -69,7 +69,7 @@ export default class CategoriasComunes extends Component {
                     </div>
                 </div>
                 <div className="card-body">
-                    <div className="table-responsive">
+                    <div className="Table-responsive">
                         <Table id="tabla-categorias-comunes" className="table table-sm table-bordered table-hover table-striped">
                             <Thead>
                                 <Tr>
