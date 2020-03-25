@@ -6,52 +6,55 @@ import $ from 'jquery'
 import DataTable from 'datatables.net'
 $.DataTable = DataTable
 
-//(this.props.session.esAdmin ? <Th><center>Habilitar/Inhabilitar</center></Th> : "")
-//{this.vendedoresList()}
-
-const Vendedor = props => (
+//Revisar los nombres de los elementos
+const Categoria = props => (
     <Tr>
-        <Td>{props.vendedor[0].documento}</Td>
-        <Td>{props.vendedor[0].nombre}</Td>
-        <Td>{props.vendedor[0].telefono}</Td>
-        <Td>{props.vendedor[1]}</Td>
-
+        <Td>{props.categoria[0]}</Td>
+        <Td>{props.categoria[1]}</Td>
     </Tr>
 )
 
 
-export default class MejoresVendedores extends Component {
+export default class CategoriasComunes extends Component {
     constructor(props) {
         super(props);
-        this.state = { vendedores: [] };
+        this.state = { categorias: [] };
     }
 
-    vendedoresList() {
-        if (this.state.vendedores.length > 0) {//hay que cambiar a length 0 despues
-            return this.state.vendedores.map(currentVendedor => {
-                return <Vendedor session={this.props.session} component={this} vendedor={currentVendedor} key={currentVendedor._id} />;
+    categoriasList() {
+        try {
+            return this.state.categorias.map(currentCategoria => {
+                return <Categoria session={this.props.session} component={this} categoria={currentCategoria} key={currentCategoria._id} />;
             })
-        } else {
+        } catch (error) {
             return (
                 <Tr>
                     <Td colSpan="4">
                         <div className="alert alert-warning" role="alert">
-                            No se han vendido seguros
-                    </div>
+                            {this.state.categorias}
+                        </div>
                     </Td>
                 </Tr>)
         }
     }
 
     componentDidMount() {
-        this.fetchMejoresVendedores();
+        this.fetchCategoriasComunes();
     }
 
-    fetchMejoresVendedores() {
-        fetch('/api/seguros/top5vendedores')
+    fetchCategoriasComunes() {
+        fetch('/api/bienes/categoriesTopFive',{
+            method: 'POST'
+        })
             .then(res => res.json())
             .then(data => {
-                this.setState({ vendedores: data });
+                var array = [];
+
+                for (const key in data) {
+                    array.push([key, data[key]]);
+                }
+                console.log(array);
+                this.setState({ categorias: array });
             })
             .catch(err => console.error(err));
     }
@@ -61,23 +64,21 @@ export default class MejoresVendedores extends Component {
                 <div className="card-header">
                     <div className="row">
                         <div className="col-sm-12">
-                            <h3><i className="fa fa-users"></i> Top 5 vendedores:</h3>
+                            <h3><i className="fa fa-sitemap"></i> Top 5 categorias:</h3>
                         </div>
                     </div>
                 </div>
                 <div className="card-body">
-                    <div className="Table-responsive">
-                        <Table id="tabla-mejores-vendedores" className="table table-sm table-hover table-striped table-bordered">
+                    <div className="table-responsive">
+                        <Table id="tabla-categorias-comunes" className="table table-sm table-bordered table-hover table-striped">
                             <Thead>
                                 <Tr>
-                                    <Th><center>Documento</center></Th>
                                     <Th><center>Nombre</center></Th>
-                                    <Th><center>Celular</center></Th>
-                                    <Th><center>Seguros vendidos</center></Th>
+                                    <Th><center>Cantidad de bienes</center></Th>
                                 </Tr>
                             </Thead>
                             <Tbody>
-                                {this.vendedoresList()}
+                                {this.categoriasList()}
                             </Tbody>
                         </Table>
                     </div>

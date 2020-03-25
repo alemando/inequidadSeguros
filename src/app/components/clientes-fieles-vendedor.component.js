@@ -51,9 +51,7 @@ export default class ClientesFieles extends Component {
         fetch('/api/clientes/bestclients')
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 this.setState({ clientes: data });
-                console.log(data.length);
             })
             .catch(err => console.error(err));
     }
@@ -68,7 +66,7 @@ export default class ClientesFieles extends Component {
                     </div>
                 </div>
                 <div className="card-body">
-                    <div className="table-responsive">
+                    <div className="Table-responsive">
                         <Table id="tabla-clientes-fieles" className="table table-sm table-bordered table-hover table-striped">
                             <Thead>
                                 <Tr>

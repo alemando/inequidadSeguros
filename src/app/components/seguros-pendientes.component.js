@@ -132,7 +132,7 @@ export default class SegurosPendientes extends Component{
               </div>
             </div>							
             <div className="card-body">
-              <div className="table-responsive">
+              <div className="Table-responsive">
                   <Table id="seguros-pendientes" className="table table-bordered table-hover display">
                       <Thead>
                           <Tr>

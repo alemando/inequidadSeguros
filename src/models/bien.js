@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const lodash = require('lodash');
 const Schema = mongoose.Schema;
 
 const categoriaModel = require('./categoria')
@@ -184,6 +185,44 @@ bienSchema.statics.verificarBienesRepetidos= async function (datos) {
     return ""
   }
 }
+
+bienSchema.statics.topCincoCategorias= async function (){
+  try {
+    let listaBienes = await bienes.find({}, { documento: 0 }).
+      populate('cliente').
+      populate('categoria').
+      exec();
+    if (listaBienes.length==0){
+      return "No se han registrado bienes aún"
+    }
+    let agrupados= lodash.groupBy(listaBienes, 'categoria.nombre')
+    let conteo = {}
+    for (categoria in agrupados){
+      conteo[categoria]=agrupados[categoria].length
+    }
+    var ordenada = Object.keys(conteo).map(function(categoria) {
+      return [categoria, conteo[categoria]];
+    });
+    
+    // Ordenar por el segundo elemento de la lista
+    ordenada.sort(function(categoria, cantidad) {
+      return cantidad[1] - categoria[1];
+    });
+
+    let resultado={}
+    tamaño=0
+    for (let i = 0; i < ordenada.length; i++){
+      if (i>=5 && ordenada[i][1]<tamaño){
+        break
+      }
+      tamaño=ordenada[i][1]
+      resultado[ordenada[i][0]]=ordenada[i][1]
+    }
+    return resultado
+  } catch (error) {
+    return {id:0,mensaje:"Ha ocurrido algo al intentar obtener bienes\n" + error}
+  }
+};
 
 const bienes = mongoose.model('bienes', bienSchema);
 

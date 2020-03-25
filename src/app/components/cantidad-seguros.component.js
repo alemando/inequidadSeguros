@@ -86,7 +86,7 @@ export default class CantidadSeguros extends Component {
                     </div>
                 </div>
                 <div className="card-body">
-                    <div className="table responsive">
+                    <div className="Table responsive">
                         <Table id="cantidad-clientes" className="table table-sm">
                             <Thead>
                                 <Tr>

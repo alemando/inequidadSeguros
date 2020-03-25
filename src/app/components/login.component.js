@@ -90,8 +90,7 @@ export default class Login extends Component {
         if(this.state.session == null){
             return(
             <div className="fondo">
-            <div className="container-fluid card-body">
-            <div className="container wrapper container-logo">
+            <div className="container">
                 <a href="#" className="logo"><img alt="logo" src="assets/images/logoColor.png" /></a>
                 <form id="#formLogin" onSubmit={this.login}>
                     <div className="form-group">
@@ -108,8 +107,7 @@ export default class Login extends Component {
                 </div>  
             </div>
             </div>
-        
-        </div>
+
         )
         }else{
             return(<App session={this.state.session}/>)
