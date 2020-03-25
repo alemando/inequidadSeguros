@@ -191,6 +191,12 @@ clienteSchema.statics.guardarCliente = async (datos, idVendedor) => {
         validacion.mensaje += "Los egresos no son numeros\n"
     }
 
+    fActual = new Date()
+    fNacimiento = Date.parse(datos.fechaNacimiento)
+    if(fActual < fNacimiento){
+        validacion.mensaje += "Fecha no valida\n"
+    }
+
     //Si no pasa alguna validacion retorna el mensaje correspondiente
     if (validacion.mensaje.length != 0) return validacion
 
