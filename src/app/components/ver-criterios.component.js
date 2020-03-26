@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import VerCriterio from "./ver-criterio.component";
+import AddCriterio from "./add-criterio.component";
+import EliminarCriterio from "./eliminar-criterio.component";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
@@ -7,6 +9,9 @@ const Criterio = props => (
   <Tr>
     <Td>{props.criterio.nombre}</Td>
     <Td><VerCriterio session={props.session} nombre={props.nombre} criterio={props.criterio} key={props.criterio.mombre} categoria={props.categoria} /></Td>
+    <Td>
+      <EliminarCriterio criterio={props.criterio.nombre} idCategoria={props.categoria._id}/>
+    </Td>
   </Tr>
 )
 
@@ -50,6 +55,7 @@ export default class VerCriterios extends Component {
                       <Tr>
                         <Th>Nombre</Th>
                         <Th>Ver más</Th>
+                        <Th>Eliminar</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
@@ -59,6 +65,7 @@ export default class VerCriterios extends Component {
                 </div>
               </div>
               <div className="modal-footer">
+              <AddCriterio idCategoria={this.props.categoria._id}/>
                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
               </div>
             </div>

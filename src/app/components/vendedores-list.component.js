@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import VerVendedor from "./ver-vendedor.component";
+import CambiarContraseña from "./vendedor-cambiar-contraseña.component";
 import CreateVendedor from "./create-vendedor.component";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
@@ -15,7 +16,8 @@ const Vendedor = props => (
     <Td>{props.vendedor.apellido1} {props.vendedor.apellido2}</Td>
     <Td><center><VerVendedor session={props.session} component={props.component} vendedor={props.vendedor} key={props.vendedor.documento}/></center></Td>
     {(props.session.esAdmin ? <Td><center><button className={"btn " + (props.vendedor.estado ?  'btn-danger' : 'btn-success')} onClick={()=>props.component.confirmDialog(props.vendedor._id)}>{(props.vendedor.estado ? 'Deshabilitar' : 'Habilitar')}</button></center></Td>: "")}
-    
+    {(props.session.esAdmin ? <Td><center><CambiarContraseña usuario={props.vendedor}/></center></Td>: "")}
+
   </Tr>
 )
 
@@ -155,6 +157,7 @@ export default class VendedoresList extends Component {
                             <Th><center>Apellidos</center></Th>
                             <Th><center>Ver más</center></Th>
                             {(this.props.session.esAdmin ? <Th><center>Habilitar/Deshabilitar</center></Th>: "")}
+                            {(this.props.session.esAdmin ? <Th><center>Cambiar contraseña</center></Th>: "")}
                             
                         </Tr>
                     </Thead>                                        

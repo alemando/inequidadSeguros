@@ -232,7 +232,13 @@ const validacionesCriterios = (arreglo) => {
 };
 //Añadir un criterio
 categoriaSchema.statics.addCriterio = async(datos,admin)=>{
-    let criterio = datos.criterio;
+    try {
+        let criterio ={
+            nombre:datos.nombre,
+            descripcion:datos.descripcion,
+            cobertura:datos.cobertura,
+            deducible:datos.deducible
+        }
     admin = true
     if (admin) {
         if(criterio.nombre==null||criterio.nombre=="")return{id:"0",mensaje:"El criterio debe tener un nombre"};
@@ -259,6 +265,9 @@ categoriaSchema.statics.addCriterio = async(datos,admin)=>{
         };
     } 
     else return { id: "0", mensaje: "No posees privilegios de administrador" };
+    } catch (error) {
+        return { id: "0", mensaje: "Algo ha salido mal:\n" + error}
+    }
 }
 //Eliminar un criterio
 categoriaSchema.statics.removeCriterio = async(datos,admin) =>{
