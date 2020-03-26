@@ -157,7 +157,6 @@ export default class CreateCliente extends Component {
                   <div className="form-group">
                     <label>Segundo apellido:</label>
                     <input name="apellido2" onChange={this.handleChange} type="text"
-                      required
                       value={this.state.apellido2}
                       className="form-control"
                     />

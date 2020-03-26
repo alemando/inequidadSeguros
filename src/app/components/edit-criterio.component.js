@@ -90,7 +90,8 @@ export default class EditCriterio extends Component {
                             <div className="form-group">
                                 <label>* Monto a cubrir:</label>
                                 <input name="cobertura" onChange={this.handleChange} type="number"
-                                    required
+                                    required min="0"
+                                    placeholder="Porcentaje o valor que el cliente asumirá al reclamar este criterio"
                                     value={this.state.cobertura}
                                     className="form-control"
                                     />

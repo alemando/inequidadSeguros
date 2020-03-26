@@ -36,7 +36,7 @@ export default class MejoresVendedores extends Component {
                 <Tr>
                     <Td colSpan="4">
                         <div className="alert alert-warning" role="alert">
-                            No se han vendido seguros
+                            No se han vendido seguros aún
                     </div>
                     </Td>
                 </Tr>)

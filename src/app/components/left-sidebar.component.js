@@ -31,7 +31,7 @@ export default class LeftSidebar extends Component {
                           </li>
 
                           <li className="submenu">
-                              <a href="/vendedores"><i className="fa fa-id-card-o"></i><span> Vendedores </span> </a>
+                              <a href="/vendedores"><i className="fa fa-id-card-o"></i><span> Usuarios </span> </a>
                           </li>
                           
                   </ul>

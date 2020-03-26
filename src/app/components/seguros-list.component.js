@@ -14,6 +14,7 @@ const Seguro = props => (
     <Td>{props.seguro.bien.nombre}</Td>
     <Td>{props.seguro.aseguradora.nombre}</Td>
     <Td>{props.seguro.vendedor.nombre + " " + props.seguro.vendedor.apellido1 + " " + props.seguro.vendedor.apellido2}</Td>
+    <Td>{props.seguro.estado}</Td>
     <Td><center><VerSeguro session={props.session} seguro={props.seguro} key={props.seguro._id} /></center></Td>
   </Tr>
 )
@@ -100,6 +101,7 @@ export default class SegurosList extends Component {
                     <Th><center>Bien</center></Th>
                     <Th><center>Aseguradora</center></Th>
                     <Th><center>Vendedor</center></Th>
+                    <Th><center>Estado</center></Th>
                     <Th><center>Ver mas</center></Th>
                   </Tr>
                 </Thead>
