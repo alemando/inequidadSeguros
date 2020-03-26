@@ -102,7 +102,7 @@ export default class CreateCriterio extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label>* Monto a cubrir:</label>
-                                        <input name="cobertura" onChange={this.handleChange} type="numer" onKeyDown={this.handleKeypress} in="0"
+                                        <input name="cobertura" onChange={this.handleChange} type="numer" onKeyDown={this.handleKeypress} min="0"
                                             required
                                             value={this.state.cobertura}
                                             className="form-control"
@@ -112,6 +112,7 @@ export default class CreateCriterio extends Component {
                                         <label>* Deducible:</label>
                                         <input name="deducible" onChange={this.handleChange} type="text"
                                             required
+                                            placeholder="Porcentaje o valor que el cliente asumirá al reclamar este criterio"
                                             value={this.state.deducible}
                                             className="form-control"
                                         />
