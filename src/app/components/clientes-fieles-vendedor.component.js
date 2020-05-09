@@ -9,10 +9,10 @@ $.DataTable = DataTable
 
 const Cliente = props => (
     <Tr>
-        <Td>{props.cliente.cliente.documento}</Td>
-        <Td>{props.cliente.cliente.nombre}</Td>
-        <Td>{props.cliente.cliente.apellido1} {props.cliente.cliente.apellido2}</Td>
-        <Td>{props.cliente.count}</Td>
+        <Td><center>{props.cliente.cliente.documento}</center></Td>
+        <Td><center>{props.cliente.cliente.nombre}</center></Td>
+        <Td><center>{props.cliente.cliente.apellido1} {props.cliente.cliente.apellido2}</center></Td>
+        <Td><center>{props.cliente.count}</center></Td>
 
     </Tr>
 )
@@ -36,8 +36,8 @@ export default class ClientesFieles extends Component {
                 <Tr>
                     <Td colSpan="4">
                         <div class="alert alert-warning" role="alert">
-                            Aun no has vendido seguros
-                    </div>
+                            <center>Aun no has vendido seguros</center>
+                        </div>
                     </Td>
                 </Tr>)
         }

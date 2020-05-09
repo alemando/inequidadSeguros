@@ -11,9 +11,9 @@ $.DataTable = DataTable
 
 const Aseguradora = props => (
     <Tr>
-        <Td>{props.aseguradora.aseguradora.nit}</Td>
-        <Td>{props.aseguradora.aseguradora.nombre}</Td>
-        <Td>{props.aseguradora.totalSeguros}</Td>
+        <Td><center>{props.aseguradora.aseguradora.nit}</center></Td>
+        <Td><center>{props.aseguradora.aseguradora.nombre}</center></Td>
+        <Td><center>{props.aseguradora.totalSeguros}</center></Td>
     </Tr>
 )
 

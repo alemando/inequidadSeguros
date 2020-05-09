@@ -11,10 +11,11 @@ $.DataTable = DataTable
 
 const Vendedor = props => (
     <Tr>
-        <Td>{props.vendedor[0].documento}</Td>
-        <Td>{props.vendedor[0].nombre}</Td>
-        <Td>{props.vendedor[0].telefono}</Td>
-        <Td>{props.vendedor[1]}</Td>
+        
+        <Td><center>{props.vendedor[0].documento}</center></Td>
+        <Td><center>{props.vendedor[0].nombre}</center></Td>
+        <Td><center>{props.vendedor[0].telefono}</center></Td>
+        <Td><center>{props.vendedor[1]}</center></Td>
 
     </Tr>
 )
@@ -27,7 +28,7 @@ export default class MejoresVendedores extends Component {
     }
 
     vendedoresList() {
-        if (this.state.vendedores.length > 0) {//hay que cambiar a length 0 despues
+        if (this.state.vendedores.length >= 0) {//hay que cambiar a length 0 despues
             return this.state.vendedores.map(currentVendedor => {
                 return <Vendedor session={this.props.session} component={this} vendedor={currentVendedor} key={currentVendedor._id} />;
             })

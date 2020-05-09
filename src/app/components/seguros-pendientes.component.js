@@ -13,10 +13,10 @@ $.DataTable = DataTable
 
 const Seguro = props =>(
     <Tr>
-        <Td>{props.seguro.vendedor.nombre+" "+props.seguro.vendedor.apellido1+" "+props.seguro.vendedor.apellido2 }</Td>
-        <Td>{props.seguro.aseguradora.nombre}</Td>
-        <Td>{props.seguro.cliente.nombre+" "+props.seguro.cliente.apellido1+" "+props.seguro.cliente.apellido2 }</Td>
-        <Td>{props.seguro.bien.nombre}</Td>
+        <Td><center>{props.seguro.vendedor.nombre+" "+props.seguro.vendedor.apellido1+" "+props.seguro.vendedor.apellido2 }</center></Td>
+        <Td><center>{props.seguro.aseguradora.nombre}</center></Td>
+        <Td><center>{props.seguro.cliente.nombre+" "+props.seguro.cliente.apellido1+" "+props.seguro.cliente.apellido2 }</center></Td>
+        <Td><center>{props.seguro.bien.nombre}</center></Td>
         <Td><center><VerSeguro session={props.session} seguro={props.seguro} key={props.seguro._id}/></center></Td>
         {(props.session.esAdmin ? <Td><center><button className={"btn btn-success"} onClick={()=>props.component.confirmDialog(props.seguro._id, "true")}>{'Aprobar'}</button>  <button className={"btn btn-danger"} onClick={()=>props.component.confirmDialog(props.seguro._id, "false")}>{'Rechazar'}</button></center></Td>: "")}
     </Tr>

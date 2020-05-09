@@ -69,7 +69,7 @@ export default class CantidadSeguros extends Component {
             return (
                 <Td>
                     <div className="alert alert-sm alert-info" role="alert">
-                            Seleccione una fecha
+                            <center>Seleccione una fecha</center>
                     </div>
                 </Td>)
         }
@@ -90,9 +90,9 @@ export default class CantidadSeguros extends Component {
                         <Table id="cantidad-clientes" className="table table-sm">
                             <Thead>
                                 <Tr>
-                                    <Th>Fecha Inicial</Th>
-                                    <Th>Fecha Final</Th>
-                                    <Th>Cantidad de seguros nuevos</Th>
+                                    <Th><center>Fecha Inicial</center></Th>
+                                    <Th><center>Fecha Final</center></Th>
+                                    <Th><center>Cantidad de seguros nuevos</center></Th>
                                 </Tr>
                             </Thead>
                             <Tbody>

@@ -70,7 +70,7 @@ export default class CantidadClientes extends Component {
             return (
                 <Td>
                     <div className="alert alert-sm alert-info" role="alert">
-                            Seleccione una fecha
+                            <center>Seleccione una fecha</center>
                     </div>
                 </Td>)
         }
@@ -91,19 +91,19 @@ export default class CantidadClientes extends Component {
                         <Table id="cantidad-clientes" className="table table-sm">
                             <Thead>
                                 <Tr>
-                                    <Th>Fecha Inicial</Th>
-                                    <Th>Fecha Final</Th>
-                                    <Th>Cantidad de clientes nuevos</Th>
+                                    <Th><center>Fecha Inicial</center></Th>
+                                    <Th><center>Fecha Final</center></Th>
+                                    <Th><center>Cantidad de clientes nuevos</center></Th>
                                 </Tr>
                             </Thead>
                             <Tbody>
-                                <Td><input className="form-control" type="date" defaultValue={this.state.fechaInicio} id="fechaInicio" name="fechaInicio"
+                                <Td><center><input className="form-control" type="date" defaultValue={this.state.fechaInicio} id="fechaInicio" name="fechaInicio"
                                     min="2015-01-01" max="2030-12-31" onChange={this.handleChange}
-                                ></input></Td>
+                                ></input></center></Td>
 
-                                <Td><input className="form-control" type="date" defaultValue={this.state.fechaFin} id="fechaFin" name="fechaFin"
+                                <Td><center><input className="form-control" type="date" defaultValue={this.state.fechaFin} id="fechaFin" name="fechaFin"
                                     min={this.state.fechaInicio} max="2030-12-31" onChange={this.handleChange}
-                                ></input></Td>
+                                ></input></center></Td>
                                 {this.getClientes()}
                             </Tbody>
                         </Table>

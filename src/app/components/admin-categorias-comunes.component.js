@@ -9,8 +9,8 @@ $.DataTable = DataTable
 //Revisar los nombres de los elementos
 const Categoria = props => (
     <Tr>
-        <Td>{props.categoria[0]}</Td>
-        <Td>{props.categoria[1]}</Td>
+        <Td><center>{props.categoria[0]}</center></Td>
+        <Td><center>{props.categoria[1]}</center></Td>
     </Tr>
 )
 

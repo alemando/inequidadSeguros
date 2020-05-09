@@ -11,10 +11,10 @@ $.DataTable = DataTable
 
 const Cliente = props => (
     <Tr>
-        <Td>{props.cliente.documento}</Td>
-        <Td>{props.cliente.nombres}</Td>
-        <Td>{props.cliente.apellidos}</Td>
-        <Td>{props.cliente.seguros}</Td>
+        <Td><center>{props.cliente.documento}</center></Td>
+        <Td><center>{props.cliente.nombres}</center></Td>
+        <Td><center>{props.cliente.apellidos}</center></Td>
+        <Td><center>{props.cliente.seguros}</center></Td>
 
     </Tr>
 )
