@@ -25,7 +25,8 @@
   "homepage": "https://github.com/alemando/inequidadSeguros#readme",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.12.0",
-    "bcrypt": "^3.0.8",
+    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
     "bootstrap": "^4.4.1",
     "cors": "^2.8.5",
     "crypto-js": "^4.0.0",
